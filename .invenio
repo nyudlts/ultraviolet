@@ -1,0 +1,35 @@
+[cli]
+flavour = RDM
+logfile = /logs/invenio-cli.log
+
+[cookiecutter]
+project_name = NYU Data Repository
+project_shortname = nyu-data-repository
+project_site = nyu-data-repository.com
+github_repo = nyudlts/nyu-data-repository
+description = NYU Data Repository InvenioRDM Instance
+author_name = NYU
+author_email = data-repository-tech@nyu.edu 
+year = 2020
+python_version = 3.7
+database = postgresql
+elasticsearch = 7
+file_storage = local
+_template = https://github.com/inveniosoftware/cookiecutter-invenio-rdm.git
+
+[files]
+app_data = {'README.md': 'd58978488626bdeddc791a15a39e341a4ed06f202b84d0c0d4aa9ef49481c6d9'}
+docker = {'nginx': {'test.crt': '72bb1c1427121d5a1186a4e76d161e5343d7a5f089d04ab62614393a673dfa27', 'Dockerfile': '541326766beaba2e8492255c99e11aa76640d71329ceab5bcab1c8d6a979bd5c', 'test.key': '252f58f3a686bb2775d2263188bf49aefe260729849f73b81aa974fc335ade7c', 'nginx.conf': '6c9a6e372fc340dfcd3b49e6a30bd7bd36af41d79d1d093b7b3ba5f4c9d781b4', 'conf.d': {'default.conf': 'e67e7706033598798ec422bba13243266a081c255162ba3b2d446cf97e92a148'}}, 'uwsgi': {'uwsgi_rest.ini': 'fb0ff33711749ac28f5967640c6ee90da73d501942f1b3050871746497479b12', 'uwsgi_ui.ini': '83f0de6cbd657cd500779844b3d13b954eaf2e3286a527e37b2e50f69065a794'}}
+invenio.cfg = 5d5b7b6866b2283ffcbbd5d5ca80931569c6340bc52624ad00d5f3f6f4e25493
+docker-services.yml = 9b9170db8494cc3407398e32c1b833a8bfc7df71cd9853aaaabada5dd12a5f40
+dockerfile = 470c8df735cf02829d5a4cb126ae17bee9ca211f00c2c0f5b6f354fb9b796efc
+readme.md = bc697d7e3837e30e2b6733969ebb9366a5eba11e70bf736d4392c34fd97d39e6
+pipfile = d2b6104f904d6497edfe936f3b125872b76ba1ec16969c9ae420bc837288ecfb
+.dockerignore = 21241bc12cdf4ac5f209d6b191adc8f25eb89af93ce5c4c3f72c86661162d7b5
+.gitignore = 0be2f3d2c1c9489ca861c4ca55a9c1845c22c43cbf92ed0cfaeeabde9b7ab2d2
+static = {'images': {'invenio-rdm.svg': '50f09b4d83244a69c58f44aa436a3fa097726d9b47fd0e0782ea92d31f854b65'}}
+docker-compose.full.yml = 277cb35352bdd091a911a163eb35c58a518b4aef249b8ef36e3a949b29045965
+templates = {'.gitkeep': 'd4756cdf68d94c670c924f9d57d44718f666e457727701486435b57a97e52c5f'}
+docker-compose.yml = 0ea1e69992ab671b35cc9ec66bd670a1e42f4b19b1c20e22ce4ff2915ebda78c
+assets = {'less': {'theme.config': '047932f53a4a3e8e94d7cf0692f73bb3cae0eb868b0ebed6b53d614c187cd58d', 'variables.less': 'e04d395806875c75abe96703cefaa06316ad867fa91e37b93a99e889a5f3be70', 'theme.less': '816518c2628cb584882d3020a3cf9eb1f81be794414770af31726359353f03a8', 'site': {'globals': {'site.variables': '240edff66017032089fa196146097a87ed174f61f90363609a2db0d0acbfa4a1', 'site.overrides': '486bbf0de79fe4e258f3247d6348801264320529d44d716202baf0aa8e9d86e8'}}}, 'templates': {'search': {'.gitkeep': 'd4756cdf68d94c670c924f9d57d44718f666e457727701486435b57a97e52c5f'}}}
+
