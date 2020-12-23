@@ -1,0 +1,24 @@
+notifications:
+  email: false
+sudo: true
+dist: trusty
+language: python
+env:
+  global:
+  - PIPENV_IGNORE_VIRTUALENVS=1
+  - OS_TYPE=centos OS_VERSION=7
+cache:
+  - pip
+python: 3.7
+before_install:
+  - sudo service postgresql stop
+  - while lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
+  - sudo docker pull centos:7
+install:
+  - pip install invenio-cli 
+  - npm i -g npm
+  -  invenio-cli containers start --lock --build --setup
+script:
+  - pipenv run black --check invenio.cfg
+after_script:
+  - invenio-cli containers destroy
