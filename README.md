@@ -1,8 +1,8 @@
-# NYU Data Repository
+# UltraViolet
 
-Welcome to your InvenioRDM instance.
+UltraViolet is NYU Libraries' platform for long-term access to a broad range of NYU-related digital content, including open access data associated with research and scholarly output and data licensed for use by members of the NYU community. This repository is the codebase for UltraViolet, a local deployment of the [InvenioRDM framework](https://inveniordm.docs.cern.ch/).
 
-## Getting started
+## Local deployment
 
 Run the following commands in order to start your new InvenioRDM instance:
 
@@ -43,8 +43,3 @@ Following is an overview of the generated files and folders:
 | ``templates`` | Folder for your Jinja templates. |
 | ``.invenio`` | Common file used by Invenio-CLI to be version controlled. |
 | ``.invenio.private`` | Private file used by Invenio-CLI *not* to be version controlled. |
-
-## Documentation
-
-To learn how to configure, customize, deploy and much more, visit
-the [InvenioRDM Documentation](https://inveniordm.docs.cern.ch/).
