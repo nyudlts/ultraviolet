@@ -7,14 +7,14 @@ verify_ssl = true
 check-manifest = ">=0.25"
 
 [packages]
-flask-resources = "~=0.3.2"
+flask-resources = "~=0.6.0"
 importlib-metadata = ">=0.12,<2.0.0"
-invenio = "==3.4.0a8"
-invenio-app-rdm = {extras = ["postgresql", "elasticsearch7"], version = "~=0.17.0"}
-invenio-drafts-resources = "~=0.6.1"
-invenio-rdm-records = "~=0.24.1"
-invenio-records-permissions = "~=0.10.0"
-invenio-records-resources = "~=0.8.4"
+invenio = "==3.4.0"
+invenio-app-rdm = {extras = ["postgresql", "elasticsearch7"], version = "~=1.0.0"}
+invenio-drafts-resources = "~=0.9.8"
+invenio-rdm-records = "~=0.27.12"
+invenio-records-permissions = "~=0.11.0"
+invenio-records-resources = "~=0.12.7"
 marshmallow-utils = "~=0.3.2"
 nbconvert = {extras = ["execute"], version = ">=4.1.0,<6.0.0"}
 uwsgi = ">=2.0"

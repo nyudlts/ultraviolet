@@ -3,8 +3,8 @@ flavour = RDM
 logfile = /logs/invenio-cli.log
 
 [cookiecutter]
-project_name = NYU Data Repository
-project_shortname = nyu-data-repository
+project_name = UltraViolet 
+project_shortname = ultraviolet 
 project_site = nyu-data-repository.com
 github_repo = nyudlts/nyu-data-repository
 description = NYU Data Repository InvenioRDM Instance
@@ -16,6 +16,7 @@ database = postgresql
 elasticsearch = 7
 file_storage = local
 _template = https://github.com/inveniosoftware/cookiecutter-invenio-rdm.git
+_project_dir = /Users/katepechekhonova/PycharmProjects/ultraviolet
 
 [files]
 app_data = {'README.md': 'd58978488626bdeddc791a15a39e341a4ed06f202b84d0c0d4aa9ef49481c6d9'}
