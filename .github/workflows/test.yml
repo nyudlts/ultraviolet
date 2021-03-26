@@ -4,7 +4,7 @@ on: [push, pull_request]
 jobs:
   test:
     env:
-      PYTHON_VERSION: 3.7
+      PYTHON_VERSION: '3.7.9'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
