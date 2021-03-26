@@ -3,17 +3,15 @@ on: [push, pull_request]
 
 jobs:
   test:
-    env:
-      PYTHON_VERSION: '3.7.9'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: Set up Python $PYTHON_VERSION
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: $PYTHON_VERSION
+          python-version: '3.7.9'
       - name: Check Requirements
         run: invenio-cli check-requirements
       # - name: Generate dependencies
