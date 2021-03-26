@@ -1,0 +1,22 @@
+name: ci:test
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      PYTHON_VERSION: 3.7
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Set up Python ${{ PYTHON_VERSION }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check Requirements
+        run: invenio-cli check-requirements
+      # - name: Generate dependencies
+      #   run: |
+      #     invenio-cli packages lock --pre --dev
+      #     invenio-cli install --pre --development
