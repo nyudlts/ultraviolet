@@ -1,6 +1,6 @@
 title:              UltraViolet Docs 💜
-url:            'https://nyudlts.github.io'
-baseurl:                '/ultraviolet'
+url:                ''
+baseurl:            '/ultraviolet'
 
 plugins:            [jekyll-remote-theme]
 remote_theme:       pmarsceill/just-the-docs
