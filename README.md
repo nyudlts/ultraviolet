@@ -6,7 +6,9 @@ UltraViolet is NYU Libraries' platform for long-term access to a broad range of 
 
 ## Getting Started
 
-We recommend you visit our [Documentation Wiki](https://nyudlts.github.io/ultraviolet/) to get started.  
+
+We recommend you visit our [Documentation Wiki](https://nyudlts.github.io/ultraviolet/) to get started. 
+You can also check [InvenioRDM documentation](https://inveniordm.docs.cern.ch/)
 Have Questions? Please submit them at the [Issues tab](https://github.com/nyudlts/ultraviolet/issues).
 
 
