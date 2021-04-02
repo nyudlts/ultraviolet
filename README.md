@@ -2,11 +2,12 @@
 [![ci:test](https://github.com/nyudlts/ultraviolet/workflows/ci:test/badge.svg)](https://github.com/nyudlts/ultraviolet/actions)
 [![ci:test:docs](https://github.com/nyudlts/ultraviolet/workflows/ci:test:docs/badge.svg)](https://nyudlts.github.io/ultraviolet/)
 
-UltraViolet is NYU Libraries' platform for long-term access to a broad range of NYU-related digital content, including open access data associated with research and scholarly output and data licensed for use by members of the NYU community. This repository is the codebase for UltraViolet, a local deployment of the [InvenioRDM framework](https://inveniordm.docs.cern.ch/).
+UltraViolet is NYU Libraries' platform for long-term access to a broad range of NYU-related digital content, including open access data associated with research and scholarly output and data licensed for use by members of the NYU community. This repository is the codebase for UltraViolet, a local deployment of the [InvenioRDM project](https://inveniordm.docs.cern.ch/).
 
 ## Getting Started
 
-We recommend you visit our [Documentation Wiki](https://nyudlts.github.io/ultraviolet/) to get started.  
+We recommend you visit our [Documentation Wiki](https://nyudlts.github.io/ultraviolet/) to get started. 
+You can also check [InvenioRDM documentation] (https://inveniordm.docs.cern.ch/)
 Have Questions? Please submit them at the [Issues tab](https://github.com/nyudlts/ultraviolet/issues).
 
 
