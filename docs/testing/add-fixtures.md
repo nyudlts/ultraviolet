@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Testing
-parent: Create and Add Fixtures
+title: Create and Add Fixtures
+parent: Testing
 nav_order: 1
 ---
 # {{ page.title }}

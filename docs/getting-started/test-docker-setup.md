@@ -12,27 +12,22 @@ has_toc: true
 
 ## Steps
 
-- get the local copy of the ultraviolet app:
+1. Get the local copy of the ultraviolet app:
+  ```sh
+  git clone https://github.com/nyudlts/ultraviolet && cd ultraviolet
+  ```
+2. Create an `.invenio.private` file which is used by the invenio-cli tool
+  ```sh
+  touch .invenio.private
+  echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
+  ```
 
-```sh
-git clone https://github.com/nyudlts/ultraviolet
-cd ultraviolet
-```
-- create .invenio.private file which is used by invenio-cli tool
-```sh
-touch .invenio.private
-```
-- add the following lines to .invenio.private
-[cli]
-project_dir = < path to ultraviolet local directory>
-services_setup = False
+3. Build docker containers using invenio-cli tool
+  ```sh
+  invenio-cli containers start --lock --build --setup
+  ```
 
-- build docker containers using invenio-cli tool
-```sh
-invenio-cli containers start --lock --build --setup
-```
-
-The Ultraviolet instance should now be available at this URL: https://127.0.0.1/
+  The Ultraviolet instance should now be available at this URL: <https://127.0.0.1/>
 
 ## Docker troubleshooting tips  
 
