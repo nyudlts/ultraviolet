@@ -8,11 +8,11 @@ on:
     paths:
       - '.github/workflows/**'
       - 'docs/**'
-defaults:
-  run:
-    working-directory: docs
 
 jobs:
+  defaults:
+      run:
+        working-directory: ./docs
   test:
     runs-on: ubuntu-latest
     steps:
