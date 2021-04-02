@@ -1,0 +1,15 @@
+title:              UltraViolet Docs 💜
+url:                ''
+baseurl:            '/ultraviolet'
+
+plugins:            [jekyll-remote-theme, jekyll-github-metadata]
+remote_theme:       pmarsceill/just-the-docs
+heading_anchors:    true
+incremental:        true
+permalink:          pretty
+aux_links_new_tab:  true
+aux_links:
+  "GitHub Repo":
+    - "//github.com/nyudlts/ultraviolet"
+  "InvenioRDM":
+    - "//invenio-software.org/products/rdm/"
