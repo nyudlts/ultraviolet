@@ -21,10 +21,15 @@ has_toc: true
   touch .invenio.private
   echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
   ```
-3. If you have used Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
-4. Build docker containers using invenio-cli tool
+
+3. Build docker containers using invenio-cli tool
   ```sh
   invenio-cli containers start --lock --build --setup
   ```
-  The Ultraviolet instance should now be available at this URL: <https://127.0.0.1/>. You are using self-signed certificate so you might want to use FireFox 
 
+  The Ultraviolet instance should now be available at this URL: <https://127.0.0.1/>
+
+## Docker troubleshooting tips  
+
+- Cleanup docker-compose to start over with `$ docker-compose down --rmi all --volumes  --remove-orphans`. Note: this might effect other docker projects if you have them!  
+- Debug a docker-compose container with `$ docker logs --tail 50 --follow --timestamps CONTAINER-NAME`
