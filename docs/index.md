@@ -23,3 +23,7 @@ To contribute to this documentation wiki, you can:
 Either way, make sure to submit a PR to the `development` branch when you're ready.
 
 If you have questions or encounter errors with the docs, you can [submit an issue](https://github.com/nyudlts/ultraviolet/issuess).
+
+## Contributors
+
+{% include contributors.html %}

@@ -2,7 +2,7 @@ title:              UltraViolet Docs 💜
 url:                ''
 baseurl:            '/ultraviolet'
 
-plugins:            [jekyll-remote-theme]
+plugins:            [jekyll-remote-theme, jekyll-github-metadata]
 remote_theme:       pmarsceill/just-the-docs
 heading_anchors:    true
 incremental:        true
