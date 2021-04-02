@@ -6,6 +6,9 @@ on:
   push:
     paths:
       - 'docs/**'
+defaults:
+  run:
+    working-directory: docs
 
 jobs:
   test:
@@ -24,6 +27,6 @@ jobs:
         with:
           bundler-cache: true
       - name: install
-        run:  cd docs && bundle install
+        run:  bundle install
       - name: build
         run: bundle exec rake build
