@@ -1,0 +1,30 @@
+name: ci:test:docs
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+on:
+  push:
+    paths:
+      - 'docs/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: install
+        run:  cd docs && bundle install
+      - name: build
+        run: bundle exec rake build
