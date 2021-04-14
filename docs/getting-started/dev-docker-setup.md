@@ -19,7 +19,7 @@ has_toc: true
   + We recommend installing [nvm](https://github.com/nvm-sh/nvm#about) to manage node and npm versions.
   + NOTE: if after nvm installation you are getting `nvm: not found` you can use the following [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux)
 - **Cairo**
-  +  + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+  + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
 ## Steps
 1. Install [invenio-cli](https://invenio-cli.readthedocs.io/en/latest/)
   ```sh
