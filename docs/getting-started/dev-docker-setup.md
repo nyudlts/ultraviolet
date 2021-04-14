@@ -13,18 +13,19 @@ has_toc: true
 - **Python 3.7**
   + To test which version you have, type `python` into the command prompt
   + There are different ways you can setup your python environment. We recommend using [pyenv](https://realpython.com/intro-to-pyenv/) to switch between python versions
-- **Pip3**
-  + [Installation instructions](https://pip.pypa.io/en/stable/installing/)
+- **Pip**
+  + You should have pip installed as part of your python installation. If it is missing you need to install it [Installation instructions](https://pip.pypa.io/en/stable/installing/)
 - **Node 14 and npm**
   + We recommend installing [nvm](https://github.com/nvm-sh/nvm#about) to manage node and npm versions.
-  + Note that node versions are tied to bash profiles, so you may need to switch to a bash profile to deploy locally. Type `bash` in Terminal.
-
+  + NOTE: if after nvm installation you are getting `nvm: not found` you can use the following [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux)
+- **Cairo**
+  +  + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
 ## Steps
 1. Install [invenio-cli](https://invenio-cli.readthedocs.io/en/latest/)
   ```sh
-  pip3 install invenio-cli
+  pip install invenio-cli
   ```
-  IMPORTANT: Check to make sure you have the latest version of Invenio-CLI tool. To check your version run `invenio-cli --version`. Versions are released about once per month, so if it's out of date, run `pip3 install --upgrade invenio-cli`
+  IMPORTANT: Check to make sure you have the latest version of Invenio-CLI tool. To check your version run `invenio-cli --version`. Versions are released about once per month, so if it's out of date, run `pip install --upgrade invenio-cli`
 
 2. Get the local copy of the UltraViolet source code:
   ```sh
