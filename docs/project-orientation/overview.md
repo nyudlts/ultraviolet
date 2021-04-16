@@ -1,8 +1,10 @@
 ---
 layout: default
-title: Overview of Resources
-parent: project-orientation
+title: Overview
+parent: Project Orientation
 nav_order: 1
+has_toc: true
+
 ---
 # {{ page.title }}
 
