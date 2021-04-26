@@ -25,6 +25,7 @@ has_toc: true
   ```sh
   pip install invenio-cli
   ```
+
   IMPORTANT: Check to make sure you have the latest version of Invenio-CLI tool. To check your version run `invenio-cli --version`. Versions are released about once per month, so if it's out of date, run `pip install --upgrade invenio-cli`
 
 2. Get the local copy of the UltraViolet source code:
@@ -51,7 +52,7 @@ has_toc: true
   invenio-cli packages lock --pre --dev
   invenio-cli install --pre --development
   ```
-7. If you have used Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
+7. If you have used the Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
 
 8. Build application services (database, search, cache) and setup the application for running
   ```sh
@@ -60,7 +61,7 @@ has_toc: true
   IMPORTANT: if services setup reported any errors, and you have to restart the setup process, make sure to run
   destroy service command first (or you will get "Failed to setup services" error ) and delete db files by running `invenio-cli services destroy` and `rm -r app_data/db/*`
 
-9. Add local admin user
+9. Add local admin user and assign admin status to it
   ```sh
   invenio-cli shell
   invenio users create admin@test.com --password=123456 --active
@@ -76,7 +77,7 @@ has_toc: true
   invenio-cli run
   ```
 
-  The Invenio instance should now be available at this URL: <https://127.0.0.1:5000/>!  
+  The UltraViolet instance should now be available at this URL: <https://127.0.0.1:5000/>  
   Because of the invalid TLS warning, you will need to use Firefox.
 
   You can login using account `admin@test.com` which you've just created and start uploading data.
