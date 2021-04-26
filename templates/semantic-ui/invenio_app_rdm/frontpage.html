@@ -14,56 +14,18 @@
 {%- block page_body %}
 {%- block first_section%}
 <section class="get-started-section section-content-white-bg">
-  <span class="section-title frontpage-title">{{ _("You've successfully installed InvenioRDM! What is ahead?") }}</span>
   <div class="ui container">
-    <div class="ui padded relaxed centered grid">
-      <div class="invenio-rdm-project-goals">
-        <div class="rdm-goal">
-          <div class="flex-center-vertically">
-            <div class="numbering">1</div>
-          </div>
-          <h3 class="section-title">{{ _("Configure") }}</h3>
-          <div class="command-line">
-            {% trans configuration_link="https://inveniordm.docs.cern.ch/install/configuration/" %}Configure the
-            datamodel, resource types, permissions and much more to make it suit your needs! For more
-            information on how to do it visit the <a href="{{ configuration_link }}">configuration
-              section in the docs</a>.{% endtrans %}
-          </div>
-        </div>
-        <div class="rdm-goal">
-          <div class="flex-center-vertically">
-            <div class="numbering">2</div>
-          </div>
-          <h3 class="section-title">{{ _("Customize") }}</h3>
-            <div class="command-line">
-              {% trans configuration_link="https://inveniordm.docs.cern.ch/customize/styling/", extensions_link="https://inveniordm.docs.cern.ch/extensions/", custom_extension_link="https://inveniordm.docs.cern.ch/extensions/custom/" %}Customize
-              the layout and adapt the styling to match your institution's. See how to do so <a
-                href="{{ configuration_link }}">here</a>. You can also add new functionality using <a
-                href="{{ extensions_link }}">supported plugins</a>, or <a href="{{ custom_extension_link }}">writing
-                your own</a>.{% endtrans %}
-          </div>
-        </div>
-        <div class="rdm-goal">
-          <div class="flex-center-vertically">
-            <div class="numbering">3</div>
-          </div>
-          <h3 class="section-title">{{ _("Deploy it!") }}</h3>
-          <div class="command-line">
-            {% trans deployment_link="https://inveniordm.docs.cern.ch/deployment/" %}Use the Helm charts to deploy your
-            InvenioRDM instance. You can use the Helm chart to <a href="{{ deployment_link }}">deploy in
-              OpenShift</a>.{% endtrans %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row inline-row">
-    <div class="inline-row-pane">
-      <div class="goto-button">
-        <a href="https://inveniordm.docs.cern.ch"><i class="file alternate outline icon"></i>{{ _("Docs") }}</a>
-      </div>
-      <div class="goto-button">
-        <a href="https://github.com/inveniosoftware"><i class="github icon"></i>{{ _("Code") }}</a>
+    <div class="ui grid">
+      <div class="uv-intro">
+        <h2>Discover Data for Research at NYU</h2>
+        <ul>
+          <li>Discover original research data and code</li>
+          <li>Access proprietary data, licensed for use at NYU</li>
+          <li>Deposit data for public use</li>
+        </ul>
+        <h2>About this Project</h2>
+        <p>The Data Repository Prototype is associated with NYU Libraries Digital Repository Services for Research. Users can deposit research data, code, photos, and other projects. The environment also contains discovery records for proprietary data, available to members of the NYU community. </p>  
+  
       </div>
     </div>
   </div>
