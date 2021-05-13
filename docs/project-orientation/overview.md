@@ -19,14 +19,14 @@ There are a lot of moving parts to the NYU implementation of UltraViolet. This p
 
 ### Hosted instances
 
-- UltraViolet GCP hosted instance (requires VPN; usually not active)
+- [UltraViolet sandbox GCP hosted instance](https://34.66.53.163/) (requires log-in credentials to view, and requires Firefox. Ask NYU DLTS for [credentials](https://nyu.app.box.com/notes/805001772990).)
 - [UltraViolet staging instance](https://stagewebapp1.dlib.nyu.edu/) (requires VPN)
 
 ### Metadata
 
-- [UltraViolet-Metadata repository](https://github.com/NYU-DataServices/ultraviolet-metadata): a place for fixtures and stable versions of metadata and code for transforming
-- [Metadata use cases](https://docs.google.com/spreadsheets/d/1dEXI7u6_sdkxVqpL__DO2l8TLgCmqpYbeHocdRXFfGk/edit?usp=sharing): narratives that represent collection needs for UltraViolet
-- [InvenioRDM Metadata Application Profile](https://inveniordm.docs.cern.ch/reference/metadata/): The community metadata standard for InvenioRDM
+- [UltraViolet-Metadata repository](https://github.com/NYU-DataServices/ultraviolet-metadata) - A place for fixtures and stable versions of metadata and code for transforming
+- [Metadata use cases](https://docs.google.com/spreadsheets/d/1dEXI7u6_sdkxVqpL__DO2l8TLgCmqpYbeHocdRXFfGk/edit?usp=sharing) - Narratives that represent collection needs for UltraViolet
+- [InvenioRDM Metadata Application Profile](https://inveniordm.docs.cern.ch/reference/metadata/) - The community metadata standard for InvenioRDM
 
 ### Internal documentation and communication
 
