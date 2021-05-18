@@ -2,7 +2,7 @@
 layout: default
 title: Dev Mode Setup (Docker)
 parent: Getting Started
-nav_order: 2
+nav_order: 1
 has_toc: true
 ---
 # {{ page.title }}
@@ -82,4 +82,22 @@ has_toc: true
 
   You can login using account `admin@test.com` which you've just created and start uploading data.
 
-11. Quit the application with `Ctr-C` and spin down the containers with `invenio-cli containers stop`
+12. Quit the application with `Ctr-C` and spin down the containers with `invenio-cli containers stop`
+
+## Testing only
+
+1. Get the local copy of the ultraviolet app:
+  ```sh
+  git clone https://github.com/nyudlts/ultraviolet && cd ultraviolet
+  ```
+2. Create an `.invenio.private` file which is used by the invenio-cli tool
+  ```sh
+  touch .invenio.private
+  echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
+  ```
+
+3. Build docker containers using invenio-cli tool
+  ```sh
+  invenio-cli containers start --lock --build --setup
+  ```
+  The UltraViolet instance should now be running at <https://127.0.0.1:5000/>
