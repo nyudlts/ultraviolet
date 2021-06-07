@@ -8,7 +8,7 @@ def test_frontpage(live_server, browser):
     html = browser.page_source
     print(html)
     assert (
-            "UltraViolet 1"
+            "UltraViolet"
             == browser.find_element_by_tag_name("h1")
             .text
     )
