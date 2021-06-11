@@ -9,7 +9,6 @@ check-manifest = ">=0.25"
 [packages]
 flask-resources = "~=0.7.1"
 importlib-metadata = ">=0.12,<2.0.0"
-invenio = "==3.5.0a2"
 invenio-app-rdm = {version = "~=4.0.1", extras = ["elasticsearch7", "postgresql"]}
 invenio-drafts-resources = "~=0.12.2"
 invenio-rdm-records = "~=0.30.4"
