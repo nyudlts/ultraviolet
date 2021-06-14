@@ -9,12 +9,11 @@ check-manifest = ">=0.25"
 [packages]
 flask-resources = "~=0.7.1"
 importlib-metadata = ">=0.12,<2.0.0"
-invenio = "==3.4.0"
-invenio-app-rdm = {extras = ["postgresql", "elasticsearch7"], version = "~=3.0.0"}
-invenio-drafts-resources = "~=0.11.6"
-invenio-rdm-records = "~=0.29.16"
+invenio-app-rdm = {version = "~=4.0.1", extras = ["elasticsearch7", "postgresql"]}
+invenio-drafts-resources = "~=0.12.2"
+invenio-rdm-records = "~=0.30.4"
 invenio-records-permissions = "~=0.11.0"
-invenio-records-resources = "~=0.14.2"
+invenio-records-resources = "~=0.15.5"
 marshmallow-utils = "~=0.4.0"
 nbconvert = {extras = ["execute"], version = ">=4.1.0,<6.0.0"}
 uwsgi = ">=2.0"
