@@ -20,7 +20,9 @@ has_toc: true
   + NOTE: if after nvm installation you are getting `nvm: not found` you can use the following [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux)
 - **Cairo**
   + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+
 ## Steps
+
 1. Install [invenio-cli](https://invenio-cli.readthedocs.io/en/latest/)
   ```sh
   pip install invenio-cli
@@ -47,7 +49,7 @@ has_toc: true
   export FLASK_SECRET_KEY=myrandomvalue
   ```
 
-6. Build application python environment and web assets (make sure that you use node 14; check by running `node -v`)
+6. Build application python environment and web assets (make sure that you use node 14; check by running `node -v` and switch if you need to by running `nvm use 14`)
   ```sh
   invenio-cli packages lock --pre --dev
   invenio-cli install --pre --development
