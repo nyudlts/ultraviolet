@@ -12,10 +12,11 @@ There are a lot of moving parts to the NYU implementation of UltraViolet. This p
 
 ## NYU UltraViolet Resources
 
-### Codebase
+### Codebase and project plans
 
 - [UltraViolet 💜 codebase](https://github.com/nyudlts/ultraviolet)
 - [UltraViolet project boards](https://github.com/nyudlts/ultraviolet/projects)
+- [UltraViolet roadmap](https://docs.google.com/document/d/1s3qWChu32uAkO9ghEaILE5u6gQY8__RqUA0X7L52aZo/edit?usp=sharing)
 
 ### Hosted instances
 
@@ -32,6 +33,7 @@ There are a lot of moving parts to the NYU implementation of UltraViolet. This p
 
 - [NYU DLTS Slack](https://nyu-dlts.slack.com): comments and questions for team members. Ask Kate for an invite.
 - [Libraries SB3 project documentation](https://drive.google.com/drive/folders/1q40bQ5bVZYn5_QhxbPDhhIAYZk3R7434?usp=sharing): All of the narratives and documentation over the years associated with this project
+- [UltraViolet tech email group](mailto:data-repository-tech@nyu.edu): Internal Google Group for team communications
 
 ## General InvenioRDM Resources
 
