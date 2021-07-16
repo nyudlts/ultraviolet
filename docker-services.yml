@@ -34,6 +34,8 @@ services:
   db:
     image: postgres:12.4
     restart: "unless-stopped"
+    volumes:
+      - ./app_data/db:/var/lib/postgresql/data
     environment:
       - "POSTGRES_USER=nyu-data-repository"
       - "POSTGRES_PASSWORD=nyu-data-repository"
