@@ -1,0 +1,7 @@
+- email: admin@test.com
+  active: True
+  password: adminpassword
+  roles:
+    - admin
+  allow:
+    - superuser-access
