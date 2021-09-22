@@ -80,7 +80,7 @@ has_toc: true
 
 ## Testing only
 
-1. Get the local copy of the ultraviolet app:
+1. Get the local copy of the UltraViolet app:
   ```sh
   git clone https://github.com/nyudlts/ultraviolet && cd ultraviolet
   ```

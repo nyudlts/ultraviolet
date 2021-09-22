@@ -41,7 +41,7 @@ You should now have a functioning version 4 of UltraViolet.
 ## Upgrading to Version 6 of UltraViolet
 
 Currently, as of August 6, 2021, the InvenioRDM project is on Version 6. Below please see the instructions on how to upgrade from version 4 to version 6
-See also the [InvenioRDM instructions.](https://inveniordm.docs.cern.ch/releases/upgrading/upgrade-v4.0/)
+See also the [InvenioRDM instructions.](https://inveniordm.docs.cern.ch/releases/upgrading/upgrade-v6.0/) Note that this upgrade assumes that you have already installed version 4 locally and have not deleted any files or images associated with it.
 
 1. First, make sure you have the most recent Docker images installed. Run `docker pull inveniosoftware/centos8-python:3.7`
 
@@ -57,8 +57,8 @@ See also the [InvenioRDM instructions.](https://inveniordm.docs.cern.ch/releases
 
 7. In a separate terminal tab or window, navigate to the UltraViolet directory and then run `invenio-cli run` to start the server.
 
-8. Once the server is started, return to your original prompt and complete the migration. 
+8. Once the server is started, return to your original prompt and complete the migration.
 
-9. If you do not mind to loose your data just rebuild the service by running `invenio-cli services setup --force`
+9. If you do not mind losing your data just rebuild the service by running `invenio-cli services setup --force`
 
-10. If you need you data follow the instructions [provided by InvenioRDM](https://inveniordm.docs.cern.ch/releases/upgrading/upgrade-v4.0/) 
+10. If you need your existing data, follow the instructions [provided by InvenioRDM](https://inveniordm.docs.cern.ch/releases/upgrading/upgrade-v6.0/). Note that for the purposes of the UltraViolet sprint, you will likely not have any (or need to preserve any) data from your local machine.
