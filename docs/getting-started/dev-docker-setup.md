@@ -40,41 +40,33 @@ has_toc: true
   touch .invenio.private
   echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
   ```
-4. Add directory for persistent db volume
+
+4. Add .env file which will contain FLASK_SECRET_KEY
   ```sh
-  mkdir -p app_data/db
-  ```
-5. Assign application key. For local development version it can be any random value
-  ```sh
-  export FLASK_SECRET_KEY=myrandomvalue
+  touch .env
+  echo FLASK_SECRET_KEY="some random value" > .env
   ```
 
-6. Build application python environment and web assets (make sure that you use node 14; check by running `node -v` and switch if you need to by running `nvm use 14`)
+5. Build application python environment and web assets (make sure that you use node 14; check by running `node -v` and switch if you need to by running `nvm use 14`)
   ```sh
   invenio-cli packages lock --pre --dev
   invenio-cli install --pre --development
   ```
-7. If you have used the Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
+6. If you have used the Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
 
-8. Build application services (database, search, cache) and setup the application for running
+7. Build application services (database, search, cache) and setup the application for running
   ```sh
   invenio-cli services setup
   ```
   IMPORTANT: if services setup reported any errors, and you have to restart the setup process, make sure to run
   destroy service command first (or you will get "Failed to setup services" error ) and delete db files by running `invenio-cli services destroy` and `rm -r app_data/db/*`
 
-9. Add local admin user and assign admin status to it
-  ```sh
-  invenio-cli shell
-  invenio users create admin@test.com --password=123456 --active
-  invenio roles add admin@test.com admin
-  ```
-10. If you do any local UI customization you need to rebuild applications web assets
+8. If you do any local UI customization you need to rebuild applications web assets
   ```sh
   invenio-cli assets build --development
   ```
 
-11. Start the application.
+9. Start the application.
   ```sh
   invenio-cli run
   ```
