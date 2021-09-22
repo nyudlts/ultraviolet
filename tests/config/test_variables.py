@@ -3,12 +3,12 @@ from invenio_app.factory import create_app
 
 def test_var_assigned(monkeypatch):
     """Mocking setting configuration using environment varuables """
-    monkeypatch.setenv('APP_ALLOWED_HOSTS', ['ultraviolet.dlib.nyu.edu'])
+    monkeypatch.setenv('APP_ALLOWED_HOSTS', 'ultraviolet.dlib.nyu.edu')
     monkeypatch.setenv('SQLALCHEMY_DATABASE_URI', 'postgresql+psycopg2://test:test@somehost.com/test')
     monkeypatch.setenv('SITE_UI_URL', 'ultraviolet.dlib.nyu.edu')
     monkeypatch.setenv('SITE_API_URL', 'ultraviolet.dlib.nyu.edu/api')
     app = create_app()
-    assert app.config.get("APP_ALLOWED_HOSTS") == "['ultraviolet.dlib.nyu.edu']"
+    assert app.config.get("APP_ALLOWED_HOSTS") == "ultraviolet.dlib.nyu.edu"
     assert app.config.get("SQLALCHEMY_DATABASE_URI") == "postgresql+psycopg2://test:test@somehost.com/test"
     assert app.config.get("SITE_UI_URL") == "ultraviolet.dlib.nyu.edu"
     assert app.config.get("SITE_API_URL") == "ultraviolet.dlib.nyu.edu/api"

@@ -1,0 +1,48 @@
+- id: eng
+  props:
+    alpha_2: en
+  tags:
+  - individual
+  - living
+  title:
+    en: English
+- id: fra
+  props:
+    alpha_2: fr
+  tags:
+  - individual
+  - living
+  title:
+    en: French
+- id: deu
+  props:
+    alpha_2: de
+  tags:
+  - individual
+  - living
+  title:
+    en: German
+- id: rus
+  props:
+    alpha_2: ru
+  tags:
+  - individual
+  - living
+  title:
+    en: Russian
+- id: spa
+  props:
+    alpha_2: es
+  tags:
+  - individual
+  - living
+  title:
+    en: Spanish
+- id: ara
+  props:
+    alpha_2: ar
+  tags:
+  - macrolanguage
+  - living
+  title:
+    en: Arabic
