@@ -7,10 +7,9 @@
 #
 # invenio-nyu is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
-
-"""Pytest fixtures and plugins for the UI application."""
-
 # conftest.py
+
+
 """Pytest configuration."""
 
 
@@ -27,6 +26,7 @@ def app_config(app_config):
         "pool_pre_ping": False,
         "pool_recycle": 3600,
     }
+    app_config['SEARCH_INDEX_PREFIX']='test'
     return app_config
 
 @pytest.fixture(scope='module')
@@ -44,6 +44,7 @@ def create_app_e2e():
         static_url_path="/static",
         app_class=factory.app_class()
     )
+
     return create_app_e2e
 
 

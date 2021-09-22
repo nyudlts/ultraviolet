@@ -22,6 +22,7 @@ uwsgi-tools = ">=1.1.1"
 pytest = "*"
 flask-pytest = "*"
 pytest-invenio = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
