@@ -70,19 +70,25 @@ has_toc: true
 
 9. If you have used the Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
 
-10. Build application services (database, search, cache) and setup the application for running
+10. Due to a [known bug in the current version of InvenioRDM](https://github.com/inveniosoftware/invenio-files-rest/issues/264) we can only use `setuptools` version smaller then 58.
+  ```sh
+  pipenv run python3.8 -m pip install setuptools '~=57.5.0'
+  pipenv install --dev
+  ``` 
+
+11. Build application services (database, search, cache) and setup the application for running
   ```sh
   invenio-cli services setup
   ```
   IMPORTANT: if services setup reported any errors, and you have to restart the setup process, make sure to run
   destroy service command first (or you will get "Failed to setup services" error ) and delete db files by running `invenio-cli services destroy` and `rm -r app_data/db/*`
 
-11. If you do any local UI customization you need to rebuild applications web assets
+12. If you do any local UI customization you need to rebuild applications web assets
   ```sh
   invenio-cli assets build --development
   ```
 
-12. Start the application.
+13. Start the application.
   ```sh
   invenio-cli run
   ```
