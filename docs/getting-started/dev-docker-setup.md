@@ -14,7 +14,7 @@ has_toc: true
   + To test which version you have, type `python` into the command prompt
   + There are different ways you can setup your python environment. We recommend using [pyenv](https://realpython.com/intro-to-pyenv/) to switch between python versions
 - **Pip**
-  + You should have pip installed as part of your python installation. If it is missing you need to install it [Installation instructions](https://pip.pypa.io/en/stable/installing/)
+  + You should have pip installed as part of your python installation. If it is missing you need to install it [Installation instructions](https://pip.pypa.io/en/stable/installation/)
 - **Node 14 and npm**
   + We recommend installing [nvm](https://github.com/nvm-sh/nvm#about) to manage node and npm versions.
   + NOTE: if after nvm installation you are getting `nvm: not found` you can use the following [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux)
