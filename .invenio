@@ -3,15 +3,15 @@ flavour = RDM
 logfile = /logs/invenio-cli.log
 
 [cookiecutter]
-project_name = UltraViolet 
-project_shortname = ultraviolet 
+project_name = UltraViolet
+project_shortname = ultraviolet
 project_site = nyu-data-repository.com
 github_repo = nyudlts/nyu-data-repository
 description = NYU Data Repository InvenioRDM Instance
 author_name = NYU
-author_email = data-repository-tech@nyu.edu 
+author_email = data-repository-tech@nyu.edu
 year = 2020
-python_version = 3.7
+python_version = 3.8
 database = postgresql
 elasticsearch = 7
 file_storage = local
@@ -33,4 +33,3 @@ docker-compose.full.yml = 277cb35352bdd091a911a163eb35c58a518b4aef249b8ef36e3a94
 templates = {'.gitkeep': 'd4756cdf68d94c670c924f9d57d44718f666e457727701486435b57a97e52c5f'}
 docker-compose.yml = 0ea1e69992ab671b35cc9ec66bd670a1e42f4b19b1c20e22ce4ff2915ebda78c
 assets = {'less': {'theme.config': '047932f53a4a3e8e94d7cf0692f73bb3cae0eb868b0ebed6b53d614c187cd58d', 'variables.less': 'e04d395806875c75abe96703cefaa06316ad867fa91e37b93a99e889a5f3be70', 'theme.less': '816518c2628cb584882d3020a3cf9eb1f81be794414770af31726359353f03a8', 'site': {'globals': {'site.variables': '240edff66017032089fa196146097a87ed174f61f90363609a2db0d0acbfa4a1', 'site.overrides': '486bbf0de79fe4e258f3247d6348801264320529d44d716202baf0aa8e9d86e8'}}}, 'templates': {'search': {'.gitkeep': 'd4756cdf68d94c670c924f9d57d44718f666e457727701486435b57a97e52c5f'}}}
-
