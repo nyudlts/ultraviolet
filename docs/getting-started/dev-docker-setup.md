@@ -65,16 +65,21 @@ has_toc: true
   ```sh
   pipenv --rm
   invenio-cli packages lock --pre --dev
+  ```
+8.5. Due to a [known bug in the current version of InvenioRDM](https://github.com/inveniosoftware/invenio-files-rest/issues/264) we can only use `setuptools` version smaller then 58.
+  ```sh
+  pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
+  pipenv install --dev
+  ```
+
+9.
+  ```sh
   invenio-cli install --pre --development
   ```
 
-9. If you have used the Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
+10. If you have used the Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
 
-10. Due to a [known bug in the current version of InvenioRDM](https://github.com/inveniosoftware/invenio-files-rest/issues/264) we can only use `setuptools` version smaller then 58.
-  ```sh
-  pipenv run python3.8 -m pip install setuptools '~=57.5.0'
-  pipenv install --dev
-  ``` 
+
 
 11. Build application services (database, search, cache) and setup the application for running
   ```sh
