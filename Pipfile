@@ -23,7 +23,6 @@ pytest = "*"
 flask-pytest = "*"
 pytest-invenio = "*"
 python-dotenv = "*"
-setuptools = "~=57.5.0"
 
 [requires]
 python_version = "3.8"
