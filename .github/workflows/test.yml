@@ -11,20 +11,22 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.7.9'
-      - name: Install Invenio-CLI
-        run: |
-          python --version
-          which pip
-          pip install invenio-cli
-      - name: Check Requirements
-        run: invenio-cli check-requirements
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+    - name: Save python version to env
+      run: echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install Invenio-CLI
+      run: |
+        python --version
+        which pip
+        pip install invenio-cli
+    - name: Check Requirements
+      run: invenio-cli check-requirements
       # - name: Generate dependencies
       #   run: |
       #     invenio-cli packages lock --pre --dev

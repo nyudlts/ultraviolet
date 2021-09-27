@@ -81,3 +81,5 @@ ubuntu*
 
 # ignore secrets
 .env
+
+celerybeat-schedule
