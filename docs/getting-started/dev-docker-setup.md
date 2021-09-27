@@ -72,7 +72,7 @@ has_toc: true
   pipenv install --dev
   ```
 
-9.
+9. Complete building application python environment and web assets
   ```sh
   invenio-cli install --pre --development
   ```
