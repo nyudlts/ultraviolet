@@ -11,11 +11,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+      - name: Save python version to env
+        run: echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
       - name: Set up Python
-        uses: actions/setup-python@v2
+         uses: actions/setup-python@v2
+         with:
+           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install Invenio-CLI
         run: |
           python --version
