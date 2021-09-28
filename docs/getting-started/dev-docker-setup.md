@@ -18,6 +18,10 @@ has_toc: true
   + [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
   + Check installation with `nvm --version`
   + NOTE: if after nvm installation you are getting `nvm: not found` you can use the following [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux)
+- **Node Package Manager (NPM)**
+  + [Installation instructions](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+  + Check your version with `npm --version`
+  + When having version >= 7, run: `echo "legacy-peer-deps = true" >> ~/.npmrc`
 - **Cairo**
   + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
 

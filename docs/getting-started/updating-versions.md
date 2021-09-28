@@ -16,7 +16,7 @@ The InvenioRDM project is on a development schedule that cuts monthly releases o
 
 As of June 1, 2021, the InvenioRDM project is on Version 4. We anticipate that upgrade instructions will change slightly as new versions are released, so it is advised to check in with these instructions. See also the [InvenioRDM instructions.](https://inveniordm.docs.cern.ch/releases/upgrading/upgrade-v4.0/)
 
-1. First, make sure you have the most recent Docker images installed. Run `docker pull inveniosoftware/centos8-python:3.7`
+1. First, make sure you have the most recent Docker images installed. Run `docker pull inveniosoftware/centos8-python:3.8`
 
 2. Check to make sure you have the latest version of `invenio-cli`. Versions are released about once per month, so if it's out of date, run `pip install --upgrade invenio-cli`
 
@@ -43,7 +43,7 @@ You should now have a functioning version 4 of UltraViolet.
 Currently, as of August 6, 2021, the InvenioRDM project is on Version 6. Below please see the instructions on how to upgrade from version 4 to version 6
 See also the [InvenioRDM instructions.](https://inveniordm.docs.cern.ch/releases/upgrading/upgrade-v6.0/) Note that this upgrade assumes that you have already installed version 4 locally and have not deleted any files or images associated with it.
 
-1. First, make sure you have the most recent Docker images installed. Run `docker pull inveniosoftware/centos8-python:3.7`
+1. First, make sure you have the most recent Docker images installed. Run `docker pull inveniosoftware/centos8-python:3.8`
 
 2. Check to make sure you have the latest version of `invenio-cli`. Versions are released about once per month, so if it's out of date, run `pip install --upgrade invenio-cli`
 
