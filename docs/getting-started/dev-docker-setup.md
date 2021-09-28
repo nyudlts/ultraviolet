@@ -20,6 +20,8 @@ has_toc: true
   + NOTE: if after nvm installation you are getting `nvm: not found` you can use the following [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux)
 - **Cairo**
   + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+- **Postgres**
+  + [Installation instructions](http://postgresguide.com/setup/install.html)
 
 ## Steps
 
