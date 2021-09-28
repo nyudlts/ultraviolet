@@ -33,8 +33,9 @@ has_toc: true
   pyenv install --skip-existing
   ```
 
-3. Load correct node version in current environment. (Check result with `node --version`)
+3. Configure and load correct node version in current environment. (Check result with `node --version`)
   ```sh
+  echo "legacy-peer-deps = true" >> ~/.npmrc
   nvm install
   ```
 
