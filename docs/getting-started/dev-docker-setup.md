@@ -24,6 +24,8 @@ has_toc: true
   + When having version >= 7, run: `echo "legacy-peer-deps = true" >> ~/.npmrc`
 - **Cairo**
   + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+- **Postgres**
+  + [Installation instructions](http://postgresguide.com/setup/install.html)
 
 ## Steps
 
@@ -73,7 +75,6 @@ has_toc: true
 8.5. Due to a [known bug in the current version of InvenioRDM](https://github.com/inveniosoftware/invenio-files-rest/issues/264) we can only use `setuptools` version smaller then 58.
   ```sh
   pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
-  pipenv install --dev
   ```
 
 9. Complete building application python environment and web assets

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Make Look and Feel Changes
-parent: Testing
+parent: Development
 nav_order: 2
 ---
 # {{ page.title }}
