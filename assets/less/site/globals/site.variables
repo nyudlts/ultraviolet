@@ -1,1 +1,17 @@
 @import "../../variables.less";
+
+@primaryColor   : @pink;
+@secondaryColor : @grey;
+@red            : #001100;
+@orange         : #001100;
+@yellow         : #001100;
+@olive          : #001100;
+@green          : #001100;
+@teal           : #001100;
+@blue           : #0E6EB8;
+@violet         : #EE82EE;
+@purple         : #001100;
+@pink           : #001100;
+@brown          : #001100;
+@grey           : #001100;
+@black          : #001100;
