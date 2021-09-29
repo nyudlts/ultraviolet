@@ -15,19 +15,20 @@ import sys
 import pytest
 import os
 
-#modify application configuration
-@pytest.fixture(scope='module')
+# modify application configuration
+@pytest.fixture(scope="module")
 def app_config(app_config):
-    #sqllite refused to create mock db without those parameters and they are missing
-    app_config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    # sqllite refused to create mock db without those parameters and they are missing
+    app_config["SQLALCHEMY_ENGINE_OPTIONS"] = {
         "pool_pre_ping": False,
         "pool_recycle": 3600,
     }
-    #need this to make sure separate indexes are created for testing
-    app_config['SEARCH_INDEX_PREFIX']='test'
+    # need this to make sure separate indexes are created for testing
+    app_config["SEARCH_INDEX_PREFIX"] = "test"
     return app_config
 
-#overriding instance path allows us to make sure we use ultraviolet templates
-@pytest.fixture(scope='module')
+
+# overriding instance path allows us to make sure we use ultraviolet templates
+@pytest.fixture(scope="module")
 def ultraviolet_instance_path():
     return os.path.join(sys.prefix, "var", "instance")

@@ -18,14 +18,14 @@ import pytest
 import os
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def create_ultraviolet_app_ui(ultraviolet_instance_path):
     create_ultraviolet_app_ui = factory.create_app_factory(
-        'ultraviolet',
-        config_loader=create_config_loader(config=None,env_prefix="Invenio"),
-        blueprint_entry_points=['invenio_base.blueprints'],
-        extension_entry_points=['invenio_base.apps'],
-        converter_entry_points=['invenio_base.converters'],
+        "ultraviolet",
+        config_loader=create_config_loader(config=None, env_prefix="Invenio"),
+        blueprint_entry_points=["invenio_base.blueprints"],
+        extension_entry_points=["invenio_base.apps"],
+        converter_entry_points=["invenio_base.converters"],
         wsgi_factory=wsgi_proxyfix(),
         instance_path=ultraviolet_instance_path,
         static_folder=os.path.join(ultraviolet_instance_path, "static"),
@@ -36,7 +36,7 @@ def create_ultraviolet_app_ui(ultraviolet_instance_path):
     return create_ultraviolet_app_ui
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def create_app(create_ultraviolet_app_ui):
     """Flask app fixture."""
     return create_ultraviolet_app_ui
