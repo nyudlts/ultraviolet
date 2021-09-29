@@ -1,0 +1,93 @@
+{#
+
+  Copyright (C) 2019-2020 CERN.
+  Copyright (C) 2019-2020 Northwestern University.
+  Copyright (C)      2021 Graz University of Technology.
+
+  Invenio App RDM is free software; you can redistribute it and/or modify it
+  under the terms of the MIT License; see LICENSE file for more details.
+#}
+
+<footer class="footer-global">
+  <div class="ui grid">
+    {%- block footer_top %}
+    <div class="row footer-top">
+      <div class="ui container">
+        <div class="ui grid">
+          <div class="invenio-rdm-footer">
+            {%- block footer_top_left %}
+            <div class="ui row grid">
+              <div class="rdm-footer">
+                <h4>About UltraViolet</h4>
+                {% trans ultraviolet_policies="https://guides.nyu.edu/ultraviolet" %}
+                <p class="margin-small"><a href="{{ultraviolet_policies}}">Service Policies</a></p>
+                {% endtrans %}
+                {% trans internal_documentation="https://nyudlts.github.io/ultraviolet/" %}
+                <p class="margin-small"><a href="{{internal_documentation}}">Project Documentation</a></p>
+                {% endtrans %}
+                {% trans curation_assistance="https://guides.nyu.edu/appointment" %}
+                <p class="margin-small"><a href="{{curation_assistance}}">Deposit Assistance</a></p>
+                {% endtrans %}
+              </div>
+              <div class="rdm-footer">
+                <h4>Partnerships</h4>
+                {% trans nyu_dlts="https://wp.nyu.edu/library-dlts/" %}
+                <p class="margin-small"><a href="{{nyu_dlts}}">NYU Digital Library Technology Services</a></p>
+                {% endtrans %}
+                {% trans data_curation_network="https://datacurationnetwork.org/" %}
+                <p class="margin-small"><a href="{{data_curation_network}}">Data Curation Network</a></p>
+                {% endtrans %}
+                {% trans invenio_rdm_docs_site="http://inveniordm.docs.cern.ch" %}
+                <p class="margin-small"><a href="{{invenio_rdm_docs_site}}">InvenioRDM</a></p>
+                {% endtrans %}
+                {% trans osf="https://osf.io/" %}
+                <p class="margin-small"><a href="{{osf}}">Open Science Framework</a></p>
+                {% endtrans %}
+              </div>
+              <div class="rdm-footer">
+                <h4>Resources</h4>
+                {% trans nyu_data_services="https://guides.nyu.edu/dataservices" %}
+                <p class="margin-small"><a href="{{nyu_data_services}}">Data Services</a></p>
+                {% endtrans %}
+                {% trans nyu_libraries="https://library.nyu.edu" %}
+                <p class="margin-small"><a href="{{nyu_libraries}}">NYU Libraries</a></p>
+                {% endtrans %}
+                {% trans nyu_schol_com="https://library.nyu.edu/departments/scholarly-communications-information-policy/" %}
+                <p class="margin-small"><a href="{{invenio_events}}">NYU Scholarly Communication and Information Policy</a></p>
+                {% endtrans %}
+              </div>
+            </div>
+            {%- endblock footer_top_left %}
+          </div>
+          <div class="six wide column right aligned">
+            {%- block footer_top_right %}
+            {%- endblock footer_top_right %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- endblock footer_top %}
+    {%- block footer_bottom %}
+    <div class="row footer-bottom">
+      <div class="ui container">
+        <div class="ui grid">
+          <div class="eight wide column left middle aligned">
+            {%- block footer_bottom_left %}
+            {% trans invenio_rdm="http://inveniosoftware.org/products/rdm" %}UltraViolet relies on <a
+              href="{{invenio_rdm}}">InvenioRDM</a>{% endtrans %}
+            {%- endblock footer_bottom_left %}
+          </div>
+          <div class="eight wide column right aligned">
+            {%- block footer_bottom_right %}
+            {%- if config.I18N_LANGUAGES %}
+            {% from "invenio_i18n/macros/language_selector.html" import language_selector_dropdown %}
+            {{ language_selector_dropdown() }}
+            {%- endif %}
+            {%- endblock footer_bottom_right %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- endblock footer_bottom %}
+  </div>
+</footer>
