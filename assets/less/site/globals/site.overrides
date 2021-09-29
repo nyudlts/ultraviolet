@@ -1,1 +1,58 @@
 @import "../../theme.less";
+
+@font-face {
+  font-family: GothamLight;
+  src: url(themes/ultraviolet/assets/fonts/Gotham-Light.ttf) format("truetype");
+}
+@font-face {
+  font-family: Lato;
+  src: url(themes/ultraviolet/assets/fonts/Gotham-Medium.ttf) format("truetype");
+}
+@font-face {
+  font-family: GothamMedium;
+  src: url(themes/ultraviolet/assets/fonts/gotham/Gotham-Medium.ttf) format("truetype");
+}
+@font-face {
+  font-family: GothamBold;
+  src: url(themes/ultraviolet/assets/fonts/Gotham-Bold.ttf) format("truetype");
+}
+
+@brandColor: #57068c;
+@brandPrimary: #57068c;
+@navbar_background_image: linear-gradient(12deg, #8b00e1db 15%, rgba(74, 11, 3, .69) );
+@navbar_background_color: #57068c;
+@footerLightColor: #320054;
+@footerDarkColor: #220038;
+@green: #799a05;
+@searchButtonColor: #c201ff;
+@teal: #149199;
+@sassyred: #ED4764;
+@signupColor: #799a05;
+
+@searchButtonColor: #c201ff;
+@searchButtonHoverColor: #ff01f2;
+
+@coverPageDefaultMargin: 0;
+
+@accessRightOpen: @green;
+@accessRightRestricted: @sassyred;
+@accessRightEmbargoed: @yellow;
+@accessRightMetadataOnly: @sassyred;
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  padding: 0;
+  font-family: GothamLight, sans-serif ;
+}
+.ui.menu {
+  font-family: GothamBold, sans-serif;
+}
+
+.ui-grid .row.footer-top {
+  padding: 3rem 0;
+}
+
