@@ -19,7 +19,8 @@ import os
 
 
 @pytest.fixture(scope="module")
-def create_ultraviolet_app_ui(ultraviolet_instance_path):
+def create_app(ultraviolet_instance_path):
+    """Flask app fixture."""
     create_ultraviolet_app_ui = factory.create_app_factory(
         "ultraviolet",
         config_loader=create_config_loader(config=None, env_prefix="Invenio"),
@@ -32,11 +33,4 @@ def create_ultraviolet_app_ui(ultraviolet_instance_path):
         root_path=ultraviolet_instance_path,
         app_class=factory.app_class(),
     )
-
-    return create_ultraviolet_app_ui
-
-
-@pytest.fixture(scope="module")
-def create_app(create_ultraviolet_app_ui):
-    """Flask app fixture."""
     return create_ultraviolet_app_ui
