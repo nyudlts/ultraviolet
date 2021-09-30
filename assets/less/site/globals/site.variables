@@ -1,18 +1,27 @@
 @import "../../variables.less";
 @fontPath: "../../../fonts";
+@primaryColor   : #57068c;
 
-@primaryColor   : @pink;
-@secondaryColor : @grey;
-@red            : #001100;
-@orange         : #001100;
-@yellow         : #001100;
-@olive          : #001100;
-@green          : #001100;
-@teal           : #001100;
-@blue           : #0E6EB8;
-@violet         : #EE82EE;
-@purple         : #001100;
-@pink           : #001100;
-@brown          : #001100;
-@grey           : #001100;
-@black          : #001100;
+@searchButtonColor:#c201ff;
+@searchButtonColorHover:  #ff01f2;
+@searchButtonColorFocus: saturate(darken(@searchButtonColor, 8), 20, relative);
+@searchButtonColorDown: darken(@searchButtonColor, 10);
+@searchButtonColorActive: saturate(darken(@searchButtonColor, 5), 15, relative);
+
+// @secondaryColor : @grey;
+// @red            : #001100;
+// @orange         : #001100;
+// @yellow         : #001100;
+// @olive          : #001100;
+@green          : #009750;
+
+// @teal           : #001100;
+// @blue           : #0E6EB8;
+// @violet         : #EE82EE;
+// @purple         : #001100;
+// @pink           : #001100;
+// @brown          : #001100;
+// @grey           : #001100;
+// @black          : #001100;
+@sassyred: #ED4764;
+@signupColor: #799a05;
