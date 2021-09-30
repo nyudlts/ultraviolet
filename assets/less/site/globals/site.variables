@@ -1,4 +1,5 @@
 @import "../../variables.less";
+@fontPath: "../../../fonts";
 
 @primaryColor   : @pink;
 @secondaryColor : @grey;

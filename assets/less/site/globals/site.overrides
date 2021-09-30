@@ -2,19 +2,19 @@
 
 @font-face {
   font-family: GothamLight;
-  src: url(themes/ultraviolet/assets/fonts/Gotham-Light.ttf) format("truetype");
+  src: url(../../../fonts/Gotham-Light.ttf) format("truetype");
 }
 @font-face {
   font-family: Lato;
-  src: url(themes/ultraviolet/assets/fonts/Gotham-Medium.ttf) format("truetype");
+  src: url(../../../fonts/Gotham-Medium.ttf) format("truetype");
 }
 @font-face {
   font-family: GothamMedium;
-  src: url(themes/ultraviolet/assets/fonts/gotham/Gotham-Medium.ttf) format("truetype");
+  src: url(../../../fonts/Gotham-Medium.ttf) format("truetype");
 }
 @font-face {
   font-family: GothamBold;
-  src: url(themes/ultraviolet/assets/fonts/Gotham-Bold.ttf) format("truetype");
+  src: url(../../../fonts/Gotham-Bold.ttf) format("truetype");
 }
 
 @brandColor: #57068c;
@@ -24,7 +24,6 @@
 @footerLightColor: #320054;
 @footerDarkColor: #220038;
 @green: #799a05;
-@searchButtonColor: #c201ff;
 @teal: #149199;
 @sassyred: #ED4764;
 @signupColor: #799a05;
@@ -34,10 +33,10 @@
 
 @coverPageDefaultMargin: 0;
 
-@accessRightOpen: @green;
-@accessRightRestricted: @sassyred;
-@accessRightEmbargoed: @yellow;
-@accessRightMetadataOnly: @sassyred;
+// @accessRightOpen: @green;
+// @accessRightRestricted: @sassyred;
+// @accessRightEmbargoed: @yellow;
+// @accessRightMetadataOnly: @sassyred;
 
 body,
 h1,
