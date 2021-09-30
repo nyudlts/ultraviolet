@@ -1,9 +1,11 @@
 ---
 layout: default
-title: Updating Versions
-parent: Getting Started
-nav_order: 3
+title: Update RDM Version
+parent: Develop
+nav_order: 4
 has_toc: true
+redirect_from:
+  - /getting-started/updating-versions/
 ---
 # {{ page.title }}
 
