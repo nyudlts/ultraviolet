@@ -1,9 +1,11 @@
 ---
 layout: default
 title: Dev Mode Setup (Docker)
-parent: Getting Started
+parent: Get Started
 nav_order: 1
 has_toc: true
+redirect_from:
+  - /getting-started/dev-docker-setup/
 ---
 # {{ page.title }}
 

@@ -1,8 +1,10 @@
 ---
 layout: default
 title: Dev Mode Setup (Vagrant)
-parent: Getting Started
+parent: Get Started
 nav_order: 2
+redirect_from:
+  - /getting-started/dev-vagrant-setup/
 ---
 # {{ page.title }}
 
