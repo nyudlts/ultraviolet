@@ -5,6 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 check-manifest = ">=0.25"
+pytest = "*"
+flask-pytest = "*"
+pytest-invenio = "*"
+selenium = "*"
 
 [packages]
 flask-resources = "~=0.7.1"
@@ -19,9 +23,6 @@ nbconvert = {extras = ["execute"], version = ">=4.1.0,<6.0.0"}
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
-pytest = "*"
-flask-pytest = "*"
-pytest-invenio = "*"
 python-dotenv = "*"
 
 [requires]

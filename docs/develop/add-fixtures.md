@@ -1,8 +1,10 @@
 ---
 layout: default
 title: Create and Add Fixtures
-parent: Development
+parent: Develop
 nav_order: 1
+redirect_from:
+  - /development/add-fixtures/
 ---
 # {{ page.title }}
 
