@@ -16,7 +16,8 @@ def test_view1(base_client):
     print(front_view)
     assert (
         "https://library.nyu.edu/departments/scholarly-communications-information-policy/"
-        in front_view.decode("utf-8"),
-        "NYU Scholarly Communication and Information Policy"
-        in front_view.decode("utf-8"),
+        in front_view.decode("utf-8")
+    )
+    assert "NYU Scholarly Communication and Information Policy" in front_view.decode(
+        "utf-8"
     )
