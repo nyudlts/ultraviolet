@@ -34,13 +34,6 @@ then
       echo "Selenium client is not installed. You can not run e2e testing"
       exit
    fi
-   if [ -z "${E21_WEBDRIVER_BROWSERS}" ]
-   then
-      echo "Webdriver is not installed. You can not run e2e testing."
-      echo "The variable could be set to Chrome, FireFox of both."
-      echo "Example: E2E_WEBDRIVER_BROWSERS='Chrome'"
-      exit 
-   fi
 fi
 
 #run tests
