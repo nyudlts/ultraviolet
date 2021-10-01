@@ -99,4 +99,7 @@ body {
   .ui.top-attached .ui.grid {
     margin-top: 1rem;
   }
+
+.invenio-rdm-footer {
+  width: 100%;
 }
