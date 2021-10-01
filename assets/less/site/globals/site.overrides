@@ -19,11 +19,7 @@
 
 @brandColor: #57068c;
 @brandPrimary: #57068c;
-@navbar_background_image: linear-gradient(
-  12deg,
-  #8b00e1db 15%,
-  rgba(74, 11, 3, 0.69)
-);
+@navbar_background_image: linear-gradient(12deg, #8b00e1db 15%, rgba(74, 11, 3, 0.69));
 @navbar_background_color: #57068c;
 @footerLightColor: #320054;
 @footerDarkColor: #220038;
@@ -42,34 +38,32 @@
 // @accessRightEmbargoed: @yellow;
 // @accessRightMetadataOnly: @sassyred;
 
-body,
-h1,
-h2,
-h3,
-h4,
-h5 {
-  padding: 0;
-  font-family: GothamLight, sans-serif;
-}
-.ui.menu {
-  font-family: GothamBold, sans-serif;
-}
-
-.ui-grid .row.footer-top {
-  padding: 3rem 0;
-}
-.ui.label.access-status.metadata-only,
-body .ui.grey.label,
-body .ui.grey.labels .label {
-  background-color: inherit !important;
-  color: @black !important;
-  border: none !important;
-}
 body {
+  font-family: GothamLight, sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    padding: 0;
+    font-family: GothamLight, sans-serif;
+  }
+  .ui.menu {
+    font-family: GothamBold, sans-serif;
+  }
+  .ui.grid > .row.footer-top {
+    padding: 3rem 0;
+  }
+  .ui.label.access-status.metadata-only,
+  .ui.grey.label,
+  .ui.grey.labels .label,
   .ui.blue.label,
   .ui.blue.labels .label {
     background-color: inherit !important;
-    color: @black !important;
+    color: rgba(0, 0, 0, 0.7) !important;
     border: none !important;
+    padding-left: 0;
+    padding-right: 2rem;
+    text-transform: uppercase;
   }
 }
