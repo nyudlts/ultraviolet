@@ -21,3 +21,6 @@ def test_view1(base_client):
     assert "NYU Scholarly Communication and Information Policy" in front_view.decode(
         "utf-8"
     )
+    assert "Browse Repository Content" in front_view.decode(
+        "utf-8"
+    )
