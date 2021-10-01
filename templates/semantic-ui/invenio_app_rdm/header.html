@@ -64,6 +64,11 @@
                       <a href="{{ item.url }}">{{ item.text|safe }}</a></li>
                       {%- endif %}
                 {%- endfor %}
+                <li class="navbar-item navbar-options">
+                  <a href="{{ url_for('invenio_search_ui.search') }}">
+                    Browse all
+                  </a>
+                </li>
             {%- endblock navbar_nav %}
             <li class="navbar-item navbar-button">
               <ul class="rdm-sign-buttons">
