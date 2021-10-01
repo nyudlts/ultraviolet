@@ -21,3 +21,8 @@ def test_front_page(base_client):
         "NYU Scholarly Communication and Information Policy"
         in front_view.decode("utf-8")
     )
+
+
+def test_header_menu_button(base_client):
+    front_view = base_client.get("/").data
+    assert "Browse all" in front_view.decode("utf-8")
