@@ -19,24 +19,17 @@
 
 @brandColor: #57068c;
 @brandPrimary: #57068c;
-@navbar_background_image: linear-gradient(12deg, #8b00e1db 15%, rgba(74, 11, 3, 0.69));
-@navbar_background_color: #57068c;
+//@navbar_background_image: linear-gradient(12deg, #8b00e1db 15%, rgba(74, 11, 3, 0.69));
+
+@navbar_background_image: linear-gradient(92deg,rgba(139,0,225,.8588235294117647) 1%,rgba(74,11,3,.49))
+
+@navbar_background_color: @brandColor;
 @footerLightColor: #320054;
 @footerDarkColor: #220038;
-@green: #799a05;
-@teal: #149199;
-@sassyred: #ed4764;
-@signupColor: #799a05;
 
-@searchButtonColor: #c201ff;
-@searchButtonHoverColor: #ff01f2;
 
 @coverPageDefaultMargin: 0;
 
-// @accessRightOpen: @green;
-// @accessRightRestricted: @sassyred;
-// @accessRightEmbargoed: @yellow;
-// @accessRightMetadataOnly: @sassyred;
 
 body {
   font-family: GothamLight, sans-serif;
@@ -55,6 +48,7 @@ body {
     padding: 3rem 0;
   }
   .ui.label.access-status.metadata-only,
+  .ui.label.access-status.open,
   .ui.grey.label,
   .ui.grey.labels .label,
   .ui.blue.label,
@@ -70,5 +64,39 @@ body {
     letter-spacing: .08em;
     font-size: .8rem;
     font-weight: 600;
+  }
+  .navbar-button {
+    .ui.button, .ui.button.signup {
+      background-color: #fff2;
+      border: 1px solid #fff5;
+      color: white;
+      &:hover {
+        background-color: #c201ff77;
+        color: #fff;
+        text-shadow: none;
+      }
+      /* overriding border-left: none elsewhere */
+      &:first-child {
+        border-left: 1px solid #fff5;
+      }
+    }
+  }
+  .ui.items a.item:hover .content .header, .ui.link.items > .item:hover .content .header {
+    color: @blue;
+    text-decoration: underline;
+  }
+  .ui.items a.item:hover, .ui.link.items > .item:hover {
+    background-color: #8080800d;
+  }
+   /* Hamburger */
+  .menu-icon .navicon {
+    background-color: #fff;
+    &::after, &::before{
+      background-color: #fff;
+    }
+  }
+   /* Hamburger */
+  .ui.top-attached .ui.grid {
+    margin-top: 1rem;
   }
 }
