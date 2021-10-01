@@ -19,13 +19,17 @@
 
 @brandColor: #57068c;
 @brandPrimary: #57068c;
-@navbar_background_image: linear-gradient(12deg, #8b00e1db 15%, rgba(74, 11, 3, .69) );
+@navbar_background_image: linear-gradient(
+  12deg,
+  #8b00e1db 15%,
+  rgba(74, 11, 3, 0.69)
+);
 @navbar_background_color: #57068c;
 @footerLightColor: #320054;
 @footerDarkColor: #220038;
 @green: #799a05;
 @teal: #149199;
-@sassyred: #ED4764;
+@sassyred: #ed4764;
 @signupColor: #799a05;
 
 @searchButtonColor: #c201ff;
@@ -45,7 +49,7 @@ h3,
 h4,
 h5 {
   padding: 0;
-  font-family: GothamLight, sans-serif ;
+  font-family: GothamLight, sans-serif;
 }
 .ui.menu {
   font-family: GothamBold, sans-serif;
@@ -54,4 +58,18 @@ h5 {
 .ui-grid .row.footer-top {
   padding: 3rem 0;
 }
-
+.ui.label.access-status.metadata-only,
+body .ui.grey.label,
+body .ui.grey.labels .label {
+  background-color: inherit !important;
+  color: @black !important;
+  border: none !important;
+}
+body {
+  .ui.blue.label,
+  .ui.blue.labels .label {
+    background-color: inherit !important;
+    color: @black !important;
+    border: none !important;
+  }
+}

@@ -16,7 +16,8 @@
 @green          : #009750;
 
 // @teal           : #001100;
-// @blue           : #0E6EB8;
+//Blue from NYU 
+ @blue           : #0170B2;
 // @violet         : #EE82EE;
 // @purple         : #001100;
 // @pink           : #001100;
