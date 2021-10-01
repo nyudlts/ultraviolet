@@ -24,43 +24,23 @@ from v6.0.4
             {%- block footer_top_left %}
             <div class="ui row grid">
               <div class="rdm-footer">
-                <h4>About UltraViolet</h4>
-                {% trans ultraviolet_policies="https://guides.nyu.edu/ultraviolet" %}
-                <p class="margin-small"><a href="{{ultraviolet_policies}}">Service Policies</a></p>
-                {% endtrans %}
-                {% trans internal_documentation="https://nyudlts.github.io/ultraviolet/" %}
-                <p class="margin-small"><a href="{{internal_documentation}}">Project Documentation</a></p>
-                {% endtrans %}
-                {% trans curation_assistance="https://guides.nyu.edu/appointment" %}
-                <p class="margin-small"><a href="{{curation_assistance}}">Deposit Assistance</a></p>
-                {% endtrans %}
+                <h4>About {{ config.THEME_SITENAME }}</h4>
+                <p class="margin-small"><a href="{{ config.UV_POLICIES }}">Service Policies</a></p>
+                <p class="margin-small"><a href="{{ config.UV_DOCS }}">Project Documentation</a></p>
+                <p class="margin-small"><a href="{{ config.UV_CURATION_ASSISTANCE }}">Deposit Assistance</a></p>
               </div>
               <div class="rdm-footer">
                 <h4>Partnerships</h4>
-                {% trans nyu_dlts="https://wp.nyu.edu/library-dlts/" %}
-                <p class="margin-small"><a href="{{nyu_dlts}}">NYU Digital Library Technology Services</a></p>
-                {% endtrans %}
-                {% trans data_curation_network="https://datacurationnetwork.org/" %}
-                <p class="margin-small"><a href="{{data_curation_network}}">Data Curation Network</a></p>
-                {% endtrans %}
-                {% trans invenio_rdm_docs_site="http://inveniordm.docs.cern.ch" %}
-                <p class="margin-small"><a href="{{invenio_rdm_docs_site}}">InvenioRDM</a></p>
-                {% endtrans %}
-                {% trans osf="https://osf.io/" %}
-                <p class="margin-small"><a href="{{osf}}">Open Science Framework</a></p>
-                {% endtrans %}
+                <p class="margin-small"><a href="{{ config.DLTS_HOMEPAGE }}">NYU Digital Library Technology Services</a></p>
+                <p class="margin-small"><a href="{{ config.DCN_HOMEPAGE }}">Data Curation Network</a></p>
+                <p class="margin-small"><a href="{{ config.RDM_DOCS_HOMEPAGE }}">InvenioRDM</a></p>
+                <p class="margin-small"><a href="{{ config.OSF_HOMEPAGE }}">Open Science Framework</a></p>
               </div>
               <div class="rdm-footer">
                 <h4>Resources</h4>
-                {% trans nyu_data_services="https://guides.nyu.edu/dataservices" %}
-                <p class="margin-small"><a href="{{nyu_data_services}}">Data Services</a></p>
-                {% endtrans %}
-                {% trans nyu_libraries="https://library.nyu.edu" %}
-                <p class="margin-small"><a href="{{nyu_libraries}}">NYU Libraries</a></p>
-                {% endtrans %}
-                {% trans nyu_schol_com="https://library.nyu.edu/departments/scholarly-communications-information-policy/" %}
-                <p class="margin-small"><a href="{{nyu_schol_com}}">NYU Scholarly Communication and Information Policy</a></p>
-                {% endtrans %}
+                <p class="margin-small"><a href="{{ config.DATA_SERVICES_HOMEPAGE }}">Data Services</a></p>
+                <p class="margin-small"><a href="{{ config.NYU_LIBRARIES_HOMEPAGE }}">NYU Libraries</a></p>
+                <p class="margin-small"><a href="{{ config.SCIP_HOMEPAGE }}">NYU Scholarly Communication and Information Policy</a></p>
               </div>
             </div>
             {%- endblock footer_top_left %}
@@ -79,8 +59,7 @@ from v6.0.4
         <div class="ui grid">
           <div class="eight wide column left middle aligned">
             {%- block footer_bottom_left %}
-            {% trans invenio_rdm="http://inveniosoftware.org/products/rdm" %}UltraViolet relies on <a
-              href="{{invenio_rdm}}">InvenioRDM</a>{% endtrans %}
+            {{ config.THEME_SITENAME }} v{{ config.UV_VERSION }} relies on <a href="{{ config.RDM_HOMEPAGE }}">InvenioRDM</a>
             {%- endblock footer_bottom_left %}
           </div>
           <div class="eight wide column right aligned">

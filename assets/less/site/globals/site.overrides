@@ -1,1 +1,6 @@
 @import "../../theme.less";
+
+
+.invenio-rdm-footer {
+  width: 100%;
+}
