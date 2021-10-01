@@ -95,11 +95,21 @@ body {
       background-color: #fff;
     }
   }
-   /* Hamburger */
-  .ui.top-attached .ui.grid {
-    margin-top: 1rem;
+   /* "Manage" alert area */
+  .ui.warning.message.top-attached {
+    margin-top: -1.5rem;
+    border-radius: 0;
+    padding: 2px 0;
+    margin-bottom: 1.5rem;
+    box-shadow: 0px 1px 2px 0px #02020245;
+    background-color: #9d6ebc54;
+    .ui.grid {
+      margin-bottom: 0rem;
+    }
   }
-
+  #recordManagement .row:not(.record-management-row) {
+    display: none;
+  }
   .invenio-rdm-footer {
     width: 100%;
   }
