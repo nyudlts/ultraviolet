@@ -65,5 +65,10 @@ body {
     padding-left: 0;
     padding-right: 2rem;
     text-transform: uppercase;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .8rem;
+    font-weight: 600;
   }
 }
