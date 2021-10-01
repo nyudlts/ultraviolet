@@ -19,9 +19,9 @@
 
 @brandColor: #57068c;
 @brandPrimary: #57068c;
-//@navbar_background_image: linear-gradient(12deg, #8b00e1db 15%, rgba(74, 11, 3, 0.69));
+@navbar_background_image: linear-gradient(92deg, #8b00e1db 15%, rgba(74, 11, 3, 0.69));
 
-@navbar_background_image: linear-gradient(92deg,rgba(139,0,225,.8588235294117647) 1%,rgba(74,11,3,.49))
+//@navbar_background_image: linear-gradient(92deg,rgba(139,0,225,.8588235294117647) 1%,rgba(74,11,3,.49))
 
 @navbar_background_color: @brandColor;
 @footerLightColor: #320054;
