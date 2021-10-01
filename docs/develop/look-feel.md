@@ -53,6 +53,8 @@ from v6.0.4
 
 2. Check and see how the changes look in the app. More than likely, you will need to first re-build all of the app assets by running `invenio-cli assets build -d`. This will take several minutes. When it's done, run `invenio-cli run` and the server will be started. You can see your changes in Firefox at `https://127.0.0.1:5000/`
 
+If you plan on iterating or making many changes, it behooves you to run `invenio-cli assets watch`. This opens up an assets server, which allows you to make modifications without having to re-build each time. After you run this, open up a new Terminal tab, navigate back to the project, and run `invenio-cli run`
+
 ## Include a test
 
 After making an override to the theme, you'll also need to include a test that asserts something and expects a result related to the change you made. Documentation on our approach to testing is at the Run Tests section.
@@ -63,7 +65,7 @@ Depending on the change you're making, you can copy a template of an existing te
 def test_view1(base_client):
     # Depends on 'base_app' fixture
     front_view = base_client.get("/").data
-    print(front_view)
+
     assert (
         "https://library.nyu.edu/departments/scholarly-communications-information-policy/"
         in front_view.decode("utf-8")
@@ -78,4 +80,4 @@ Tests should be placed in the `tests/ui` directory.
 
 ## Run the tests
 
-While you're on your checked out branch, it doesn't hurt to run the tests. Navigate back to the main project directory and run `bash test_run.sh`
+While you're on your checked out branch, it doesn't hurt to run the tests. However, the services must be started for the tests to work. In a separate Terminal tab, navigate back to the main project directory and run `invenio-cli services start` and then `bash test_run.sh`.
