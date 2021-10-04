@@ -121,7 +121,7 @@ body {
       padding-left: 0;
     }
   }
-  .invenio-rdm-footer {
-    width: 100%;
-  }
+}
+.invenio-rdm-footer {
+  width: 100%;
 }
