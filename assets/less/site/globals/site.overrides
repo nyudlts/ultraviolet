@@ -96,14 +96,6 @@ body {
     .row:not(.record-management-row) {
       display: none;
     }
-     /* Make buttons into links? */
-    .button {
-      background-color: #57068c00;
-      color: #57068c;
-      text-shadow: none;
-      background-image: none;
-      padding-left: 0;
-    }
   }
 }
 .invenio-rdm-footer {
