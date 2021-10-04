@@ -20,11 +20,42 @@ body {
     padding: 0;
     font-family: GothamLight, Lato, sans-serif;
   }
+  .outer-navbar a {
+    color: @white;
+  }
+  .result-options .ui.label {
+    background-color: inherit !important;
+  }
   .ui.menu {
     font-family: GothamBold, Lato, sans-serif;
   }
   .ui.grid > .row.footer-top {
     padding: 3rem 0;
+  }
+  .ui.items > .item .extra.labels-actions {
+    > * {
+      margin: 0;
+    }
+    > [class*="right floated"] {
+      margin: 0 0 0 .5rem;
+    }
+    
+    div {
+      &::after {
+        content: '\2022';
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+      &:last-child::after {
+        content: '';
+        padding: 0;
+      }
+      &:last-of-type::after {
+        content: '';
+        padding: 0;
+      }
+  
+    }
   }
   .ui.label.access-status.metadata-only,
   .ui.label.access-status.open,
@@ -33,16 +64,18 @@ body {
   .ui.blue.label,
   .ui.blue.labels .label {
     background-color: inherit !important;
-    color: rgba(0, 0, 0, 0.7) !important;
+    color: rgba(0,0,0,.65) !important;
     border: none !important;
     padding-left: 0;
-    padding-right: 2rem;
-    text-transform: uppercase;
+    padding-right: 0;
     line-height: 1;
     text-transform: uppercase;
-    letter-spacing: .08em;
-    font-size: .8rem;
+    letter-spacing: .075em;
+    font-size: .7rem;
     font-weight: 600;
+  }
+  .ui.label > .icon {
+    margin: 0 .5em 0 0;
   }
   .navbar-button {
     .ui.button, .ui.button.signup {
