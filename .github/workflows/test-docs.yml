@@ -20,6 +20,12 @@ jobs:
         with:
           working-directory: ./docs
           bundler-cache: true
-      - name: build
+      - name: install
         working-directory: ./docs
-        run:  bundle && bundle exec jekyll build
+        run:  bundle install
+      - name: install
+        working-directory: ./docs
+        run:  bundle exec rake build
+      - name: install
+        working-directory: ./docs
+        run:  bundle exec rake test
