@@ -1,0 +1,99 @@
+{#
+
+  Copyright (C) 2019-2020 CERN.
+  Copyright (C) 2019-2020 Northwestern University.
+
+  Invenio App RDM is free software; you can redistribute it and/or modify it
+  under the terms of the MIT License; see LICENSE file for more details.
+
+  footer.html copied from https://github.com/inveniosoftware/invenio-app-rdm/blob/v6.0.4/invenio_app_rdm/theme/templates/semantic-ui/invenio_app_rdm/header.html
+  on 2021-10-01
+  from v6.0.4
+#}
+
+<div>
+  <header class="theme header">
+    <div class="outer-navbar">
+      {%- block navbar %}
+      <nav id="invenio-nav" class="ui inverted menu borderless">
+        <div class="ui grid container">
+        <ul class="navbar-menu">
+            <li class="logo">
+              {%- block navbar_header %}
+              {%- block brand %}
+                {%- if config.THEME_LOGO %}
+                <a class="logo-link" href="/">
+                  <img class="ui medium image rdm-logo"
+                      src="{{ url_for('static', filename=config.THEME_LOGO) }}"/>
+                </a>
+                {%- else %}
+                <a class="logo" href="/">{{ _(config.THEME_SITENAME) }}</a>
+                {%- endif %}
+              {%- endblock brand %}
+              {%- endblock navbar_header %}
+            </li>
+            <li class="navbar-item navbar-search-bar">
+              {%- if config.THEME_SEARCHBAR %}
+                  {%- block navbar_search %}
+                    <div class="navbar-item navbar-search-bar" id="header-search-bar">
+                      <form class="form" action="{{ config.THEME_SEARCH_ENDPOINT }}" role="search">
+                        <div class="ui action icon input">
+                          <input type="text" name="q" placeholder="{{ _('Search') }}">
+                          <button type="submit" class="ui icon search button">
+                            <i class="icon search"></i>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                  {%- endblock navbar_search %}
+                {%- endif %}
+            </li>
+              {%- block navbar_nav %}
+                {%- for item in current_menu.submenu('main').children|sort(attribute='order') if item.visible recursive %}
+                    {%- if item.children %}
+                  <li class="navbar-item navbar-options">
+                    <div class="dropdown{{ ' active' if item.active else '' }}">
+                      <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" href="{{ item.url }}">{{ item.text|safe }} <b class="caret"></b></a>
+                      <ul class="dropdown-menu">{{ loop(item.children|sort(attribute='order')) }}</ul>
+                    </div>
+                  </li>
+                    {%- else %}
+                      <li class={{ "navbar-item navbar-options active" if item.active and loop.depth == 0 else "navbar-item" }}>
+                      <a href="{{ item.url }}">{{ item.text|safe }}</a></li>
+                      {%- endif %}
+                {%- endfor %}
+                <li class="navbar-item navbar-options">
+                  <a href="{{ url_for('invenio_search_ui.search') }}">
+                    Browse all
+                  </a>
+                </li>
+            {%- endblock navbar_nav %}
+            <li class="navbar-item navbar-button">
+              <ul class="rdm-sign-buttons">
+                {%- block navbar_right %}
+                  <li class="navbar-item navbar-button">{%- include config.THEME_HEADER_LOGIN_TEMPLATE %}</li>
+                {%- endblock navbar_right %}
+              </ul>
+            </li>
+
+            <li class="toggle">
+              <input class="menu-btn" type="checkbox" id="menu-btn" />
+              <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+            </li>
+        </ul>
+      </div>
+      </nav>
+      {%- endblock navbar %}
+    </div>
+  {%- block flashmessages %}
+  {%- from "invenio_theme/macros/messages.html" import flashed_messages with context -%}
+  {{ flashed_messages() }}
+  {%- endblock %}
+  </header>
+
+  {%- block breadcrumbs %}
+  {%- include "invenio_theme/breadcrumbs.html" %}
+  {%- endblock breadcrumbs %}
+</div>

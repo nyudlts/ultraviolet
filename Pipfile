@@ -5,8 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 check-manifest = ">=0.25"
-pytest = "*"
 flask-pytest = "*"
+pytest = "*"
 pytest-invenio = "*"
 selenium = "*"
 
@@ -20,10 +20,10 @@ invenio-records-permissions = "<0.13.0,>=0.12.1"
 invenio-records-resources = "<0.17.0,>=0.16.12"
 marshmallow-utils = "<0.6.0,>=0.5.2"
 nbconvert = {extras = ["execute"], version = ">=4.1.0,<6.0.0"}
+python-dotenv = "*"
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
-python-dotenv = "*"
 
 [requires]
 python_version = "3.8"
