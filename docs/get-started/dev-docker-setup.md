@@ -28,6 +28,8 @@ redirect_from:
   + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
 - **Postgres**
   + [Installation instructions](http://postgresguide.com/setup/install.html)
+- **ImageMagick**
+  + [Installation instructions](https://imagemagick.org/script/download.php#macosx)
 
 ## Steps
 
