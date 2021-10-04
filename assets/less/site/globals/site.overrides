@@ -1,27 +1,11 @@
 @import "../../theme.less";
 
-@font-face {
-  font-family: GothamLight;
-  src: url(../../../fonts/Gotham-Light.ttf) format("truetype");
-}
-@font-face {
-  font-family: Lato;
-  src: url(../../../fonts/Gotham-Medium.ttf) format("truetype");
-}
-@font-face {
-  font-family: GothamMedium;
-  src: url(../../../fonts/Gotham-Medium.ttf) format("truetype");
-}
-@font-face {
-  font-family: GothamBold;
-  src: url(../../../fonts/Gotham-Bold.ttf) format("truetype");
-}
-
 @brandColor: #57068c;
 @brandPrimary: #57068c;
 @navbar_background_image: linear-gradient(92deg, #8b00e1db 15%, rgba(74, 11, 3, 0.69));
 
 //@navbar_background_image: linear-gradient(92deg,rgba(139,0,225,.8588235294117647) 1%,rgba(74,11,3,.49))
+//@navbar_background_image: linear-gradient(12deg,rgba(139,0,225,.85) 15%,#330662);
 
 @navbar_background_color: @brandColor;
 @footerLightColor: #320054;
@@ -32,17 +16,17 @@
 
 
 body {
-  font-family: GothamLight, sans-serif;
+  font-family: GothamLight, Lato, sans-serif;
   h1,
   h2,
   h3,
   h4,
   h5 {
     padding: 0;
-    font-family: GothamLight, sans-serif;
+    font-family: GothamLight, Lato, sans-serif;
   }
   .ui.menu {
-    font-family: GothamBold, sans-serif;
+    font-family: GothamBold, Lato, sans-serif;
   }
   .ui.grid > .row.footer-top {
     padding: 3rem 0;
