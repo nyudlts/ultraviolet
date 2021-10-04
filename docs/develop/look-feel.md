@@ -80,4 +80,4 @@ Tests should be placed in the `tests/ui` directory.
 
 ## Run the tests
 
-While you're on your checked out branch, it doesn't hurt to run the tests. However, the services must be started for the tests to work. In a separate Terminal tab, navigate back to the main project directory and run `invenio-cli services start` and then `bash test_run.sh`.
+While you're on your checked out branch, it doesn't hurt to run the tests. However, the services must be started for the tests to work. In a separate Terminal tab, navigate back to the main project directory and run `invenio-cli services start` and then `bash run_tests.sh`.
