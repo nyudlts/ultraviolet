@@ -4,4 +4,8 @@ gem 'github-pages'
 gem 'jekyll-github-metadata'
 gem 'jekyll-remote-theme'
 gem 'jekyll-redirect-from'
-gem 'rake'
+
+group :development, :test do
+  gem 'rake'
+  gem 'html-proofer'
+end
