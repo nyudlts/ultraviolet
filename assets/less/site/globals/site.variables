@@ -1,5 +1,5 @@
 @import "../../variables.less";
-@fontPath: "../../../fonts";
+//@fontPath: "../../../fonts";
 @primaryColor   : #57068c;
 @brandColor: #57068c;
 @brandPrimary: #57068c;
@@ -11,12 +11,9 @@
 @searchButtonColorActive: saturate(darken(@searchButtonColor, 5), 15, relative);
 
 
-//@navbar_background_image: linear-gradient(12deg,  #8b00e1db 15%, rgba(74, 11, 3, 0.69));
-@navbar_background_color: #57068c;
 @footerLightColor: #320054;
 @footerDarkColor: #220038;
 
-@coverPageDefaultMargin: 0;
 
 // @secondaryColor : @grey;
 
