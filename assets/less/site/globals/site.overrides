@@ -129,3 +129,13 @@ body {
 .invenio-rdm-footer {
   width: 100%;
 }
+
+.row .column.no-padding, .row.no-padding {
+  /* This style is visible here https://inveniordm.web.cern.ch  */
+  /* Should be pulled from invenio-theme/invenio_theme/assets/semantic-ui/less/invenio_theme/theme/collections/grid.overrides */
+  padding: 0 !important;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
