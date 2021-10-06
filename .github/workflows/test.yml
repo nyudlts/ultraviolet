@@ -3,9 +3,11 @@ on:
   pull_request:
     paths-ignore:
       - 'docs/**'
+      - 'README.md'
   push:
     paths-ignore:
       - 'docs/**'
+      - 'README.md'
 
 jobs:
   test:
