@@ -73,7 +73,7 @@
 <div class="ui container">
   <div class="ui relaxed grid">
     <div class="two column row top-padded">
-      <div class="eleven wide column">
+      <article class="eleven wide column record-detail-main">
         {% if record.access.record == 'restricted' %}
           <div class="ui {{ record.ui.access_status.message_class }} message">
             <strong><i class="{{ record.ui.access_status.icon }} icon"></i>{{ record.ui.access_status.title_l10n }}</strong> {{ record.ui.access_status.description_l10n }}
@@ -87,17 +87,17 @@
         {%- block record_header_button -%}
         {{ super() }}
         {%- endblock record_header_button -%}
-        <div class="ui grid middle aligned">
+        <div class="ui grid middle aligned record-detail-md1">
           <div class="two column row">
             <div class="left floated left aligned column">
-              <span class="ui" title="{{ _("Publication date") }}">{{ record.ui.publication_date_l10n_long }}</span>
-              <span class="label text-muted"> | Version {{ record.ui.version }}</span>
+              <span class="ui label grey dl-md-pubdate" title="{{ _("Publication date") }}">First Published {{ record.ui.publication_date_l10n_long }}</span>
+              <span class="ui label grey dl-md-version">Version {{ record.ui.version }}</span>
             </div>
-            <div class="right floated right aligned column">
+            <div class="right floated right aligned column record-detail-md1-sub1">
               {% if record.ui.resource_type %}
-              <span class="ui label small grey">{{ record.ui.resource_type.title_l10n }}</span>
+              <span class="ui label small grey dl-md-resource-type">{{ record.ui.resource_type.title_l10n }}</span>
               {% endif %}
-              <span class="ui label small access-status {{ record.ui.access_status.id }}" data-tooltip="{{ record.ui.access_status.description_l10n }}" data-inverted="">
+              <span class="ui label small access-status dl-md-access-status {{ record.ui.access_status.id }}" data-tooltip="{{ record.ui.access_status.description_l10n }}" data-inverted="">
                 {% if record.ui.access_status.icon %}<i class="icon {{ record.ui.access_status.icon }}"></i>{% endif %}
                 {{ record.ui.access_status.title_l10n }}
               </span>
@@ -127,7 +127,7 @@
         {{ super() }}
         {%- endblock jump -%}
         {%- endblock record_body %}
-      </div>
+      </article>
       <div class="five wide column">
         {% block record_sidebar %}
         {%- include "invenio_app_rdm/records/details/side_bar.html" %}
