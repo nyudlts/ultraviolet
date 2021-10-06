@@ -17,7 +17,7 @@ body {
   h3,
   h4,
   h5 {
-    padding: 0;
+    //padding: 0;
     font-family: GothamLight, Lato, sans-serif;
   }
   .outer-navbar a {
@@ -25,6 +25,9 @@ body {
   }
   .result-options .ui.label {
     background-color: inherit !important;
+  }
+  .ui.header {
+    font-weight: 400;
   }
   .ui.menu {
     font-family: GothamBold, Lato, sans-serif;
@@ -55,6 +58,20 @@ body {
         padding: 0;
       }
   
+    }
+  }
+  .record-detail-md1{
+    .ui.label {
+      margin: 0;
+      &::after {
+        content: '\2022';
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+      &:last-of-type::after {
+        content: '';
+        padding: 0;
+      }
     }
   }
   .ui.label.access-status.metadata-only,
@@ -124,6 +141,12 @@ body {
     .row:not(.record-management-row) {
       display: none;
     }
+  }
+  #record-details {
+    margin-top: 2rem;
+  }
+  #record-description {
+    margin-top: 2rem;
   }
 }
 .invenio-rdm-footer {
