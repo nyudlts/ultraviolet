@@ -124,19 +124,38 @@ body {
       background-color: #fff;
     }
   }
-   /* "Manage" alert area */
-  .ui.warning.message.top-attached {
-    margin-top: -1.5rem;
+   /* Top attached alert area = edit existing post, preview */
+
+  .ui.message.top-attached {
+    margin-top: -1.5rem !important;
     border-radius: 0;
-    padding: 2px 0;
-    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+    margin-bottom: 2.5rem;
     box-shadow: 0px 1px 2px 0px #02020245;
-    background-color: #9d6ebc54;
+    background-color: #57068c20;
+    &.manage {
+      background-color: #f8ffff;
+      
+    }
+    &.warning {
+      background-color: #57068c20;
+    }
+    &.positive {
+      background-color: rgba(0, 151, 80, 0.1);
+    }
     .ui.grid {
-      margin-bottom: 0rem;
+      margin-bottom: 0;
+    }
+    .column {
+      padding-bottom: 0;
     }
   }
+
+  
   #recordManagement {
+    .record-management-row {
+      margin-top:0;
+    }
       /* Hide the header that says "manage" */
     .row:not(.record-management-row) {
       display: none;
