@@ -1,12 +1,8 @@
 name: ci:test:docs
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/**'
-      - 'docs/**'
   push:
     paths:
-      - '.github/workflows/**'
+      - '.github/workflows/test-docs.yml'
       - 'docs/**'
 
 jobs:
