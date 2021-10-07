@@ -1,10 +1,18 @@
 name: ci:test
+
 on:
   push:
+    branches:
+      - main
     paths-ignore:
-      - 'docs/**'
-      - 'README.md'
-      - '.github/workflows/test-docs.yml'
+      - "docs/**"
+      - "**.md"
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
 
 jobs:
   test:
