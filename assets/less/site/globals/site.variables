@@ -32,8 +32,3 @@
 // @brown          : #001100;
 // @grey           : #001100;
 // @black          : #001100;
-
-@accessRightOpen: @green;
-@accessRightRestricted: @red;
-@accessRightEmbargoed: @yellow;
-@accessRightMetadataOnly: @red;
