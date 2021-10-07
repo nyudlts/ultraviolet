@@ -76,6 +76,8 @@ body {
   }
   .ui.label.access-status.metadata-only,
   .ui.label.access-status.open,
+  .ui.label.access-status.embargoed,
+  .ui.label.access-status.restricted,
   .ui.grey.label,
   .ui.grey.labels .label,
   .ui.blue.label,
