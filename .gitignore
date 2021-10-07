@@ -81,3 +81,6 @@ ubuntu*
 # Storage related files
 celerybeat-schedule
 *.db
+
+# local act runner config
+.actrc
