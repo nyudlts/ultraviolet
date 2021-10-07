@@ -26,9 +26,9 @@
 @teal           : #149199;
 //Blue from NYU home page
  @blue           : #0170B2;
-// @violet         : #EE82EE;
-// @purple         : #001100;
+ @violet         : #57068c;
+ @purple         : #57068c;
 // @pink           : #001100;
 // @brown          : #001100;
-// @grey           : #001100;
+ @grey           : #57068c20;
 // @black          : #001100;
