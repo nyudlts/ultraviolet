@@ -18,7 +18,8 @@
 // @secondaryColor : @grey;
 
 @red            : #ed4764;
-// @orange         : #001100;
+// making "orange" blue
+ @orange         : #003e8e;
 // @yellow         : #001100;
 // @olive          : #001100;
 @green          : #009750;
