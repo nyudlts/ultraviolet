@@ -16,19 +16,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: "Checkout current state"
+        uses: actions/checkout@v2
+      - name: "Save Ruby version to env"
+        run: echo "RUBY_VERSION=$(cat './docs/.ruby-version')" >> ${GITHUB_ENV}
+      - name: "Set up Ruby"
+        uses: ruby/setup-ruby@v1
         with:
-          fetch-depth: 1
-      - uses: ruby/setup-ruby@v1
-        with:
-          working-directory: ./docs
+          ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-      - name: install
+          working-directory: ./docs
+      - name: "Build the documentation"
+        run: bundle exec rake build
         working-directory: ./docs
-        run:  bundle install
-      - name: install
+      - name: "Test the documentation"
+        run: bundle exec rake test
         working-directory: ./docs
-        run:  bundle exec rake build
-      - name: install
-        working-directory: ./docs
-        run:  bundle exec rake test
