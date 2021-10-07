@@ -1,35 +1,46 @@
 name: ci:test
 on:
-  pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - 'README.md'
   push:
     paths-ignore:
       - 'docs/**'
       - 'README.md'
+      - '.github/workflows/test-docs.yml'
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
-    - name: Save python version to env
-      run: echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - name: Install Invenio-CLI
-      run: |
-        python --version
-        which pip
-        pip install invenio-cli
-    - name: Check Requirements
-      run: invenio-cli check-requirements
-      # - name: Generate dependencies
-      #   run: |
-      #     invenio-cli packages lock --pre --dev
-      #     invenio-cli install --pre --development
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Save python version to env
+        run: echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install invenio-cli
+        run: |
+          python --version
+          which pip
+          pip install invenio-cli
+      - name: Check requirements
+        run: invenio-cli check-requirements
+      - name: Setup files
+        run: |
+          touch .invenio.private && echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
+          touch .env && echo FLASK_SECRET_KEY="some random value" > .env
+      - name: Install dependencies
+        run: | # first line is tmp hack for fs bug
+          pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
+          invenio-cli packages lock --pre --dev
+          invenio-cli install --pre --dev
+      - name: Run & check containers
+        run: |
+          invenio-cli services setup
+          invenio-cli services status
+          invenio-cli run
+      - name: Run tests
+        run: |
+          pipenv install --dev
+          sh ./run_tests.sh
