@@ -39,11 +39,12 @@ jobs:
           pip install --no-cache-dir --quiet pipenv
           pip list
       - name: "Check project requirements"
-        run: invenio-cli check-requirements
+        run: |
+          invenio-cli check-requirements
       - name: "Setup mandatory files"
         run: |
-          echo "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
-          echo FLASK_SECRET_KEY="some random value" >> .env
+          echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
+          echo -e FLASK_SECRET_KEY="some random value" >> .env
       - name: "Install project dependencies"
         run: |
           pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
