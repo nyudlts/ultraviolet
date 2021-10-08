@@ -1,0 +1,18 @@
+{#
+  Copyright (C) 2020 CERN.
+  Copyright (C) 2020 Northwestern University.
+
+  Invenio RDM Records is free software; you can redistribute it and/or modify
+  it under the terms of the MIT License; see LICENSE file for more details.
+  
+  Copied from https://github.com/inveniosoftware/invenio-app-rdm/blob/master/invenio_app_rdm/records_ui/templates/semantic-ui/invenio_app_rdm/records/details/description.html
+  on 2021-10-07 v v6.0.4
+#}
+
+{% set description = metadata.get('description') %}
+{% if description %}
+<div id="record-description">
+{# description data is being sanitized by marshmallow in the backend #}
+{{ description | safe }}
+</div>
+{% endif %}

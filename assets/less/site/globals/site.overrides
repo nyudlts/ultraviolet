@@ -1,6 +1,185 @@
 @import "../../theme.less";
 
+@brandColor: #57068c;
+@brandPrimary: #57068c;
 
+@navbar_background_image: linear-gradient(12deg,rgba(139,0,225,.85) 15%,#330662);
+
+@navbar_background_color: @brandColor;
+@footerLightColor: #320054;
+@footerDarkColor: #220038;
+
+
+body {
+  font-family: GothamLight, Lato, sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    //padding: 0;
+    font-family: GothamLight, Lato, sans-serif;
+  }
+  .outer-navbar a {
+    color: @white;
+  }
+  .result-options .ui.label {
+    background-color: inherit !important;
+  }
+  .ui.header {
+    font-weight: 400;
+  }
+  .ui.menu {
+    font-family: GothamBold, Lato, sans-serif;
+  }
+  .ui.grid > .row.footer-top {
+    padding: 3rem 0;
+  }
+  .ui.items > .item .extra.labels-actions {
+    > * {
+      margin: 0;
+    }
+    > [class*="right floated"] {
+      margin: 0 0 0 .5rem;
+    }
+    
+    div {
+      &::after {
+        content: '\2022';
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+      &:last-child::after {
+        content: '';
+        padding: 0;
+      }
+      &:last-of-type::after {
+        content: '';
+        padding: 0;
+      }
+  
+    }
+  }
+  .record-detail-md1{
+    .ui.label {
+      margin: 0;
+      &::after {
+        content: '\2022';
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+      &:last-of-type::after {
+        content: '';
+        padding: 0;
+      }
+    }
+  }
+  .ui.label.access-status.metadata-only,
+  .ui.label.access-status.open,
+  .ui.label.access-status.embargoed,
+  .ui.label.access-status.restricted,
+  .ui.grey.label,
+  .ui.grey.labels .label,
+  .ui.blue.label,
+  .ui.blue.labels .label {
+    background-color: inherit !important;
+    color: rgba(0,0,0,.65) !important;
+    border: none !important;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: .075em;
+    font-size: .7rem;
+    font-weight: 600;
+  }
+  .ui.label > .icon {
+    margin: 0 .5em 0 0;
+  }
+  .navbar-button {
+    .ui.button, .ui.button.signup {
+      background-color: #fff2;
+      border: 1px solid #fff5;
+      color: white;
+      &:hover {
+        background-color: #c201ff77;
+        color: #fff;
+        text-shadow: none;
+      }
+      /* overriding border-left: none elsewhere */
+      &:first-child {
+        border-left: 1px solid #fff5;
+      }
+    }
+  }
+  .ui.items a.item:hover .content .header, .ui.link.items > .item:hover .content .header {
+    color: @blue;
+    text-decoration: underline;
+  }
+  .ui.items a.item:hover, .ui.link.items > .item:hover {
+    background-color: #8080800d;
+  }
+   /* Hamburger */
+  .menu-icon .navicon {
+    background-color: #fff;
+    &::after, &::before{
+      background-color: #fff;
+    }
+  }
+   /* Top attached alert area = edit existing post, preview */
+
+  .ui.message.top-attached {
+    margin-top: -1.5rem !important;
+    border-radius: 0;
+    padding: 1rem 0;
+    margin-bottom: 2.5rem;
+    box-shadow: 0px 1px 2px 0px #02020245;
+    background-color: #57068c20;
+    &.manage {
+      background-color: #f8ffff;
+      
+    }
+    &.warning {
+      background-color: #57068c20;
+    }
+    &.positive {
+      background-color: rgba(0, 151, 80, 0.1);
+    }
+    .ui.grid {
+      margin-bottom: 0;
+    }
+    .column {
+      padding-bottom: 0;
+    }
+  }
+
+  
+  #recordManagement {
+    .record-management-row {
+      margin-top:0;
+    }
+      /* Hide the header that says "manage" */
+    .row:not(.record-management-row) {
+      display: none;
+    }
+  }
+  #record-details {
+    margin-top: 2rem;
+  }
+  #record-description {
+    margin-top: 2rem;
+  }
+}
 .invenio-rdm-footer {
   width: 100%;
+}
+
+.row .column.no-padding, .row.no-padding {
+  /* This style is visible here https://inveniordm.web.cern.ch  */
+  /* Should be pulled from invenio-theme/invenio_theme/assets/semantic-ui/less/invenio_theme/theme/collections/grid.overrides */
+  padding: 0 !important;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
 }

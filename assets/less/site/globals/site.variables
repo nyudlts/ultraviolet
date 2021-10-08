@@ -1,1 +1,34 @@
 @import "../../variables.less";
+//@fontPath: "../../../fonts";
+@primaryColor   : #57068c;
+@brandColor: #57068c;
+@brandPrimary: #57068c;
+
+@searchButtonColor:#c201ff;
+@searchButtonColorHover:  #ff01f2;
+@searchButtonColorFocus: #ff01f2;
+@searchButtonColorDown: #ff01f2;
+@searchButtonColorActive: #ff01f2;
+
+
+@footerLightColor: #320054;
+@footerDarkColor: #220038;
+
+
+// @secondaryColor : @grey;
+
+@red            : #ed4764;
+// making "orange" blue
+ @orange         : #003e8e;
+// @yellow         : #001100;
+// @olive          : #001100;
+@green          : #009750;
+@teal           : #149199;
+//Blue from NYU home page
+ @blue           : #0170B2;
+ @violet         : #57068c;
+ @purple         : #57068c;
+// @pink           : #001100;
+// @brown          : #001100;
+ @grey           : #57068c20;
+// @black          : #001100;

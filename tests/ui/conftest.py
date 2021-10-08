@@ -22,7 +22,7 @@ import os
 def create_app(ultraviolet_instance_path):
     """Flask app fixture."""
     create_ultraviolet_app_ui = factory.create_app_factory(
-        "ultraviolet",
+        "invenio",
         config_loader=create_config_loader(config=None, env_prefix="Invenio"),
         blueprint_entry_points=["invenio_base.blueprints"],
         extension_entry_points=["invenio_base.apps"],

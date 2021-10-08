@@ -82,5 +82,8 @@ ubuntu*
 celerybeat-schedule
 *.db
 
+
 # local act runner config
 .actrc
+
+assets/fonts/
