@@ -34,9 +34,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: "Install invenio-cli"
         run: |
-          pip install --no-cache-dir --upgrade pip setuptools wheel
-          pip install --no-cache-dir --quiet invenio-cli
-          pip install --no-cache-dir --quiet pipenv
+          pip install --no-cache-dir --upgrade pip invenio-cli pipenv pytest
           pip list
       - name: "Check project requirements"
         run: |
@@ -50,6 +48,11 @@ jobs:
           pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
           invenio-cli packages lock --pre --dev
           invenio-cli install --pre --dev
+      - name: Start services and app
+        run: | 
+          invenio-cli services start
+          invenio-cli run &
       - name: "Run tests"
         run: |
+          pipenv install --dev
           sh ./run_tests.sh
