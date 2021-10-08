@@ -81,3 +81,5 @@ ubuntu*
 # Storage related files
 celerybeat-schedule
 *.db
+
+assets/fonts/
