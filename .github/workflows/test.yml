@@ -34,7 +34,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: "Install invenio-cli"
         run: |
-          pip install --no-cache-dir --upgrade pip invenio-cli pipenv pytest
+          pip install --upgrade pip invenio-cli pipenv
           pip list
       - name: "Check project requirements"
         run: |
@@ -49,10 +49,10 @@ jobs:
           invenio-cli packages lock --pre --dev
           invenio-cli install --pre --dev
       - name: Start services and app
-        run: | 
+        run: |
           invenio-cli services start
           invenio-cli run &
       - name: "Run tests"
         run: |
           pipenv install --dev
-          sh ./run_tests.sh
+          pipenv run pytest -p no:cacheprovider
