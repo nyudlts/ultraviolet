@@ -49,12 +49,11 @@ Before running E2E make sure that Selenium Client is installed and Chrome Webdri
   ``` sh
   export E2E_WEBDRIVER_BROWSERS="Firefox"
   ```
-5. Run the tests! This shell script will run all tests in the repo.
-
-``` sh
-sh ./run_tests.sh
-```
+5. Run the tests!
+  ``` sh
+  pipenv run pytest -p no:cacheprovider
+  ```
 6. OPTIONAL: You can (re)run specific tests by specifying the path, e.g.,
-``` sh
-sh ./run_tests.sh tests/ui
-```
+  ``` sh
+  pipenv run pytest -p no:cacheprovider tests/ui
+  ```
