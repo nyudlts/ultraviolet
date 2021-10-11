@@ -34,7 +34,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: "Install invenio-cli"
         run: |
-          pip install --upgrade pip invenio-cli pipenv
+          pip install --no-cache-dir --upgrade pip invenio-cli pipenv
           pip list
       - name: "Check project requirements"
         run: |
