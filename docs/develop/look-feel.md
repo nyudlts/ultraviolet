@@ -49,11 +49,22 @@ from v6.0.4
 
 ## Implement changes
 
-1. Make the appropriate customizations (wording changes, e.g.).
 
-2. Check and see how the changes look in the app. More than likely, you will need to first re-build all of the app assets by running `invenio-cli assets build -d`. This will take several minutes. When it's done, run `invenio-cli run` and the server will be started. You can see your changes in Firefox at `https://127.0.0.1:5000/`
 
-If you plan on iterating or making many changes, it behooves you to run `invenio-cli assets watch`. This opens up an assets server, which allows you to make modifications without having to re-build each time. After you run this, open up a new Terminal tab, navigate back to the project, and run `invenio-cli run`
+1. Run the asset server in the background to watch changes:
+  ```sh
+  invenio-cli assets watch &
+  ```
+
+2. Make sure the app is running:
+  ```sh
+  invenio-cli run
+  ```
+
+3. Make the appropriate customizations in your text editor (wording changes, e.g.).
+
+
+4. Check and see how the changes look in the app. You can see your changes in Firefox at `https://127.0.0.1:5000/`
 
 ## Include a test
 
@@ -80,4 +91,4 @@ Tests should be placed in the `tests/ui` directory.
 
 ## Run the tests
 
-While you're on your checked out branch, it doesn't hurt to run the tests. However, the services must be started for the tests to work. In a separate Terminal tab, navigate back to the main project directory and run `invenio-cli services start` and then `bash run_tests.sh`.
+See the [Run Tests]({{ 'develop/run-tests/' | absolute_url }}) wiki page.
