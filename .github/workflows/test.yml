@@ -1,35 +1,58 @@
 name: ci:test
+
 on:
-  pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - 'README.md'
   push:
+    branches:
+      - main
     paths-ignore:
-      - 'docs/**'
-      - 'README.md'
+      - "docs/**"
+      - "**.md"
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
-    - name: Save python version to env
-      run: echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - name: Install Invenio-CLI
-      run: |
-        python --version
-        which pip
-        pip install invenio-cli
-    - name: Check Requirements
-      run: invenio-cli check-requirements
-      # - name: Generate dependencies
-      #   run: |
-      #     invenio-cli packages lock --pre --dev
-      #     invenio-cli install --pre --development
+      - name: "Checkout current state"
+        uses: actions/checkout@v2
+      - name: "Save Python and Node versions to env"
+        run: |
+          echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
+          echo "NODE_VERSION=$(cat '.nvmrc')" >> ${GITHUB_ENV}
+      - name: "Set up Python"
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: "Set up Node"
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: "Install invenio-cli"
+        run: |
+          pip install --no-cache-dir --upgrade pip invenio-cli pipenv
+          pip list
+      - name: "Check project requirements"
+        run: |
+          invenio-cli check-requirements
+      - name: "Setup mandatory files"
+        run: |
+          echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
+          echo -e FLASK_SECRET_KEY="some random value" >> .env
+      - name: "Install project dependencies"
+        run: |
+          pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
+          invenio-cli packages lock --pre --dev
+          invenio-cli install --pre --dev
+      - name: Start services and app
+        run: |
+          invenio-cli services start
+          invenio-cli run &
+      - name: "Run tests"
+        run: |
+          pipenv install --dev
+          E2E=yes pipenv run pytest -p no:cacheprovider
