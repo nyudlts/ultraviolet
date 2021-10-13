@@ -116,9 +116,7 @@ body {
     color: @blue;
     text-decoration: underline;
   }
-  .ui.items a.item:hover, .ui.link.items > .item:hover {
-    background-color: #8080800d;
-  }
+ 
    /* Hamburger */
   .menu-icon .navicon {
     background-color: #fff;
