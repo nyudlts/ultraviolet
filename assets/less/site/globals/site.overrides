@@ -169,6 +169,12 @@ body {
   #record-description {
     margin-top: 2rem;
   }
+  
+  // a11y
+  // from invenio-theme/invenio_theme/assets/semantic-ui/less/invenio_theme/theme/globals/site.overrides line 64
+  .text-muted {
+    color: #646363;
+  }
 }
 .invenio-rdm-footer {
   width: 100%;
