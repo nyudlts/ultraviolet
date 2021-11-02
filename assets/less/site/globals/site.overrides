@@ -9,17 +9,42 @@
 @footerLightColor: #320054;
 @footerDarkColor: #220038;
 
+// NYU Custom variables, to override Semantic UI's link colors, which have inadequate contrast
+@linkColor: #2674c1;
+@linkColorHover: saturate(darken(@linkColor, 5), 10, relative);
+@linkColorActive:#CC00D2;
+// 
+
+
+
 
 body {
   font-family: GothamLight, Lato, sans-serif;
+  a {
+    color: @linkColor;
+    &:hover {
+      color: @linkColorHover ;
+      text-decoration: underline;
+    }
+    &:active {
+      color: @linkColorActive;
+    }
+    &:focus {
+      color: @linkColorHover ;
+      background-color: inherit;
+      //box-shadow: 0 0 1px 1px #ec00f4;
+      outline: 3px solid @linkColorActive;
+    }
+  }
+  
   h1,
   h2,
   h3,
   h4,
   h5 {
-    //padding: 0;
     font-family: GothamLight, Lato, sans-serif;
   }
+
   .outer-navbar a {
     color: @white;
   }
@@ -109,6 +134,9 @@ body {
       /* overriding border-left: none elsewhere */
       &:first-child {
         border-left: 1px solid #fff5;
+      }
+      &:focus {
+        outline: 3px solid @linkColorActive;
       }
     }
   }
