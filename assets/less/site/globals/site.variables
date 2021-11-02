@@ -1,5 +1,11 @@
 @import "../../variables.less";
 //@fontPath: "../../../fonts";
+// imported from
+// invenio_app_rdm/invenio_app_rdm/theme/assets/semantic-ui/less/invenio_app_rdm/variables.less
+// and before that, from 
+// invenio-theme/invenio_theme/assets/semantic-ui/less/invenio_theme/theme/globals/site.overrides
+// invenio-theme/invenio_theme/assets/semantic-ui/less/invenio_theme/theme/globals/site.variables
+
 @primaryColor   : #57068c;
 @brandColor: #57068c;
 @brandPrimary: #57068c;
