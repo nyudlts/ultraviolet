@@ -138,6 +138,10 @@ body {
       &:focus {
         outline: 3px solid @linkColorActive;
       }
+      &:active,
+      &:hover:focus {
+        outline: 3px solid transparent;
+      }
     }
   }
   .ui.link.items {
