@@ -140,11 +140,15 @@ body {
       }
     }
   }
-  .ui.items a.item:hover .content .header, .ui.link.items > .item:hover .content .header {
-    color: @blue;
-    text-decoration: underline;
+  .ui.link.items {
+    a.item:hover {
+      text-decoration: none;
+      .header {
+        color: @blue;
+        text-decoration: underline;
+      }
+    }
   }
- 
    /* Hamburger */
   .menu-icon .navicon {
     background-color: #fff;
