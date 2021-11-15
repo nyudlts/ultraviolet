@@ -7,3 +7,6 @@ resourcetypes:
 languages:
   pid-type: lng
   data-file: vocabularies/languages.yaml
+creatorsroles:
+  pid-type: crr
+  data-file: vocabularies/creatorsroles_nyu.yaml
