@@ -1,0 +1,64 @@
+- acronym: NYU
+  id: 0190ak572
+  identifiers:
+  - identifier: 0190ak572
+    scheme: ror
+  name: New York University
+  title:
+    en: New York University
+    es: Universidad de Nueva York
+    fr: "Universit\xE9 de New York"
+- id: 005dvqh91
+  identifiers:
+  - identifier: 005dvqh91
+    scheme: ror
+  name: New York University Langone Medical Center
+  title:
+    en: New York University Langone Medical Center
+- id: 05d789537
+  identifiers:
+  - identifier: 05d789537
+    scheme: ror
+  name: New York University Langone Orthopedic Hospital
+  title:
+    en: New York University Langone Orthopedic Hospital
+- id: 00e5k0821
+  identifiers:
+  - identifier: 00e5k0821
+    scheme: ror
+  name: New York University Abu Dhabi
+  title:
+    ar: "\u062C\u0627\u0645\u0639\u0629 \u0646\u064A\u0648\u064A\u0648\u0631\u0643\
+      \ \u0623\u0628\u0648\u0638\u0628\u064A"
+    en: New York University Abu Dhabi
+- acronym: NYU PRESS
+  id: 01rz15025
+  identifiers:
+  - identifier: 01rz15025
+    scheme: ror
+  name: New York University Press
+  title:
+    en: New York University Press
+- id: 02vpsdb40
+  identifiers:
+  - identifier: 02vpsdb40
+    scheme: ror
+  name: New York University Shanghai
+  title:
+    en: New York University Shanghai
+    zh: "\u4E0A\u6D77\u7EBD\u7EA6\u5927\u5B66"
+- acronym: NYU
+  id: 02pthyn77
+  identifiers:
+  - identifier: 02pthyn77
+    scheme: ror
+  name: New York University
+  title:
+    en: New York University
+- id: 05mq03431
+  identifiers:
+  - identifier: 05mq03431
+    scheme: ror
+  name: New York University Paris
+  title:
+    en: New York University Paris
