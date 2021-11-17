@@ -76,7 +76,7 @@
 
 <div class="ui container">
   <div class="ui relaxed grid">
-    <div class="two column row top-padded">
+    <main class="two column row top-padded" id="main">
       <article class="eleven wide column record-detail-main">
         {% if record.access.record == 'restricted' %}
           <div class="ui {{ record.ui.access_status.message_class }} message">
@@ -137,7 +137,7 @@
         {%- include "invenio_app_rdm/records/details/side_bar.html" %}
         {% endblock record_sidebar %}
       </div>
-    </div>
+    </main>
   </div>
 </div>
 
