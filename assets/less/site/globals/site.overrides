@@ -21,7 +21,7 @@
 
 body {
   font-family: GothamLight, Lato, sans-serif;
-  a {
+  a, .ui.breadcrumb & {
     color: @linkColor;
     &:hover {
       color: @linkColorHover;
