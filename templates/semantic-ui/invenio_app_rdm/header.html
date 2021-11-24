@@ -10,7 +10,7 @@
   on 2021-10-01
   from v6.0.4
 #}
-
+<a class="skip-link" href="#main">Skip to main</a>
 <div>
   <header class="theme header">
     <div class="outer-navbar">
@@ -24,7 +24,8 @@
                 {%- if config.THEME_LOGO %}
                 <a class="logo-link" href="/">
                   <img class="ui medium image rdm-logo"
-                      src="{{ url_for('static', filename=config.THEME_LOGO) }}"/>
+                      src="{{ url_for('static', filename=config.THEME_LOGO) }}"
+                      alt="{{ _(config.THEME_SITENAME) }}"/>
                 </a>
                 {%- else %}
                 <a class="logo" href="/">{{ _(config.THEME_SITENAME) }}</a>

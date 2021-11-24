@@ -21,7 +21,7 @@
 
 body {
   font-family: GothamLight, Lato, sans-serif;
-  a {
+  a, .ui.breadcrumb & {
     color: @linkColor;
     &:hover {
       color: @linkColorHover;
@@ -225,4 +225,30 @@ body {
   padding-right: 0px;
   padding-bottom: 0px;
   padding-left: 0px;
+}
+
+.skip-link {
+  left: -999px;
+  position: absolute;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -999;
+}
+.skip-link:focus {
+  color: #000;
+  background-color: #3dbbdb;
+  left: auto;
+  top: auto;
+  width: 40%;
+  height: auto;
+  overflow: auto;
+  margin: 10px 35%;
+  padding: 5px;
+  border-radius: 15px;
+  border: 4px solid #3dbbdb;
+  text-align: center;
+  font-size: 1.2em;
+  z-index: 999;
 }
