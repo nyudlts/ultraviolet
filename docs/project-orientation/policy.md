@@ -24,3 +24,11 @@ UltraViolet metadata is made available under a [CC0 License](https://creativecom
 #### Metadata versioning and provenance
 
 In order to provide contextual information and align with [FAIR principle R1.2: (Meta)data are associated with detailed provenance](https://www.go-fair.org/fair-principles/r1-2-metadata-associated-detailed-provenance/), metadata records are versioned and may include notes about corrections or amendments. Previous versions of metadata records are made available in in Github. Small errors might be documented in a running version description narrative, while major changes and all updates would be given a new version.
+
+#### Internal application of profile
+
+In NYU Data Services' management and curation of the UltraViolet project, we apply the InvenioRDM metadata schema. Departures and local applications of the schema are documented here.
+
+##### Creator Roles
+
+The `creator role` is a sub-element that comes from the DataCite schema. We define it accordingly.

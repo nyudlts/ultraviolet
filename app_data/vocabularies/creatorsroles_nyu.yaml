@@ -1,0 +1,55 @@
+- id: contactperson
+  props:
+    datacite: ContactPerson
+  title:
+    en: Contact person
+- id: datacollector
+  props:
+    datacite: DataCollector
+  title:
+    en: Data collector
+- id: distributor
+  props:
+    datacite: Distributor
+  title:
+    en: Distributor
+- id: editor
+  props:
+    datacite: Editor
+  title:
+    en: Editor
+- id: hostinginstitution
+  props:
+    datacite: HostingInstitution
+  title:
+    en: Hosting institution
+- id: producer
+  props:
+    datacite: Producer
+  title:
+    en: Producer
+- id: researcher
+  props:
+    datacite: Researcher
+  title:
+    en: Researcher
+- id: researchgroup
+  props:
+    datacite: ResearchGroup
+  title:
+    en: Research group
+- id: rightsholder
+  props:
+    datacite: RightsHolder
+  title:
+    en: Rights holder
+- id: other
+  props:
+    datacite: Other
+  title:
+    en: Other
+- id: vendor
+  props:
+    datacite: ''
+  title:
+    en: Vendor
