@@ -5,3 +5,38 @@
     - admin
   allow:
     - superuser-access
+- email: nyudepositor@test.com
+  active: True
+  password: nyudepositor
+  roles:
+    - admin
+  allow:
+    - superuser-access
+- email: nyuviewer@test.com
+  active: True
+  password: nyuviewer
+  roles:
+    - admin
+  allow:
+    - superuser-access
+- email: restdatauser@test.com
+  active: True
+  password: restdatauser
+  roles:
+    - admin
+  allow:
+    - superuser-access
+- email: nyudepositor@test.com
+  active: True
+  password: nyudepositor
+  roles:
+    - admin
+  allow:
+    - superuser-access
+- email: publicviewer@test.com
+  active: True
+  password: publicviewer
+  roles:
+    - admin
+  allow:
+    - superuser-access
