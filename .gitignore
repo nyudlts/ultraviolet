@@ -87,3 +87,8 @@ celerybeat-schedule
 .actrc
 
 assets/fonts/
+
+# local development modules
+ultraviolet-cli
+fixtures
+.notes

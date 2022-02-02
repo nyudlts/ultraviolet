@@ -9,6 +9,8 @@ flask-pytest = "*"
 pytest = "*"
 pytest-invenio = "*"
 selenium = "*"
+flask-debugtoolbar = "*"
+ultraviolet-cli = {editable = true, path = "./ultraviolet-cli"}
 
 [packages]
 flask-resources = "~=0.7.1"
