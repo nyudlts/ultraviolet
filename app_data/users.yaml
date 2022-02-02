@@ -5,3 +5,8 @@
     - admin
   allow:
     - superuser-access
+- email: api-su@uv.test
+  active: True
+  password: '123456'
+  roles:
+    - admin
