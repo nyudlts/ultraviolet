@@ -93,7 +93,7 @@ redirect_from:
 
 13. Build application services (database, search, cache) and setup the application for running
   ```sh
-  invenio-cli services setup
+  invenio-cli services setup -N
   ```
   IMPORTANT: if services setup reported any errors, and you have to restart the setup process, make sure to run
   destroy service command first (or you will get "Failed to setup services" error ) and delete db files by running `invenio-cli services destroy` and `rm -r app_data/db/*`
