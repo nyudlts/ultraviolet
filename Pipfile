@@ -10,11 +10,11 @@ pytest = "*"
 pytest-invenio = "*"
 selenium = "*"
 flask-debugtoolbar = "*"
-ultraviolet-cli = {editable = true, path = "./ultraviolet-cli"}
+ultraviolet-cli = {git = "https://github.com/nyudlts/ultraviolet-cli.git", editable = true, ref = "main"}
+# ultraviolet-cli = {path = "./ultraviolet-cli", editable = true}
 
 [packages]
 flask-resources = "~=0.7.1"
-importlib-metadata = ">=0.12,<2.0.0"
 invenio-app-rdm = {version = "~=6.0.4", extras = ["elasticsearch7", "postgresql"]}
 invenio-drafts-resources = "<0.14.0,>=0.13.4"
 invenio-rdm-records = "<0.33.0,>=0.32.4"
