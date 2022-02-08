@@ -50,10 +50,9 @@ redirect_from:
   nvm install
   ```
 
-5. Install and/or update pip and [invenio-cli](https://invenio-cli.readthedocs.io/en/latest/)
+5. Install and/or update pip, pipenv, and [invenio-cli](https://invenio-cli.readthedocs.io/en/latest/)
   ```sh
-  pip install --upgrade pip
-  pip install --upgrade invenio-cli
+  pip install -U --upgrade pip pipenv invenio-cli
   ```
 
 6. Check Invenio's requirements
