@@ -91,4 +91,5 @@ assets/fonts/
 # local development modules
 ultraviolet-cli
 fixtures
-.notes
+tmp
+fixture-map.json
