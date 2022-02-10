@@ -12,7 +12,7 @@ During the process of development, you may want to create a new fixture record a
 
 ## Bulk add fixtures to docker development instance
 
-1. Make sure the application is up and running at https://127.0.0.1:5000/ via `invenio-cli run` (see [Dev docker setup](../get-started/dev-docker-setup/))
+1. Make sure the application is up and running at https://127.0.0.1:5000/ via `invenio-cli run` (see [Dev docker setup](../../get-started/dev-docker-setup/))
 
 2. In a new bash tab or window, nav back into the cloned project directory.
 
