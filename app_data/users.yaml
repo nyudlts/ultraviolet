@@ -5,7 +5,7 @@
     - admin
   allow:
     - superuser-access
-- email: api-su@uv.test
+- email: fixture_user@uv.test
   active: True
   password: '123456'
   roles:
