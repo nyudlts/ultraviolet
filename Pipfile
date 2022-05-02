@@ -5,6 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 check-manifest = ">=0.25"
+flask-pytest = "*"
+pytest = "*"
+pytest-invenio = "*"
+selenium = "*"
 
 [packages]
 invenio-app-rdm = {extras = ["postgresql", "elasticsearch7"], version = "~=6.0.5"}
