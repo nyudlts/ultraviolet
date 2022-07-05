@@ -5,13 +5,11 @@ verify_ssl = true
 
 [dev-packages]
 check-manifest = ">=0.25"
-flask-pytest = "*"
-pytest = "*"
-pytest-invenio = "*"
+pytest = "==6.2.5"
 selenium = "*"
 
 [packages]
-invenio-app-rdm = {extras = ["postgresql", "elasticsearch7"], version = "~=6.0.5"}
+invenio-app-rdm = {version = "~=9.0.5", extras = ["elasticsearch7", "postgresql"]}
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
