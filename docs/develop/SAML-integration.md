@@ -44,9 +44,15 @@ For testing, we have used the [Docker Test SAML 2.0 Identity Provider](https://h
 docker run --name=testsamlidp_idp \
 -p 8080:8080 \
 -p 8443:8443 \
+<<<<<<< HEAD
 -e SIMPLESAMLPHP_SP_ENTITY_ID=https://127.0.0.1:5000/saml/metadata/simplesaml \
 -e SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://127.0.0.1:5000/saml/authorized/simplesaml \
 -e SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://127.0.0.1:5000/saml/sls/simplesaml \
+=======
+-e SIMPLESAMLPHP_SP_ENTITY_ID=https://archivefda.dlib.nyu.edu/shibboleth-sp \
+-e SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=<UV SP ACS ROUTE> \
+-e SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=<UV SP SLO ROUTE> \
+>>>>>>> SAML Integration
 -d kristophjunge/test-saml-idp
 ```
 
@@ -110,7 +116,6 @@ SSO_SAML_IDPS = {
                 # to see the NameIdFormat that are supported.
                 'NameIDFormat': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
             },
-
             # Identity Provider Data that we want connected with our SP. -- This will change according to the NYU IdP
             'idp': {
 
@@ -172,7 +177,6 @@ SSO_SAML_IDPS = {
                     'http://www.w3.org/2001/04/xmlenc#sha256'
             },
         },
-
         # Account Mapping -- This will change according to the NYU IdP
         "mappings": {
             "email": "email",
