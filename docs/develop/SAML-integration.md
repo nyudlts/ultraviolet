@@ -45,6 +45,7 @@ docker run --name=testsamlidp_idp \
 -p 8080:8080 \
 -p 8443:8443 \
 <<<<<<< HEAD
+<<<<<<< HEAD
 -e SIMPLESAMLPHP_SP_ENTITY_ID=https://127.0.0.1:5000/saml/metadata/simplesaml \
 -e SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://127.0.0.1:5000/saml/authorized/simplesaml \
 -e SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://127.0.0.1:5000/saml/sls/simplesaml \
@@ -53,6 +54,11 @@ docker run --name=testsamlidp_idp \
 -e SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=<UV SP ACS ROUTE> \
 -e SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=<UV SP SLO ROUTE> \
 >>>>>>> SAML Integration
+=======
+-e SIMPLESAMLPHP_SP_ENTITY_ID=https://127.0.0.1:5000/saml/metadata/simplesaml \
+-e SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://127.0.0.1:5000/saml/authorized/simplesaml \
+-e SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://127.0.0.1:5000/saml/sls/simplesaml \
+>>>>>>> SAML Integration Complete
 -d kristophjunge/test-saml-idp
 ```
 
