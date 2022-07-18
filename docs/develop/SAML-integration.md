@@ -111,7 +111,7 @@ SSO_SAML_IDPS = {
                 'NameIDFormat': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
             },
 
-            # Identity Provider Data that we want connected with our SP.
+            # Identity Provider Data that we want connected with our SP. -- This will change according to the NYU IdP
             'idp': {
 
                 # Identifier of the IdP entity  (must be a URI)
@@ -173,12 +173,12 @@ SSO_SAML_IDPS = {
             },
         },
 
-        # Account Mapping
+        # Account Mapping -- This will change according to the NYU IdP
         "mappings": {
-            "email": "<attribute_email>",
-            "name": "<attribute_name>",
-            "surname": "<attribute_surname>",
-            "external_id": "<attribute_external_id>",
+            "email": "email",
+            "name": "email",
+            "surname": "eduPersonAffiliation",
+            "external_id": "uid",
         },
 
         # Inject your simplesaml idp app to handler
