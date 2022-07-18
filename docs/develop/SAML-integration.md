@@ -122,6 +122,7 @@ SSO_SAML_IDPS = {
                 # to see the NameIdFormat that are supported.
                 'NameIDFormat': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
             },
+
             # Identity Provider Data that we want connected with our SP. -- This will change according to the NYU IdP
             'idp': {
 
@@ -183,6 +184,7 @@ SSO_SAML_IDPS = {
                     'http://www.w3.org/2001/04/xmlenc#sha256'
             },
         },
+
         # Account Mapping -- This will change according to the NYU IdP
         "mappings": {
             "email": "email",
