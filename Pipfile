@@ -11,13 +11,9 @@ selenium = "*"
 [packages]
 invenio-app-rdm = {version = "~=10.1.0", extras = ["elasticsearch7", "postgresql"]}
 python-dotenv = "*"
-<<<<<<< HEAD
 uwsgi = "*"
 pytest-invenio = "==1.4.3"
 flask-pytest = "*"
-=======
-invenio-saml = {path = "./invenio-saml"}
->>>>>>> SAML Integration
 
 [requires]
 python_version = "3.8"
