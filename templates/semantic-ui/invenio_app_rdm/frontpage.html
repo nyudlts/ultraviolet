@@ -1,6 +1,7 @@
 {#
   Copyright (C) 2019-2020 CERN.
   Copyright (C) 2019-2020 Northwestern University.
+  Copyright (C) 2021 New York University.
 
   Invenio App RDM is free software; you can redistribute it and/or modify it
   under the terms of the MIT License; see LICENSE file for more details.
@@ -12,11 +13,11 @@
 {%- endblock page_header %}
 
 {%- block page_body %}
-{%- block first_section%}
-<main class="section-content-white-bg" id="main">
-  <div class="ui container">
+{%- block first_section %}
+
+  <div class="ui main text container" style="margin-top: 3rem">
     <div class="ui grid">
-      <div class="uv-intro">
+      <div class="uv-intro sixteen wide column">
         <h2>Discover Data for Research at NYU</h2>
         <ul>
           <li>Discover original research data and code</li>
@@ -24,14 +25,11 @@
           <li>Deposit data for public use</li>
         </ul>
         <h2>About this Project</h2>
-        <p>UltraViolet is associated with NYU Libraries Digital Repository Services for Research. Users can deposit research data, code, photos, and other projects. The environment also contains discovery records for proprietary data, available to members of the NYU community.</p>  
+        <p>UltraViolet is associated with NYU Libraries Digital Repository Services for Research. Users can deposit research data, code, photos, and other projects. The environment also contains discovery records for proprietary data, available to members of the NYU community.</p>
 
       </div>
     </div>
   </div>
-</main>
-{%- endblock first_section%}
-{%- block second_section%}
 
-{%- endblock second_section%}
-{%- endblock page_body%}
+{%- endblock first_section %}
+{%- endblock page_body %}

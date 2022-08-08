@@ -1,37 +1,223 @@
 {#
   Copyright (C) 2020-2021 CERN.
   Copyright (C) 2020-2021 Northwestern University.
+  Copyright (C) 2021 New York University.
 
   Invenio RDM Records is free software; you can redistribute it and/or modify
   it under the terms of the MIT License; see LICENSE file for more details.
-  
-  Copied from https://github.com/inveniosoftware/invenio-app-rdm/blob/master/invenio_app_rdm/records_ui/templates/semantic-ui/invenio_app_rdm/records/details/details.html
-  on 2021-10-07 v v6.0.4
 #}
 
 
-{%- from "invenio_app_rdm/records/macros/detail.html" import list_formats, list_languages,
-  list_sizes, show_add_descriptions, show_add_titles, show_dates, show_detail, show_funding,
-  show_references, show_alternate_identifiers, show_related_identifiers %}
+{%- from "invenio_app_rdm/records/macros/detail.html" import show_references, show_add_titles,
+show_alternate_identifiers, show_related_identifiers, show_funding, show_dates %}
 
-<div id="record-details">
-  <hr class="thin-line"></hr>
-  <h2 class="ui header">{{ _('Details')}}</h2>
-  <hr class="thin-line"></hr>
-  <section class="top-bottom-padded">
-    {{ show_detail(_('Resource type'), record.ui.resource_type.title_l10n) if record.ui.resource_type }}
-    {{ show_detail(_('Publication date'), record.ui.publication_date_l10n) if record.ui.publication_date_l10n }}
-    {{ show_detail(_('Publisher'), metadata.publisher) if metadata.publisher }}
-    {{ show_detail(_('Additional titles'), show_add_titles(record.ui.additional_titles)) if metadata.additional_titles }}
-    {{ show_detail(_('Additional descriptions'), show_add_descriptions(record.ui.additional_descriptions)) if record.ui.additional_descriptions }}
-    {{ show_detail(_('Dates'), show_dates(record.ui.dates)) if record.ui.dates }}
-    {{ show_detail(_('Languages'), list_languages(record.ui.languages)) if record.ui.languages }}
-    {{ show_detail(_('Formats'), list_formats(metadata.formats)) if metadata.formats }}
-    {{ show_detail(_('Sizes'), list_sizes(metadata.sizes)) if metadata.sizes }}
-    {{ show_detail(_('Funding'), show_funding(metadata.funding)) if metadata.funding }}
-    {{ show_detail(_('Alternate identifiers'), show_alternate_identifiers(metadata.identifiers)) if metadata.identifiers }}
-    {{ show_detail(_('Related works'), show_related_identifiers(record.ui.related_identifiers)) if record.ui.related_identifiers }}
-    {{ show_detail(_('References'), show_references(metadata.references)) if metadata.references }}
-  </section>
-<hr class="thin-line"></hr>
-</div>
+{% set hasContent = record.ui.additional_titles or
+                    metadata.identifiers or
+                    record.ui.related_identifiers or
+                    metadata.funding or
+                    record.ui.dates or
+                    metadata.references
+%}
+{% set rights = record.ui.get('rights') %}
+{% set funding = record.ui.get('funding') %}
+{% set active = true %}
+
+{% if hasContent %}
+  <div class="ui divider"></div>
+
+  <h2 id="record-details-heading">{{ _('Additional details') }}</h2>
+
+  <div class="rdm-tab-container ml-0-mobile mr-0-mobile">
+    {# Tabs #}
+    <div role="tablist" class="ui top attached tabs menu rdm-tab-menu">
+      {% if record.ui.additional_titles %}
+        <a
+          role="tab"
+          aria-selected="{{ active }}"
+          aria-controls="additional-titles-tab-panel"
+          data-tab="additional-titles"
+          tabindex="0"
+          class="{{ 'active' if active }} item"
+          id="additional-titles-tab"
+        >
+          {{ _('Additional titles') }}
+        </a>
+        {% set active = false %}
+      {% endif %}
+
+
+      {% if metadata.identifiers %}
+        <a
+          role="tab"
+          aria-selected="{{ active }}"
+          aria-controls="identifiers-tab-panel"
+          data-tab="identifiers"
+          tabindex="0"
+          class="{{ 'active' if active }} item"
+          id="identifiers-tab"
+        >
+          {{ _('Identifiers') }}
+        </a>
+        {% set active = false %}
+      {% endif %}
+
+      {% if record.ui.related_identifiers %}
+        <a
+          role="tab"
+          aria-selected="{{ active }}"
+          aria-controls="related-works-tab-panel"
+          data-tab="related-works"
+          tabindex="0"
+          class="{{ 'active' if active }} item"
+          id="related-works-tab"
+        >
+          {{ _('Related works') }}
+        </a>
+        {% set active = false %}
+      {% endif %}
+
+      {% if metadata.funding %}
+        <a
+          role="tab"
+          aria-selected="{{ active }}"
+          aria-controls="funding-tab-panel"
+          data-tab="funding"
+          tabindex="0"
+          class="{{ 'active' if active }} item"
+          id="funding-tab"
+        >
+          {{ _('Funding') }}
+        </a>
+        {% set active = false %}
+      {% endif %}
+
+      {% if record.ui.dates %}
+        <a
+          role="tab"
+          aria-selected="{{ active }}"
+          aria-controls="dates-tab-panel"
+          data-tab="dates"
+          tabindex="0"
+          class="{{ 'active' if active }} item"
+          id="dates-tab"
+        >
+          {{ _('Dates') }}
+        </a>
+        {% set active = false %}
+      {% endif %}
+
+      {% if metadata.references %}
+        <a
+          role="tab"
+          aria-selected="{{ active }}"
+          aria-controls="references-tab-panel"
+          data-tab="references"
+          tabindex="0"
+          class="{{ 'active' if active }} item"
+          id="references-tab"
+        >
+          {{ _('References') }}
+        </a>
+      {% endif %}
+    </div>
+
+    {# Content #}
+    {% set active = true %}
+
+    {% if record.ui.additional_titles %}
+      <div
+          role="tabpanel"
+          class="ui bottom attached {{ 'active' if active }} tab segment"
+          data-tab="additional-titles"
+          aria-labelledby="additional-titles-tab"
+          id="additional-titles-tab-panel"
+          hidden="{{ not active }}"
+
+      >
+        <dl class="details-list">
+          {{ show_add_titles(record.ui.additional_titles) }}
+        </dl>
+      </div>
+      {% set active = false %}
+    {% endif %}
+
+    {% if metadata.identifiers %}
+      <div
+          role="tabpanel"
+          class="ui bottom attached {{ 'active' if active }} tab segment"
+          data-tab="identifiers"
+          aria-labelledby="identifiers-tab"
+          id="identifiers-tab-panel"
+          hidden="{{ not active }}"
+      >
+        <dl class="details-list">
+          {{ show_alternate_identifiers(metadata.identifiers) }}
+        </dl>
+      </div>
+      {% set active = false %}
+    {% endif %}
+
+    {% if record.ui.related_identifiers %}
+      <div
+          role="tabpanel"
+          class="ui bottom attached {{ 'active' if active }} tab segment"
+          data-tab="related-works"
+          aria-labelledby="related-works-tab"
+          id="related-works-tab-panel"
+          hidden="{{ not active }}"
+      >
+        <dl class="details-list">
+          {{ show_related_identifiers(record.ui.related_identifiers) }}
+        </dl>
+      </div>
+      {% set active = false %}
+    {% endif %}
+
+    {% if funding %}
+      <div
+          role="tabpanel"
+          class="ui bottom attached {{ 'active' if active }} tab segment"
+          data-tab="funding"
+          aria-labelledby="funding-tab"
+          id="funding-tab-panel"
+          hidden="{{ not active }}"
+      >
+        <dl class="details-list">
+          {{ show_funding(funding) }}
+        </dl>
+      </div>
+      {% set active = false %}
+    {% endif %}
+
+    {% if record.ui.dates %}
+      <div
+          role="tabpanel"
+          class="ui bottom attached {{ 'active' if active }} tab segment"
+          data-tab="dates"
+          aria-labelledby="dates-tab"
+          id="dates-tab-panel"
+          hidden="{{ not active }}"
+      >
+        <dl class="details-list">
+          {{ show_dates(record.ui.dates) }}
+        </dl>
+      </div>
+      {% set active = false %}
+    {% endif %}
+
+    {% if metadata.references %}
+      <div
+          role="tabpanel"
+          class="ui bottom attached {{ 'active' if active }} tab segment"
+          data-tab="references"
+          aria-labelledby="references-tab"
+          id="references-tab-panel"
+          hidden="{{ not active }}"
+      >
+        <dl class="details-list">
+          {{ show_references(metadata.references) }}
+        </dl>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

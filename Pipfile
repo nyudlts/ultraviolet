@@ -9,12 +9,9 @@ pytest = "==6.2.5"
 selenium = "*"
 
 [packages]
-invenio-app-rdm = {version = "~=9.0.5", extras = ["elasticsearch7", "postgresql"]}
-uwsgi = ">=2.0"
-uwsgitop = ">=0.11"
-uwsgi-tools = ">=1.1.1"
-markupsafe = "==2.0.1"
+invenio-app-rdm = {version = "~=9.1.3", extras = ["elasticsearch7", "postgresql"]}
 python-dotenv = "*"
+uwsgi = "*"
 
 [requires]
 python_version = "3.8"

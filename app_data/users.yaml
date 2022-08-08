@@ -1,4 +1,4 @@
-- email: admin@test.com
+- email: adminUV@test.com
   active: True
   password: adminpassword
   roles:
@@ -22,13 +22,6 @@
 - email: restdatauser@test.com
   active: True
   password: restdatauser
-  roles:
-    - admin
-  allow:
-    - superuser-access
-- email: nyudepositor@test.com
-  active: True
-  password: nyudepositor
   roles:
     - admin
   allow:
