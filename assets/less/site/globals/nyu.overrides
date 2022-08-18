@@ -43,7 +43,7 @@ body {
   }
   // Top Navbar Links
   #invenio-nav .item a {
-    color: #ffffff !important;
+    //color: #ffffff !important;
     &:focus {
       //color: #ffffff !important;
       background-color: inherit;
