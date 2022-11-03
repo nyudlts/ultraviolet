@@ -15,7 +15,7 @@ services:
       - "INVENIO_CELERY_RESULT_BACKEND=redis://cache:6379/2"
       - "INVENIO_SEARCH_ELASTIC_HOSTS=['es:9200']"
       - "INVENIO_SECRET_KEY=CHANGE_ME"
-      - "INVENIO_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://nyu-data-repository:nyu-data-repository@db/nyu-data-repository"
+      - "INVENIO_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://nyudatarepository:changeme@db/nyudatarepository"
       - "INVENIO_WSGI_PROXIES=2"
       - "INVENIO_RATELIMIT_STORAGE_URL=redis://cache:6379/3"
   frontend:
@@ -35,9 +35,9 @@ services:
     image: postgres:12.4
     restart: "unless-stopped"
     environment:
-      - "POSTGRES_USER=nyu-data-repository"
-      - "POSTGRES_PASSWORD=nyu-data-repository"
-      - "POSTGRES_DB=nyu-data-repository"
+      - "POSTGRES_USER=nyudatarepository"
+      - "POSTGRES_PASSWORD=changeme"
+      - "POSTGRES_DB=nyudatarepository"
     ports:
       - "5432:5432"
   mq:
