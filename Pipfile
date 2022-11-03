@@ -12,6 +12,8 @@ selenium = "*"
 invenio-app-rdm = {version = "~=9.1.3", extras = ["elasticsearch7", "postgresql"]}
 python-dotenv = "*"
 uwsgi = "*"
+pytest-invenio = "==1.4.3"
+flask-pytest = "*"
 
 [requires]
 python_version = "3.8"
