@@ -1,0 +1,15 @@
+{#
+    Copyright (C) 2020 CERN.
+    Copyright (C) 2020 Northwestern University.
+
+    Invenio-App-RDM is free software; you can redistribute it and/or modify
+    it under the terms of the MIT License; see LICENSE file for more details.
+#}
+
+{%- extends config.PREVIEWER_ABSTRACT_TEMPLATE %}
+
+{% block panel %}
+<div class="iiif-simple-preview">
+  <img src="{{ file_url }}" alt="{{ _('Preview for' )}} {{ file.filename }}" />
+</div>
+{% endblock %}

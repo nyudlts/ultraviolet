@@ -1,0 +1,119 @@
+/*-------------------
+    Brand Colors
+--------------------*/
+
+// https://www.nyu.edu/employees/resources-and-services/media-and-communications/nyu-brand-guidelines/designing-in-our-style/nyu-colors.html
+// NYU Violet #57068c
+// Ultra Violet 8900e1
+// Deep Violet  #330662
+// Magenta: #fb0f78;
+
+@brandPrimary: #8900e1;
+@primaryColor: #57068c;
+@secondaryColor: #330662;
+@featuredListBackgroundColor: #4899DB;
+@primaryDarkenColor: #8900e1;
+
+// backwards compatibility
+@brandColor: @primaryColor;
+@brand-primary: @primaryColor;
+
+// set these too
+// @secondaryInvertedRedBackground;
+// @secondaryInvertedColor;
+
+/*-------------------
+      Site Colors
+--------------------*/
+
+@darkGray: #333;
+@signupColor: #fff2;
+
+@red: #db0363;
+//@red: #c40057;
+@green: #009b8a;
+@footerLightColor: #320054;
+@footerDarkColor: #220038;
+@subFooterColor: @footerDarkColor;
+@footerTextLightColor: #ffffff;
+@footerTextDarkColor: #ffffff;
+
+
+@navbarBackgroundImage: linear-gradient(12deg,
+    rgba(139, 0, 225, 0.85) 15%,
+    #330662);
+@navbarBackgroundColor: @brandColor;
+@versionActiveColor: #d9edf7;
+
+@mutedAccordionHeaderColor: #f5f5f5;
+
+/*-------------------
+    Emotive Colors
+--------------------*/
+
+/* Positive */
+@positiveColor : @green;
+@positiveBackgroundColor : desaturate(lighten(@green, 68), 5, relative);
+@positiveBorderColor : @green;
+@positiveHeaderColor :saturate(darken(@green, 8), 20, relative);
+@positiveTextColor : saturate(darken(@green, 8), 20, relative);
+
+
+/* Negative */
+@negativeColor : @red;
+@negativeBackgroundColor : desaturate(lighten(@red, 55), 15, relative);
+@negativeBorderColor : desaturate(lighten(@red, 20), 15, relative);
+@negativeHeaderColor : saturate(darken(@red, 8), 20, relative);
+@negativeTextColor : saturate(darken(@red, 8), 20, relative);
+
+/* Info */
+@infoColor : #31CCEC;
+@infoBackgroundColor : #F8FFFF;
+@infoBorderColor : #A9D5DE;
+@infoHeaderColor : #0E566C;
+@infoTextColor : #276F86;
+
+/* Warning */
+@warningColor : #F2C037;
+@warningBorderColor : #C9BA9B;
+@warningBackgroundColor : #FFFAF3;
+@warningHeaderColor : #794B02;
+@warningTextColor : #573A08;
+
+/*-------------------
+      Links
+--------------------*/
+
+@linkColor: #2674c1;
+@linkUnderline: none;
+// Question: do we need these both?
+@linkHoverColor: saturate(darken(@linkColor, 5), 10, relative);
+@linkColorHover: saturate(darken(@linkColor, 5), 10, relative);
+
+@linkHoverUnderline: underline;
+@linkColorActive: #cc00d2;
+
+
+
+
+/***********************************************
+        Button Variables
+***********************************************/
+
+@searchButtonColor: #C201FF;
+@searchButtonColorHover: saturate(darken(@searchButtonColor, 5), 10, relative);
+@searchButtonColorFocus: saturate(darken(@searchButtonColor, 8), 20, relative);
+@searchButtonColorDown: darken(@searchButtonColor, 10);
+@searchButtonColorTextColor: @invertedTextColor;
+
+@signupColorTextColor: @invertedTextColor;
+//@signupColorTextShadow: @invertedTextShadow;
+
+@searchButtonColorTextColor: @invertedTextColor;
+//@searchButtonColorTextShadow: @invertedTextShadow;
+
+
+
+/***********************************************
+        NYU custom variables (not found in iRDM, invenio-theme, or SemanticUI)
+***********************************************/

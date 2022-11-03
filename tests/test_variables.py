@@ -40,9 +40,7 @@ def test_var_noassigned():
     assert app.config.get("APP_ALLOWED_HOSTS") == ["0.0.0.0", "localhost", "127.0.0.1"]
     assert (
         app.config.get("SQLALCHEMY_DATABASE_URI")
-        == "postgresql+psycopg2://nyu-data-repository:nyu-data-repository@localhost/nyu-data-repository"
+        == "postgresql+psycopg2://nyudatarepository:changeme@localhost/nyudatarepository"
     )
-    assert app.config.get("RDM_RECORDS_DOI_DATACITE_ENABLED") is False
-    assert app.config.get("COMMUNITIES_ENABLED") is False
     assert app.config.get("SITE_UI_URL") == "https://127.0.0.1:5000"
     assert app.config.get("SITE_API_URL") == "https://127.0.0.1:5000/api"

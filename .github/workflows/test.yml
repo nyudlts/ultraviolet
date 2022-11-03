@@ -36,9 +36,9 @@ jobs:
         run: |
           pip install --no-cache-dir --upgrade pip invenio-cli pipenv
           pip list
-      - name: "Check project requirements"
-        run: |
-          invenio-cli check-requirements
+      # - name: "Check project requirements"
+        # run: |
+          # invenio-cli check-requirements
       - name: "Setup mandatory files"
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
