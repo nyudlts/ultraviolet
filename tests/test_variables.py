@@ -42,6 +42,5 @@ def test_var_noassigned():
         app.config.get("SQLALCHEMY_DATABASE_URI")
         == "postgresql+psycopg2://nyudatarepository:changeme@localhost/nyudatarepository"
     )
-    assert app.config.get("RDM_RECORDS_DOI_DATACITE_ENABLED") is False
     assert app.config.get("SITE_UI_URL") == "https://127.0.0.1:5000"
     assert app.config.get("SITE_API_URL") == "https://127.0.0.1:5000/api"
