@@ -1,0 +1,175 @@
+{#
+  Copyright (C) 2020 CERN.
+
+  Invenio RDM Records is free software; you can redistribute it and/or modify
+  it under the terms of the MIT License; see LICENSE file for more details.
+#}
+
+
+{% macro show_detail(title, value) %}
+  <dt class="ui tiny header">{{ title }}</dt>
+  <dd>{{ value }}</dd>
+{%- endmacro %}
+
+{% macro show_title_detail(title, language, value) %}
+  <dt class="ui tiny header">
+    {{ title }}
+    <span class="language text-muted">
+      {{ '(' + language + ')' if language}}
+    </span>
+  </dt>
+  <dd>
+    {{ value }}
+  </dd>
+{%- endmacro %}
+
+{% macro show_sanitized_detail(title, value) %}
+<dt class="ui tiny header">{{ title }}</dt>
+<dd>
+    {{ value | sanitize_html()| safe }}
+</dd>
+{%- endmacro %}
+
+
+{% macro list_sizes(sizes) %}
+  {% for size in sizes %}
+    {{ size }}{{ ", " if not loop.last }}
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro list_formats(formats) %}
+  {% for format in formats %}
+    {{ format }}{{ ", " if not loop.last }}
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro show_add_titles(add_titles) %}
+  {% for add_title in add_titles %}
+    {% if add_title.lang %}
+      {{ show_title_detail(add_title.type.title_l10n, add_title.lang.title_l10n, add_title.title)}}
+    {% else %}
+      {{ show_title_detail(add_title.type.title_l10n,None, add_title.title)}}
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro show_add_descriptions(add_descriptions) %}
+  {% for add_description in add_descriptions %}
+  <section id="additional-description-{{loop.index}}" class="rel-mt-2" aria-label="{{ _( add_description.type.title_l10n ) }}">
+    <h2>{{add_description.type.title_l10n }} <span class="text-muted language">{{ '(' + add_description.lang.title_l10n + ')' if add_description.lang }}</span></h2>
+    <p>{{ add_description.description | sanitize_html() | safe}}</p>
+  </section>
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro show_dates(dates) %}
+  {% for date in dates %}
+    <dt class="ui tiny header">{{ date.type.title_l10n }}</dt>
+    <dd>
+      <div>{{ date.date }}</div>
+      <div class="text-muted">{{ date.description }}</div>
+    </dd>
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro show_funding(funding) %}
+    {% for fund in funding %}
+      {{ _show_funding_item(fund, loop.index0) }}
+    {% endfor %}
+{% endmacro %}
+
+{% macro _show_funding_item(item, index) %}
+  {%- if item.award -%}
+    {%- if item.award.title_l10n -%}
+      <dt class="ui tiny header">
+        <span class="mr-5">
+          {{ item.award.title_l10n }}
+        </span>
+
+        {%- if item.award.number -%}
+          <span class="ui mini basic label ml-0 mr-5" id="number-label-{{ index }}">
+            {{ item.award.number }}
+          </span>
+        {%- endif -%}
+
+        {%- if item.award.identifiers -%}
+          {% for identifier in item.award.identifiers if 'url' == identifier.scheme %}
+            <a href="{{ identifier.identifier }}" target="_blank" rel="noopener noreferrer" aria-label="{{_('Open external link')}}">
+              <i class="external alternate icon"></i>
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
+      </dt>
+    {%- endif -%}
+    <dd class="text-muted">{{ item.funder.name if item.funder }}</dd>
+  {%- else -%}
+    <dt class="ui tiny header">{{ item.funder.name if item.funder }}</dt>
+  {%- endif -%}
+{% endmacro %}
+
+
+{% macro show_references(references) %}
+    <dt class="hidden">{{ _('References') }}</dt>
+  {% for reference in references %}
+    <dd>{{ reference.reference + ' ( ' + reference.scheme + ' - ' +  reference.identifier + ' )'}}</dd>
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro _identifiers_for_group(related_identifiers) %}
+  {% for identifier in related_identifiers %}
+    <dd>
+      {% if identifier.resource_type is defined %}
+        {{ identifier.resource_type.title_l10n }}:
+      {% endif %}
+
+      {% set url = identifier.identifier|pid_url %}
+      {% if url %}
+        <a href="{{ url }}" target="_blank" title="{{ _('Opens in new tab') }}">
+          {{ identifier.identifier }}
+        </a>
+      {% else %}
+        {{ identifier.identifier }}
+      {% endif %}
+
+      {{ ' (' + identifier.scheme | get_scheme_label + ')' }}
+    </dd>
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro show_related_identifiers(related_identifiers) %}
+  {%- for group in related_identifiers | groupby('relation_type.title_l10n')%}
+  <dt class="ui tiny header">{{ group.grouper }}</dt>
+  {{ _identifiers_for_group(group.list) }}
+  {%- endfor %}
+{% endmacro %}
+
+
+{% macro show_alternate_identifiers(identifiers) %}
+  {% for alt_id in identifiers %}
+  <dt class="ui tiny header">{{ alt_id.scheme | get_scheme_label }}</dt>
+  <dd>
+    {% set url = alt_id.identifier|pid_url(scheme=alt_id.scheme) %}
+    {% if url %}
+      <a href="{{ url }}" target="_blank" title="{{ _('Opens in new tab') }}">
+        {{ alt_id.identifier }}
+      </a>
+    {% else %}
+      {{ alt_id.identifier }}
+    {% endif %}
+  </dd>
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro list_languages(languages) %}
+  {% for lang in languages %}
+    {{ lang.title_l10n }}{{ ", " if not loop.last }}
+  {% endfor %}
+{% endmacro %}
