@@ -1,0 +1,147 @@
+// NYU Overrides
+
+body {
+
+  font-family: GothamLight, Lato, sans-serif;
+
+  a,
+  .ui.breadcrumb & {
+    color: @linkColor;
+
+    &:hover {
+      color: @linkColorHover;
+      text-decoration: underline;
+    }
+
+    &:focus {
+      background-color: inherit;
+      outline: 3px solid @linkColorActive !important;
+    }
+
+    &:active,
+    &:hover:focus {
+      color: @linkColorActive;
+      outline: none;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: GothamLight, Lato, sans-serif;
+  }
+
+  // Please document this
+  #invenio-menu .right.menu .ui.button {
+    background-color: #fff2;
+    color: #FFFFFF;
+    text-shadow: none;
+    background-image: none;
+    box-shadow: inset 0px 0px 0px 1px #ffffff9e;
+  }
+  // Top Navbar Links
+  #invenio-nav .item a {
+    //color: #ffffff !important;
+    &:focus {
+      //color: #ffffff !important;
+      background-color: inherit;
+      //box-shadow: 0 0 1px 1px #ec00f4;
+      outline: 3px solid @linkColorActive !important;
+    }
+
+    &:active,
+    &:hover:focus {
+      color: #ffffff;
+      outline: none;
+    }
+
+  }
+  .ui.search.button {
+    background-color: @searchButtonColor  !important;
+
+    &:hover {
+      background-color: @searchButtonColorHover  !important;
+      // color: @searchButtonColorTextColor;
+      // text-shadow: @searchButtonColorTextShadow;
+    }
+
+    &:focus {
+      background-color: @searchButtonColorFocus;
+      //  color: @searchButtonColorTextColor;
+      //text-shadow: @searchButtonColorTextShadow;
+    }
+
+    &:active {
+      background-color: @searchButtonColorDown;
+      //color: @searchButtonColorTextColor;
+      //text-shadow: @searchButtonColorTextShadow;
+    }
+  }
+
+  // metadata tags
+  .ui.label {
+
+    &,
+    &.tiny,
+    &.access-status.metadata-only,
+    &.access-status.open,
+    &.access-status.embargoed,
+    &.neutral {
+      background-color: transparent !important;
+      border: none !important;
+      color: @darkGray !important;;
+      margin-left: 0;
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  .ui.items>.item .extra.labels-actions {
+    margin-bottom: 0;
+
+    >* {
+      margin: 0;
+    }
+
+    >[class*="right floated"] {
+      margin: 0 0 0 0.5rem;
+    }
+
+    // Bullet points between metadata labels
+    div {
+      &::after {
+        content: "\2022";
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+
+      &:last-child::after {
+        content: "";
+        padding: 0;
+      }
+
+      &:last-of-type::after {
+        content: "";
+        padding: 0;
+      }
+    }
+  }
+
+
+  .ui.items>.item>.content {
+    // Put the metadata labels last
+    display: flex;
+    flex-direction: column;
+
+    >.labels-actions {
+      order: 10;
+    }
+
+    >.extra {
+      order: 11;
+    }
+  }
+
+}
