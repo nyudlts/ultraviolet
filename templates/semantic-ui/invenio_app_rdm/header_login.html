@@ -80,10 +80,17 @@
               {%- endfor %}
 
               <div class="divider"></div>
-              <a role="menuitem" class="item" href="{{ url_for_security('logout') }}" tabindex="-1">
-                <i class="sign-out icon"></i>
-                {{ _('Log out') }}
-              </a>
+                {% if config.OAUTHCLIENT_REMOTE_APPS or config.SSO_SAML_IDPS %}
+                  <a role="menuitem" class="item" href="{{ url_for('ultraviolet_saml.logout_saml') }}" tabindex="-1">
+                    <i class="sign-out icon"></i>
+                    {{ _('Log out') }}
+                  </a>
+                {%- else %}
+                  <a role="menuitem" class="item" href="{{ url_for_security('logout') }}" tabindex="-1">
+                    <i class="sign-out icon"></i>
+                    {{ _('Log out') }}
+                  </a>
+                {%- endif %}
             </div>
           </div>
 
@@ -97,18 +104,31 @@
             {%- endfor %}
 
             <div class="ui divider"></div>
-
-            <a role="menuitem" class="item" style="color:black;" href="{{ url_for_security('logout') }}">
-                <i class="sign-out icon"></i>
-                {{ _('Log out') }}
-            </a>
+            {% if config.OAUTHCLIENT_REMOTE_APPS or config.SSO_SAML_IDPS %}
+                <a role="menuitem" class="item" style="color:black;" href="{{ url_for('ultraviolet_saml.logout_saml') }}">
+                    <i class="sign-out icon"></i>
+                    {{ _('Log out') }}
+                </a>
+              {%- else %}
+                <a role="menuitem" class="item" style="color:black;" href="{{ url_for_security('logout') }}">
+                    <i class="sign-out icon"></i>
+                    {{ _('Log out') }}
+                </a>
+              {%- endif %}
           </div>
 
         {%- else %}
-          <a role="button" href="{{ url_for_security('logout') }}" class="ui button">
-            <i class="sign-out icon"></i>
-            {{ _('Log out') }}
-          </a>
+          {% if config.OAUTHCLIENT_REMOTE_APPS or config.SSO_SAML_IDPS %}
+            <a role="button" href="{{ url_for('ultraviolet_saml.logout_saml') }}" class="ui button">
+                <i class="sign-out icon"></i>
+                {{ _('Log out') }}
+            </a>
+          {%- else %}
+            <a role="button" href="{{ url_for_security('logout') }}" class="ui button">
+                <i class="sign-out icon"></i>
+                {{ _('Log out') }}
+            </a>
+          {%- endif %}
         {%- endif %}
     {%- endif %}
 {%- endif %}
