@@ -204,11 +204,6 @@ SSO_SAML_IDPS = {
     # This is used to automatically set email and profile visibility to public to all SAML logged in users - remove this if not required
     "default_visibility": "public",
 
-    # The following is a hacky implementation. It should be False for a fresh invenio installation. After creating a community and adding the nyuusers role to the community, add the community ID as a list here
-    # For example: "auto_update_communities": ["c441b9c2-40e0-4035-96cc-8e13bd28d0f7"] where c441b9c2-40e0-4035-96cc-8e13bd28d0f7 is the community ID retrieved from the communities_metadata table. If one
-    # community is updated here, no need to update for subsequent communities, they add new group members automatically.
-    "auto_update_communities": False,
-
     # Inject your remote_app to handler
     # Note: keep in mind the string should match
     # given name for authentication provider
@@ -218,6 +213,12 @@ SSO_SAML_IDPS = {
     'auto_confirm': True
     }
 }
+
+# The following is a hacky implementation. It should be False for a fresh ultraviolet installation. After creating a community and adding the nyuusers role to the community using ultraviolet-cli, add the community ID as a list here
+# For example: COMMUNITIES_AUTO_UPDATE = ["c441b9c2-40e0-4035-96cc-8e13bd28d0f7"] where c441b9c2-40e0-4035-96cc-8e13bd28d0f7 is the community ID retrieved from the ultraviolet-cli communities_create command. If one
+# community is updated here, no need to update for subsequent communities, they add new group members automatically.
+COMMUNITIES_AUTO_UPDATE = False
+
 SSO_SAML_ROLES = {
         # Default role to be assigned to all SAML logged in users - remove this if not required
         # Unique role for each added SAML configuration needs to be specified here
