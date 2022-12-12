@@ -9,7 +9,7 @@ pytest = "==6.2.5"
 selenium = "*"
 
 [packages]
-invenio-app-rdm = {version = "~=9.1.3", extras = ["elasticsearch7", "postgresql"]}
+invenio-app-rdm = {version = "~=10.1.0", extras = ["elasticsearch7", "postgresql"]}
 python-dotenv = "*"
 uwsgi = "*"
 pytest-invenio = "==1.4.3"
