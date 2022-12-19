@@ -94,7 +94,7 @@
                 {%- endif %}
               {%- endfor %}
 
-              {% for item in current_menu.submenu('actions').children|sort(attribute='order') if item.visible recursive %}
+              {% for item in current_menu.submenu('actions').children|sort(attribute='order') if item.visible and config.ADMIN_ROLE in current_user.roles|map(attribute='name') recursive %}
                 <div class="item">
                   <a role="menuitem" href="{{ item.url }}">{{ item.text|safe }}</a>
                 </div>
