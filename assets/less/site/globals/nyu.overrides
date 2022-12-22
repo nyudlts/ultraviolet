@@ -58,6 +58,15 @@ body {
     }
 
   }
+  #rdm-burger-menu-icon {
+    .navicon {
+      background: #fff !important;
+      &:before,
+      &:after {
+        background:#fff !important;
+      }
+    }
+  }
   .ui.search.button {
     background-color: @searchButtonColor  !important;
 
