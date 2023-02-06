@@ -152,5 +152,7 @@ body {
       order: 11;
     }
   }
-
+  .ui.text.container {
+    font-family: GothamLight, Lato, sans-serif;
+  }
 }
