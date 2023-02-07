@@ -5,6 +5,7 @@
 
   Invenio is free software; you can redistribute it and/or modify it
   under the terms of the MIT License; see LICENSE file for more details.
+  Modified by NYU DLTS 02/2023 to make sure only admins can create communities
 #}
 
 {% extends "invenio_communities/base.html" %}
@@ -40,12 +41,14 @@
           </div>
         </form>
       </div>
+      {% if config.ADMIN_ROLE in current_user.roles|map(attribute='name') %}
       <div class="three wide mobile five wide tablet three wide computer stretched column">
         <a href="{{ config.COMMUNITIES_ROUTES['new'] }}" class="ui icon left labeled positive button" role="button">
           <i class="icon plus"></i>
           {{_('New community')}}
         </a>
       </div>
+      {% endif %}
     </div>
     <div class="ui divider hidden"></div>
   </div>

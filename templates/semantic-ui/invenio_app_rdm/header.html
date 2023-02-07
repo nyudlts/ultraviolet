@@ -94,7 +94,7 @@
                 {%- endif %}
               {%- endfor %}
 
-              {% for item in current_menu.submenu('actions').children|sort(attribute='order') if item.visible recursive %}
+              {% for item in current_menu.submenu('actions').children|sort(attribute='order') if item.visible and config.ADMIN_ROLE in current_user.roles|map(attribute='name') recursive %}
                 <div class="item">
                   <a role="menuitem" href="{{ item.url }}">{{ item.text|safe }}</a>
                 </div>
@@ -104,7 +104,7 @@
 
             {%- block navbar_right %}
               <div class="right menu item">
-                {%- if config.ACCOUNTS and current_user.is_authenticated %}
+                {%- if config.ACCOUNTS and current_user.is_authenticated and config.ADMIN_ROLE in current_user.roles|map(attribute='name') %}
                   {% for item in current_menu.submenu('notifications').children|sort(attribute='order') if item.visible recursive %}
                     <div class="item inbox">
                       <a role="menuitem" href="{{ item.url }}" aria-label="{{ _("Requests") }}">
