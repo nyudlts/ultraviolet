@@ -152,6 +152,10 @@ body {
       order: 11;
     }
   }
+
+  .ui.text.container {
+    font-family: GothamLight, Lato, sans-serif;
+  }
   .wrap-long-link {
     overflow-wrap: break-word;
     word-wrap: break-word;
