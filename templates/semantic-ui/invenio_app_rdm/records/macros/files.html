@@ -67,8 +67,8 @@
       {%- set file_type = file.key.split('.')[-1] %}
       <tr>
         <td>
-          <div class="truncated">
-            <a href="{{ file_url_download }}">{{ file.key }}</a>
+          <div>
+            <a class="wrap-long-link" href="{{ file_url_download }}">{{ file.key }}</a>
           </div>
           <small class="ui text-muted font-tiny">{{ file.checksum }}
           <div class="ui icon inline-block" data-tooltip="{{_('This is the file fingerprint (checksum), which can be used to verify the file integrity.')}}">
