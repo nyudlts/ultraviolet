@@ -27,4 +27,4 @@ def test_header_menu_button(base_client):
     front_view = base_client.get("/").data
     assert "Browse" in front_view.decode("utf-8")
     assert "FAQs" in front_view.decode("utf-8")
-    assert "Deposits" in front_view.decode("utf-8")
+    assert "Deposit" in front_view.decode("utf-8")
