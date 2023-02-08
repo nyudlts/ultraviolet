@@ -13,8 +13,7 @@ selenium = "*"
 [packages]
 python-dotenv = "*"
 uwsgi = "*"
-ultraviolet-saml = "*"
-invenio-app-rdm = {version = "~=10.0.0", extras = ["elasticsearch7", "postgresql"]}
+invenio-app-rdm = {version = "~=10.0.0", extras = ["opensearch2", "postgresql"]}
 
 [requires]
 python_version = "3.8"
