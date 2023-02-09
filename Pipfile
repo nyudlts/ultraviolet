@@ -11,6 +11,7 @@ selenium = "*"
 [packages]
 invenio-app-rdm = {version = "~=11.0.0", extras = ["postgresql", "opensearch2"]}
 invenio-logging = {extras = ["sentry-sdk"], version = "~=1.3.0"}
+ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git", ref = "sync_fork"}
 python-dotenv = "*"
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
