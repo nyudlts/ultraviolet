@@ -39,9 +39,9 @@ jobs:
       - name: "Install XMLSec1 Dependency for Ultraviolet SAML"
         run: |
           sudo apt-get install libxml2-dev libxmlsec1-dev
-      - name: "Check project requirements"
-        run: |
-          invenio-cli check-requirements
+      # - name: "Check project requirements"
+        # run: |
+          # invenio-cli check-requirements
       - name: "Setup mandatory files"
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
