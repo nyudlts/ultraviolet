@@ -2,7 +2,7 @@
 layout: default
 title: Update RDM Version
 parent: Develop
-nav_order: 5
+nav_order: 4
 has_toc: true
 redirect_from:
   - /getting-started/updating-versions/

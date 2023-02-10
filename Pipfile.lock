@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1816fdcddba6cb2484acd6f725f15cf5d2c1beda29b5e7190fd9449a8c490544"
+            "sha256": "673729110a366985266b63cb6de5957b5974780b6065d98f28a8cf861792466e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -830,6 +830,13 @@
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.5.1"
         },
+        "flask-sso-saml": {
+            "hashes": [
+                "sha256:8a6c7dd746301863ae65022128ab5c9c6bd6109756cd5b4e943d23ca8c96006a",
+                "sha256:96f07457a44bdc6ce8f9ab4dd58ceb712d6bbdc19d18c019ad7bb9be0f07ef1a"
+            ],
+            "version": "==0.2.0"
+        },
         "flask-talisman": {
             "hashes": [
                 "sha256:08a25360c771f7a79d6d4db2abfa71f7422e62a714418b671d69d6a201764d05",
@@ -1295,14 +1302,6 @@
                 "sha256:80c348282715b4a40855f8ea04f3f3acbda7d4f37e8e60e81f91115e31f8883b"
             ],
             "version": "==1.2.8"
-        },
-        "invenio-saml": {
-            "hashes": [
-                "sha256:10da3922f0b102063e4fa87fb845330343a1f23ce0fb68bcadfd16fc22d35163",
-                "sha256:6d3f7d38680557f2701b7201ba18e59e053e68783f111d56f9b1a31e91152bc9"
-            ],
-            "index": "pypi",
-            "version": "==1.0.0a4"
         },
         "invenio-search": {
             "extras": [
@@ -2744,6 +2743,10 @@
                 "sha256:f97126300df8ac0f8f2c9d8559669532d626a1af529265fd253cba56e73ab36e"
             ],
             "version": "==0.16.1"
+        },
+        "ultraviolet-saml": {
+            "git": "https://github.com/nyudlts/ultraviolet-saml.git",
+            "ref": "9f7ebc2aea0700dfc241c6933405a8f1123dd542"
         },
         "uritemplate": {
             "hashes": [
