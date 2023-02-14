@@ -80,10 +80,31 @@
               {%- endfor %}
 
               <div class="divider"></div>
-              <a role="menuitem" class="item" href="{{ url_for_security('logout') }}" tabindex="-1">
-                <i class="sign-out icon"></i>
-                {{ _('Log out') }}
-              </a>
+              {% if 'SSO_SAML_ROLES' in config %}
+                  {% set ns = namespace(flag=false) %}
+                  {% for user_role in current_user.roles|map(attribute='name') %}
+                    {% for saml in config.SSO_SAML_ROLES %}
+                        {% if config.SSO_SAML_ROLES[saml] == user_role %}
+                          <a role="menuitem" class="item" href="{{ url_for('ultraviolet_saml.logout_saml', idp=saml) }}" tabindex="-1">
+                            <i class="sign-out icon"></i>
+                            {{ _('Log out') }}
+                          </a>
+                            {% set ns.flag = true %}
+                        {%- endif %}
+                    {%- endfor %}
+                 {%- endfor %}
+                {% if ns.flag == false %}
+                    <a role="menuitem" class="item" href="{{ url_for_security('logout') }}" tabindex="-1">
+                    <i class="sign-out icon"></i>
+                    {{ _('Log out') }}
+                  </a>
+                {%- endif %}
+              {%- else %}
+                  <a role="menuitem" class="item" href="{{ url_for_security('logout') }}" tabindex="-1">
+                    <i class="sign-out icon"></i>
+                    {{ _('Log out') }}
+                  </a>
+              {%- endif %}
             </div>
           </div>
 
@@ -97,18 +118,59 @@
             {%- endfor %}
 
             <div class="ui divider"></div>
-
-            <a role="menuitem" class="item" style="color:black;" href="{{ url_for_security('logout') }}">
-                <i class="sign-out icon"></i>
-                {{ _('Log out') }}
-            </a>
+            {% if 'SSO_SAML_ROLES' in config %}
+              {% set ns = namespace(flag=false) %}
+              {% for user_role in current_user.roles|map(attribute='name') %}
+                {% for saml in config.SSO_SAML_ROLES %}
+                    {% if config.SSO_SAML_ROLES[saml] == user_role %}
+                        <a role="menuitem" class="item" style="color:black;" href="{{ url_for('ultraviolet_saml.logout_saml', idp=saml) }}">
+                            <i class="sign-out icon"></i>
+                            {{ _('Log out') }}
+                        </a>
+                        {% set ns.flag = true %}
+                    {%- endif %}
+                    {%- endfor %}
+                {%- endfor %}
+              {% if ns.flag == false %}
+                <a role="menuitem" class="item" style="color:black;" href="{{ url_for_security('logout') }}">
+                    <i class="sign-out icon"></i>
+                    {{ _('Log out') }}
+                </a>
+              {%- endif %}
+              {%- else %}
+                <a role="menuitem" class="item" style="color:black;" href="{{ url_for_security('logout') }}">
+                    <i class="sign-out icon"></i>
+                    {{ _('Log out') }}
+                </a>
+              {%- endif %}
           </div>
 
         {%- else %}
-          <a role="button" href="{{ url_for_security('logout') }}" class="ui button">
-            <i class="sign-out icon"></i>
-            {{ _('Log out') }}
-          </a>
+          {% if 'SSO_SAML_ROLES' in config %}
+              {% set ns = namespace(flag=false) %}
+              {% for user_role in current_user.roles|map(attribute='name') %}
+                {% for saml in config.SSO_SAML_ROLES %}
+                    {% if config.SSO_SAML_ROLES[saml] == user_role %}
+                        <a role="button" href="{{ url_for('ultraviolet_saml.logout_saml', idp=saml) }}" class="ui button">
+                            <i class="sign-out icon"></i>
+                            {{ _('Log out') }}
+                        </a>
+                        {% set ns.flag = true %}
+                    {%- endif %}
+                {%- endfor %}
+              {%- endfor %}
+              {% if ns.flag == false %}
+                <a role="button" href="{{ url_for_security('logout') }}" class="ui button">
+                <i class="sign-out icon"></i>
+                {{ _('Log out') }}
+                </a>
+              {%- endif %}
+          {%- else %}
+            <a role="button" href="{{ url_for_security('logout') }}" class="ui button">
+                <i class="sign-out icon"></i>
+                {{ _('Log out') }}
+            </a>
+          {%- endif %}
         {%- endif %}
     {%- endif %}
 {%- endif %}

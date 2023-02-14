@@ -36,6 +36,9 @@ jobs:
         run: |
           pip install --no-cache-dir --upgrade pip invenio-cli pipenv
           pip list
+      - name: "Install XMLSec1 Dependency for Ultraviolet SAML"
+        run: |
+          sudo apt-get install libxml2-dev libxmlsec1-dev
       # - name: "Check project requirements"
         # run: |
           # invenio-cli check-requirements
