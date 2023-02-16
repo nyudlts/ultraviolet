@@ -9,46 +9,67 @@ redirect_from:
 ---
 # {{ page.title }}
 
-## Prerequisites
-- **Docker**
-  + [Installation instructions]({{ 'tips-and-gotchas/install-docker' | absolute_url }})
-  + Check for successful installation with `docker --version`
-- **Simple Python Version Management (Pyenv)**
-  + [Installation instructions](https://github.com/pyenv/pyenv#installation)
-  + Check for successful installation with `pyenv --version`
-- **Node Version Manager (NVM)**
-  + [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
-  + Check for successful installation with `nvm --version`
-  + NOTE: if after nvm installation you are getting `nvm: not found` you can use the following [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux). You may also want to configure your Bash profile to automatically recognize a specific `nvm` environment See this [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) for more info.
-- **Node Package Manager (NPM)**
-  + [Installation instructions](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-  + Check your version with `npm --version`
-  + When having version >= 7, run: `echo "legacy-peer-deps = true" >> ~/.npmrc`
-- **Cairo**
-  + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
-- **Postgres**
-  + [Installation instructions](http://postgresguide.com/setup/install.html)
-- **ImageMagick**
-  + [Installation instructions](https://imagemagick.org/script/download.php#macosx)
+## System Requirements
 
-## Steps
+> As of Jan 2023, Ultraviolet uses InvenioRDM version 7 that is behind a couple of versions from the current InvenioRDM v11 released in Jan 2023.
+
+The following instructions were modified from the [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/):
+
+- Supported Hardware
+  + ARM (M1 MacOS) architectures are not fully functional yet for Ultraviolet's version of InvenioRDM, we recommend `x86_64` processors.
+  + At least 8GB of RAM and 4 cores.
+- Supported Operating Systems
+  - MacOS or Linux-based systems (Windows not supported)
+- System Requirements to Install Ultraviolet
+  - Git
+  - **Simple Python Version Management (Pyenv)**
+    + [Installation instructions](https://github.com/pyenv/pyenv#installation)
+    + Restart Terminal and Check for successful installation with `pyenv --version`
+    + Why does InvenioRDM use [Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
+  - **Docker**
+    + Use the [Install Docker Documentation]({{'tips-and-gotchas/install-docker/' | absolute_url }})
+    + Check for successful installation with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
+    + If you are doing a fully containerized testing this is all you need to quick start the application; jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
+  - **Node Version Manager (NVM)**
+    + Use these [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating) following the CLI installation (for MacOS install nvm from scratch not from brew).
+    + Restart Terminal and Check for successful installation with `nvm --version`. [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux). 
+    + Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
+  - **Cairo**
+    + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+  - **Postgres**
+    + [Installation instructions](http://postgresguide.com/setup/install.html)
+    + When running fully containerized App ensure postgresql services are off since they will conflict with ports of the postgres containers if you run them simultaneously. Use `systemctl stop postgresql` to stop postgres in Linux. Probably `brew services stop postgresql` for MacOS installation using Homebrew.
+  - **ImageMagick**
+    + MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
+    + Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
+
+> From the InvenioRDM documentation: During Setup and Installation we start these services, but you can also just as well use externally hosted options for these:
+> - postgresql
+> - elasticsearch
+> - redis memcached
+
+## Setup and Installation
 
 1. Get the local copy of the UltraViolet source code:
   ```sh
   git clone https://github.com/nyudlts/ultraviolet.git && cd ultraviolet
   ```
-
 2. Make sure your Docker Desktop is running. If planning to do sustained work, you may want to increase the memory allocation to at least 4 GB but this isn't necessary.
 
-3. Load correct python version in current environment. (Check result with `python --version`)
+3. Load correct python version in current environment. 
   ```sh
   pyenv install --skip-existing
   ```
+  > (Check result with `python --version`)
 
 4. Load correct node version (14.x) in current environment. (Check result with `node --version`)
   ```sh
   nvm install
   ```
+  > reads `.nvmrc` for a node version and installs it. Installs NPM (Node Package Manager) alongside Node.
+  > `node --version` to confirm Node has been installed
+  > `npm --version` to confirm NPM has been installed
+  > IF `npm --version` >= 7, run: `echo "legacy-peer-deps = true" >> ~/.npmrc`
 
 5. Install and/or update pip, pipenv, and [invenio-cli](https://invenio-cli.readthedocs.io/en/latest/)
   ```sh
@@ -59,6 +80,7 @@ redirect_from:
   ```sh
   invenio-cli check-requirements
   ```
+  > error docker-compose not found possible, see [Docker Compose Troubleshooting]({{ site.baseurl }}{% link tips-and-gotchas/docker.md %})
 
 7. Create an `.invenio.private` file which is used by the invenio-cli tool
   ```sh
@@ -77,6 +99,7 @@ redirect_from:
   pipenv --rm
   invenio-cli packages lock --pre --dev
   ```
+  > possible `No virtualenv has been created for this project yet`
 
 10. Due to a [known bug in the current version of InvenioRDM](https://github.com/inveniosoftware/invenio-files-rest/issues/264) we can only use `setuptools` version smaller then 58.
   ```sh
@@ -101,6 +124,7 @@ redirect_from:
   ```sh
   invenio-cli assets build --development
   ```
+  > will run webpack and JS bundlers 
 
 15. Start the application.
   ```sh

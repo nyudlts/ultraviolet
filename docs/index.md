@@ -5,13 +5,9 @@ nav_order: 0
 ---
 # Welcome to the NYU UltraViolet Docs Wiki
 
-UltraViolet 💜 is a data repository service managed by New York University Libraries. UltraViolet provides long-term open access to data associated with research and scholarly output by members of the NYU community. UltraViolet is an NYU-specific implementation of the InvenioRDM software.
+UltraViolet is an NYU repository application for research data. The codebase for UltraViolet is a local deployment of the [InvenioRDM](https://inveniosoftware.org/products/rdm/) application. NYU Libraries contributes to InvenioRDM as part of an open-source community. 
 
-## Overview
-
-The UltraViolet codebase lives in the [nyudlts /
-ultraviolet](https://github.com/nyudlts/ultraviolet) GitHub repo.  
-This site is built by GitHub pages using the files in the `docs` directory of the main UltraViolet repo.
+For information about NYU's UltraViolet repository service, including policies and how to submit data, see: [https://guides.nyu.edu/ultraviolet](https://guides.nyu.edu/ultraviolet).
 
 ## Contributors
 

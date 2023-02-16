@@ -4,6 +4,7 @@ gem 'github-pages'
 gem 'jekyll-github-metadata'
 gem 'jekyll-remote-theme'
 gem 'jekyll-redirect-from'
+gem "webrick"
 
 group :development, :test do
   gem 'rake'
