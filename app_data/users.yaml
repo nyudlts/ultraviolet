@@ -1,36 +1,20 @@
 - email: adminUV@test.com
   username: adminUV
   active: True
-  password: adminpassword
-  roles:
-    - admin
-  allow:
-    - superuser-access
-- email: nyudepositor@test.com
-  username: nyudepositor
+  password: changeme
+- email: depositor@test.com
+  username: depositor
   active: True
-  password: nyudepositor
-  roles:
-    - admin
-  allow:
-    - superuser-access
-- email: nyuviewer@test.com
-  username: nyuviewer
+  password: changeme
+- email: viewer@test.com
+  username: viewer
   active: True
-  password: nyuviewer
-  roles:
-    - admin
-  allow:
-    - superuser-access
-- email: restdatauser@test.com
-  username: restdatauser 
+  password: changeme
+- email: curator@test.com
+  username: curator
   active: True
-  password: restdatauser
-  roles:
-    - admin
-  allow:
-    - superuser-access
-- email: publicviewer@test.com
-  username: publicviewer 
+  password: changeme
+- email: owner@test.com
+  username: owner
   active: True
-  password: publicviewer
+  password: changeme
