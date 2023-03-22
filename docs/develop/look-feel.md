@@ -1,12 +1,7 @@
----
-layout: default
-title: Make Look and Feel Changes
-parent: Develop
-nav_order: 2
-redirect_from:
-  - /development/look-feel/
----
-# {{ page.title }}
+# Look and Feel Changes
+
+TOC
+
 
 This page offers general instructions on how to mock up look and feel changes and submit them for review. Use the Invenio RDM project documentation for further/updated instructions:
 - <https://inveniordm.docs.cern.ch/customize/look-and-feel/>
@@ -100,9 +95,13 @@ Stop the server and restart to view changes in Templates
 invenio-cli run
 ```
 
-## Include a test
+### Include a Test
+
+More about [TEST.md](../TEST.md)
 
 After making an override to the theme, you'll also need to include a test that asserts something and expects a result related to the change you made. Documentation on our approach to testing is at the Run Tests section.
+
+> Tests should be placed in the `tests/ui` directory.
 
 Depending on the change you're making, you can copy a template of an existing test and modify it to check the change being made. For example, if a change is made to add a link to the NYU Scholarly Communication and Information Policy department, I could modify the `tests/ui/test_front_view.py` file to include the following:
 
@@ -120,9 +119,3 @@ def test_view1(base_client):
     )
 ```
 The test makes sure that the string "NYU Scholarly Communication and Information Policy" is appropriately in place.
-
-Tests should be placed in the `tests/ui` directory.
-
-## Run the tests
-
-See the [Run Tests]({{ 'develop/run-tests/' | absolute_url }}) wiki page.

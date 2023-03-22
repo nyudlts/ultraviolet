@@ -1,10 +1,13 @@
----
-layout: default
-title: Docker Installation
-parent: Tips and Gotchas
-nav_order: 0
----
 # Install Docker
+
+TOC
+- [Install Docker](#install-docker)
+  - [Linux Docker Engine and Docker Desktop Post Install](#linux-docker-engine-and-docker-desktop-post-install)
+- [Troubleshooting Docker](#troubleshooting-docker)
+- [Troubleshooting Docker-Compose ](#troubleshooting-docker-compose-)
+  - [Docker Compose not recognized by invenio-cli (as of 2023)](#docker-compose-not-recognized-by-invenio-cli-as-of-2023)
+  - [`docker compose` (v2) vs `docker-compose` (v1)](#docker-compose-v2-vs-docker-compose-v1)
+
 
 If you are running the application on your local machine then you need to install Docker and Docker Compose. You do not need to perform these steps if you are using the Vagrant configuration.
 

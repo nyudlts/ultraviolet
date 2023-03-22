@@ -1,15 +1,27 @@
----
-layout: default
-title: Dev Mode Setup (Docker)
-parent: Get Started
-nav_order: 1
-has_toc: true
-redirect_from:
-  - /getting-started/dev-docker-setup/
----
-# {{ page.title }}
+# Setup
+
+TOC
+- [Setup](#setup)
+  - [Introduction](#introduction)
+  - [System Requirements](#system-requirements)
+  - [Setup and Installation](#setup-and-installation)
+  - [Testing only](#testing-only)
+  - [Testing with Vagrant](#testing-with-vagrant)
+
+
+## Introduction
+[back to top](#setup)
+
+Like the InvenioRDM application, you can run Ultraviolet in two modes:
+
+- Fully Dockerized Mode: Containerized application and services (good for a quick preview).  
+- Partially Dockerized Mode: Local dev tools runnig parts of InvenioRDM with containerized services (good for developers) also considered [instance development](https://inveniordm.docs.cern.ch/develop/getting-started/instance-development/#integrating-react-development-modules).
+
+> From the InvenioRDM docs: In the future we aim to move to a **fully containerized development environment.**  
+> More on the [InvenioRDM Architecture](https://inveniordm.docs.cern.ch/develop/architecture/)  
 
 ## System Requirements
+[back to top](#setup)
 
 > As of Jan 2023, Ultraviolet uses InvenioRDM version 7 that is behind a couple of versions from the current InvenioRDM v11 released in Jan 2023.
 
@@ -20,7 +32,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
   + At least 8GB of RAM and 4 cores.
 - Supported Operating Systems
   - MacOS or Linux-based systems (Windows not supported)
-- System Requirements to Install Ultraviolet
+- System Requirements to Install Ultraviolet (ensure you have these installed on your system)
   - Git
   - **Simple Python Version Management (Pyenv)**
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
@@ -49,6 +61,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
 > - redis memcached
 
 ## Setup and Installation
+[back to top](#setup)
 
 1. Get the local copy of the UltraViolet source code:
   ```sh
@@ -139,6 +152,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
 16. Quit the application with `Ctr-C` and spin down the containers with `invenio-cli containers stop`
 
 ## Testing only
+[back to top](#setup)
 
 1. Get the local copy of the UltraViolet app:
   ```sh
@@ -155,3 +169,8 @@ The following instructions were modified from the [InvenioRDM System Requirement
   invenio-cli containers start --lock --build --setup
   ```
   The UltraViolet instance should now be running at <https://127.0.0.1:5000/>
+
+## Testing with Vagrant
+[back to top](#setup)
+
+Currently, we do not have a Vagrant image of UltraViolet in place, but one is coming soon. In the meantime, consider local development and testing with Docker.

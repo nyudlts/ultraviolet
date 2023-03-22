@@ -14,7 +14,6 @@ For information about NYU's UltraViolet repository service, including policies a
 ## Getting Started as a Developer on Ultraviolet
 
 We recommend you read our the following documentation in order:
-<!-- 1. Finish this readme.md document. -->
 1. Read [CONTRIBUTING.md](docs/CONTRIBUTE.md) to learn how we organize, how we collaborate, and how we work.
 2. Follow [SETUP.md](docs/SETUP.md) to install ultraviolet locally
 3. Use [CHEATSHEETS.md](docs/CHEATSHEETS.md) for a short explainer of commonly used commands.
