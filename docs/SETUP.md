@@ -23,7 +23,7 @@ Like the InvenioRDM application, you can run Ultraviolet in two modes:
 ## System Requirements
 [back to top](#setup)
 
-> As of Jan 2023, Ultraviolet uses InvenioRDM version 7 that is behind a couple of versions from the current InvenioRDM v11 released in Jan 2023.
+> As of Jan 2023, Ultraviolet uses InvenioRDM version 3.8.12 that is behind a couple of versions from the current InvenioRDM v11 released in Jan 2023.
 
 The following instructions were modified from the [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/):
 

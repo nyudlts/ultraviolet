@@ -20,7 +20,7 @@ TOC
         - OR `invenio-cli install --dev` - include dev dependencies
     - `invenio-cli services` - start and setup services, can be done in two separate steps like so:
         - `invenio-cli services setup -N` - builds containers for local serivices; `-N` disables the creation of demo data
-        - `invenio-cli serices start` - start the services containers
+        - `invenio-cli services start` - start the services containers
             - if postgres is not starting you might have a local installation of psql running in the same port. `systemctl stop postgresql` to stop it.A
     - `invenio-cli services status` - can be also viewed in Docker Desktop UI
     - `invenio-cli services stop` - stop container services
@@ -33,7 +33,7 @@ TOC
     - `invenio-cli packages install $HOME/projects/invenio/`
         - runs installation for pip packages of said project
     - `invenio-cli assets build` - injects variables and transpiles
-    - `invenio-cli assets watch` - watch mode, exit with [CTRL+C]
+    - `invenio-cli assets watch` - watch mode (can be run in a separate terminal), exit with [CTRL+C]
         - can only watch existing files, if creating a new file stop your server and `invenio-cli assets build` before watching again.
         - TODO: how different is this from `invenio-cli run`??
 

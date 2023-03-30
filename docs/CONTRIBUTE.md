@@ -47,7 +47,7 @@ There are two project boards that manage tickets for Ultraviolet:
 ### Branching Strategy
 
 - `main` represents truth
-- branch naming convention: `<ticketNumber>/<summary-title>`
+- branch naming convention: `<ticketNumber>-<summary-title>`
 
 ### Hosted instances
 
