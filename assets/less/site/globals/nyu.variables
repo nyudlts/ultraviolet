@@ -112,7 +112,8 @@
 @searchButtonColorTextColor: @invertedTextColor;
 //@searchButtonColorTextShadow: @invertedTextShadow;
 
-
+@loginSignupMobileBackground:#7d01cd;
+@loginSignupMobileBackgroundHover:#9b00ff;
 
 /***********************************************
         NYU custom variables (not found in iRDM, invenio-theme, or SemanticUI)

@@ -40,7 +40,16 @@ body {
     text-shadow: none;
     background-image: none;
     box-shadow: inset 0px 0px 0px 1px #ffffff9e;
+    @media screen and (max-width: @largestTabletScreen) {
+      background-color: @loginSignupMobileBackground;
+      border-color: transparent;
+      &:active,
+      &:hover {
+        background-color: @loginSignupMobileBackgroundHover;
+      }
+    }
   }
+
   // Top Navbar Links
   #invenio-nav .item a {
     //color: #ffffff !important;
