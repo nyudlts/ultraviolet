@@ -15,7 +15,6 @@ uwsgi = "*"
 pytest-invenio = "==1.4.3"
 flask-pytest = "*"
 ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
-ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git"}
 
 [requires]
 python_version = "3.8"

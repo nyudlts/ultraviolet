@@ -19,17 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout current state"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       - name: "Save Python and Node versions to env"
         run: |
           echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
           echo "NODE_VERSION=$(cat '.nvmrc')" >> ${GITHUB_ENV}
       - name: "Set up Python"
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: "Set up Node"
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: "Install invenio-cli"
