@@ -11,7 +11,7 @@
 # - Cache: Redis (exposed port: 6379)
 # - DB: (PostgresSQL/MySQL) (exposed port: 5432 or 3306)
 # - Message queue: RabbitMQ (exposed ports: 5672, 15672)
-# - Elasticsearch (exposed ports: 9200, 9300)
+# - OpenSearch (exposed ports: 9200, 9300)
 #
 version: '2.2'
 services:
@@ -27,7 +27,7 @@ services:
     extends:
       file: docker-services.yml
       service: mq
-  es:
+  search:
     extends:
       file: docker-services.yml
-      service: es
+      service: search 
