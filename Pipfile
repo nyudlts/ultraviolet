@@ -9,12 +9,15 @@ pytest = "==6.2.5"
 selenium = "*"
 
 [packages]
-invenio-app-rdm = {version = "~=10.1.0", extras = ["elasticsearch7", "postgresql"]}
+invenio-app-rdm = {version = "==10.1.1", extras = ["opensearch2", "postgresql"]}
 python-dotenv = "*"
 uwsgi = "*"
 pytest-invenio = "==1.4.3"
 flask-pytest = "*"
-ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
+invenio-communities = "==3.2.2"
+invenio-vocabularies = "==0.13.3"
+invenio-base = "==1.2.13"
+ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git", editable=true}
 ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git"}
 
 [requires]

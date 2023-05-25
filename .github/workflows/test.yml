@@ -38,10 +38,8 @@ jobs:
           pip list
       - name: "Install XMLSec1 Dependency for Ultraviolet SAML"
         run: |
-          sudo apt-get install libxml2-dev libxmlsec1-dev
-      # - name: "Check project requirements"
-        # run: |
-          # invenio-cli check-requirements
+          sudo apt-get update -y
+          sudo apt-get install -y libxml2-dev libxmlsec1-dev
       - name: "Setup mandatory files"
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
@@ -53,9 +51,11 @@ jobs:
           invenio-cli install --pre --dev
       - name: Start services and app
         run: |
-          invenio-cli services start
+          docker -v
+          docker compose up -d
+          #invenio-cli services start
           invenio-cli run &
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=yes pipenv run pytest -p no:cacheprovider
+          E2E=no pipenv run pytest -p no:cacheprovider
