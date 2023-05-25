@@ -18,7 +18,7 @@ invenio-communities = "==3.2.2"
 invenio-vocabularies = "==0.13.3"
 invenio-base = "==1.2.13"
 ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git", editable=true}
-ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module"}
+ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git"}
 
 [requires]
 python_version = "3.8"
