@@ -16,27 +16,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 20
-    strategy:
-      matrix:
-          cache-service: [redis5]
-          search-service: [opensearch2]
-          db-service: [postgresql10 ]
-
-          include:
-          - db-service: postgresql10
-            DB_EXTRAS: "postgresql"
-          - search-service: opensearch2
-            SEARCH_EXTRAS: "opensearch2"
-          - cache-service: redis 
-            SEARCH_EXTRAS: "redis5"
-
-    env:
-      CACHE: ${{ matrix.cache-service }}
-      DB: ${{ matrix.db-service }}
-      SEARCH: ${{ matrix.search-service }}
-      EXTRAS: tests
+    runs-on: ubuntu-latest
     steps:
       - name: "Checkout current state"
         uses: actions/checkout@v2
@@ -69,10 +49,12 @@ jobs:
           pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
           invenio-cli packages lock --pre --dev
           invenio-cli install --pre --dev
-      # - name: Start services and app
-         # run: |
-          # invenio-cli services start
-          # invenio-cli run &
+      - name: Start services and app
+        run: |
+          docker -v
+          docker compose up -d
+          #invenio-cli services start
+          invenio-cli run &
       - name: "Run tests"
         run: |
           pipenv install --dev
