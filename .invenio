@@ -11,12 +11,12 @@ description = NYU Data Repository InvenioRDM Instance
 author_name = NYU
 author_email = data-repository-tech@nyu.edu 
 year = 2020
-python_version = 3.8
 database = postgresql
-opensearch = 2
+search = opensearch2
 file_storage = local
+development_tools = no
+site_code = yes
 _template = https://github.com/inveniosoftware/cookiecutter-invenio-rdm.git
-_project_dir = /Users/katepechekhonova/PycharmProjects/ultraviolet
 
 [files]
 app_data = {'README.md': 'd58978488626bdeddc791a15a39e341a4ed06f202b84d0c0d4aa9ef49481c6d9'}

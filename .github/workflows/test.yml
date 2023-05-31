@@ -46,7 +46,6 @@ jobs:
           echo -e FLASK_SECRET_KEY="some random value" >> .env
       - name: "Install project dependencies"
         run: |
-          pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
           invenio-cli packages lock --pre --dev
           invenio-cli install --pre --dev
       - name: Start services and app

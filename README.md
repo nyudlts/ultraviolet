@@ -33,3 +33,15 @@ Following is an overview of the generated files and folders:
 | ``templates`` | Folder for your Jinja templates. |
 | ``.invenio`` | Common file used by Invenio-CLI to be version controlled. |
 | ``.invenio.private`` | Private file used by Invenio-CLI *not* to be version controlled. |
+
+## RDM v11 Caveat
+
+Pipfile automatically installs version of 4.18.a3 of jsonschema which is a pre-release version and thus, unstable. Install
+stable version of v4.17.3. 
+
+```
+pipenv run pip install -U jsonschema==4.17.3
+```
+
+Further, there is no need to install a lower version of setuptools now in Python 3.9 like in the guide at https://nyudlts.github.io/ultraviolet/get-started/dev-docker-setup/. Tested to be working with all custom 
+ultraviolet modules - ultraviolet_permissions, ultraviolet_saml, ultraviolet_communities, ultraviolet_cli.
