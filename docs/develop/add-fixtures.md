@@ -1,12 +1,4 @@
----
-layout: default
-title: Create and Add Fixtures
-parent: Develop
-nav_order: 1
-redirect_from:
-  - /development/add-fixtures/
----
-# {{ page.title }}
+# Add Fixtures
 
 During the process of development, you may want to create a new fixture record and add it to the project to demonstrate or test a new feature. This page demonstrates sample strategies and workflows.
 
