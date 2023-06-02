@@ -20,6 +20,11 @@ jobs:
     steps:
       - name: "Checkout current state"
         uses: actions/checkout@v3
+      - shell: bash
+        run: |
+          rc=/tmp/rcfile
+          echo 'shopt -s expand_aliases' > $rc
+          echo 'alias docker-compose="docker compose" ' >> $rc
       - name: "Save Python and Node versions to env"
         run: |
           echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
@@ -35,7 +40,6 @@ jobs:
       - name: "Install invenio-cli"
         run: |
           pip install --no-cache-dir --upgrade pip invenio-cli pipenv
-          pip list
       - name: "Install XMLSec1 Dependency for Ultraviolet SAML"
         run: |
           sudo apt-get update -y
@@ -48,13 +52,13 @@ jobs:
         run: |
           invenio-cli packages lock --pre --dev
           invenio-cli install --pre --dev
+          pipenv run pip install -U jsonschema==4.17.3
       - name: Start services and app
         run: |
           docker -v
           docker compose up -d
-          #invenio-cli services start
           invenio-cli run &
+          pipenv run invenio db create
       - name: "Run tests"
         run: |
-          pipenv install --dev
           E2E=no pipenv run pytest -p no:cacheprovider

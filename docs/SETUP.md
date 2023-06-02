@@ -17,18 +17,17 @@ Like the InvenioRDM application, you can run Ultraviolet in two modes:
 - Fully Dockerized Mode: Containerized application and services (good for a quick preview).  
 - Partially Dockerized Mode: Local dev tools runnig parts of InvenioRDM with containerized services (good for developers) also considered [instance development](https://inveniordm.docs.cern.ch/develop/getting-started/instance-development/#integrating-react-development-modules).
 
-> From the InvenioRDM docs: In the future we aim to move to a **fully containerized development environment.**  
 > More on the [InvenioRDM Architecture](https://inveniordm.docs.cern.ch/develop/architecture/)  
 
 ## System Requirements
 [back to top](#setup)
 
-> As of Jan 2023, Ultraviolet uses InvenioRDM version 3.8.12 that is behind a couple of versions from the current InvenioRDM v11 released in Jan 2023.
+> Production Ultraviolet installation currently uses InvenioRDM version 10
+> Development Ultraviolet Installation currently uses InvenioRDM version 11
 
 The following instructions were modified from the [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/):
 
 - Supported Hardware
-  + ARM (M1 MacOS) architectures are not fully functional yet for Ultraviolet's version of InvenioRDM, we recommend `x86_64` processors.
   + At least 8GB of RAM and 4 cores.
 - Supported Operating Systems
   - MacOS or Linux-based systems (Windows not supported)
@@ -48,16 +47,13 @@ The following instructions were modified from the [InvenioRDM System Requirement
     + Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
     + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
-  - **Postgres**
-    + [Installation instructions](http://postgresguide.com/setup/install.html)
-    + When running fully containerized App ensure postgresql services are off since they will conflict with ports of the postgres containers if you run them simultaneously. Use `systemctl stop postgresql` to stop postgres in Linux. Probably `brew services stop postgresql` for MacOS installation using Homebrew.
   - **ImageMagick**
     + MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
     + Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
 
 > From the InvenioRDM documentation: During Setup and Installation we start these services, but you can also just as well use externally hosted options for these:
 > - postgresql
-> - elasticsearch
+> - opensearch
 > - redis memcached
 
 ## Setup and Installation
@@ -75,7 +71,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
   ```
   > (Check result with `python --version`)
 
-4. Load correct node version (14.x) in current environment. (Check result with `node --version`)
+4. Load correct node version in current environment. (Check result with `node --version`)
   ```sh
   nvm install
   ```
@@ -114,14 +110,15 @@ The following instructions were modified from the [InvenioRDM System Requirement
   ```
   > possible `No virtualenv has been created for this project yet`
 
-10. Due to a [known bug in the current version of InvenioRDM](https://github.com/inveniosoftware/invenio-files-rest/issues/264) we can only use `setuptools` version smaller then 58.
-  ```sh
-  pipenv run python3.8 -m pip install 'setuptools~=57.5.0'
-  ```
 
-11. Complete building application python environment and web assets
+10. Complete building application python environment and web assets
   ```sh
   invenio-cli install --pre --development
+  ```
+
+11. Pipfile automatically installs version of 4.18.a3 of jsonschema which is a pre-release version and thus, unstable. Install stable version of v4.17.3. 
+  ```sh
+  pipenv run pip install -U jsonschema==4.17.3 
   ```
 
 12. If you have used the Invenio Framework before, this is a good time to make sure that you do not have old images or running containers. (Check [Docker troubleshooting tips]({{ 'tips-and-gotchas/docker' | absolute_url }}) for helpful commands).
