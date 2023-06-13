@@ -50,6 +50,24 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - **ImageMagick**
     + MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
     + Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
+  - **Libraries needed for SAML Integration**
+    + Ubuntu
+    ```sh
+    apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
+    ```
+    + CentOS/RHEL
+    ```sh
+    yum install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
+    ```
+    + MacOS
+    ```sh
+    xcode-select --install
+    brew upgrade
+    brew install libxml2 libxmlsec1
+    ```
+    IMPORTANT: Upgrade of xmlsec1 to version 1.3.0 introduced an issue described [here](https://github.com/xmlsec/python-xmlsec/issues/254). You might need to use a work around
+    described at the provided link to complete your installation.
+   
 
 > From the InvenioRDM documentation: During Setup and Installation we start these services, but you can also just as well use externally hosted options for these:
 > - postgresql
