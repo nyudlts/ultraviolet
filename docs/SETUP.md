@@ -53,11 +53,11 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - **Libraries needed for SAML Integration**
     + Ubuntu
     ```sh
-    apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
+    sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
     ```
-    + CentOS/RHEL
+    + Rocky Linux/RHEL
     ```sh
-    yum install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
+    sudo dnf install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
     ```
     + MacOS
     ```sh
