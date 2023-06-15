@@ -36,6 +36,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - **Simple Python Version Management (Pyenv)**
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
     + Restart Terminal and Check for successful installation with `pyenv --version`
+    IMPORTANT: If you already have pyenv installed make sure to update it to latest version by running `pyenv update`
     + Why does InvenioRDM use [Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
   - **Docker**
     + Use the [Install Docker Documentation]({{'tips-and-gotchas/install-docker/' | absolute_url }})
@@ -53,11 +54,11 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - **Libraries needed for SAML Integration**
     + Ubuntu
     ```sh
-    apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
+    sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
     ```
-    + CentOS/RHEL
+    + Rocky Linux/RHEL
     ```sh
-    yum install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
+      sudo dnf install xmlsec1-devel libtool-ltdl-devel
     ```
     + MacOS
     ```sh
