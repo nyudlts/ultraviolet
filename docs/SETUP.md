@@ -58,7 +58,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
     ```
     + Rocky Linux/RHEL
     ```sh
-      sudo dnf install xmlsec1-devel libtool-ltdl-devel
+    sudo dnf install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
     ```
     + MacOS
     ```sh
