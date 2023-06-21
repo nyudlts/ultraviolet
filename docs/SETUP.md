@@ -23,6 +23,7 @@ Like the InvenioRDM application, you can run Ultraviolet in two modes:
 [back to top](#setup)
 
 > Production Ultraviolet installation currently uses InvenioRDM version 10
+
 > Development Ultraviolet Installation currently uses InvenioRDM version 11
 
 The following instructions were modified from the [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/):
