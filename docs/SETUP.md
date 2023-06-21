@@ -50,6 +50,10 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - **Node Version Manager (NVM)**
     - Version required: latest
     - Use these [Installation and updating instructions](https://github.com/nvm-sh/nvm#installing-and-updating).  Be sure to use the approach described there (running a script) rather than using homebrew because the NVM supported by homebrew is outdated.
+
+  - **Node**
+    - Version required: look at the `.nvmrc` file
+    - To install and/or switch to that version (for example): `nvm install 16.19.0`
     + Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
     + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
