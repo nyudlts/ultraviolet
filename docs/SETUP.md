@@ -34,11 +34,13 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
   - Git
-  - **Simple Python Version Management (Pyenv)**
+  - **Python Version Management (Pyenv)**
+    + Version required: 2.3.20
+    + To check version: `pyenv --version`
+    + To update: `pyenv update`
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
-    + Restart Terminal and Check for successful installation with `pyenv --version`
-    IMPORTANT: If you already have pyenv installed make sure to update it to latest version by running `pyenv update`
-    + Why does InvenioRDM use [Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
+      + You might need to restart your terminal after installation
+    + Why does InvenioRDM use [Python Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
   - **Docker**
     + Use the [Install Docker Documentation]({{'tips-and-gotchas/install-docker/' | absolute_url }})
     + Check for successful installation with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
