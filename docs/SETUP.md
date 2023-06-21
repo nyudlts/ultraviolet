@@ -35,7 +35,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
   - Git
   - **Python Version Management (Pyenv)**
-    + Version required: 2.3.20
+    + Version required: 2.3.20+
     + To check version: `pyenv --version`
     + To update: `pyenv update`
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
