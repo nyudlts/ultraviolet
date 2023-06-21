@@ -33,7 +33,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
 - Supported Operating Systems
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
-  - Git
+  - **Git**
   - **Python Version Management (Pyenv)**
     + Version required: 2.3.20+
     + To check version: `pyenv --version`
@@ -45,8 +45,8 @@ The following instructions were modified from the [InvenioRDM System Requirement
     + Docker version required: 20.10.10+
     + Docker-Compose version required: 1.17.0+
     + Check version with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
-    + To install, use the [Install Docker Documentation]({{'./tips-and-gotchas/install-docker.md' | relative_url}})
-    + If you are doing a fully containerized testing this is all you need to quick start the application; jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
+    + To install, use the [Install Docker Documentation]({{ site.baseurl }}{% link tips-and-gotchas/install-docker.md %})
+    + If you are doing a fully containerized testing, this is all you need to quick start the application — jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
   - **Node Version Manager (NVM)**
     - Version required: latest
     - Use these [Installation and updating instructions](https://github.com/nvm-sh/nvm#installing-and-updating).  Be sure to use the approach described there (running a script) rather than using homebrew because the NVM supported by homebrew is outdated.
@@ -54,22 +54,22 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - **Node**
     - Version required: look at the `.nvmrc` file
     - To install and/or switch to that version (for example): `nvm install 16.19.0`
-    + Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
+    - Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
-    + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+    - [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
   - **ImageMagick**
-    + MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
-    + Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
+    - MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
+    - Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
   - **Libraries needed for SAML Integration**
-    + Ubuntu
+    - Ubuntu
     ```sh
     sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
     ```
-    + Rocky Linux/RHEL
+    - Rocky Linux/RHEL
     ```sh
     sudo dnf install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
     ```
-    + MacOS
+    - MacOS
     ```sh
     xcode-select --install
     brew upgrade
