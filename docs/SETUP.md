@@ -42,12 +42,14 @@ The following instructions were modified from the [InvenioRDM System Requirement
       + You might need to restart your terminal after installation
     + Why does InvenioRDM use [Python Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
   - **Docker**
-    + Use the [Install Docker Documentation]({{'tips-and-gotchas/install-docker/' | absolute_url }})
-    + Check for successful installation with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
+    + Docker version required: 20.10.10+
+    + Docker-Compose version required: 1.17.0+
+    + Check version with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
+    + To install, use the [Install Docker Documentation]({{'./tips-and-gotchas/install-docker.md' | relative_url}})
     + If you are doing a fully containerized testing this is all you need to quick start the application; jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
   - **Node Version Manager (NVM)**
-    + Use these [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating) following the CLI installation (for MacOS install nvm from scratch not from brew).
-    + Restart Terminal and Check for successful installation with `nvm --version`. [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux). 
+    - Version required: latest
+    - Use these [Installation and updating instructions](https://github.com/nvm-sh/nvm#installing-and-updating).  Be sure to use the approach described there (running a script) rather than using homebrew because the NVM supported by homebrew is outdated.
     + Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
     + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
