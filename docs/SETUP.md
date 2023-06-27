@@ -35,12 +35,14 @@ The following instructions were modified from the [InvenioRDM System Requirement
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
   - **Git**
   - **Python Version Management (Pyenv)**
+    + Pyenv will install and switch you to the correct version of Python 
     + Version required: 2.3.20+
     + To check version: `pyenv --version`
     + To update: `pyenv update`
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
       + You might need to restart your terminal after installation
     + Why does InvenioRDM use [Python Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
+
   - **Docker**
     + Docker version required: 20.10.10+
     + Docker-Compose version required: 1.17.0+
@@ -50,10 +52,6 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - **Node Version Manager (NVM)**
     - Version required: latest
     - Use these [Installation and updating instructions](https://github.com/nvm-sh/nvm#installing-and-updating).  Be sure to use the approach described there (running a script) rather than using homebrew because the NVM supported by homebrew is outdated.
-
-  - **Node**
-    - Version required: look at the `.nvmrc` file
-    - To install and/or switch to that version (for example): `nvm install 16.19.0`
     - Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
     - [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
@@ -70,13 +68,14 @@ The following instructions were modified from the [InvenioRDM System Requirement
     sudo dnf install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
     ```
     - MacOS
+  
+    **IMPORTANT**: Upgrade of xmlsec1 to version 1.3.0 introduced a breaking bug. You might need to use [a work around](https://github.com/xmlsec/python-xmlsec/issues/254) to complete your installation.
     ```sh
     xcode-select --install
     brew upgrade
     brew install libxml2 libxmlsec1
     ```
-    IMPORTANT: Upgrade of xmlsec1 to version 1.3.0 introduced an issue described [here](https://github.com/xmlsec/python-xmlsec/issues/254). You might need to use a work around
-    described at the provided link to complete your installation.
+  
    
 
 > From the InvenioRDM documentation: During Setup and Installation we start these services, but you can also just as well use externally hosted options for these:
