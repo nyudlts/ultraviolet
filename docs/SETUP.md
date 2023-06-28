@@ -33,13 +33,15 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
   - Git
+    - macos `xcode-select --install` will bring Git, gcc, etc. Check for successful installation with `xcode-select -p`
   - **Simple Python Version Management (Pyenv)**
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
+      + macos: you will need to install [homebrew](https://brew.sh/) for pyenv. 
     + Restart Terminal and Check for successful installation with `pyenv --version`
     IMPORTANT: If you already have pyenv installed make sure to update it to latest version by running `pyenv update`
     + Why does InvenioRDM use [Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
   - **Docker**
-    + Use the [Install Docker Documentation]({{'tips-and-gotchas/install-docker/' | absolute_url }})
+    + Use the [Install Docker Documentation](tips-and-gotchas/install-docker.md)
     + Check for successful installation with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
     + If you are doing a fully containerized testing this is all you need to quick start the application; jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
   - **Node Version Manager (NVM)**
@@ -62,8 +64,13 @@ The following instructions were modified from the [InvenioRDM System Requirement
     ```
     + MacOS
     ```sh
-    xcode-select --install
+    # ensure xcode-select is installed (avoid using full xcode)
+    xcode-select -p
+    # update homebrew and package definitions homebrew uses
+    brew update
+    # update all possible local unpinned packages in homebrew
     brew upgrade
+    # install libxml2 and libxmlsec1
     brew install libxml2 libxmlsec1
     ```
     IMPORTANT: Upgrade of xmlsec1 to version 1.3.0 introduced an issue described [here](https://github.com/xmlsec/python-xmlsec/issues/254). You might need to use a work around
