@@ -115,7 +115,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
   ```sh
   invenio-cli check-requirements
   ```
-  > error docker-compose not found possible, see [Docker Compose Troubleshooting]({{ site.baseurl }}{% link tips-and-gotchas/docker.md %})
+  > error docker-compose not found possible, see [Docker Compose Troubleshooting](tips-and-gotchas/install-docker.md#troubleshooting-docker-compose)
 
 7. Create an `.invenio.private` file which is used by the invenio-cli tool
   ```sh
