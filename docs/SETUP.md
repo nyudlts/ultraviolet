@@ -108,7 +108,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
 
 5. Install and/or update pip, pipenv, and [invenio-cli](https://invenio-cli.readthedocs.io/en/latest/)
   ```sh
-  pip install -U --upgrade pip pipenv invenio-cli
+  pip install --upgrade pip pipenv invenio-cli
   ```
 
 6. Check Invenio's requirements
