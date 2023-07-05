@@ -93,3 +93,6 @@ ultraviolet-cli
 fixtures
 tmp
 fixture-map.json
+
+# cairo packages that need symlinking for MacOS
+libcairo*
