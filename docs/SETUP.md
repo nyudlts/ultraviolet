@@ -33,8 +33,9 @@ The following instructions were modified from the [InvenioRDM System Requirement
 - Supported Operating Systems
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
-  - **Git**
-  - **Python Version Management (Pyenv)**
+  - **Version Control (Git 2.41.0+)**
+    - MacOS(arm) download full Xcode via the appstore (this will bring in development tools like Git, but will also setup for success when downloading Cairo). Check for installation with `xcode-select -p`. Ensure to open Xcode to accept license agreement.
+  - **Python Version Management (Pyenv 2.3.20+)**
     + Pyenv will install and switch you to the correct version of Python 
     + Version required: 2.3.20+
     + To check version: `pyenv --version`
@@ -42,19 +43,19 @@ The following instructions were modified from the [InvenioRDM System Requirement
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
       + You might need to restart your terminal after installation
     + Why does InvenioRDM use [Python Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
-
-  - **Docker**
+  - **Conainter Management (Docker 20.10.10+ & Docker Compose 1.17.0+)**
     + Docker version required: 20.10.10+
     + Docker-Compose version required: 1.17.0+
     + Check version with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
-    + To install, use the [Install Docker Documentation]({{ site.baseurl }}{% link tips-and-gotchas/install-docker.md %})
+    + To install, use the [Install Docker Documentation](tips-and-gotchas/install-docker.md)
     + If you are doing a fully containerized testing, this is all you need to quick start the application — jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
-  - **Node Version Manager (NVM)**
-    - Version required: latest
+  - **Node Version Manager (NVM 0.39.3+)**
+    - Version required: 0.39.3+
     - Use these [Installation and updating instructions](https://github.com/nvm-sh/nvm#installing-and-updating).  Be sure to use the approach described there (running a script) rather than using homebrew because the NVM supported by homebrew is outdated.
     - Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
     - [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+    - MacOs(arm): will require you to symlink cairo packages from your homebrew installation to your local ultraviolet directory as recommended by [Issue385 in CairoSVG](https://github.com/Kozea/CairoSVG/issues/385)
   - **ImageMagick**
     - MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
     - Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
@@ -68,8 +69,6 @@ The following instructions were modified from the [InvenioRDM System Requirement
     sudo dnf install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
     ```
     - MacOS
-  
-    **IMPORTANT**: Upgrade of xmlsec1 to version 1.3.0 introduced a breaking bug. You might need to use [a work around](https://github.com/xmlsec/python-xmlsec/issues/254) to complete your installation.
     ```sh
     # ensure xcode-select is installed (using full xcode is necessary)
     xcode-select -p   # => /Applications/Xcode.app/Contents/Developer
@@ -80,7 +79,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
     # install libxml2 and libxmlsec1
     brew install libxml2 libxmlsec1
     ```
-    > MacOS/homebrew issue: ultraviolet saml uses `_xmlSecSoap11Ns` from the `libxmlsec1` library. This library was removed from libxmlsec1 in version 1.3.0 that introduced an [bug](https://github.com/xmlsec/python-xmlsec/issues/254). You will need to downgrade libxmlsec1 to a previous tap 1.2.7 as described in the issue to complete your installation.
+    **IMPORTANT**: The latest `libxmlsec1` version 1.3.0 introduced a breaking bug. Follow [this work around](https://github.com/xmlsec/python-xmlsec/issues/254) to downgrade the package manually.
 
 ## Setup and Installation
 [back to top](#setup)
