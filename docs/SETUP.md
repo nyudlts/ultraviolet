@@ -23,6 +23,7 @@ Like the InvenioRDM application, you can run Ultraviolet in two modes:
 [back to top](#setup)
 
 > Production Ultraviolet installation currently uses InvenioRDM version 10
+
 > Development Ultraviolet Installation currently uses InvenioRDM version 11
 
 The following instructions were modified from the [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/):
@@ -33,37 +34,42 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
   - **Git**
-    - MacOS(all): you will need to install full xcode via the app store to bring in the build development packages that are used in homebrew and other packages of our SAML authentication. Open xcode and accept license and agreements. Check you have tools installed with `xcode-select -p`.
-  - **Pyenv - Python Version Management**
-    + MacOS(all): install package manager [homebrew](https://brew.sh/) to install pyenv. 
+  - **Python Version Management (Pyenv)**
+    + Pyenv will install and switch you to the correct version of Python 
+    + Version required: 2.3.20+
+    + To check version: `pyenv --version`
+    + To update: `pyenv update`
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
-    + Restart Terminal and Check for successful installation with `pyenv --version`
-    IMPORTANT: If you already have pyenv installed make sure to update it to latest version by running `pyenv update`
-    + Why does InvenioRDM use [Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
-  - **Docker - Container Management**
-    + Use the [Install Docker Documentation](tips-and-gotchas/install-docker.md)
-    + Check for successful installation with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
-    + If you are doing a fully containerized testing this is all you need to quick start the application; jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
-  - **nvm - Node Version Manager**
-    + Use these [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating) following the CLI installation (for MacOS install nvm from scratch not from brew).
-    + Restart Terminal and Check for successful installation with `nvm --version`. [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux). 
-    + Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
+      + You might need to restart your terminal after installation
+    + Why does InvenioRDM use [Python Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
+
+  - **Docker**
+    + Docker version required: 20.10.10+
+    + Docker-Compose version required: 1.17.0+
+    + Check version with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
+    + To install, use the [Install Docker Documentation]({{ site.baseurl }}{% link tips-and-gotchas/install-docker.md %})
+    + If you are doing a fully containerized testing, this is all you need to quick start the application — jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
+  - **Node Version Manager (NVM)**
+    - Version required: latest
+    - Use these [Installation and updating instructions](https://github.com/nvm-sh/nvm#installing-and-updating).  Be sure to use the approach described there (running a script) rather than using homebrew because the NVM supported by homebrew is outdated.
+    - Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
-    + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
-      + macos: will require you to symlink cairo packages from your homebrew installation to your local ultraviolet directory as recommended by [Issue385 in CairoSVG](https://github.com/Kozea/CairoSVG/issues/385)
+    - [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
   - **ImageMagick**
-    + MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
-    + Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
+    - MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
+    - Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
   - **Libraries needed for SAML Integration**
-    + Ubuntu
+    - Ubuntu
     ```sh
     sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
     ```
-    + Rocky Linux/RHEL
+    - Rocky Linux/RHEL
     ```sh
     sudo dnf install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
     ```
-    + MacOS
+    - MacOS
+  
+    **IMPORTANT**: Upgrade of xmlsec1 to version 1.3.0 introduced a breaking bug. You might need to use [a work around](https://github.com/xmlsec/python-xmlsec/issues/254) to complete your installation.
     ```sh
     # ensure xcode-select is installed (using full xcode is necessary)
     xcode-select -p   # => /Applications/Xcode.app/Contents/Developer
