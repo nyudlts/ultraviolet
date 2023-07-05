@@ -32,24 +32,25 @@ The following instructions were modified from the [InvenioRDM System Requirement
 - Supported Operating Systems
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
-  - Git
-    - macos `xcode-select --install` will bring Git, gcc, etc. Check for successful installation with `xcode-select -p`
-  - **Simple Python Version Management (Pyenv)**
+  - **Git**
+    - MacOS(all): you will need to install full xcode via the app store to bring in the build development packages that are used in homebrew and other packages of our SAML authentication. Open xcode and accept license and agreements. Check you have tools installed with `xcode-select -p`.
+  - **Pyenv - Python Version Management**
+    + MacOS(all): install package manager [homebrew](https://brew.sh/) to install pyenv. 
     + [Installation instructions](https://github.com/pyenv/pyenv#installation)
-      + macos: you will need to install [homebrew](https://brew.sh/) for pyenv. 
     + Restart Terminal and Check for successful installation with `pyenv --version`
     IMPORTANT: If you already have pyenv installed make sure to update it to latest version by running `pyenv update`
     + Why does InvenioRDM use [Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
-  - **Docker**
+  - **Docker - Container Management**
     + Use the [Install Docker Documentation](tips-and-gotchas/install-docker.md)
     + Check for successful installation with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
     + If you are doing a fully containerized testing this is all you need to quick start the application; jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
-  - **Node Version Manager (NVM)**
+  - **nvm - Node Version Manager**
     + Use these [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating) following the CLI installation (for MacOS install nvm from scratch not from brew).
     + Restart Terminal and Check for successful installation with `nvm --version`. [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux). 
     + Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
     + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+      + macos: will require you to symlink cairo packages from your homebrew installation to your local ultraviolet directory as recommended by [Issue385 in CairoSVG](https://github.com/Kozea/CairoSVG/issues/385)
   - **ImageMagick**
     + MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
     + Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
@@ -64,8 +65,8 @@ The following instructions were modified from the [InvenioRDM System Requirement
     ```
     + MacOS
     ```sh
-    # ensure xcode-select is installed (avoid using full xcode)
-    xcode-select -p
+    # ensure xcode-select is installed (using full xcode is necessary)
+    xcode-select -p   # => /Applications/Xcode.app/Contents/Developer
     # update homebrew and package definitions homebrew uses
     brew update
     # update all possible local unpinned packages in homebrew
@@ -73,14 +74,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
     # install libxml2 and libxmlsec1
     brew install libxml2 libxmlsec1
     ```
-    IMPORTANT: Upgrade of xmlsec1 to version 1.3.0 introduced an issue described [here](https://github.com/xmlsec/python-xmlsec/issues/254). You might need to use a work around
-    described at the provided link to complete your installation.
-   
-
-> From the InvenioRDM documentation: During Setup and Installation we start these services, but you can also just as well use externally hosted options for these:
-> - postgresql
-> - opensearch
-> - redis memcached
+    > MacOS/homebrew issue: ultraviolet saml uses `_xmlSecSoap11Ns` from the `libxmlsec1` library. This library was removed from libxmlsec1 in version 1.3.0 that introduced an [bug](https://github.com/xmlsec/python-xmlsec/issues/254). You will need to downgrade libxmlsec1 to a previous tap 1.2.7 as described in the issue to complete your installation.
 
 ## Setup and Installation
 [back to top](#setup)
@@ -151,10 +145,13 @@ The following instructions were modified from the [InvenioRDM System Requirement
 
 13. Build application services (database, search, cache) and setup the application for running
   ```sh
-  invenio-cli services setup -N
+  invenio-cli services setup --no-demo-data
+  # `invenio-cli services setup --help` for more info
+  # `-N` means `--no-demo-data`
   ```
   IMPORTANT: if services setup reported any errors, and you have to restart the setup process, make sure to run
   destroy service command first (or you will get "Failed to setup services" error ) and delete db files by running `invenio-cli services destroy` and `rm -r app_data/db/*`
+  IMPORTANT: if services setup fails to connect to the docker.sock you will need to run first `pipenv run invenio-cli run` (process stays on the tail of your docker logs), open a separate terminal window and now run `invenio-cli services setup`
 
 14. If you do any local UI customization you need to rebuild applications web assets
   ```sh
@@ -165,6 +162,8 @@ The following instructions were modified from the [InvenioRDM System Requirement
 15. Start the application.
   ```sh
   invenio-cli run
+  # if this doesn't work use
+  pipenv run invenio-cli run
   ```
 
   The UltraViolet instance should now be available at this URL: <https://127.0.0.1:5000/>  
