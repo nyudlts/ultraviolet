@@ -33,28 +33,32 @@ The following instructions were modified from the [InvenioRDM System Requirement
 - Supported Operating Systems
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
-  - **Git**
-  - **Python Version Management (Pyenv)**
+  - **MacOS prep**
+    - Download full Xcode via the appstore (this will bring in development tools like gcc, git, and fulfills a future requirement for libxmlsec1). Check for installation with `xcode-select -p`. Ensure to open Xcode to accept license agreement or run `sudo xcodebuild -license accept`.
+    - Install [homebrew package manager](brew.sh), restart your terminal.
+  - **Version Control (Git 2.41.0+)**
+      - Use system git OR install newer git with homebrew `brew install git`
+      - Validate with `git --version` and `which git`
+  - **Python Version Management (Pyenv 2.3.20+)**
     + Pyenv will install and switch you to the correct version of Python 
     + Version required: 2.3.20+
     + To check version: `pyenv --version`
-    + To update: `pyenv update`
-    + [Installation instructions](https://github.com/pyenv/pyenv#installation)
-      + You might need to restart your terminal after installation
+    + To update: `pyenv update` (for non-brew install) or `brew update && brew upgrade pyenv` (for brew installations).
+    + [Installation instructions](https://github.com/pyenv/pyenv#installation), restart your terminal after installation.
     + Why does InvenioRDM use [Python Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
-
-  - **Docker**
+  - **Conainter Management (Docker 20.10.10+ & Docker Compose 1.17.0+)**
     + Docker version required: 20.10.10+
     + Docker-Compose version required: 1.17.0+
     + Check version with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
-    + To install, use the [Install Docker Documentation]({{ site.baseurl }}{% link tips-and-gotchas/install-docker.md %})
+    + To install, use the [Install Docker Documentation](tips-and-gotchas/install-docker.md)
     + If you are doing a fully containerized testing, this is all you need to quick start the application — jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
-  - **Node Version Manager (NVM)**
-    - Version required: latest
+  - **Node Version Manager (NVM 0.39.3+)**
+    - Version required: 0.39.3+
     - Use these [Installation and updating instructions](https://github.com/nvm-sh/nvm#installing-and-updating).  Be sure to use the approach described there (running a script) rather than using homebrew because the NVM supported by homebrew is outdated.
     - Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
   - **Cairo**
     - [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
+    - MacOs(arm): will require you to symlink cairo packages from your homebrew installation to your local ultraviolet directory as recommended by [Issue385 in CairoSVG](https://github.com/Kozea/CairoSVG/issues/385)
   - **ImageMagick**
     - MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
     - Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
@@ -68,20 +72,17 @@ The following instructions were modified from the [InvenioRDM System Requirement
     sudo dnf install libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel
     ```
     - MacOS
-  
-    **IMPORTANT**: Upgrade of xmlsec1 to version 1.3.0 introduced a breaking bug. You might need to use [a work around](https://github.com/xmlsec/python-xmlsec/issues/254) to complete your installation.
     ```sh
-    xcode-select --install
+    # ensure xcode-select is installed (using full xcode is necessary)
+    xcode-select -p   # => /Applications/Xcode.app/Contents/Developer
+    # update homebrew and package definitions homebrew uses
+    brew update
+    # update all possible local unpinned packages in homebrew
     brew upgrade
+    # install libxml2 and libxmlsec1
     brew install libxml2 libxmlsec1
     ```
-  
-   
-
-> From the InvenioRDM documentation: During Setup and Installation we start these services, but you can also just as well use externally hosted options for these:
-> - postgresql
-> - opensearch
-> - redis memcached
+    **IMPORTANT**: The latest `libxmlsec1` version 1.3.0 introduced a breaking bug. Follow [this work around](https://github.com/xmlsec/python-xmlsec/issues/254) to downgrade the package manually.
 
 ## Setup and Installation
 [back to top](#setup)
@@ -109,14 +110,14 @@ The following instructions were modified from the [InvenioRDM System Requirement
 
 5. Install and/or update pip, pipenv, and [invenio-cli](https://invenio-cli.readthedocs.io/en/latest/)
   ```sh
-  pip install -U --upgrade pip pipenv invenio-cli
+  pip install --upgrade pip pipenv invenio-cli
   ```
 
 6. Check Invenio's requirements
   ```sh
   invenio-cli check-requirements
   ```
-  > error docker-compose not found possible, see [Docker Compose Troubleshooting]({{ site.baseurl }}{% link tips-and-gotchas/docker.md %})
+  > error docker-compose not found possible, see [Docker Compose Troubleshooting](tips-and-gotchas/install-docker.md#troubleshooting-docker-compose)
 
 7. Create an `.invenio.private` file which is used by the invenio-cli tool
   ```sh
@@ -152,10 +153,13 @@ The following instructions were modified from the [InvenioRDM System Requirement
 
 13. Build application services (database, search, cache) and setup the application for running
   ```sh
-  invenio-cli services setup -N
+  invenio-cli services setup --no-demo-data
+  # `invenio-cli services setup --help` for more info
+  # `-N` means `--no-demo-data`
   ```
   IMPORTANT: if services setup reported any errors, and you have to restart the setup process, make sure to run
   destroy service command first (or you will get "Failed to setup services" error ) and delete db files by running `invenio-cli services destroy` and `rm -r app_data/db/*`
+  IMPORTANT: if services setup fails to connect to the docker.sock you will need to run first `pipenv run invenio-cli run` (process stays on the tail of your docker logs), open a separate terminal window and now run `invenio-cli services setup`
 
 14. If you do any local UI customization you need to rebuild applications web assets
   ```sh
@@ -166,6 +170,8 @@ The following instructions were modified from the [InvenioRDM System Requirement
 15. Start the application.
   ```sh
   invenio-cli run
+  # if this doesn't work use
+  pipenv run invenio-cli run
   ```
 
   The UltraViolet instance should now be available at this URL: <https://127.0.0.1:5000/>  
