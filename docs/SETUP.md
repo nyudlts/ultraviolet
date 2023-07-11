@@ -34,7 +34,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
   - **Version Control (Git 2.41.0+)**
-    - MacOS(arm) download full Xcode via the appstore (this will bring in development tools like Git, but will also setup for success when downloading Cairo). Check for installation with `xcode-select -p`. Ensure to open Xcode to accept license agreement.
+    - MacOS(arm) download full Xcode via the appstore (this will bring in development tools like Git, and fulfills a future requirement for Cairo). Check for installation with `xcode-select -p`. Ensure to open Xcode to accept license agreement.
   - **Python Version Management (Pyenv 2.3.20+)**
     + Pyenv will install and switch you to the correct version of Python 
     + Version required: 2.3.20+
