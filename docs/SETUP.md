@@ -33,15 +33,18 @@ The following instructions were modified from the [InvenioRDM System Requirement
 - Supported Operating Systems
   - MacOS or Linux-based systems (Windows not supported)
 - System Requirements to Install Ultraviolet (ensure you have these installed on your system)
+  - **MacOS prep**
+    - Download full Xcode via the appstore (this will bring in development tools like gcc, git, and fulfills a future requirement for libxmlsec1). Check for installation with `xcode-select -p`. Ensure to open Xcode to accept license agreement or run `sudo xcodebuild -license accept`.
+    - Install [homebrew package manager](brew.sh), restart your terminal.
   - **Version Control (Git 2.41.0+)**
-    - MacOS(arm) download full Xcode via the appstore (this will bring in development tools like Git, and fulfills a future requirement for Cairo). Check for installation with `xcode-select -p`. Ensure to open Xcode to accept license agreement.
+      - Use system git OR install newer git with homebrew `brew install git`
+      - Validate with `git --version` and `which git`
   - **Python Version Management (Pyenv 2.3.20+)**
     + Pyenv will install and switch you to the correct version of Python 
     + Version required: 2.3.20+
     + To check version: `pyenv --version`
-    + To update: `pyenv update`
-    + [Installation instructions](https://github.com/pyenv/pyenv#installation)
-      + You might need to restart your terminal after installation
+    + To update: `pyenv update` (for non-brew install) or `brew update && brew upgrade pyenv` (for brew installations).
+    + [Installation instructions](https://github.com/pyenv/pyenv#installation), restart your terminal after installation.
     + Why does InvenioRDM use [Python Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
   - **Conainter Management (Docker 20.10.10+ & Docker Compose 1.17.0+)**
     + Docker version required: 20.10.10+
