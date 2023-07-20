@@ -19,7 +19,33 @@
   <input id="deposits-record" type="hidden" name="deposits-record" value='{{record | tojson }}'></input>
   {%- endif %}
   {%- if preselectedCommunity %}
-  <input id="deposits-draft-community" type="hidden" name="deposits-draft-community" value='{{preselectedCommunity | tojson }}'></input>
+    <input id="deposits-draft-community" type="hidden" name="deposits-draft-community" value='{{preselectedCommunity | tojson }}'></input>
+    {#
+      <input id="deposits-draft-community" type="hidden" name="deposits-draft-community" value='{{preselectedCommunity | tojson }}'></input>
+    #} 
+    {#
+      {# warning: this is a hacky solution to pass down a preselected community to the deposit form thank to getInputFromDOM
+      https://github.com/caltechlibrary/caltechauthors/blob/87761329b6c230f416722678964e7e2eb6b002ce/templates/semantic-ui/invenio_app_rdm/records/deposit.html#L23 #}
+      <input id="deposits-draft-community" type="hidden" name="deposits-draft-community"
+        value='{
+          "access": {
+            "visibility": "public"
+          },
+          "id": "baafc572-2063-4826-b34c-748221b9feda",
+          "links": {
+            "logo": ""
+          },
+          "metadata": {
+            "title": "Open Data"
+          },
+          "slug": "opendata",
+          "ui": {
+            "permissions": {
+              "can_include_directly": false
+            }
+          }'>
+      </input>
+    #}
   {%- endif %}
   {%- if files %}
   <input id="deposits-record-files" type="hidden" name="deposits-record-files" value='{{files | tojson }}'></input>
