@@ -175,9 +175,14 @@ The following instructions were modified from the [InvenioRDM System Requirement
   ```
 
   The UltraViolet instance should now be available at this URL: <https://127.0.0.1:5000/>  
-  Because of the invalid TLS warning, you will need to use Firefox.
+  Because of the invalid TLS warning, you will need  configure your browser
+  of choice to skip certificate verification for localhost or use Firefox
 
-  You can login using account `admin@test.com` which you've just created and start uploading data.
+  To start uploading data you can login with default admin account adminUV@test.com (password for that account is defined
+  by the variable RDM_RECORDS_USER_FIXTURE_PASSWORDS in your invenio.cfg). After login an option "My dashboard" will become
+  available. Click on it and then use "New upload" button.
+  
+  NOTE: Do not click on "Deposit" option, it is used in production by non-admin users to request curated upload 
 
 16. Quit the application with `Ctr-C` and spin down the containers with `invenio-cli containers stop`
 
