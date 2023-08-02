@@ -19,7 +19,7 @@ During the process of development, you may want to create a new fixture record a
 3. Now clone the `ultraviolet-fixtures` repository into a `fixtures` directory with the following command. (`.fixtures` is gitignored, so don't worry about it getting committed!)
 
   ``` sh
-  git clone git@github.com:NYU-DataServices/ultraviolet-fixtures.git fixtures
+  git clone git@github.com:ADDLOCATIONHERE,TBD fixtures
   ```
 4. Post the fixture records to the instance via `uv-cli`
   ``` sh
