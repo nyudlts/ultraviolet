@@ -15,6 +15,34 @@
 {%- extends config.BASE_TEMPLATE %}
 
 {%- block page_body %}
+
+  <style>
+    /*
+      This hacky solution hides the "Remove" button from the community selection header when a community has been
+      This prevents the screen from flashing the button as we wait for the DOM to load and react to finish rendering.
+      This is an initial step to hide the "Remove" button before we use JS (below) to delete it from the DOM
+      For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
+    */
+    #communityRequired .community-header-element button:nth-child(2) {
+      display: none;
+    }
+
+    /*
+      These css blocks add an asterisc to the Community Header to simbolize to the user it's required
+      For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
+    */
+    #communityRequired .page-subheader .page-subheader-element:nth-child(2)::after {
+      content: "*";
+      color:red;
+      padding-left: .2em;
+    }
+    #deposit-form .page-subheader-element::after {
+      content: "*";
+      color:red;
+      padding-left: .2em;
+    }
+  </style>
+
   {%- if record %}
   <input id="deposits-record" type="hidden" name="deposits-record" value='{{record | tojson }}'></input>
   {%- endif %}
@@ -36,4 +64,21 @@
 {%- block javascript %}
     {{ super() }}
     {{ webpack['invenio-app-rdm-deposit.js'] }}
+
+    <script>
+      // This hacky solution removes the "Remove" buttom from the community header in order to make
+      // the selection of a community a requirement and to avoid users removing the pre-selected community
+      // For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
+      document.addEventListener('DOMContentLoaded', () => {
+
+        function removeRemove() {
+          const matches = document.querySelectorAll("#communityRequired .community-header-element button:nth-child(2)")
+          matches.forEach(match => {
+            match.remove()
+          })
+        }
+        // delay removing for 1 sec to allow react to render and selection to happen
+        const timer = setTimeout(removeRemove, 1000);
+      })
+    </script>
 {%- endblock %}
