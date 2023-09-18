@@ -23,7 +23,7 @@
       This is an initial step to hide the "Remove" button before we use JS (below) to delete it from the DOM
       For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
     */
-    #communityRequired .community-header-element button:nth-child(2) {
+    #deposit-form .community-header-element .community-header-button:nth-child(2) {
       display: none;
     }
 
@@ -31,12 +31,7 @@
       These css blocks add an asterisc to the Community Header to simbolize to the user it's required
       For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
     */
-    #communityRequired .page-subheader .page-subheader-element:nth-child(2)::after {
-      content: "*";
-      color:red;
-      padding-left: .2em;
-    }
-    #deposit-form .page-subheader-element::after {
+    #deposit-form div.page-subheader-element:nth-last-child(2):after {
       content: "*";
       color:red;
       padding-left: .2em;
@@ -76,16 +71,16 @@
         const url = new URL(window.location.href)
         // Get the value of 'community' from the query string
         const communityId = url.searchParams.get('community')
+        const isThisRecordNew = url.pathname.match(/new/)
         // Check if the parameters exist; if not redirect the user to the page and include the default community in the query string
-        if (communityId === null) {
+        if (isThisRecordNew && communityId === null) {
           window.location.href = `/uploads/new?community=${defaultCommunityId}`
         }
 
         function removeRemove() {
-          const matches = document.querySelectorAll("#communityRequired .community-header-element button:nth-child(2)")
-          matches.forEach(match => {
-            match.remove()
-          })
+          // const matches = document.querySelectorAll("#deposit-form .community-header-element .community-header-button:nth-child(2)")
+          const match = document.querySelector("#deposit-form .community-header-element .community-header-button:nth-child(2)");
+          match.remove()
         }
         // delay removing for 1 sec to allow react to render and selection to happen
         const timer = setTimeout(removeRemove, 1000);
