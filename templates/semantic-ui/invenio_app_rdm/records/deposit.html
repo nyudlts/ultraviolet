@@ -60,29 +60,33 @@
     {{ super() }}
     {{ webpack['invenio-app-rdm-deposit.js'] }}
 
+    {%- if not record.is_published and not record.versions.index %}
+      <script>
+        // as long as the current record is not published and has no previous versions (new record)
+        // when cold navigated to /uploads/new without query string REDIRECT to /uploads/new?community={{communityName}}
+        // pick default community name from environment variables
+        const defaultCommunityName = '{{ config.DEFAULT_COMMUNITY }}'
+        const url = new URL(window.location.href)
+        const communityId = url.searchParams.get("community")
+        // Check if the parameters exist and do something with them
+        if (communityId === null) {
+          window.location.href = `/uploads/new?community=${defaultCommunityName}`
+        }
+      </script>
+    {%- endif %}
+
     <script>
       // This hacky solution removes the "Remove" buttom from the community header in order to make
       // the selection of a community a requirement and to avoid users removing the pre-selected community
       // For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
       document.addEventListener('DOMContentLoaded', () => {
-        
-        // Redirect if cold navigated to /uploads/new without query string
-        const defaultCommunityId = 'opendata'
-        const url = new URL(window.location.href)
-        // Get the value of 'community' from the query string
-        const communityId = url.searchParams.get('community')
-        const isThisRecordNew = url.pathname.match(/new/)
-        // Check if the parameters exist; if not redirect the user to the page and include the default community in the query string
-        if (isThisRecordNew && communityId === null) {
-          window.location.href = `/uploads/new?community=${defaultCommunityId}`
-        }
-
-        function removeRemove() {
-          const match = document.querySelector("#deposit-form .community-header-element .community-header-button:nth-child(2)");
-          match.remove()
-        }
         // delay removing for 1 sec to allow react to render and selection to happen
-        const timer = setTimeout(removeRemove, 1000);
+        // preventing flashing the button by hidding with CSS above
+        setTimeout(() => {
+          const match = document.querySelectorAll("#deposit-form .community-header-element .community-header-button:nth-child(2)");
+          match && match.remove()
+        }, 1000);
       })
     </script>
 {%- endblock %}
+
