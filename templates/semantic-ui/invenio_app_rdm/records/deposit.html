@@ -60,18 +60,15 @@
     {{ super() }}
     {{ webpack['invenio-app-rdm-deposit.js'] }}
 
-    {%- if not record.is_published and not record.versions.index %}
+    {%- set communityInURL = request.args.get("community") %}
+    {%- if not record.is_published and not record.versions.index and not communityInURL %}
       <script>
         // as long as the current record is not published and has no previous versions (new record)
         // when cold navigated to /uploads/new without query string REDIRECT to /uploads/new?community={{communityName}}
         // pick default community name from environment variables
         const defaultCommunityName = '{{ config.DEFAULT_COMMUNITY }}'
-        const url = new URL(window.location.href)
-        const communityId = url.searchParams.get("community")
         // Check if the parameters exist and do something with them
-        if (communityId === null) {
-          window.location.href = `/uploads/new?community=${defaultCommunityName}`
-        }
+        window.location.href = `/uploads/new?community=${defaultCommunityName}`
       </script>
     {%- endif %}
 
