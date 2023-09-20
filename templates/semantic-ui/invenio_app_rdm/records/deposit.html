@@ -60,8 +60,8 @@
     {{ super() }}
     {{ webpack['invenio-app-rdm-deposit.js'] }}
 
-    {%- set communityInURL = request.args.get("community") %}
-    {%- if not record.is_published and not record.versions.index and not communityInURL %}
+    {%- set community_in_url = request.args.get("community") %}
+    {%- if not record.is_published and not record.versions.index and not community_in_url %}
       <script>
         // as long as the current record is not published and has no previous versions (new record)
         // when cold navigated to /uploads/new without query string REDIRECT to /uploads/new?community={{communityName}}
