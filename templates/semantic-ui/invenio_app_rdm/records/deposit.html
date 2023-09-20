@@ -32,9 +32,14 @@
       For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
     */
     #deposit-form div.page-subheader-element:nth-last-child(2):after {
+      display: inline-block;
+      vertical-align: top;
+      margin: -.2em 0 0 .2em;
       content: "*";
-      color:red;
-      padding-left: .2em;
+      color: #db0363;
+      font-size: .92857143em;
+      font-weight: 700;
+      text-transform: none;
     }
   </style>
 
@@ -80,8 +85,10 @@
         // delay removing for 1 sec to allow react to render and selection to happen
         // preventing flashing the button by hidding with CSS above
         setTimeout(() => {
-          const match = document.querySelectorAll("#deposit-form .community-header-element .community-header-button:nth-child(2)");
-          match && match.remove()
+          const matches = document.querySelectorAll("#deposit-form .community-header-element .community-header-button:nth-child(2)");
+          matches.forEach((match) => {
+            match.remove();
+          })
         }, 1000);
       })
     </script>
