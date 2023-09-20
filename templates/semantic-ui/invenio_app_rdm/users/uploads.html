@@ -18,7 +18,7 @@
   // This is a temporary workaround until we have a better solution.
   // See: https://jira.nyu.edu/browse/INVENIO-58
   document.addEventListener('DOMContentLoaded', (event) => {
-    const communitySlug = 'opendata'
+    const communitySlug = '{{ config.DEFAULT_COMMUNITY }}'
     const matches = document.querySelectorAll("a[href='/uploads/new']")
     matches.forEach(match => {
       match.setAttribute('href', `/uploads/new?community=${communitySlug}`)
