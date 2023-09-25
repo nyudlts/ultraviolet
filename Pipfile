@@ -18,7 +18,7 @@ python-dotenv = "*"
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
-pytest-invenio = "==1.4.3"
+pytest-invenio = "==2.1.0"
 flask-pytest = "*"
 
 [requires]

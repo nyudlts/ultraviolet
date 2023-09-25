@@ -9,7 +9,7 @@ on:
       - "**.md"
   pull_request:
     branches:
-      - main
+      - main, development
     paths-ignore:
       - "docs/**"
       - "**.md"
@@ -27,7 +27,7 @@ jobs:
           echo 'alias docker-compose="docker compose" ' >> $rc
       - name: "Save Python and Node versions to env"
         run: |
-          echo "PYTHON_VERSION=$(cat '.python-version')" >> ${GITHUB_ENV}
+          echo "PYTHON_VERSION=$(cat '.python-test')" >> ${GITHUB_ENV}
           echo "NODE_VERSION=$(cat '.nvmrc')" >> ${GITHUB_ENV}
       - name: "Set up Python"
         uses: actions/setup-python@v4

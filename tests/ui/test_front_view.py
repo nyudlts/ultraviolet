@@ -8,9 +8,10 @@
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 """View tests of the front page."""
+from flask_security import login_user
+from invenio_accounts.testutils import login_user_via_session
 
-
-def test_front_page(base_client):
+def test_front_page(base_client,db):
     # Depends on 'base_app' fixture
     front_view = base_client.get("/").data
     assert (
@@ -23,8 +24,15 @@ def test_front_page(base_client):
     )
 
 
-def test_header_menu_button(base_client):
+def test_header_menu_button(base_client,db):
     front_view = base_client.get("/").data
     assert "Browse" in front_view.decode("utf-8")
     assert "FAQs" in front_view.decode("utf-8")
     assert "Deposit" in front_view.decode("utf-8")
+
+def test_community(base_client,users,admin_user,db):
+    user = users["user1"]
+    login_user(user, remember=True)
+    login_user_via_session(base_client, email=user.email)
+    front_view = base_client.get("/me/uploads/new").data
+    assert "communities" in front_view.decode("utf-8")
