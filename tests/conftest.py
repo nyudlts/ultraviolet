@@ -91,3 +91,17 @@ def client_with_login(client, users):
     login_user(user, remember=True)
     login_user_via_session(client, email=user.email)
     return client
+
+@pytest.fixture(scope="module")
+def opendata_community():
+    """Minimal community metadata."""
+    return {
+        "access": {
+            "visibility": "public",
+            "record_policy": "open",
+        },
+        "slug": "opendata",
+        "metadata": {
+            "title": "Open Data",
+        },
+    }
