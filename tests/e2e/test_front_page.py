@@ -12,6 +12,8 @@
 from flask import url_for
 from selenium.webdriver.common.by import By
 import multiprocessing
+from flask_security import login_user
+from invenio_accounts.testutils import login_user_via_session
 
 
 """This is needed so live_server fixture can be used on Mac with python3.8 
@@ -23,4 +25,3 @@ def test_frontpage(live_server, browser):
     """Test retrieval of front page."""
     browser.get(url_for("invenio_app_rdm.index", _external=True))
     assert "Search Ultraviolet" == browser.find_element(By.TAG_NAME, "h1").text
-
