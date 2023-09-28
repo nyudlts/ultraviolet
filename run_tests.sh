@@ -44,6 +44,8 @@ fi
 #run tests
 #if path to test is provided check that it is valid and use it
 #otherwise run tests from test directory defined in  pytest.ini
+#check that all services containers are running
+pipenv run invenio-cli services start
 if [ $# -eq 0 ]
 then
     pipenv run pytest -p no:cacheprovider

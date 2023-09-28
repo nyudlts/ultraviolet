@@ -34,7 +34,7 @@ def test_var_assigned(monkeypatch):
 
 
 # Check that default values are assign to configuration variables when values are not passed through os
-def test_var_noassigned():
+def test_var_notassigned():
     """Mocking using default configuration"""
     app = create_app()
     assert app.config.get("APP_ALLOWED_HOSTS") == ["0.0.0.0", "localhost", "127.0.0.1"]
@@ -42,5 +42,6 @@ def test_var_noassigned():
         app.config.get("SQLALCHEMY_DATABASE_URI")
         == "postgresql+psycopg2://nyudatarepository:changeme@localhost/nyudatarepository"
     )
+    print(app.config)
     assert app.config.get("SITE_UI_URL") == "https://127.0.0.1:5000"
     assert app.config.get("SITE_API_URL") == "https://127.0.0.1:5000/api"

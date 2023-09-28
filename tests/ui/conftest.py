@@ -13,17 +13,23 @@
 
 import invenio_app.factory as factory
 from invenio_base.wsgi import wsgi_proxyfix
+from invenio_communities.communities.records.api import Community
 from invenio_config import create_config_loader
+from invenio_rdm_records.fixtures import vocabularies
 import pytest
 import os
 
+from invenio_rdm_records.records import RDMRecord, RDMDraft
+from invenio_vocabularies.records.api import Vocabulary
+
+
 
 @pytest.fixture(scope="module")
-def create_app(ultraviolet_instance_path):
+def create_app(ultraviolet_instance_path, app_config ):
     """Flask app fixture."""
     create_ultraviolet_app_ui = factory.create_app_factory(
         "invenio",
-        config_loader=create_config_loader(config=None, env_prefix="Invenio"),
+        config_loader=create_config_loader(config=app_config, env_prefix="Invenio"),
         blueprint_entry_points=["invenio_base.blueprints"],
         extension_entry_points=["invenio_base.apps"],
         converter_entry_points=["invenio_base.converters"],

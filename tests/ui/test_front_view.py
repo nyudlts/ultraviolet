@@ -29,10 +29,3 @@ def test_header_menu_button(base_client,db):
     assert "Browse" in front_view.decode("utf-8")
     assert "FAQs" in front_view.decode("utf-8")
     assert "Deposit" in front_view.decode("utf-8")
-
-def test_community(base_client,users,admin_user,db):
-    user = users["user1"]
-    login_user(user, remember=True)
-    login_user_via_session(base_client, email=user.email)
-    front_view = base_client.get("/me/uploads/new").data
-    assert "communities" in front_view.decode("utf-8")

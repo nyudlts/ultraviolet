@@ -20,11 +20,6 @@ jobs:
     steps:
       - name: "Checkout current state"
         uses: actions/checkout@v3
-      - shell: bash
-        run: |
-          rc=/tmp/rcfile
-          echo 'shopt -s expand_aliases' > $rc
-          echo 'alias docker-compose="docker compose" ' >> $rc
       - name: "Save Python and Node versions to env"
         run: |
           echo "PYTHON_VERSION=$(cat '.python-test')" >> ${GITHUB_ENV}
@@ -58,7 +53,6 @@ jobs:
           docker -v
           docker compose up -d
           invenio-cli run &
-          pipenv run invenio db create
       - name: "Run tests"
         run: |
           E2E=no pipenv run pytest -p no:cacheprovider
