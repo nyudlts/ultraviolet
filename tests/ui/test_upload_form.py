@@ -11,9 +11,7 @@
 from flask_security import login_user
 from invenio_accounts.testutils import login_user_via_session
 
-def test_deposit( _search_create_indexes, app_config, base_client, users, admin_user, db, opendata_community, resource_type_item, language_item, subject_item,
-                   creator_role_item, contributor_role_item, title_type_item,description_type_item, date_type_item,
-                   relations_type_item):
+def test_deposit( prepare_indexes, app_config, base_client, users, admin_user, db, opendata_community):
     user = users["user1"]
     login_user(user, remember=True)
     login_user_via_session(base_client, email=user.email)
