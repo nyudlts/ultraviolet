@@ -2,6 +2,7 @@
   username: adminUV
   active: True
   password: changeme
+  roles: [ admin ]
 - email: depositor@test.com
   username: depositor
   active: True
