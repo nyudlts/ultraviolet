@@ -11,32 +11,11 @@
 """Pytest configuration."""
 
 
-import invenio_app.factory as factory
-from invenio_base.wsgi import wsgi_proxyfix
-from invenio_communities.communities.records.api import Community
-from invenio_config import create_config_loader
-from invenio_rdm_records.fixtures import vocabularies
+from invenio_app.factory import create_app as create_ui
 import pytest
-import os
-
-from invenio_rdm_records.records import RDMRecord, RDMDraft
-from invenio_vocabularies.records.api import Vocabulary
-
 
 
 @pytest.fixture(scope="module")
-def create_app(ultraviolet_instance_path, app_config ):
+def create_app():
     """Flask app fixture."""
-    create_ultraviolet_app_ui = factory.create_app_factory(
-        "invenio",
-        config_loader=create_config_loader(config=app_config, env_prefix="Invenio"),
-        blueprint_entry_points=["invenio_base.blueprints"],
-        extension_entry_points=["invenio_base.apps"],
-        converter_entry_points=["invenio_base.converters"],
-        wsgi_factory=wsgi_proxyfix(),
-        instance_path=ultraviolet_instance_path,
-        static_folder=os.path.join(ultraviolet_instance_path, "static"),
-        root_path=ultraviolet_instance_path,
-        app_class=factory.app_class(),
-    )
-    return create_ultraviolet_app_ui
+    return create_ui

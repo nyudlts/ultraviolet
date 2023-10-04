@@ -11,9 +11,7 @@
 """Pytest fixtures for ultraviolet testing"""
 
 
-import sys
 import pytest
-import os
 
 from flask_principal import AnonymousIdentity
 from flask_security import login_user
@@ -40,26 +38,22 @@ from invenio_vocabularies.records.api import Vocabulary
 from invenio_vocabularies.records.models import VocabularyScheme
 
 
-
 @pytest.fixture(scope="module")
-def app_config( app_config, ultraviolet_instance_path):
+def app_config(app_config):
     # need this to make sure separate indexes and database are created for testing
-    app_config["SEARCH_INDEX_PREFIX"] = "test-"
     app_config["SQLALCHEMY_DATABASE_URI"] = "postgresql+psycopg2://nyudatarepository:changeme@localhost/test_uv"
-
+    app_config["SEARCH_INDEX_PREFIX"] = ""
+    app_config["WEBPACKEXT_STORAGE_CLS"] = "functools.partial(<class 'pywebpack.storage.LinkStorage'>, depth=2)"
+    app_config["SITE_UI_URL"] = "https://127.0.0.1:5000"
+    app_config["SITE_API_URL"] = "https://127.0.0.1:5000/api"
     return app_config
 
-
-# overriding instance path allows us to make sure we use ultraviolet templates
-@pytest.fixture(scope="module")
-def ultraviolet_instance_path():
-    return os.path.join(sys.prefix, "var", "instance")
 
 #
 # Services
 #
 @pytest.fixture()
-def community_service(app, app_config):
+def community_service(app):
     """Community service."""
     return current_communities.service
 
@@ -80,17 +74,9 @@ def events_service(app):
 
 
 @pytest.fixture()
-def vocabularies_service(app, app_config):
+def vocabularies_service(app):
     """Vocabularies service."""
-    Vocabulary.index.create()
     return vocabulary_service
-
-@pytest.fixture(scope="module")
-def anon_identity():
-    """A new user."""
-    identity = AnonymousIdentity()
-    identity.provides.add(any_user_need)
-    return identity
 
 
 @pytest.fixture()
@@ -190,11 +176,11 @@ def owner(community_users):
     return community_users["owner"]
 
 @pytest.fixture()
-def resource_type_type(app, app_config):
+def resource_type_type(app):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(system_identity, "resourcetypes", "rsrct")
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def resource_type_item(app, resource_type_type, app_config):
     """Resource type vocabulary record."""
     rst = vocabulary_service.create(
@@ -220,13 +206,13 @@ def resource_type_item(app, resource_type_type, app_config):
     )
 
 @pytest.fixture()
-def title_type(app,app_config):
+def title_type(app):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(system_identity, "titletypes", "ttyp")
 
 
 @pytest.fixture()
-def title_type_item(app, title_type, app_config):
+def title_type_item(app, title_type):
     """Title type vocabulary record."""
     ttyp = vocabulary_service.create(
         system_identity,
@@ -242,12 +228,12 @@ def title_type_item(app, title_type, app_config):
     return ttyp
 
 @pytest.fixture()
-def creator_role(app, app_config):
+def creator_role(app):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(system_identity, "creatorsroles", "crr")
 
 @pytest.fixture()
-def creator_role_item(app, creator_role, app_config):
+def creator_role_item(app, creator_role):
     """Title type vocabulary record."""
     crr = vocabulary_service.create(
         system_identity,
@@ -263,13 +249,13 @@ def creator_role_item(app, creator_role, app_config):
     return crr
 
 @pytest.fixture()
-def contributor_role(app, app_config):
+def contributor_role(app):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(system_identity, "contributorsroles", "cor")
 
 
 @pytest.fixture()
-def contributor_role_item(app, contributor_role, app_config):
+def contributor_role_item(app, contributor_role):
     """Title type vocabulary record."""
     cor = vocabulary_service.create(
         system_identity,
@@ -285,13 +271,13 @@ def contributor_role_item(app, contributor_role, app_config):
     return cor
 
 @pytest.fixture()
-def relations_type(app, app_config):
+def relations_type(app):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(system_identity, "relationtypes", "rlt")
 
 
 @pytest.fixture()
-def relations_type_item(app, relations_type, app_config):
+def relations_type_item(app, relations_type):
     """Title type vocabulary record."""
     rlt = vocabulary_service.create(
         system_identity,
@@ -307,13 +293,13 @@ def relations_type_item(app, relations_type, app_config):
     return rlt
 
 @pytest.fixture()
-def description_type(app, app_config):
+def description_type(app):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(system_identity, "descriptiontypes", "dty")
 
 
 @pytest.fixture()
-def description_type_item(app, description_type, app_config):
+def description_type_item(app, description_type):
     """Title type vocabulary record."""
     dty = vocabulary_service.create(
         system_identity,
@@ -329,13 +315,13 @@ def description_type_item(app, description_type, app_config):
     return dty
 
 @pytest.fixture()
-def date_type(app, app_config):
+def date_type(app):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(system_identity, "datetypes", "dat")
 
 
 @pytest.fixture()
-def date_type_item(app, date_type, app_config):
+def date_type_item(app, date_type):
     """Title type vocabulary record."""
     dat = vocabulary_service.create(
         system_identity,
@@ -357,7 +343,7 @@ def languages_type(app):
 
 
 @pytest.fixture()
-def language_item(app, languages_type, app_config):
+def language_item(app, languages_type):
     """Language vocabulary record."""
     lang = vocabulary_service.create(
         system_identity,
@@ -371,11 +357,10 @@ def language_item(app, languages_type, app_config):
         },
     )
     Vocabulary.index.refresh()
-
     return lang
 
 @pytest.fixture()
-def subjects_mesh_scheme(app, db, app_config):
+def subjects_mesh_scheme(app, db):
     """Subject Scheme for MeSH."""
     scheme = VocabularyScheme.create(
         id="MeSH",
@@ -387,7 +372,7 @@ def subjects_mesh_scheme(app, db, app_config):
     return scheme
 
 @pytest.fixture()
-def subject_item(app, subjects_mesh_scheme, subjects_service, app_config):
+def subject_item(app, subjects_mesh_scheme, subjects_service):
     """Subject vocabulary record."""
     subj = subjects_service.create(
         system_identity,
@@ -402,30 +387,32 @@ def subject_item(app, subjects_mesh_scheme, subjects_service, app_config):
     return subj
 
 @pytest.fixture()
-def subjects_service(app, app_config):
+def subjects_service(app):
     """Subjects service."""
     return current_service_registry.get("subjects")
 
-@pytest.fixture()
-def _search_create_indexes(app_config):
+@pytest.fixture(scope='module')
+def _search_create_indexes(app):
     """Create all registered search indexes."""
     to_create = [
-        RDMRecord.index._name,
-        RDMDraft.index._name,
-        Community.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+RDMRecord.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+RDMDraft.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+Vocabulary.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+Subject.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+Community.index._name
     ]
-    app_config["SEARCH_INDEX_PREFIX"] = "test-"
-    # list to trigger iter
     list(current_search.create(ignore_existing=True, index_list=to_create ))
     current_search_client.indices.refresh()
 
 @pytest.fixture()
-def _search_delete_indexes(app_config):
+def _search_delete_indexes(app):
     """Delete all registered search indexes."""
     to_delete = [
-        RDMRecord.index._name,
-        RDMDraft.index._name,
-        Community.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+RDMRecord.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+RDMDraft.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+Community.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+Vocabulary.index._name,
+        app.config["SEARCH_INDEX_PREFIX"]+Subject.index._name
     ]
     list(current_search.delete(index_list=to_delete))
 
@@ -433,7 +420,7 @@ def _search_delete_indexes(app_config):
 # overwrite pytest_invenio.fixture to only delete record indices
 # keeping vocabularies.
 @pytest.fixture()
-def search_clear(search, app_config):
+def search_clear(search):
     """Clear search indices after test finishes (function scope).
 
     This fixture rollback any changes performed to the indexes during a test,
@@ -446,7 +433,7 @@ def search_clear(search, app_config):
     _search_create_indexes(current_search, current_search_client)
 
 @pytest.fixture()
-def opendata_community( _search_create_indexes, minimal_community, location, db, app_config):
+def opendata_community(app, minimal_community, location, db):
     """A community."""
     slug = "opendata"
     try:
@@ -458,11 +445,10 @@ def opendata_community( _search_create_indexes, minimal_community, location, db,
             minimal_community
         )
         Community.index.refresh()
-
     return c
 
 @pytest.fixture()
-def prepare_indexes(_search_create_indexes, app_config, resource_type_item, language_item, subject_item,
+def prepare_indexes(app,resource_type_item, language_item, subject_item,
                    creator_role_item, contributor_role_item, title_type_item,description_type_item, date_type_item,
-                   relations_type_item):
+                   relations_type_item, opendata_community):
     """ We often need all indexes for testing a feature so we combine them here"""

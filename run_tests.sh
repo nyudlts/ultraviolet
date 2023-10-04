@@ -45,15 +45,21 @@ fi
 #if path to test is provided check that it is valid and use it
 #otherwise run tests from test directory defined in  pytest.ini
 #check that all services containers are running
-pipenv run invenio-cli services start
+
+docker compose -f docker-compose-test.yml --project-name ultraviolet-test up -d
+
 if [ $# -eq 0 ]
 then
-    pipenv run pytest -p no:cacheprovider
+    pipenv run pytest -p no:cacheprovider --disable-warnings
 else
     if ! [ -d "$1" ]
     then
        echo "Path to test is invalid"
        exit 1
     fi
-       pipenv run pytest -p no:cacheprovider "$1"
+       pipenv run pytest -p no:cacheprovider --disable-warnings "$1"
 fi
+
+docker compose --project-name ultraviolet-test stop
+docker compose --project-name ultraviolet-test -f rm
+docker compose --project-name ultraviolet-test down

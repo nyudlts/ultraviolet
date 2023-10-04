@@ -42,7 +42,7 @@ Before running E2E make sure that Selenium Client is installed and Chrome Webdri
   ``` sh
   pipenv install --dev
   ```
-2. Make sure the application containers are running
+2. Make sure the application containers are stoped to avoid port conflicts
   ``` sh
   invenio-cli services status
   ```
@@ -56,9 +56,9 @@ Before running E2E make sure that Selenium Client is installed and Chrome Webdri
   ```
 5. Run the tests!
   ``` sh
-  pipenv run pytest -p no:cacheprovider
+  ./run-tests.sh
   ```
 6. OPTIONAL: You can (re)run specific tests by specifying the path, e.g.,
   ``` sh
-  pipenv run pytest -p no:cacheprovider tests/ui
+  ./run-test.sh tests/ui
   ```
