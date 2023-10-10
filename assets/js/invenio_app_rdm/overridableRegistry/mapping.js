@@ -1,4 +1,3 @@
-// import { NewVersionButtonContainerOverride } from "./components/NewVersionButton"
 import { FileUploader } from "./components/FileUploader"
 
 export const overriddenComponents = {
