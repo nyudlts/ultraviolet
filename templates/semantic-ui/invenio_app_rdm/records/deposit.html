@@ -36,4 +36,13 @@
 {%- block javascript %}
     {{ super() }}
     {{ webpack['invenio-app-rdm-deposit.js'] }}
+  <script>
+    // option 2 - using cloneElement and re-append with new message
+    const warning = document.querySelector("div.ui.visible.warning.message")
+    let secondWarning = warning.cloneNode(true) // true for deepclone
+    let oldMessage = secondWarning.innerHTML
+    secondWarning.innerHTML = oldMessage.replace("File addition, removal or modification are not allowed after you have published your upload.", "Contact the NYU Libraries UltraViolet service team at <a href='mailto:email@example.com'>uv@nyu.edu</a> if you have more than 100 files or 50GB.")
+    secondWarning.id = warning.id + "1"
+    warning.parentNode.append(secondWarning)
+  </script>
 {%- endblock %}
