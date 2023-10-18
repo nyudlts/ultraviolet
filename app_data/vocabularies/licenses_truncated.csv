@@ -418,3 +418,4 @@ xinetd;xinetd License;;;all;https://fedoraproject.org/wiki/Licensing/Xinetd_Lice
 xpp;XPP License;;;all;https://fedoraproject.org/wiki/Licensing/xpp;spdx;
 zlib-acknowledgement;zlib/libpng License with Acknowledgement;;;all;https://fedoraproject.org/wiki/Licensing/ZlibWithAcknowledgement;spdx;
 prop-license;License Held by Publisher;Rights are held by a vendor or private party. Access is limited to current members of the NYU Community;;all;https://www.nyu.edu/about/policies-guidelines-compliance/policies-and-guidelines/responsible-use-of-nyu-computers-and-data-policy-on.html;;
+alr;All Rights Reserved; the copyright holder reserves all rights provided by U.S. copyright law;;;https://en.wikipedia.org/wiki/All_rights_reserved;;
