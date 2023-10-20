@@ -15,6 +15,34 @@
 {%- extends config.BASE_TEMPLATE %}
 
 {%- block page_body %}
+
+  <style>
+    /*
+      This hacky solution hides the "Remove" button from the community selection header when a community has been
+      This prevents the screen from flashing the button as we wait for the DOM to load and react to finish rendering.
+      This is an initial step to hide the "Remove" button before we use JS (below) to delete it from the DOM
+      For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
+    */
+    #deposit-form .community-header-element .community-header-button:nth-child(2) {
+      display: none;
+    }
+
+    /*
+      These css blocks add an asterisc to the Community Header to simbolize to the user it's required
+      For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
+    */
+    #deposit-form div.page-subheader-element:nth-last-child(2):after {
+      display: inline-block;
+      vertical-align: top;
+      margin: -.2em 0 0 .2em;
+      content: "*";
+      color: #db0363;
+      font-size: .92857143em;
+      font-weight: 700;
+      text-transform: none;
+    }
+  </style>
+
   {%- if record %}
   <input id="deposits-record" type="hidden" name="deposits-record" value='{{record | tojson }}'></input>
   {%- endif %}
@@ -36,4 +64,33 @@
 {%- block javascript %}
     {{ super() }}
     {{ webpack['invenio-app-rdm-deposit.js'] }}
+
+    {%- set community_in_url = request.args.get("community") %}
+    {%- if not record.is_published and not record.versions.index and not community_in_url %}
+      <script>
+        // as long as the current record is not published and has no previous versions (new record)
+        // when cold navigated to /uploads/new without query string REDIRECT to /uploads/new?community={{communityName}}
+        // pick default community name from environment variables
+        const defaultCommunityName = '{{ config.DEFAULT_COMMUNITY }}'
+        // Check if the parameters exist and do something with them
+        window.location.href = `/uploads/new?community=${defaultCommunityName}`
+      </script>
+    {%- endif %}
+
+    <script>
+      // This hacky solution removes the "Remove" buttom from the community header in order to make
+      // the selection of a community a requirement and to avoid users removing the pre-selected community
+      // For more about this approach please read https://jira.nyu.edu/browse/INVENIO-58
+      document.addEventListener('DOMContentLoaded', () => {
+        // delay removing for 1 sec to allow react to render and selection to happen
+        // preventing flashing the button by hidding with CSS above
+        setTimeout(() => {
+          const matches = document.querySelectorAll("#deposit-form .community-header-element .community-header-button:nth-child(2)");
+          matches.forEach((match) => {
+            match.remove();
+          })
+        }, 1000);
+      })
+    </script>
 {%- endblock %}
+
