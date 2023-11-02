@@ -90,15 +90,15 @@
             match.remove();
           })
         }, 1000);
-      })
 
-      // for more info: https://jira.nyu.edu/browse/INVENIO-114
-      // deposit form > date title, changes title to Additional Dates
-      let titles = document.querySelectorAll(".field-label-class.invenio-field-label").forEach((currentValue) => {
-        if (currentValue.innerHTML.includes("Dates")) {
-          let old = currentValue.innerHTML.replace("Dates", "Additional Dates");
-          currentValue.innerHTML = old
-        }
+        // for more info: https://jira.nyu.edu/browse/INVENIO-114
+        // deposit form > date title, changes title to Additional Dates
+        document.querySelectorAll(".field-label-class.invenio-field-label").forEach((currentValue) => {
+          if (currentValue.innerHTML.includes("Dates")) {
+            let old = currentValue.innerHTML.replace("Dates", "Additional Dates");
+            currentValue.innerHTML = old
+          }
+        })
       })
     </script>
 {%- endblock %}
