@@ -7,13 +7,13 @@ const rootContainer = document.querySelector("div.ui.visible.warning.message").p
 
 ReactDOM.render(
   <>
-    <Message visible warning>
+    <Message visible warning key="file-upload-message-warning-1">
       <p>
         <Icon name="warning sign" />
         {i18next.t("File addition, removal or modification are not allowed after you have published your upload.")}
       </p>
     </Message>
-    <Message visible warning>
+    <Message visible warning key="file-upload-message-warning-2">
       <p>
         <Icon name="warning sign" />
         {i18next.t("Contact the NYU Libraries UltraViolet service team at ")}
