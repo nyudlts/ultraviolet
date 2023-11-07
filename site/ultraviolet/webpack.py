@@ -10,6 +10,7 @@ theme = WebpackThemeBundle(
         "semantic-ui": dict(
             entry={
                 # Add your webpack entrypoints
+                "ultraviolet": "./js/ultraviolet/ultraviolet.js"
             },
         ),
     },
