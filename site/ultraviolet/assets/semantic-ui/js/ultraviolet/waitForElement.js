@@ -3,7 +3,6 @@
  * to wait for more changes on the DOM to look up that element
  * should be called within a DOMContentLoaded
  * @param {string} selector 
- * @param {function} callback 
  */
 // https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
 export async function waitForElement(selector) {
