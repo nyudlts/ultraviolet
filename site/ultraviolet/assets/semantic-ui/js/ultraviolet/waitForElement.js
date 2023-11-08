@@ -19,5 +19,3 @@ export async function waitForElement(selector) {
     observer.observe(document.body, { childList: true, subtree: true })
   })
 }
-
-export default waitForElement;
