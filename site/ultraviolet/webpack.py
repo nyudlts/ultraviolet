@@ -10,7 +10,7 @@ theme = WebpackThemeBundle(
         "semantic-ui": dict(
             entry={
                 # Add your webpack entrypoints
-                "file-upload-limit-message": "./js/ultraviolet/FileUploadLimitMessage.js"
+                "ultraviolet.deposit": "./js/ultraviolet/ultraviolet.deposit.js"
             },
         ),
     },
