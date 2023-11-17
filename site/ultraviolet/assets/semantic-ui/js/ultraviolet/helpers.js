@@ -1,11 +1,9 @@
 /**
- * waits for the dom to load and places an observer on the body
- * to wait for more changes on the DOM to look up that element
- * should be called within a DOMContentLoaded
+ * places an observer on the body to wait for changes and check if an element exists
+ * https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
  * @param {string} selector 
  * @returns {Promise<HTMLElement>} 
  */
-// https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
 export async function waitForElement(selector) {
   return new Promise(resolve => {
     if (document.querySelector(selector)) {
