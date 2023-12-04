@@ -4,7 +4,7 @@ import { waitForElement } from "./helpers"
  * Adds a warning message to the file upload section of the deposit form
  * https://jira.nyu.edu/browse/INVENIO-84
  */
-export async function invenio84() {
+export async function uvFileLimitsMessage() {
   const fileUploadWarningContainer = await waitForElement(".file-upload-note div.column")
   if (fileUploadWarningContainer) {
     let secondWarning = document.createElement("div")
