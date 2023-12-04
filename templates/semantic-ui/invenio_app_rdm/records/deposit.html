@@ -64,6 +64,7 @@
 {%- block javascript %}
     {{ super() }}
     {{ webpack['invenio-app-rdm-deposit.js'] }}
+    {{ webpack['ultraviolet.deposit.js'] }}
 
     {%- set community_in_url = request.args.get("community") %}
     {%- if not record.is_published and not record.versions.index and not community_in_url %}
