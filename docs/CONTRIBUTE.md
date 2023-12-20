@@ -1,68 +1,22 @@
 # Contribute
 
-There are a lot of moving parts to Ultraviolet, NYU's implementation of the InvenioRDM framework. 
-This page is meant to be a guide to contributing to this project.
-
-TOC
-- [Contribute](#contribute)
-    - [How we Organize (Project Management)](#how-we-organize-project-management)
-    - [How we Communicate](#how-we-communicate)
-    - [How we Document](#how-we-document)
-    - [How we Develop](#how-we-develop)
-        - [Issue tracking](#issue-tracking)
-        - [Branching Strategy](#branching-strategy)
-        - [Hosted instances](#hosted-instances)
-    - [Continuous Integration (CI)](#continuous-integration-ci)
-    - [Continuous Deployment (CD)](#continuous-deployment-cd)
-
-## How we Organize (Project Management)
-
-- [UltraViolet roadmap](https://docs.google.com/document/d/1s3qWChu32uAkO9ghEaILE5u6gQY8__RqUA0X7L52aZo/edit?usp=sharing)
-- [NYU/Ultraviolet SB3 Google Drive](https://drive.google.com/drive/folders/1q40bQ5bVZYn5_QhxbPDhhIAYZk3R7434?usp=sharing)
-
-There are two project boards that manage tickets for Ultraviolet:
-- [Github Project Board](https://github.com/nyudlts/ultraviolet/projects?type=classic): is out of sync with Jira but is used as an entrypoint for Issues on the application.
-- Jira Project Board (link TBD)
-
-### Issue tracking
-
-- [Github Issues](https://github.com/nyudlts/ultraviolet/issues).
-
-## How we Communicate
-
+#Contributing
+Here we will elaborate on some guidelines on how one can contribute to this project. Please feel free to ask more questions to clarify any details.
+You can use the following channels of communication:
 - [NYU DLTS Slack](https://nyu-dlts.slack.com): comments and questions for team members. Ask Kate for an invite.
 - [UltraViolet tech email group](mailto:data-repository-tech@nyu.edu): Internal Google Group for team communications
+#Git Flow
+##Branching
+Our Git flow is a simplified Git-Flow. Much like Git-Flow, we take advantage of a main branch, a development branch, and feature branches.
+###The main Branch 
+This branch remains readily deployable at all times. It has no end to its lifespan and only heavily tested code (or no code at all) is allowed in this exclusive branch. Any pull request to the main branch should be considered a new release.
+###The development Branch 
+This branch is where all ongoing work is done. It runs parallel to main and incorporates all bug fixes and features planned for specific release. When all planned features are implemented and the head of the development branch is tested and meets our coding requirements (to be discussed later) we are ready to create a PR to main.
+###feature Branches 
+feature branches branch off of development and must be merged back into development. A feature branch adds end-user functionality to the application. Each feature is described and discussed through the DLTS project tracking system (currently JIRA).  When working on a feature branch, it is important to only make changes that are relevant to the feature you are currently working on. Thus the lifespan of the feature branch is limited to the development of that feature. As a convention, we prefix feature branch names with the Jira ticket number.
+###chore Branches 
+chore branches branch off of development and must be merged back into development. A chore branch does not add end-user functionality but is used for housekeeping tasks (e.g., updating a configuration file). When working on a chore branch, it is important to only make changes that are relevant to the chore you are currently working on. Thus the lifespan of the chore branch is limited to the completion of the chore. As a convention, we prefix chore branch names with chore/ (e.g., chore/update-database-config).
+###Hotfix Branches 
+Hotfix branches are necessary in case we need an immediate fix in the current production system. Hotfix branches branch off of the main branch and must be merged back to development and main branches through pull request.
 
-## How we Document
 
-- [Instructions](docs/DOCUMENT.md) on how to contribute to this documentation.
-- [Libraries SB3 project documentation](https://drive.google.com/drive/folders/1q40bQ5bVZYn5_QhxbPDhhIAYZk3R7434?usp=sharing): All of the narratives and documentation over the years associated with this project
-
-## How we Develop
-
-<!-- - [UltraViolet 💜 codebase](https://github.com/nyudlts/ultraviolet) -->
-- Learn about Architecture, System Requirements, Setup steps in our [DEVELOP documentation](./DEVELOP.md)
-
-
-### Branching Strategy
-
-- `main` represents truth
-- branch naming convention: `<ticketNumber>-<summary-title>`
-
-### Hosted instances
-
-We currently have two instances available for preview:
-
-- [UltraViolet sandbox GCP hosted instance](https://34.66.53.163/) (requires log-in credentials to view, and requires Firefox to bypass the lack of CA certificates. Ask NYU DLTS for [credentials](https://nyu.app.box.com/notes/805001772990).)
-- [UltraViolet staging instance](https://stagewebapp1.dlib.nyu.edu/) (requires VPN)
-
-## Continuous Integration (CI)
-
-We currently have two main CI pipelines:
-
-- CI:test for Ultraviolet (workflows/test.yml)
-- CI for building Ultraviolet's docs (will be deprecated once we move documentation away from Jekyll + Github Pages)
-
-## Continuous Deployment (CD)
-
-Go to our [Deployment docs](./DEPLOY.md)
