@@ -21,4 +21,4 @@ multiprocessing.set_start_method("fork")
 def test_frontpage(live_server, browser):
     """Test retrieval of front page."""
     browser.get(url_for("invenio_app_rdm.index", _external=True))
-    assert "Search Ultraviolet" == browser.find_element(By.TAG_NAME, "h1").text
+    assert "Search Ultraviolet Data Repository" == browser.find_element(By.TAG_NAME, "h1").text

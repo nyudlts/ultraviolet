@@ -15,7 +15,7 @@
 # - Cache: Redis (exposed port: 6379)
 # - DB: (PostgresSQL/MySQL) (exposed port: 5432 or 3306)
 # - Message queue: RabbitMQ (exposed ports: 5672, 15672)
-# - Elasticsearch (exposed ports: 9200, 9300)
+# - Opensearch (exposed ports: 9200, 9300)
 #
 version: '2.2'
 services:
@@ -81,7 +81,7 @@ services:
       file: docker-services.yml
       service: app
     restart: "always"
-    command: ["celery -A invenio_app.celery worker --loglevel=INFO"]
+    command: ["celery -A invenio_app.celery worker --beat --loglevel=INFO"]
     image: nyu-data-repository
     depends_on:
       search:
