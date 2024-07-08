@@ -1,7 +1,7 @@
 - email: adminUV@test.com
   username: adminUV
   active: True
-  password: adminpassword
+  password: changeme 
   roles:
     - admin
   allow:
@@ -9,7 +9,7 @@
 - email: nyudepositor@test.com
   username: nyudepositor
   active: True
-  password: nyudepositor
+  password: changeme 
   roles:
     - admin
   allow:
@@ -17,7 +17,7 @@
 - email: nyuviewer@test.com
   username: nyuviewer
   active: True
-  password: nyuviewer
+  password: changeme 
   roles:
     - admin
   allow:
@@ -25,7 +25,7 @@
 - email: restdatauser@test.com
   username: restdatauser 
   active: True
-  password: restdatauser
+  password: changeme 
   roles:
     - admin
   allow:
@@ -33,4 +33,4 @@
 - email: publicviewer@test.com
   username: publicviewer 
   active: True
-  password: publicviewer
+  password: changeme 

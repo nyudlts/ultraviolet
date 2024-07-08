@@ -10,7 +10,13 @@ selenium = "*"
 
 [packages]
 invenio-logging = {extras = ["sentry-sdk"], version = "~=1.3.0"}
-ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git", ref = "sync_fork"}
+ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
+ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git"}
+invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git", ref="4.1.1-role-filter"}
+lxml = "==4.9.3"
+xmlsec = "==1.3.13"
+invenio-assets = "==2.0.0"
+invenio-previewer = "==1.3.10"
 python-dotenv = "*"
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"

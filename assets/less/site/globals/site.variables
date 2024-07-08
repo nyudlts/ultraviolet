@@ -42,8 +42,8 @@
 @footerTextDarkColor: #ffffff;
 
 @errorTextColor: #9f3a38;
-@focusedFormBorderColor: #2185d0;
-@focusedFormMutedBorderColor: #2185d0;
+@focusedFormBorderColor: #cc00d2;
+@focusedFormMutedBorderColor: #f88bfc;
 
 @highlightHeaderColor: #ededed;
 @highlightBackgroundColor: @highlightHeaderColor;
