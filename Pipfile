@@ -7,6 +7,8 @@ verify_ssl = true
 check-manifest = ">=0.25"
 pytest = "==6.2.5"
 selenium = "*"
+pytest-invenio = "==2.2.1"
+flask-pytest = "*"
 
 [packages]
 invenio-logging = {extras = ["sentry-sdk"], version = "~=1.3.0"}
@@ -21,8 +23,6 @@ python-dotenv = "*"
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
-pytest-invenio = "==1.4.3"
-flask-pytest = "*"
 invenio-app-rdm = {version = "~=11.0.0", extras = ["opensearch2", "postgresql"]}
 
 [requires]

@@ -10,7 +10,7 @@
 """View tests of the front page."""
 
 
-def test_front_page(base_client):
+def test_front_page(db,base_client):
     # Depends on 'base_app' fixture
     front_view = base_client.get("/").data
     assert (
@@ -23,7 +23,7 @@ def test_front_page(base_client):
     )
 
 
-def test_header_menu_button(base_client):
+def test_header_menu_button(db,base_client):
     front_view = base_client.get("/").data
     assert "Browse" in front_view.decode("utf-8")
     assert "FAQs" in front_view.decode("utf-8")
