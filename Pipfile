@@ -7,7 +7,7 @@ verify_ssl = true
 check-manifest = ">=0.25"
 pytest = "==6.2.5"
 selenium = "*"
-pytest-invenio = "==2.2.1"
+pytest-invenio = "==2.1.1"
 flask-pytest = "*"
 
 [packages]
