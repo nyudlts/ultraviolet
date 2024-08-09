@@ -49,7 +49,6 @@ body {
       }
     }
   }
-
   // Top Navbar Links
   #invenio-nav .item a {
     //color: #ffffff !important;

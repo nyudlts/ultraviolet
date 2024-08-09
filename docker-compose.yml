@@ -30,4 +30,4 @@ services:
   search:
     extends:
       file: docker-services.yml
-      service: search 
+      service: search
