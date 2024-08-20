@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - main
+      - invenio-220-bigfile
     paths-ignore:
       - "docs/**"
       - "**.md"
