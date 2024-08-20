@@ -54,6 +54,18 @@ jobs:
           docker compose up -d
           #invenio-cli services start
           invenio-cli run &
+      - name: "Install Chrome"
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+      - name: "Install ChromeDriver"
+        run: |
+          CHROME_VERSION=$(google-chrome --version | awk '{ print $3 }' | awk -F'.' '{ print $1"."$2"."$3 }')
+          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          wget -q -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+          rm /tmp/chromedriver.zip
+          sudo chmod +x /usr/local/bin/chromedriver
       - name: "Run tests"
         run: |
           pipenv install --dev
