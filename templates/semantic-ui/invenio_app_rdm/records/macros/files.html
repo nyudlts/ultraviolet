@@ -52,12 +52,18 @@
         <th>{{_('Name')}}</th>
         <th>{{_('Size')}}</th>
 	 <th class>
-          {%- if config.RDM_ARCHIVE_DOWNLOAD_ENABLED %}
-          {% set archive_download_url = record.links.archive %}
-          <a role="button" class="ui compact mini button right floated archive-link" href="{{ archive_download_url }}">
-            <i class="file archive icon button"></i> {{_("Download all")}}
-          </a>
-          {%- endif %}
+        {% set ns = namespace(download_all=0) %}
+        {% for file in files %}
+          {% if file.size > config.MAX_FILE_SIZE %}
+            {% set ns.download_all = ns.download_all + 1 %}
+          {% endif %}
+        {% endfor %}
+        {% if config.RDM_ARCHIVE_DOWNLOAD_ENABLED and ns.download_all == 0%}
+            {% set archive_download_url = record.links.archive %}
+            <a role="button" class="ui compact mini button right floated archive-link" href="{{ archive_download_url }}">
+              <i class="file archive icon"></i> {{_("Download all")}}
+            </a>
+        {% endif %}
         </th>
         <th class="hidden">{{_('Actions')}}</th>
       </tr>
@@ -76,7 +82,11 @@
       <tr>
         <td>
           <div>
-            <a class="wrap-long-link" href="{{ file_url_download }}">{{ file.key }}</a>
+            {% if file.size < config.MAX_FILE_SIZE %}
+                <a class="wrap-long-link" href="{{ file_url_download }}">{{ file.key }}</a>
+            {% else %}
+                {{ file.key }}
+            {% endif %}
           </div>
           <small class="ui text-muted font-tiny">{{ file.checksum }}
           <div class="ui icon inline-block" data-tooltip="{{_('This is the file fingerprint (checksum), which can be used to verify the file integrity.')}}">
@@ -92,10 +102,12 @@
               <i class="eye icon"></i> {{_("Preview")}}
             </a>
             {% endif %}
-            <a role="button" class="ui compact mini button" href="{{ file_url_download }}">
-              <i class="download icon"></i>
-              {{_('Download')}}
-            </a>
+            {% if file.size < config.MAX_FILE_SIZE %}
+              <a role="button" class="ui compact mini button" href="{{ file_url_download }}">
+                <i class="download icon"></i>
+                {{_('Download')}}
+              </a>
+            {% endif %}
           </span>
         </td>
       </tr>
