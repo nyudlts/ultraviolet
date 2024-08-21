@@ -48,6 +48,7 @@ jobs:
         run: |
           invenio-cli packages lock --pre --dev
           invenio-cli install --pre --dev
+          invenio-cli services setup -N
       - name: Start services and app
         run: |
           docker -v
