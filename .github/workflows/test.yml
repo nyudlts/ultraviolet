@@ -40,6 +40,9 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y libxml2-dev libxmlsec1-dev
+      - name: "Check Invenio's requirements"
+        run: |
+          invenio-cli check-requirements
       - name: "Setup mandatory files"
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
@@ -47,6 +50,7 @@ jobs:
       - name: "Install project dependencies"
         run: |
           invenio-cli packages lock --pre --dev
+          pipenv run python3.9 -m pip install 'setuptools~=57.5.0'
           invenio-cli install --pre --dev
           invenio-cli services setup -N
       - name: Start services and app
@@ -60,9 +64,6 @@ jobs:
           bash check-services.sh
       - name: "Run tests"
         run: |
-          google-chrome --version
-          chromedriver --version
-          invenio-cli services status
           pipenv install --dev
           export E2E=yes
           pipenv run pytest -p no:cacheprovider
