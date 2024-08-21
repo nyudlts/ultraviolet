@@ -9,6 +9,9 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 """E2E test of the front page."""
 
+import os
+import random
+import string
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -41,6 +44,13 @@ def create_chrome_driver():
 
 def test_frontpage():
     """Test retrieval of front page."""
-    browser = create_chrome_driver()
-    browser.get("https://127.0.0.1:5000/")
-    assert "Search UltraViolet" == browser.find_element(By.TAG_NAME, "h1").text
+    try:
+        browser = create_chrome_driver()
+        browser.get("https://127.0.0.1:5000/")
+        assert "Search UltraViolet" == browser.find_element(By.TAG_NAME, "h1").text
+    except Exception as e:
+        if not os.path.exists("screenshots"):
+            os.mkdir("screenshots")
+        browser.save_screenshot(f'screenshots/test_frontpage_failure_{''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(5))}.png')
+
+        raise e

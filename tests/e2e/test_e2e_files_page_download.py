@@ -1,5 +1,4 @@
 import datetime
-import multiprocessing
 import os
 import random
 import string
@@ -320,7 +319,8 @@ def test_small_file(cleanup_community, cleanup_token):
     except Exception as e:
         if not os.path.exists("screenshots"):
             os.mkdir("screenshots")
-        browser.save_screenshot(f'screenshots/test_frontpage_failure_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png')
+        browser.save_screenshot(f'screenshots/test_frontpage_failure_{''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(5))}.png')
+
         raise e
     finally:
         browser.quit()
