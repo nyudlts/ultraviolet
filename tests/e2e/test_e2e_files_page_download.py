@@ -1,3 +1,4 @@
+import datetime
 import multiprocessing
 import os
 import random
@@ -316,6 +317,11 @@ def test_small_file(cleanup_community, cleanup_token):
         _ = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "a.ui.compact.mini.button.right.floated.archive-link"))
         )
+    except Exception as e:
+        if not os.path.exists("screenshots"):
+            os.mkdir("screenshots")
+        browser.save_screenshot(f'screenshots/test_frontpage_failure_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png')
+        raise e
     finally:
         browser.quit()
         if os.path.exists("fake.bin"):

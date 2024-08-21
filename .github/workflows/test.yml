@@ -65,3 +65,9 @@ jobs:
           pipenv install --dev
           export E2E=yes
           pipenv run pytest -p no:cacheprovider
+      - name: "Upload screenshots"
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: screenshots
+          path: ./screenshots/*.png

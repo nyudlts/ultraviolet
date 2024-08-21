@@ -39,7 +39,7 @@ def create_chrome_driver():
     return driver
 
 
-def test_frontpage(live_server):
+def test_frontpage():
     """Test retrieval of front page."""
     browser = create_chrome_driver()
     browser.get("https://127.0.0.1:5000/")
