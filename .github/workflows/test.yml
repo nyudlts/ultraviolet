@@ -58,6 +58,7 @@ jobs:
         run: |
           google-chrome --version
           chromedriver --version
+          invenio-cli services status
           pipenv install --dev
           export E2E=yes
           pipenv run pytest -p no:cacheprovider
