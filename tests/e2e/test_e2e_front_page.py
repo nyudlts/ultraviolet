@@ -51,6 +51,5 @@ def test_frontpage():
     except Exception as e:
         if not os.path.exists("screenshots"):
             os.mkdir("screenshots")
-        browser.save_screenshot(f'screenshots/test_frontpage_failure_{''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(5))}.png')
-
+            browser.save_screenshot(f'screenshots/test_frontpage_failure_{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
         raise e
