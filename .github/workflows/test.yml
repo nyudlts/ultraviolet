@@ -56,7 +56,9 @@ jobs:
           invenio-cli run &
       - name: "Run tests"
         run: |
+          google-chrome --version
+          chromedriver --version
           pipenv install --dev
-          export E2E=no
+          export E2E=yes
           pipenv run pytest -p no:cacheprovider
 

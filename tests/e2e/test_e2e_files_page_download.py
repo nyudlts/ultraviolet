@@ -318,7 +318,8 @@ def test_small_file(cleanup_community, cleanup_token):
         )
     finally:
         browser.quit()
-        os.remove("fake.bin")
+        if os.path.exists("fake.bin"):
+            os.remove("fake.bin")
 
 
 
@@ -488,4 +489,5 @@ def test_large_file(cleanup_community, cleanup_token):
             pass
     finally:
         browser.quit()
-        os.remove("fake.bin")
+        if os.path.exists("fake.bin"):
+            os.remove("fake.bin")
