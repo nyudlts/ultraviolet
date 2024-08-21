@@ -54,6 +54,9 @@ jobs:
           docker compose up -d
           #invenio-cli services start
           invenio-cli run &
+      - name: "Check services status"
+        run: |
+          bash check-services.sh
       - name: "Run tests"
         run: |
           google-chrome --version
