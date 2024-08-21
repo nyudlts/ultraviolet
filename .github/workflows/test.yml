@@ -66,8 +66,10 @@ jobs:
           export E2E=yes
           pipenv run pytest -p no:cacheprovider
       -name: "Uplaod failure screenshot"
-        run: |
-        if: failure()
-        with: 
+       uses: actions/upload-artifact@latest
+       if: failure()
+       with:
           name: failed-test-screenshots
           path: .e2e_screenshots/*.png
+
+
