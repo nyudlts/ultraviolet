@@ -57,7 +57,5 @@ jobs:
       - name: "Run tests"
         run: |
           pipenv install --dev
-          export E2E=yes
-          pipenv run pytest -p no:cacheprovider tests/e2e
-          pipenv run pytest -p no:cacheprovider tests/ui
+          E2E=no pipenv run pytest -p no:cacheprovider
 
