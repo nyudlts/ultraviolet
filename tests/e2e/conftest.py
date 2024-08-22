@@ -38,28 +38,3 @@ def create_app(ultraviolet_instance_path):
     )
     return create_app_e2e
 
-@pytest.fixture(scope="module", autouse=True)
-def update_invenio_config():
-    config_file_path = os.path.join(os.path.dirname(__file__), '../../invenio.cfg')
-    with open(config_file_path, 'r') as file:
-        original_lines = file.readlines()
-    updated_lines = original_lines.copy()
-
-    key1 = 'MAX_FILE_SIZE'
-    value1 = '10 * 1024 * 1024'  # Set to 10 MB
-    key2 = 'DATACITE_ENABLED'
-    value2 = 'False'
-
-    for i, line in enumerate(updated_lines):
-        if line.startswith(key1):
-            updated_lines[i] = f"{key1} = {value1}\n"
-        if line.startswith(key2):
-            updated_lines[i] = f"{key2} = {value2}\n"
-
-    with open(config_file_path, 'w') as file:
-        file.writelines(updated_lines)
-
-    yield
-
-    with open(config_file_path, 'w') as file:
-        file.writelines(original_lines)
