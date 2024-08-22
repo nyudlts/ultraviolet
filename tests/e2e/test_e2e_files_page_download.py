@@ -103,7 +103,7 @@ def create_large_file(file_path, size_in_mb):
 def create_chrome_driver():
     chrome_options = Options()
     chrome_options.add_argument("disable-blink-features=AutomationControlled")
-    # chrome_options.add_argument('--headless=new')
+    chrome_options.add_argument('--headless=new')
     chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--disable-gpu")
@@ -323,7 +323,7 @@ def test_small_file():
     except Exception as e:
         if not os.path.exists("screenshots"):
             os.mkdir("screenshots")
-            browser.save_screenshot(f'screenshots/test_files_page{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
+            browser.save_screenshot(f'screenshots/test_small_file{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
         print(str(e))
         raise e
     finally:
@@ -414,7 +414,7 @@ def test_large_file():
     except Exception as e:
         if not os.path.exists("screenshots"):
             os.mkdir("screenshots")
-        browser.save_screenshot(f'screenshots/test_cleanup_community{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
+        browser.save_screenshot(f'screenshots/test_lage_file{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
         print(str(e))
         raise e
     finally:
