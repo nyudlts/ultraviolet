@@ -1,8 +1,8 @@
-import datetime
 import os
 import random
 import string
 import subprocess
+from time import sleep
 
 import pytest
 import requests
@@ -16,9 +16,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 """This is needed so live_server fixture can be used on Mac with python3.8 
     https://github.com/pytest-dev/pytest-flask/issues/104 """
 # multiprocessing.set_start_method("fork")
+
 code_text = None
 
 def login(browser):
+    """
+    Logs a user into the application by navigating to the login page, filling credentials, and submitting form.
+    """
     browser.get("https://127.0.0.1:5000/")
     login_button = WebDriverWait(browser, 10).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, "a.ui.button[href='/login/?next=%2F']"))
@@ -35,6 +39,16 @@ def login(browser):
     login_button.click()
 
 def upload_file(code_text, size):
+    """
+    Handles the upload process of a file to InvenioRDM.
+
+    Args:
+    code_text (str): The bearer token used for authorization.
+    size (int): The size of the file to generate and upload in mb.
+
+    Raises:
+    Exception: If any step in the file upload process fails.
+    """
     try:
         # 1. Create a Draft Upload
         url = "https://127.0.0.1:5000/api/records"
@@ -93,6 +107,16 @@ def upload_file(code_text, size):
         print(str(e))
 
 def create_large_file(file_path, size_in_mb):
+    """
+    Creates a large file of a specified size by using the 'truncate' command to set the file size.
+
+    Args:
+    file_path (str): The path where the file will be created.
+    size_in_mb (int): The size of the file to create in mb.
+
+    Raises:
+    subprocess.CalledProcessError: If the 'truncate' command fails.
+    """
     size_in_bytes = size_in_mb * 1024 * 1024
     try:
         subprocess.run(['truncate', '-s', str(size_in_bytes), file_path], check=True)
@@ -101,6 +125,12 @@ def create_large_file(file_path, size_in_mb):
         print(f"An error occurred while running truncate: {e}")
 
 def create_chrome_driver():
+    """
+    Configures and returns a headless Chrome WebDriver with specific options
+
+    Returns:
+    webdriver.Chrome: An instance of Chrome WebDriver with all specified options applied.
+    """
     chrome_options = Options()
     chrome_options.add_argument("disable-blink-features=AutomationControlled")
     chrome_options.add_argument('--headless=new')
@@ -117,11 +147,13 @@ def create_chrome_driver():
     chrome_options.add_argument('--ignore-certificate-errors')
     driver = webdriver.Chrome(options=chrome_options)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    
     return driver
 
 @pytest.fixture(scope="session", autouse=True)
 def cleanup_token():
+    """
+    A pytest fixture that automatically runs after test session to delete the testing token.
+    """
     yield 
 
     browser = create_chrome_driver()
@@ -143,6 +175,9 @@ def cleanup_token():
 
 @pytest.fixture(scope="session", autouse=True)
 def cleanup_community():
+    """
+    A pytest fixture that automatically runs after test session to delete the testing community.
+    """
     yield 
 
     browser = create_chrome_driver()
@@ -176,6 +211,10 @@ def cleanup_community():
         browser.quit()
 
 def setup_community(browser):
+    """
+    Helper function to automate the process of setting up a new community.
+
+    """
     login(browser)
 
     # Navigate to the community creation page
@@ -199,8 +238,13 @@ def setup_community(browser):
 
 @pytest.mark.order(1)
 def test_small_file():
+    """
+    This test verifies the upload and publication workflow for a small file within the application.
+    The Download button, Download all button, and file name download link should be presented.
+    """
     global code_text
 
+    # Update config for testing
     config_file_path = os.path.join(os.path.dirname(__file__), '../../invenio.cfg')
     with open(config_file_path, 'r') as file:
         original_lines = file.readlines()
@@ -209,7 +253,7 @@ def test_small_file():
     key1 = 'MAX_FILE_SIZE'
     value1 = '10 * 1024 * 1024'  # Set to 10 MB
     key2 = 'DATACITE_ENABLED'
-    value2 = 'False'
+    value2 = 'False'             # Not use DOI
 
     for i, line in enumerate(updated_lines):
         if line.startswith(key1):
@@ -220,6 +264,8 @@ def test_small_file():
     with open(config_file_path, 'w') as file:
         file.writelines(updated_lines)
 
+    sleep(5)
+    
     try:
         browser = create_chrome_driver()
         setup_community(browser)
@@ -330,13 +376,21 @@ def test_small_file():
         browser.quit()
         if os.path.exists("fake.bin"):
             os.remove("fake.bin")
+
 @pytest.mark.order(2)
 def test_large_file():
+    """
+    This test verifies the upload and publication workflow for a large file within the application.
+    The Download button, Download all button, and file name download link should not be presented.
+    """
     global code_text
     try:
         browser = create_chrome_driver()
         login(browser)
-        # API calls for upload large file
+
+        # remove old fake file if present
+        if os.path.exists("fake.bin"):
+            os.remove("fake.bin")
         upload_file(code_text, 20)
         
         # 5. Assign community and publish the draft
@@ -422,6 +476,7 @@ def test_large_file():
         if os.path.exists("fake.bin"):
             os.remove("fake.bin")
         
+        # Remove config updates after test finish
         config_file_path = os.path.join(os.path.dirname(__file__), '../../invenio.cfg')
         with open(config_file_path, 'r') as file:
             original_lines = file.readlines()
