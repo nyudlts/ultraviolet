@@ -116,6 +116,11 @@ def cleanup_community():
             EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'ui negative button') and contains(text(), 'Delete')]"))
         )
         confirm_delete_button.click()
+    except Exception as e:
+        if not os.path.exists("screenshots"):
+            os.mkdir("screenshots")
+            browser.save_screenshot(f'screenshots/test_cleanup_community{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
+        raise e
     finally:
         browser.quit()
 
@@ -320,14 +325,11 @@ def test_small_file(cleanup_community, cleanup_token):
         if not os.path.exists("screenshots"):
             os.mkdir("screenshots")
             browser.save_screenshot(f'screenshots/test_files_page{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
-
         raise e
     finally:
         browser.quit()
         if os.path.exists("fake.bin"):
             os.remove("fake.bin")
-
-
 
 def test_large_file(cleanup_community, cleanup_token):
     try:
