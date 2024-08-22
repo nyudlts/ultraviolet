@@ -1,6 +1,21 @@
+# -*- coding: utf-8 -*-
+#
+# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2019 NYU.
+#
+# ultraviolet is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+"""View tests for files page download related elements."""
+
 from flask import render_template_string
 
 def test_small_file_download_visibility(create_app):
+    """
+    This test verifies the Download button, Download all button,
+    and downoad link should be presented for small files.
+    """
     app = create_app()
     app.config['SERVER_NAME'] = 'localhost'
 
@@ -37,6 +52,10 @@ def test_small_file_download_visibility(create_app):
 
     
 def test_large_filedownload_visibility(create_app):
+    """
+    This test verifies the Download button, Download all button,
+    and downoad link should be not presented for lage files.
+    """
     app = create_app()
     app.config['SERVER_NAME'] = 'localhost'
 

@@ -1,3 +1,15 @@
+# -*- coding: utf-8 -*-
+#
+# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2019 NYU.
+#
+# ultraviolet is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+"""E2E test for files page download related elements."""
+
+
 import os
 import random
 import string
@@ -12,10 +24,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-
-"""This is needed so live_server fixture can be used on Mac with python3.8 
-    https://github.com/pytest-dev/pytest-flask/issues/104 """
-# multiprocessing.set_start_method("fork")
 
 code_text = None
 
