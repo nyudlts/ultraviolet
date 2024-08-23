@@ -31,20 +31,27 @@ def login(browser):
     """
     Logs a user into the application by navigating to the login page, filling credentials, and submitting form.
     """
-    browser.get("https://127.0.0.1:5000/")
-    login_button = WebDriverWait(browser, 10).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "a.ui.button[href='/login/?next=%2F']"))
-    )
-    login_button.click()
-    assert "Log in to account" == browser.find_element(By.TAG_NAME, "h3").text
+    try:
+        browser.get("https://127.0.0.1:5000/")
+        login_button = WebDriverWait(browser, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "a.ui.button[href='/login/?next=%2F']"))
+        )
+        login_button.click()
+        assert "Log in to account" == browser.find_element(By.TAG_NAME, "h3").text
 
-    # Login
-    browser.find_element(By.NAME, "email").send_keys('adminUV@test.com')
-    browser.find_element(By.NAME, "password").send_keys('changeme')
-    login_button = WebDriverWait(browser, 10).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
-    )
-    login_button.click()
+        # Login
+        browser.find_element(By.NAME, "email").send_keys('adminUV@test.com')
+        browser.find_element(By.NAME, "password").send_keys('changeme')
+        login_button = WebDriverWait(browser, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
+        )
+        login_button.click()
+    except Exception as e:
+        if not os.path.exists("screenshots"):
+            os.mkdir("screenshots")
+        browser.save_screenshot(f'screenshots/test_login{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
+        print(str(e))
+        raise e
 
 def upload_file(code_text, size):
     """
@@ -87,7 +94,7 @@ def upload_file(code_text, size):
         response = requests.post(url, headers=headers, json=data, verify=False)
         pid = response.json().get("id")
 
-        create_large_file('fake.bin', size) 
+        create_file('fake.bin', size) 
 
         # 2. Initialize the file uplaod for the large file
         url = f"https://127.0.0.1:5000/api/records/{pid}/draft/files"
@@ -114,7 +121,7 @@ def upload_file(code_text, size):
     except Exception as e:
         print(str(e))
 
-def create_large_file(file_path, size_in_mb):
+def create_file(file_path, size_in_mb):
     """
     Creates a large file of a specified size by using the 'truncate' command to set the file size.
 
@@ -132,63 +139,31 @@ def create_large_file(file_path, size_in_mb):
     except subprocess.CalledProcessError as e:
         print(f"An error occurred while running truncate: {e}")
 
-def create_chrome_driver():
+def cleanup_token(browser):
     """
-    Configures and returns a headless Chrome WebDriver with specific options
-
-    Returns:
-    webdriver.Chrome: An instance of Chrome WebDriver with all specified options applied.
-    """
-    chrome_options = Options()
-    chrome_options.add_argument("disable-blink-features=AutomationControlled")
-    chrome_options.add_argument('--headless=new')
-    chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
-    chrome_options.add_argument("--window-size=1920,1080")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--disable-software-rasterizer")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-    chrome_options.page_load_strategy = 'none'
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    chrome_options.add_experimental_option('useAutomationExtension', False)
-    chrome_options.add_argument('--ignore-ssl-errors=yes')
-    chrome_options.add_argument('--ignore-certificate-errors')
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    return driver
-
-@pytest.fixture(scope="session", autouse=True)
-def cleanup_token():
-    """
-    A pytest fixture that automatically runs after test session to delete the testing token.
+    A helper method to delete the testing token.
     """
     yield 
 
-    browser = create_chrome_driver()
-    try:
-        login(browser)
-        # delete token
-        browser.get("https://127.0.0.1:5000/")
-        browser.get('https://127.0.0.1:5000/account/settings/applications/')
-        token_link = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'token-for-e2e-test')]"))
-        )
-        token_link.click()
-        delete_button = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//button[@type="submit" and @name="delete" and contains(@class, "ui button negative")]'))
-        )
-        delete_button.click()
-    finally:
-        browser.quit()
+    login(browser)
+    # delete token
+    browser.get("https://127.0.0.1:5000/")
+    browser.get('https://127.0.0.1:5000/account/settings/applications/')
+    token_link = WebDriverWait(browser, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'token-for-e2e-test')]"))
+    )
+    token_link.click()
+    delete_button = WebDriverWait(browser, 10).until(
+        EC.element_to_be_clickable((By.XPATH, '//button[@type="submit" and @name="delete" and contains(@class, "ui button negative")]'))
+    )
+    delete_button.click()
 
-@pytest.fixture(scope="session", autouse=True)
-def cleanup_community():
+def cleanup_community(browser):
     """
-    A pytest fixture that automatically runs after test session to delete the testing community.
+    A helper method to delete the testing community.
     """
     yield 
 
-    browser = create_chrome_driver()
     try:
         login(browser)
 
@@ -215,8 +190,6 @@ def cleanup_community():
             browser.save_screenshot(f'screenshots/test_cleanup_community{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
         print(str(e))
         raise e
-    finally:
-        browser.quit()
 
 def setup_community(browser):
     """
@@ -245,7 +218,7 @@ def setup_community(browser):
     create_button.click()
 
 @pytest.mark.order(1)
-def test_small_file():
+def test_small_file(chrome_driver):
     """
     This test verifies the upload and publication workflow for a small file within the application.
     The Download button, Download all button, and file name download link should be presented.
@@ -275,7 +248,7 @@ def test_small_file():
     sleep(5)
     
     try:
-        browser = create_chrome_driver()
+        browser = chrome_driver
         setup_community(browser)
         # generate token
         browser.get("https://127.0.0.1:5000/account/settings/applications/")
@@ -381,24 +354,25 @@ def test_small_file():
         print(str(e))
         raise e
     finally:
-        browser.quit()
         if os.path.exists("fake.bin"):
             os.remove("fake.bin")
+        cleanup_token(browser)
+        cleanup_community(browser)
 
 @pytest.mark.order(2)
-def test_large_file():
+def test_large_file(chrome_driver):
     """
     This test verifies the upload and publication workflow for a large file within the application.
     The Download button, Download all button, and file name download link should not be presented.
     """
     global code_text
     try:
-        browser = create_chrome_driver()
-        login(browser)
-
+        browser = chrome_driver
+        
         # remove old fake file if present
         if os.path.exists("fake.bin"):
             os.remove("fake.bin")
+
         upload_file(code_text, 20)
         
         # 5. Assign community and publish the draft
@@ -483,6 +457,8 @@ def test_large_file():
         browser.quit()
         if os.path.exists("fake.bin"):
             os.remove("fake.bin")
+        cleanup_token(browser)
+        cleanup_community(browser)
         
         # Remove config updates after test finish
         config_file_path = os.path.join(os.path.dirname(__file__), '../../invenio.cfg')
@@ -503,4 +479,5 @@ def test_large_file():
 
         with open(config_file_path, 'w') as file:
             file.writelines(updated_lines)
+        
 
