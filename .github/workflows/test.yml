@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - invenio-220-bigfile
+      - update-invenio-v12
     paths-ignore:
       - "docs/**"
       - "**.md"
