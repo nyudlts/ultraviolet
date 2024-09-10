@@ -50,10 +50,11 @@ There are two project boards that manage tickets for Ultraviolet:
 
 ### Hosted instances
 
-We currently have two instances available for preview:
+We  have a hosted instance available for for DLTS development use:
+- [UltraViolet dev instance](https://devultraviolet.library.nyu.edu) (requires VPN)
 
-- [UltraViolet staging instance](https://stagewebapp1.dlib.nyu.edu/) (requires VPN)
-- 
+And a hosted instance for service team use:
+- [UltraViolet QA instance] (https://qaultraviolet.dlib.nyu.edu) (requires VPN)
 
 ## Continuous Integration (CI)
 
