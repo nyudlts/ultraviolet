@@ -18,10 +18,9 @@ TOC
 ## How we Organize (Project Management)
 
 - [UltraViolet roadmap](https://docs.google.com/document/d/1s3qWChu32uAkO9ghEaILE5u6gQY8__RqUA0X7L52aZo/edit?usp=sharing)
-- [NYU/Ultraviolet SB3 Google Drive](https://drive.google.com/drive/folders/1q40bQ5bVZYn5_QhxbPDhhIAYZk3R7434?usp=sharing)
 
 There are two project boards that manage tickets for Ultraviolet:
-- [Github Project Board](https://github.com/nyudlts/ultraviolet/projects?type=classic): is out of sync with Jira but is used as an entrypoint for Issues on the application.
+
 - Jira Project Board (link TBD)
 
 ### Issue tracking
@@ -40,7 +39,7 @@ There are two project boards that manage tickets for Ultraviolet:
 
 ## How we Develop
 
-<!-- - [UltraViolet 💜 codebase](https://github.com/nyudlts/ultraviolet) -->
+<!-- - [UltraViolet codebase](https://github.com/nyudlts/ultraviolet) -->
 - Learn about Architecture, System Requirements, Setup steps in our [DEVELOP documentation](./DEVELOP.md)
 
 
@@ -53,8 +52,8 @@ There are two project boards that manage tickets for Ultraviolet:
 
 We currently have two instances available for preview:
 
-- [UltraViolet sandbox GCP hosted instance](https://34.66.53.163/) (requires log-in credentials to view, and requires Firefox to bypass the lack of CA certificates. Ask NYU DLTS for [credentials](https://nyu.app.box.com/notes/805001772990).)
 - [UltraViolet staging instance](https://stagewebapp1.dlib.nyu.edu/) (requires VPN)
+- 
 
 ## Continuous Integration (CI)
 
