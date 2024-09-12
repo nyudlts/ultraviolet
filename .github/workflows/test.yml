@@ -49,10 +49,6 @@ jobs:
           echo -e FLASK_SECRET_KEY="some random value" >> .env
       - name: "Install project dependencies"
         run: |
-          invenio-cli packages lock --pre --dev
-          pipenv run python3.9 -m pip install 'setuptools~=57.5.0'
-          pipenv update flask-admin
-          pipenv update invenio-admin
           invenio-cli install --dev
           invenio-cli services setup -N
       - name: Start services and app
