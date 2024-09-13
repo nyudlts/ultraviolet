@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - main
+      - invenio-220-bigfile
     paths-ignore:
       - "docs/**"
       - "**.md"
@@ -40,21 +40,34 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y libxml2-dev libxmlsec1-dev
+      - name: "Check Invenio's requirements"
+        run: |
+          invenio-cli check-requirements
       - name: "Setup mandatory files"
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
           echo -e FLASK_SECRET_KEY="some random value" >> .env
       - name: "Install project dependencies"
         run: |
-          invenio-cli packages lock --pre --dev
-          invenio-cli install --pre --dev
+          invenio-cli install --dev
+          invenio-cli services setup -N
       - name: Start services and app
         run: |
           docker -v
           docker compose up -d
           #invenio-cli services start
           invenio-cli run &
+      - name: "Check services status"
+        run: |
+          bash check-services.sh
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=no pipenv run pytest -p no:cacheprovider
+          export E2E=yes
+          pipenv run pytest -p no:cacheprovider
+      - name: "Upload screenshots"
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshots
+          path: screenshots/*.png
