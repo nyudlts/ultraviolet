@@ -41,7 +41,7 @@ def login(browser):
 
         # Login
         browser.find_element(By.NAME, "email").send_keys('adminUV@test.com')
-        browser.find_element(By.NAME, "password").send_keys('changeme')
+        browser.find_element(By.NAME, "password").send_keys('adminUV')
         login_button = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
         )
