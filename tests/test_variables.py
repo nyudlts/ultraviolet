@@ -10,6 +10,7 @@
 
 # Tests  to check configuration settings
 import os
+import sys
 
 from invenio_app.factory import create_app
 
@@ -24,6 +25,7 @@ def test_var_assigned(monkeypatch):
     monkeypatch.setenv("SQLALCHEMY_DATABASE_URI", db_connection)
     monkeypatch.setenv("SITE_UI_URL", app_host)
     monkeypatch.setenv("SITE_API_URL", app_host + "/api")
+    monkeypatch.setenv("DATACITE_ENABLED","true")
 
     """Create app with configurations passed above"""
     app = create_app()
@@ -31,6 +33,7 @@ def test_var_assigned(monkeypatch):
     assert app.config.get("SQLALCHEMY_DATABASE_URI") == db_connection
     assert app.config.get("SITE_UI_URL") == app_host
     assert app.config.get("SITE_API_URL") == app_host + "/api"
+    assert app.config.get("DATACITE_ENABLED") == True
 
 
 # Check that default values are assign to configuration variables when values are not passed through os
@@ -44,3 +47,4 @@ def test_var_noassigned():
     )
     assert app.config.get("SITE_UI_URL") == "https://127.0.0.1:5000"
     assert app.config.get("SITE_API_URL") == "https://127.0.0.1:5000/api"
+    assert app.config.get("DATACITE_ENABLED") == False
