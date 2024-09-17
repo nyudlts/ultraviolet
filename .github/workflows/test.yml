@@ -49,10 +49,11 @@ jobs:
           echo -e FLASK_SECRET_KEY="some random value" >> .env
       - name: "Install project dependencies"
         run: |
-          invenio-cli install --dev
-          invenio-cli services setup -N
           pipenv run pip install opensearch-dsl
           pipenv run pip install invenio-search
+          invenio-cli install --dev
+          invenio-cli services setup -N
+
       - name: Start services and app
         run: |
           docker -v
