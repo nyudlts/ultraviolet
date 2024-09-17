@@ -12,11 +12,7 @@ creatorsroles:
   data-file: vocabularies/creatorsroles_nyu.yaml
 affiliations:
   pid-type: aff
-  schemes:
-    - id: ROR
-      name: Research Organization Registry
-      uri: "https://ror.org/"
-      data-file: vocabularies/affiliations_ror.yaml
+  data-file: vocabularies/affiliations_ror.yaml
 subjects:
   pid-type: sub
   schemes:
