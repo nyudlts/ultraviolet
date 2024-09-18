@@ -2,20 +2,16 @@
 
 
 ## System Requirements
-[back to top](#setup)
 
 Follow the instructions provided in the InvenioRDM documentation for system requirements [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/).
 
 Currently, we use Python 3.9 and node 18 for development version of UltraViolet. 
 
-NVM is recommended for managing node versions. 
-- [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
+[NVM](https://github.com/nvm-sh/nvm#installing-and-updating) is recommended for managing node versions. 
+ 
+[Pyenv](https://github.com/pyenv/pyenv#installation) is recommended for managing Python versions. 
 
-Pyenv is recommended for managing Python versions. 
-- [Installation instructions](https://github.com/pyenv/pyenv#installation)
-
-You will need to install Postgres.
-- [Installation instructions](http://postgresguide.com/setup/install.html)
+You will need to install [Postgres](http://postgresguide.com/setup/install.html).
 
 
 ## Setup and Installation for Running Application Locally for Development 
@@ -109,7 +105,9 @@ You will need to install Postgres.
 
 16. Quit the application with `Ctr-C` and spin down the containers with `invenio-cli containers stop`
 
-## Setup and Installation for Previewing this Application 
+
+
+## Setup and Installation for Previewing Application 
 [back to top](#setup)
 
 1. Get the local copy of the UltraViolet app:
@@ -128,3 +126,27 @@ You will need to install Postgres.
   ```
   The UltraViolet instance should now be running at <https://127.0.0.1:5000/>
 
+
+
+## InvenioRDM File Overview
+[back to top](#setup)
+
+Following installation, the project folder will include the following. 
+
+| Name | Description |
+|---|---|
+| ``Dockerfile`` | Dockerfile used to build your application image. |
+| ``Pipfile`` | Python requirements installed via [pipenv](https://pipenv.pypa.io) |
+| ``Pipfile.lock`` | Locked requirements (generated on first install). |
+| ``app_data`` | Application data such as vocabularies. |
+| ``assets`` | Web assets (CSS, JavaScript, LESS, JSX templates) used in the Webpack build. |
+| ``docker`` | Example configuration for NGINX and uWSGI. |
+| ``docker-compose.full.yml`` | Example of a full infrastructure stack. |
+| ``docker-compose.yml`` | Backend services needed for local development. |
+| ``docker-services.yml`` | Common services for the Docker Compose files. |
+| ``invenio.cfg`` | The Invenio application configuration. |
+| ``logs`` | Log files. |
+| ``static`` | Static files that need to be served as-is (e.g. images). |
+| ``templates`` | Folder for your Jinja templates. |
+| ``.invenio`` | Common file used by Invenio-CLI to be version controlled. |
+| ``.invenio.private`` | Private file used by Invenio-CLI *not* to be version controlled. |
