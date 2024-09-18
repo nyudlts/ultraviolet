@@ -6,7 +6,7 @@ NYU Libraries contributes to InvenioRDM as part of an open-source community. For
 
 ## Getting Started as a Developer for UltraViolet
 
-- Guidelines for contributing to UltraViolet [CONTRIBUTING.md](docs/CONTRIBUTE.md) 
+- Contributor guidelines for UltraViolet [CONTRIBUTE.md](docs/CONTRIBUTE.md) 
 - Set up information to install UltraViolet locally [SETUP.md](docs/SETUP.md)
 - Information about writing and running tests [TEST.md](docs/TEST.md)
 
