@@ -17,6 +17,3 @@ We recommend you read our the following documentation in order:
 
 To view our entire documentation look inside our [`docs`](docs/) directory.
 
-## Bug Report
-
-Found a bug? Please create a new Issue on [Github](https://github.com/nyudlts/ultraviolet/issues).
