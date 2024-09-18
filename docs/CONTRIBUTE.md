@@ -5,6 +5,7 @@ Here are some guidelines on how one can contribute to this project. Please feel 
 # Git Flow
 
 ## Branching
+[back to top](#contributor-guidelines)
 
 Our Git flow is a simplified Git-Flow. Much like Git-Flow, we take advantage of a main branch, a development branch, and feature branches.
 
@@ -24,6 +25,8 @@ chore branches branch off of development and must be merged back into developmen
 Hotfix branches are necessary in case we need an immediate fix in the current production system. Hotfix branches branch off of the main branch and must be merged back to development and main branches through pull request.
 
 ## Committing
+[back to top](#contributor-guidelines)
+
 Commit often! Your commits tell the story of your project. We expect to have well written commit messages. Your commits should reflect what changes you made to the code base and should be coherent, cohesive, concise, and isolated. This way it becomes easy to track what change affects the product as a whole.
 That being said, the message itself should be written in the imperative. The end result will have your Git Commit history looking like a recipe for success!
 For example, when I finish this document and submit it, my Git Commit will probably be:
@@ -32,6 +35,8 @@ Add CONTRIBUTING.md
 Add documentation for expectations on contributing.
 
 ## Pull Requests
+[back to top](#contributor-guidelines)
+
 When you're confident in your code, you're going to want to send in a pull request. Your commit history will be able to tell the code maintainer what you've changed and how it will affect the codebase. It may be a good idea to summarize what you have done in the pull request message and how it will affect the codebase. All pull requests require at least one review and approval from other project developers.
 If the merging of your code requires additional operations other than a simple merge and deploy, you should include the additional steps in your pull request. For example, if you're adding a new collection, you would add "Requires collection data load" to the PR.
 Sometimes the development branch will be updated while you have an open PR. When this happens, your branch might become stale, meaning that your branch can no longer be merged into development without a conflict. When this happens you should:
@@ -59,22 +64,28 @@ Now you can create a new PR for feature/gizmo in GitHub, include a reference to 
 
 
 ### Code Review
+[back to top](#contributor-guidelines)
+
 After sending your pull request, your code will get reviewed to make sure merging it won't break the branch it's merging into. This is a good time to ask any questions or concerns you have. Code reviews also help get a fresh set of eyes to look at your code, and if those eyes are also working on the project, it lets them get familiar with the new code base.
 #Testing
 We expect developers to use test driven development (i.e., create a test for a requested feature before it is implemented). We have GitHub actions configured to run the project test suite for each pull request submitted to the development branch and for each commit to the main branch.  Project test suite now includes tests written using pytest library and fixtures provided in flask-pytest and pytest-invenio modules. Those technologies have some limitations so we are currently considering integration of the nightwatch testing tool to the project.
 
 
 # Issue Tracking
+[back to top](#contributor-guidelines)
+
 If you find any issues in the code base, feel free to open up an issue using GitHub's issues feature. You can assign issues to users, label them, and set them to milestones.
 This is also true if you find issues with the general User Experience or anything else.  
 
 
 # Comments
+[back to top](#contributor-guidelines)
+
 It's a good idea to include an inline comment explaining how your code works. Keep in mind that if your comments are too complicated, the problem might be with the code. If you copy code, provide links to the original source of copied code. Include links to external references where they will be most helpful. Add comments when fixing bugs and/or adding features (include reference to the Jira ticket). Use comments to mark incomplete implementations. For example, you can use #TODO or #IMPORTANT.
 
  
 # Best Practices
-[back to top](#contributor guidelines)
+[back to top](#contributor-guidelines)
 
 For best practices, give every class, method, and variable a clear, semantic name, along with comments explaining the code's purpose. Try to avoid cluttered comments and large methods. The human eye is attracted to empty space, so breaking up large blocks of code to succinct blocks with small comments is highly visible and easier to follow.
 
