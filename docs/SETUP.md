@@ -3,7 +3,7 @@
 
 ## System Requirements
 
-Follow the instructions provided in the InvenioRDM documentation for system requirements [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/).
+Follow the instructions provided in the InvenioRDM documentation for system requirements [InvenioRDM System Requirements](https://inveniordm.docs.cern.ch/install/requirements/).
 
 Currently, we use Python 3.9 and node 18 for development version of UltraViolet. 
 
