@@ -91,6 +91,8 @@ For best practices, give every class, method, and variable a clear, semantic nam
 
 
 # More Resources
+[back to top](#contributor-guidelines)
+
 Blog post on our workflows
 Some more info on pull requests, and why code reviews are important.
 5 useful tips on how to write a better git commit message
