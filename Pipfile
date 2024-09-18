@@ -26,6 +26,7 @@ uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
 invenio-app-rdm = {extras = ["2", "postgresql"], version = "~=12.0.0"}
 invenio-search = "*"
+opensearch-dsl = "*"
 
 [requires]
 python_version = "3.9"

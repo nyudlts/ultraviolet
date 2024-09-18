@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "87d5a2c56c28b3053b35851bd1239bf31fe4ad1e842c6617099b926844436e01"
+            "sha256": "e8787ba8ba98fc51b76a8571474adc815985ff0cc2a338f65fae4e138a186cdf"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -562,6 +562,12 @@
             "markers": "python_version >= '3.8'",
             "version": "==2.2.0"
         },
+        "events": {
+            "hashes": [
+                "sha256:a7286af378ba3e46640ac9825156c93bdba7502174dd696090fdfcd4d80a1abd"
+            ],
+            "version": "==0.5"
+        },
         "exceptiongroup": {
             "hashes": [
                 "sha256:3111b9d131c238bec2f8f516e123e14ba243563fb135d3fe885990585aa7795b",
@@ -1053,7 +1059,7 @@
         "invenio-communities": {
             "git": "https://github.com/nyudlts/ultraviolet-communities.git",
             "markers": "python_version >= '3.8'",
-            "ref": "f4a745968e8af241018c7bf55abdeecca66993a7"
+            "ref": "cf53cf91dab43e1c75cca0d5c6f803de0350f254"
         },
         "invenio-config": {
             "hashes": [
@@ -1969,6 +1975,23 @@
             ],
             "version": "==2.1.0"
         },
+        "opensearch-dsl": {
+            "hashes": [
+                "sha256:31559b738b48ed5abe87b357205a040fa1dc64042a6454ad2d6854050d911ba0",
+                "sha256:e54ad0d754358233503e0c08e85b77dbe07d6c00babeae62c81d8cee11965ae6"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==2.1.0"
+        },
+        "opensearch-py": {
+            "hashes": [
+                "sha256:5417650eba98a1c7648e502207cebf3a12beab623ffe0ebbf55f9b1b4b6e44e9",
+                "sha256:67ab76e9373669bc71da417096df59827c08369ac3795d5438c9a8be21cbd759"
+            ],
+            "markers": "python_version >= '3.8' and python_version < '4'",
+            "version": "==2.7.1"
+        },
         "ordered-set": {
             "hashes": [
                 "sha256:046e1132c71fcf3330438a539928932caf51ddbc582496833e23de611de14562",
@@ -2112,11 +2135,11 @@
         },
         "platformdirs": {
             "hashes": [
-                "sha256:8b4ba85412f5065dae40aa19feaa02ac2be584c8b14abd70712b5cd11ad80034",
-                "sha256:9e8a037c36fe1b1f1b5de4482e60464272cc8dca725e40b568bf2c285f7509cf"
+                "sha256:357fb2acbc885b0419afd3ce3ed34564c13c9b95c89360cd9563f73aa5e2b907",
+                "sha256:73e575e1408ab8103900836b97580d5307456908a03e92031bab39e4554cc3fb"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==4.3.4"
+            "version": "==4.3.6"
         },
         "pluggy": {
             "hashes": [
@@ -3291,11 +3314,11 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:ca899ca043dcb1bafa3e262d73aa25c465bfb49e0bd9dd5d59f1d0acba2f8fac",
-                "sha256:e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
+                "sha256:0ed14ccfbf1c30a9072c7ca157e4319b70d65f623e91e7b32fadb2853431016e",
+                "sha256:40c2dc0c681e47eb8f90e7e27bf6ff7df2e677421fd46756da1161c39ca70d32"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==2.2.3"
+            "version": "==1.26.20"
         },
         "uwsgi": {
             "hashes": [
@@ -3931,11 +3954,11 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:ca899ca043dcb1bafa3e262d73aa25c465bfb49e0bd9dd5d59f1d0acba2f8fac",
-                "sha256:e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
+                "sha256:0ed14ccfbf1c30a9072c7ca157e4319b70d65f623e91e7b32fadb2853431016e",
+                "sha256:40c2dc0c681e47eb8f90e7e27bf6ff7df2e677421fd46756da1161c39ca70d32"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==2.2.3"
+            "version": "==1.26.20"
         },
         "werkzeug": {
             "hashes": [

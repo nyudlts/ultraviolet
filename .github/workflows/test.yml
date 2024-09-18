@@ -49,8 +49,6 @@ jobs:
           echo -e FLASK_SECRET_KEY="some random value" >> .env
       - name: "Install project dependencies"
         run: |
-          pipenv run pip install opensearch-dsl
-          pipenv run pip install invenio-search
           invenio-cli install --dev
           invenio-cli services setup -N
 
