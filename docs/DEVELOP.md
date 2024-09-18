@@ -6,7 +6,6 @@ TOC
 - [Develop](#develop)
   - [Learning InvenioRDM Resources](#learning-inveniordm-resources)
   - [File Overview](#file-overview)
-  - [Metadata](#metadata)
   - [Visual Changes](#visual-changes)
   - [Add Fixtures](#add-fixtures)
   - [SAML Integration](#saml-integration)
@@ -46,12 +45,6 @@ Following is an overview of the generated files and folders from the scaffolding
 | ``templates`` | Folder for your Jinja templates. |
 | ``.invenio`` | Common file used by Invenio-CLI to be version controlled. |
 | ``.invenio.private`` | Private file used by Invenio-CLI *not* to be version controlled. |
-
-## Metadata
-
-- [UltraViolet-Metadata repository](https://github.com/NYU-DataServices/ultraviolet-metadata) - A place for fixtures and stable versions of metadata and code for transforming
-- [Metadata use cases](https://docs.google.com/spreadsheets/d/1dEXI7u6_sdkxVqpL__DO2l8TLgCmqpYbeHocdRXFfGk/edit?usp=sharing) - Narratives that represent collection needs for UltraViolet
-- [InvenioRDM Metadata Application Profile](https://inveniordm.docs.cern.ch/reference/metadata/) - The community metadata standard for InvenioRDM
 
 
 ## Visual Changes
