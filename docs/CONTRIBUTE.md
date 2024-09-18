@@ -5,6 +5,7 @@ Here are some guidelines on how one can contribute to this project. Please feel 
 # Git Flow
 
 ## Branching
+
 Our Git flow is a simplified Git-Flow. Much like Git-Flow, we take advantage of a main branch, a development branch, and feature branches.
 
 ### The main Branch 
@@ -73,6 +74,8 @@ It's a good idea to include an inline comment explaining how your code works. Ke
 
  
 # Best Practices
+[back to top](#contributor guidelines)
+
 For best practices, give every class, method, and variable a clear, semantic name, along with comments explaining the code's purpose. Try to avoid cluttered comments and large methods. The human eye is attracted to empty space, so breaking up large blocks of code to succinct blocks with small comments is highly visible and easier to follow.
 
 
