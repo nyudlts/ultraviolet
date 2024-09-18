@@ -1,66 +1,24 @@
 # Setup
 
-TOC
-- [Setup](#setup)
-  - [Introduction](#introduction)
-  - [System Requirements](#system-requirements)
-  - [Setup and Installation](#setup-and-installation)
-  - [Testing only](#testing-only)
-  - [Testing with Vagrant](#testing-with-vagrant)
-
-
-## Introduction
-[back to top](#setup)
-
-Like the InvenioRDM application, you can run Ultraviolet in two modes:
-
-- Fully Dockerized Mode: Containerized application and services (good for a quick preview).  
-- Partially Dockerized Mode: Local dev tools runnig parts of InvenioRDM with containerized services (good for developers) also considered [instance development](https://inveniordm.docs.cern.ch/develop/getting-started/instance-development/#integrating-react-development-modules).
-
-> From the InvenioRDM docs: In the future we aim to move to a **fully containerized development environment.**  
-> More on the [InvenioRDM Architecture](https://inveniordm.docs.cern.ch/develop/architecture/)  
 
 ## System Requirements
 [back to top](#setup)
 
-> As of Jan 2023, Ultraviolet uses InvenioRDM version 3.8.12 that is behind a couple of versions from the current InvenioRDM v11 released in Jan 2023.
+Follow the instructions provided in the InvenioRDM documentation for system requirements [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/).
 
-The following instructions were modified from the [InvenioRDM System Requirements:](https://inveniordm.docs.cern.ch/install/requirements/):
+Currently, we use Python 3.9 and node 18 for development version of UltraViolet. 
 
-- Supported Hardware
-  + ARM (M1 MacOS) architectures are not fully functional yet for Ultraviolet's version of InvenioRDM, we recommend `x86_64` processors.
-  + At least 8GB of RAM and 4 cores.
-- Supported Operating Systems
-  - MacOS or Linux-based systems (Windows not supported)
-- System Requirements to Install Ultraviolet (ensure you have these installed on your system)
-  - Git
-  - **Simple Python Version Management (Pyenv)**
-    + [Installation instructions](https://github.com/pyenv/pyenv#installation)
-    + Restart Terminal and Check for successful installation with `pyenv --version`
-    + Why does InvenioRDM use [Virtual Environments](https://inveniordm.docs.cern.ch/install/requirements/#python-virtual-environments)?
-  - **Docker**
-    + Use the [Install Docker Documentation]({{'tips-and-gotchas/install-docker/' | absolute_url }})
-    + Check for successful installation with `docker --version` and `docker-compose --version` (note the usage of standalone docker-compose).
-    + If you are doing a fully containerized testing this is all you need to quick start the application; jump to the [Testing Only](#testing-only). If you are doing development, continue forth!
-  - **Node Version Manager (NVM)**
-    + Use these [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating) following the CLI installation (for MacOS install nvm from scratch not from brew).
-    + Restart Terminal and Check for successful installation with `nvm --version`. [troubleshooting tips](https://github.com/nvm-sh/nvm#troubleshooting-on-linux). 
-    + Optional: configure your SHELL to recognize the existence of `.nvmrc` and switch node versions [post](https://medium.com/allenhwkim/bash-profile-for-git-and-nodejs-users-15d3fbc301f0) 
-  - **Cairo**
-    + [Installation instructions](https://invenio-formatter.readthedocs.io/en/latest/installation.html)
-  - **Postgres**
-    + [Installation instructions](http://postgresguide.com/setup/install.html)
-    + When running fully containerized App ensure postgresql services are off since they will conflict with ports of the postgres containers if you run them simultaneously. Use `systemctl stop postgresql` to stop postgres in Linux. Probably `brew services stop postgresql` for MacOS installation using Homebrew.
-  - **ImageMagick**
-    + MacOS (brew) [Installation instructions](https://imagemagick.org/script/download.php#macosx)
-    + Linux [Installation from source code instructions](https://imagemagick.org/script/download.php#linux)
+NVM is recommended for managing node versions. 
+- [Installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-> From the InvenioRDM documentation: During Setup and Installation we start these services, but you can also just as well use externally hosted options for these:
-> - postgresql
-> - elasticsearch
-> - redis memcached
+Pyenv is recommended for managing Python versions. 
+- [Installation instructions](https://github.com/pyenv/pyenv#installation)
 
-## Setup and Installation
+You will need to install Postgres.
+- [Installation instructions](http://postgresguide.com/setup/install.html)
+
+
+## Setup and Installation for Running Application Locally for Development 
 [back to top](#setup)
 
 1. Get the local copy of the UltraViolet source code:
@@ -151,7 +109,7 @@ The following instructions were modified from the [InvenioRDM System Requirement
 
 16. Quit the application with `Ctr-C` and spin down the containers with `invenio-cli containers stop`
 
-## Testing only
+## Setup and Installation for Previewing this Application 
 [back to top](#setup)
 
 1. Get the local copy of the UltraViolet app:
@@ -170,7 +128,3 @@ The following instructions were modified from the [InvenioRDM System Requirement
   ```
   The UltraViolet instance should now be running at <https://127.0.0.1:5000/>
 
-## Testing with Vagrant
-[back to top](#setup)
-
-Currently, we do not have a Vagrant image of UltraViolet in place, but one is coming soon. In the meantime, consider local development and testing with Docker.
