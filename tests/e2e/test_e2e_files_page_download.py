@@ -218,6 +218,7 @@ def setup_community(browser):
     create_button.click()
 
 @pytest.mark.order(1)
+@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
 def test_small_file(chrome_driver):
     """
     This test verifies the upload and publication workflow for a small file within the application.
@@ -360,6 +361,7 @@ def test_small_file(chrome_driver):
         cleanup_community(browser)
 
 @pytest.mark.order(2)
+@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
 def test_large_file(chrome_driver):
     """
     This test verifies the upload and publication workflow for a large file within the application.
