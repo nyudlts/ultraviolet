@@ -3,7 +3,7 @@
 UltraViolet is NYU Libraries' local deployment of [InvenioRDM](https://inveniordm.docs.cern.ch/).
 NYU Libraries contributes to InvenioRDM as part of an open-source community.
 
-For information about NYU Libraries' UltraViolet repository service, including policies and how to submit data, see: [https://guides.nyu.edu/ultraviolet](https://guides.nyu.edu/ultraviolet).  
+For information about NYU Libraries' UltraViolet repository service, including policies, see: [https://guides.nyu.edu/ultraviolet](https://guides.nyu.edu/ultraviolet).
 
 
 ## Getting Started as a Developer on UltraViolet
