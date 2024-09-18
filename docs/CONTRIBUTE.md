@@ -1,13 +1,12 @@
 # Start Here
 
-Ultraviolet is an NYU Libraries implementation of the InvenioRDM application. 
-
 TOC
-- [How we Communicate](#how-we-communicate)
-- [Issue tracking](#issue-tracking)
-- [Branching Strategy](#branching-strategy)
-- [Hosted instances](#hosted-instances)
-- [Continuous Integration (CI)](#continuous-integration-ci)
+- [Start Here](#start)
+  - [How we Communicate](#how-we-communicate)
+  - [Issue tracking](#issue-tracking)
+  - [Branching Strategy](#branching-strategy)
+  - [Hosted instances](#hosted-instances)
+  - [Continuous Integration (CI)](#continuous-integration-ci)
 
 ## How we Communicate
 
