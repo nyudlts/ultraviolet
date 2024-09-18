@@ -1,15 +1,6 @@
 # Testing
 
-This document contains information of how to test and write tests for the Ultraviolet application
-
-TOC
-- [Testing](#testing)
-- [Introduction to Testing InvenioRDM](#introduction-to-testing-inveniordm)
-- [UI Testing](#ui-testing)
-- [End to End Testing](#end-to-end-testing)
-  - [Prerequisites](#prerequisites)
-- [Run the tests (Unit or end-to-end)](#run-the-tests-(unit-or-end-to-end))
-
+This document contains information about how write tests for the UltraViolet application.
 
 
 ## Introduction to Testing InvenioRDM
@@ -24,15 +15,11 @@ We use the test layout recommended in pytest-invenio documentation, e.g. tests a
 - `tests/e2e/` - tests that need both UI and API application (end-to-end tests)
 - requires creating both the UI and API tests and using a special WSGI middleware to dispatch requests between both applications.
 
-## UI Testing
-
-Use the example in [look-feel.md](./develop/look-feel.md)
-
 ## End to End Testing
 
 ### Prerequisites
 
-Before running E2E make sure that Selenium Client is installed and Chrome Webdriver is installed and added to you path.
+Before running E2E make sure that Selenium Client is installed and Chrome Webdriver is installed and added to your path.
 
 [Installation instructions](https://www.selenium.dev/selenium/docs/api/py/)
 
