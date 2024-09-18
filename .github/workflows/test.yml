@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - invenio-220-bigfile
+      - rm-e2e
     paths-ignore:
       - "docs/**"
       - "**.md"
@@ -63,8 +63,7 @@ jobs:
       - name: "Run tests"
         run: |
           pipenv install --dev
-          export E2E=yes
-          pipenv run pytest -p no:cacheprovider
+          E2E=no pipenv run pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
