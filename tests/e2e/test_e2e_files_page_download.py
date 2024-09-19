@@ -41,7 +41,7 @@ def login(browser):
 
         # Login
         browser.find_element(By.NAME, "email").send_keys('adminUV@test.com')
-        browser.find_element(By.NAME, "password").send_keys('changeme')
+        browser.find_element(By.NAME, "password").send_keys('adminUV')
         login_button = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
         )
@@ -218,6 +218,7 @@ def setup_community(browser):
     create_button.click()
 
 @pytest.mark.order(1)
+@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
 def test_small_file(chrome_driver):
     """
     This test verifies the upload and publication workflow for a small file within the application.
@@ -233,14 +234,10 @@ def test_small_file(chrome_driver):
 
     key1 = 'MAX_FILE_SIZE'
     value1 = '10 * 1024 * 1024'  # Set to 10 MB
-    key2 = 'DATACITE_ENABLED'
-    value2 = 'False'             # Not use DOI
 
     for i, line in enumerate(updated_lines):
         if line.startswith(key1):
             updated_lines[i] = f"{key1} = {value1}\n"
-        if line.startswith(key2):
-            updated_lines[i] = f"{key2} = {value2}\n"
 
     with open(config_file_path, 'w') as file:
         file.writelines(updated_lines)
@@ -360,6 +357,7 @@ def test_small_file(chrome_driver):
         cleanup_community(browser)
 
 @pytest.mark.order(2)
+@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
 def test_large_file(chrome_driver):
     """
     This test verifies the upload and publication workflow for a large file within the application.
@@ -468,14 +466,10 @@ def test_large_file(chrome_driver):
 
         key1 = 'MAX_FILE_SIZE'
         value1 = '50 * 1024 * 1024 * 1024'
-        key2 = 'DATACITE_ENABLED'
-        value2 = 'True'
 
         for i, line in enumerate(updated_lines):
             if line.startswith(key1):
                 updated_lines[i] = f"{key1} = {value1}\n"
-            if line.startswith(key2):
-                updated_lines[i] = f"{key2} = {value2}\n"
 
         with open(config_file_path, 'w') as file:
             file.writelines(updated_lines)
