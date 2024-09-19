@@ -1,22 +1,20 @@
 # UltraViolet Repository
 
-UltraViolet is NYU Libraries' platform for long-term access to a broad range of NYU-related digital content, including open access data associated with research and scholarly output and data licensed for use by members of the NYU community.  
-UltraViolet is a local deployment of the [InvenioRDM](https://inveniordm.docs.cern.ch/) that uses the [Invenio Framework](https://inveniosoftware.org/products/framework/) maintained by CERN to build a turn-key repository platform.  
-NYU Libraries contributes to InvenioRDM as part of their open-source community.
+UltraViolet is NYU Libraries' local deployment of [InvenioRDM](https://github.com/inveniosoftware/invenio-app-rdm).
+NYU Libraries contributes to InvenioRDM as part of an open-source community. For information about NYU Libraries' UltraViolet repository service, including policies, see: [https://guides.nyu.edu/ultraviolet](https://guides.nyu.edu/ultraviolet).
 
-## Getting Started as a User of Ultraviolet
 
-For information about NYU's UltraViolet repository service, including policies and how to submit data, see: [https://guides.nyu.edu/ultraviolet](https://guides.nyu.edu/ultraviolet).  
+## Getting Started as a Developer for UltraViolet
 
-## Getting Started as a Developer on Ultraviolet
+- Contributor guidelines for UltraViolet [CONTRIBUTE.md](docs/CONTRIBUTE.md) 
+- Set up information to install UltraViolet locally [SETUP.md](docs/SETUP.md)
+- Information about writing and running tests [TEST.md](docs/TEST.md)
 
-We recommend you read our the following documentation in order:
-1. Read [CONTRIBUTING.md](docs/CONTRIBUTE.md) to learn how we organize, how we collaborate, and how we work.
-2. Follow [SETUP.md](docs/SETUP.md) to install ultraviolet locally
-3. Use [CHEATSHEETS.md](docs/CHEATSHEETS.md) for a short explainer of commonly used commands.
 
-To view our entire documentation look inside our [`docs`](docs/) directory.
+## InvenioRDM Resources for Developers
 
-## Bug Report
-
-Found a bug? Please create a new Issue on [Github](https://github.com/nyudlts/ultraviolet/issues).
+- [InvenioRDM Documentation](https://inveniordm.docs.cern.ch/)
+- [InvenioRDM REST API documentation](https://inveniordm.docs.cern.ch/reference/rest_api_index/)
+- [InvenioRDM Develop](https://inveniordm.docs.cern.ch/develop/#getting-started)
+- [InvenioRDM Newcomers Guide](https://inveniordm.docs.cern.ch/maintenance/newcomers/)
+- [InvenioRDM Discord channel](https://discord.gg/m3dfukqc5F)
