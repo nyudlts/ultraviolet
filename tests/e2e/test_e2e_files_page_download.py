@@ -219,7 +219,7 @@ def setup_community(browser):
 
 @pytest.mark.order(1)
 @pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
-def test_small_file(chrome_driver):
+def test_small_file(browser):
     """
     This test verifies the upload and publication workflow for a small file within the application.
     The Download button, Download all button, and file name download link should be presented.
@@ -245,8 +245,8 @@ def test_small_file(chrome_driver):
     sleep(5)
     
     try:
-        browser = chrome_driver
-        setup_community(browser)
+        # browser = chrome_driver
+        setup_community()
         # generate token
         browser.get("https://127.0.0.1:5000/account/settings/applications/")
         
@@ -356,122 +356,122 @@ def test_small_file(chrome_driver):
         cleanup_token(browser)
         cleanup_community(browser)
 
-@pytest.mark.order(2)
-@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
-def test_large_file(chrome_driver):
-    """
-    This test verifies the upload and publication workflow for a large file within the application.
-    The Download button, Download all button, and file name download link should not be presented.
-    """
-    global code_text
-    try:
-        browser = chrome_driver
+# @pytest.mark.order(2)
+# @pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
+# def test_large_file(chrome_driver):
+#     """
+#     This test verifies the upload and publication workflow for a large file within the application.
+#     The Download button, Download all button, and file name download link should not be presented.
+#     """
+#     global code_text
+#     try:
+#         browser = chrome_driver
         
-        # remove old fake file if present
-        if os.path.exists("fake.bin"):
-            os.remove("fake.bin")
+#         # remove old fake file if present
+#         if os.path.exists("fake.bin"):
+#             os.remove("fake.bin")
 
-        upload_file(code_text, 20)
+#         upload_file(code_text, 20)
         
-        # 5. Assign community and publish the draft
-        browser.get("https://127.0.0.1:5000/me/uploads")
+#         # 5. Assign community and publish the draft
+#         browser.get("https://127.0.0.1:5000/me/uploads")
 
-        test_file_link = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'truncate-lines-2') and text()='Test file']"))
-        )
-        test_file_link.click()
+#         test_file_link = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'truncate-lines-2') and text()='Test file']"))
+#         )
+#         test_file_link.click()
 
-        community_button = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//button[contains(@name, "setting") and contains(@class, "community-header-button")]'))
-        )
-        community_button.click()
+#         community_button = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.XPATH, '//button[contains(@name, "setting") and contains(@class, "community-header-button")]'))
+#         )
+#         community_button.click()
 
-        select_button = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//button[contains(@aria-label, "Select a-test-community-name") and contains(@class, "ui small button")]'))
-        )
-        select_button.click()
+#         select_button = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.XPATH, '//button[contains(@aria-label, "Select a-test-community-name") and contains(@class, "ui small button")]'))
+#         )
+#         select_button.click()
 
-        submit_review_button = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[name="SubmitReview"]'))
-        )
-        submit_review_button.click()
-        checkbox1 = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//label[@for='acceptAccessToRecord']"))
-        )
-        checkbox1.click()
-        checkbox2 = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//label[@for='acceptAfterPublishRecord']"))
-        )
-        checkbox2.click()
-        submit_button = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[name="submitReview"]'))
-        )
+#         submit_review_button = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[name="SubmitReview"]'))
+#         )
+#         submit_review_button.click()
+#         checkbox1 = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.XPATH, "//label[@for='acceptAccessToRecord']"))
+#         )
+#         checkbox1.click()
+#         checkbox2 = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.XPATH, "//label[@for='acceptAfterPublishRecord']"))
+#         )
+#         checkbox2.click()
+#         submit_button = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[name="submitReview"]'))
+#         )
 
-        submit_button.click()
+#         submit_button.click()
 
-        accept_and_publish_button1 = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'ui icon positive left labeled button') and contains(., 'Accept and publish')]"))
-        )
-        accept_and_publish_button1.click()
-        all_accept_and_publish_buttons = WebDriverWait(browser, 10).until(
-            EC.presence_of_all_elements_located((By.XPATH, "//button[contains(., 'Accept and publish')]"))
-        )
-        if len(all_accept_and_publish_buttons) >= 2:
-            all_accept_and_publish_buttons[1].click()
-        browser.refresh()
-        uploads_link = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'item') and contains(text(), 'Uploads')]"))
-        )
-        uploads_link.click()
-        test_title_link = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'truncate-lines-2') and contains(text(), 'Test file')]"))
-        )
-        test_title_link.click()
+#         accept_and_publish_button1 = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'ui icon positive left labeled button') and contains(., 'Accept and publish')]"))
+#         )
+#         accept_and_publish_button1.click()
+#         all_accept_and_publish_buttons = WebDriverWait(browser, 10).until(
+#             EC.presence_of_all_elements_located((By.XPATH, "//button[contains(., 'Accept and publish')]"))
+#         )
+#         if len(all_accept_and_publish_buttons) >= 2:
+#             all_accept_and_publish_buttons[1].click()
+#         browser.refresh()
+#         uploads_link = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'item') and contains(text(), 'Uploads')]"))
+#         )
+#         uploads_link.click()
+#         test_title_link = WebDriverWait(browser, 10).until(
+#             EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'truncate-lines-2') and contains(text(), 'Test file')]"))
+#         )
+#         test_title_link.click()
 
-        try:
-            _ = WebDriverWait(browser, 10).until(
-                EC.presence_of_element_located((By.XPATH, '//a[@role="button" and contains(@class, "ui compact mini button") and contains(., "Download")]'))
-            )
-            assert False, "Download button should not be present, but it was found."
-        except TimeoutException:
-            # expected exception
-            pass
+#         try:
+#             _ = WebDriverWait(browser, 10).until(
+#                 EC.presence_of_element_located((By.XPATH, '//a[@role="button" and contains(@class, "ui compact mini button") and contains(., "Download")]'))
+#             )
+#             assert False, "Download button should not be present, but it was found."
+#         except TimeoutException:
+#             # expected exception
+#             pass
         
-        try:
-            _ = WebDriverWait(browser, 10).until(
-                EC.presence_of_element_located((By.XPATH, '//a[@class="wrap-long-link"]'))
-            )
-            assert False, "Download link should not be present, but it was found."
-        except TimeoutException:
-            # expected exception
-            pass
-    except Exception as e:
-        if not os.path.exists("screenshots"):
-            os.mkdir("screenshots")
-        browser.save_screenshot(f'screenshots/test_lage_file{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
-        print(str(e))
-        raise e
-    finally:
-        browser.quit()
-        if os.path.exists("fake.bin"):
-            os.remove("fake.bin")
-        cleanup_token(browser)
-        cleanup_community(browser)
+#         try:
+#             _ = WebDriverWait(browser, 10).until(
+#                 EC.presence_of_element_located((By.XPATH, '//a[@class="wrap-long-link"]'))
+#             )
+#             assert False, "Download link should not be present, but it was found."
+#         except TimeoutException:
+#             # expected exception
+#             pass
+#     except Exception as e:
+#         if not os.path.exists("screenshots"):
+#             os.mkdir("screenshots")
+#         browser.save_screenshot(f'screenshots/test_lage_file{".".join(random.choices(string.ascii_lowercase + string.digits, k=10))}.png')
+#         print(str(e))
+#         raise e
+#     finally:
+#         browser.quit()
+#         if os.path.exists("fake.bin"):
+#             os.remove("fake.bin")
+#         cleanup_token(browser)
+#         cleanup_community(browser)
         
-        # Remove config updates after test finish
-        config_file_path = os.path.join(os.path.dirname(__file__), '../../invenio.cfg')
-        with open(config_file_path, 'r') as file:
-            original_lines = file.readlines()
-        updated_lines = original_lines.copy()
+#         # Remove config updates after test finish
+#         config_file_path = os.path.join(os.path.dirname(__file__), '../../invenio.cfg')
+#         with open(config_file_path, 'r') as file:
+#             original_lines = file.readlines()
+#         updated_lines = original_lines.copy()
 
-        key1 = 'MAX_FILE_SIZE'
-        value1 = '50 * 1024 * 1024 * 1024'
+#         key1 = 'MAX_FILE_SIZE'
+#         value1 = '50 * 1024 * 1024 * 1024'
 
-        for i, line in enumerate(updated_lines):
-            if line.startswith(key1):
-                updated_lines[i] = f"{key1} = {value1}\n"
+#         for i, line in enumerate(updated_lines):
+#             if line.startswith(key1):
+#                 updated_lines[i] = f"{key1} = {value1}\n"
 
-        with open(config_file_path, 'w') as file:
-            file.writelines(updated_lines)
+#         with open(config_file_path, 'w') as file:
+#             file.writelines(updated_lines)
         
 

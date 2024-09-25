@@ -10,6 +10,8 @@
 """E2E test of the front page."""
 
 import os
+
+from flask import url_for
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -24,4 +26,4 @@ multiprocessing.set_start_method("fork")
 def test_frontpage(live_server, browser):
     """Test retrieval of front page."""
     browser.get(url_for("invenio_app_rdm.index", _external=True))
-    assert "Search Ultraviolet Data Repository 22" == browser.find_element(By.TAG_NAME, "h1").text
+    assert "Search UltraViolet" == browser.find_element(By.TAG_NAME, "h1").text

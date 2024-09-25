@@ -25,6 +25,7 @@ def app_config(app_config):
     }
     # need this to make sure separate indexes are created for testing
     app_config["SEARCH_INDEX_PREFIX"] = "test"
+    app_config["SERVER_NAME"] = "127.0.0.1"
     return app_config
 
 
