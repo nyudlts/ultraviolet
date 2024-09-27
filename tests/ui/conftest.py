@@ -37,13 +37,6 @@ def create_app(ultraviolet_instance_path):
     return create_ultraviolet_app_ui
 
 @pytest.fixture()
-def client_admin(client, admin_user):
-    """Log in a user to the client."""
-    login_user(admin_user, remember=True)
-    login_user_via_session(client, email=admin_user.email)
-    return client
-
-@pytest.fixture()
 def service(running_app, search_clear):
     """RDM Record Service."""
     return running_app.app.extensions["invenio-rdm-records"].records_service

@@ -14,12 +14,10 @@ from io import BytesIO
 from invenio_access.permissions import system_identity
 
 
-def test_one_small_file(service, minimal_record, client_admin):
+def test_one_small_file(service, minimal_record, client_with_login):
     """Restricted record fixture."""
     data = minimal_record.copy()
     data["files"]["enabled"] = True
-    data["access"]["record"] = "restricted"
-    data["access"]["files"] = "restricted"
 
     # Create
     draft = service.create(system_identity, data)
@@ -36,19 +34,17 @@ def test_one_small_file(service, minimal_record, client_admin):
     # Publish
     record = service.publish(system_identity, draft.id)
 
-    record_view = client_admin.get("/records/" + record['id']).data
+    record_view = client_with_login.get("/records/" + record['id']).data
     # Download all button should present
     assert "Download all" in record_view.decode("utf-8")
     # Downlaod button should present
     expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
     assert expected_button_html in record_view.decode("utf-8")
 
-def test_one_large_file(service, minimal_record, client_admin):
+def test_one_large_file(service, minimal_record, client_with_login):
     """Restricted record fixture."""
     data = minimal_record.copy()
     data["files"]["enabled"] = True
-    data["access"]["record"] = "restricted"
-    data["access"]["files"] = "restricted"
 
     # Create
     draft = service.create(system_identity, data)
@@ -67,19 +63,18 @@ def test_one_large_file(service, minimal_record, client_admin):
     # Publish
     record = service.publish(system_identity, draft.id)
 
-    record_view = client_admin.get("/records/" + record['id']).data
+    record_view = client_with_login.get("/records/" + record['id']).data
+
     # Download all button should not present
     assert "Download all" not in record_view.decode("utf-8")
     # Downlaod button should not present
     expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
     assert expected_button_html not in record_view.decode("utf-8")
     
-def test_two_files(service, minimal_record, client_admin):
+def test_two_files(service, minimal_record, client_with_login):
     """Restricted record fixture."""
     data = minimal_record.copy()
     data["files"]["enabled"] = True
-    data["access"]["record"] = "restricted"
-    data["access"]["files"] = "restricted"
 
     # Create
     draft = service.create(system_identity, data)
@@ -102,8 +97,8 @@ def test_two_files(service, minimal_record, client_admin):
     # Publish
     record = service.publish(system_identity, draft.id)
 
-    record_view = client_admin.get("/records/" + record['id']).data
-    print(record_view)
+    record_view = client_with_login.get("/records/" + record['id']).data
+    
     # Download all button show not present
     assert "Download all" not in record_view.decode("utf-8")
     # Download button for small file should present
