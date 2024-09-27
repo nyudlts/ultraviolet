@@ -7,84 +7,108 @@
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
-"""View tests for files page download related elements."""
+"""View tests of the front page."""
 
-from flask import render_template_string
 
-def test_small_file_download_visibility(create_app):
-    """
-    This test verifies the Download button, Download all button,
-    and downoad link should be presented for small files.
-    """
-    app = create_app()
-    app.config['SERVER_NAME'] = 'localhost'
+from io import BytesIO
+from invenio_access.permissions import system_identity
 
-    with app.app_context():
 
-        file = {
-            "size": 20 * 1024**3,
-            "key": "example-file-key"
-        }
+def test_one_small_file(service, minimal_record, client_admin):
+    """Restricted record fixture."""
+    data = minimal_record.copy()
+    data["files"]["enabled"] = True
+    data["access"]["record"] = "restricted"
+    data["access"]["files"] = "restricted"
 
-        context = {
-            "files": [file],
-            "pid": "example-pid",
-            "is_preview": True,
-            "with_preview": True,
-            "file_type": "jpg",
-            "config": app.config,
-            "record": {
-                "links":{
-                    "archive": "https://127.0.0.1:5000/api/records/6se1e-bgq09/files",
-                        }
-                },
-        }
+    # Create
+    draft = service.create(system_identity, data)
 
-        wrapped_content = """
-        {% from "invenio_app_rdm/records/macros/files.html" import file_list %}
-        {{ file_list(files, pid, is_preview=true, record=record) }}
-        """
+    # Add a file
+    service.draft_files.init_files(
+        system_identity, draft.id, data=[{"key": "test.pdf"}]
+    )
+    service.draft_files.set_file_content(
+        system_identity, draft.id, "test.pdf", BytesIO(b"test file")
+    )
+    service.draft_files.commit_file(system_identity, draft.id, "test.pdf")
 
-        rendered = render_template_string(wrapped_content, **context)
-        assert "Download" in rendered, f"Download button not found in rendered content: {rendered}"
-        assert "wrap-long-link" in rendered, f"Download link not found in rendered content: {rendered}"
-        assert "Download all" in rendered, f"Download all button not found in rendered content: {rendered}"
+    # Publish
+    record = service.publish(system_identity, draft.id)
 
+    record_view = client_admin.get("/records/" + record['id']).data
+    # Download all button should present
+    assert "Download all" in record_view.decode("utf-8")
+    # Downlaod button should present
+    expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
+    assert expected_button_html in record_view.decode("utf-8")
+
+def test_one_large_file(service, minimal_record, client_admin):
+    """Restricted record fixture."""
+    data = minimal_record.copy()
+    data["files"]["enabled"] = True
+    data["access"]["record"] = "restricted"
+    data["access"]["files"] = "restricted"
+
+    # Create
+    draft = service.create(system_identity, data)
+
+    # Add a file
+    service.draft_files.init_files(
+        system_identity, draft.id, data=[{"key": "test.pdf"}]
+    )
+
+    # larger than config limit
+    service.draft_files.set_file_content(
+        system_identity, draft.id, "test.pdf", BytesIO(b'1' * (10**6))
+    )
+    service.draft_files.commit_file(system_identity, draft.id, "test.pdf")
+
+    # Publish
+    record = service.publish(system_identity, draft.id)
+
+    record_view = client_admin.get("/records/" + record['id']).data
+    # Download all button should not present
+    assert "Download all" not in record_view.decode("utf-8")
+    # Downlaod button should not present
+    expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
+    assert expected_button_html not in record_view.decode("utf-8")
     
-def test_large_filedownload_visibility(create_app):
-    """
-    This test verifies the Download button, Download all button,
-    and downoad link should be not presented for lage files.
-    """
-    app = create_app()
-    app.config['SERVER_NAME'] = 'localhost'
+def test_two_files(service, minimal_record, client_admin):
+    """Restricted record fixture."""
+    data = minimal_record.copy()
+    data["files"]["enabled"] = True
+    data["access"]["record"] = "restricted"
+    data["access"]["files"] = "restricted"
 
-    with app.app_context():
+    # Create
+    draft = service.create(system_identity, data)
 
-        file = {
-            "size": 60 * 1024**3,
-            "key": "example-file-key"
-        }
-        context = {
-            "files": [file],
-            "pid": "example-pid",
-            "is_preview": True,
-            "with_preview": True,
-            "file_type": "jpg",
-            "config": app.config,
-            "record": {
-                "links":{
-                    "archive": "https://127.0.0.1:5000/api/records/6se1e-bgq09/files",
-                        }
-                },
-        }
+    # Add two files
+    service.draft_files.init_files(
+        system_identity, draft.id, data=[{"key": "small.pdf"}, {"key": "large.pdf"}]
+    )
+    
+    service.draft_files.set_file_content(
+        system_identity, draft.id, "small.pdf", BytesIO(b"test file")
+    )
+    service.draft_files.commit_file(system_identity, draft.id, "small.pdf")
+    # larger than config limit
+    service.draft_files.set_file_content(
+        system_identity, draft.id, "large.pdf", BytesIO(b'1' * (10**6))
+    )
+    service.draft_files.commit_file(system_identity, draft.id, "large.pdf")
 
-        wrapped_content = """
-        {% from "invenio_app_rdm/records/macros/files.html" import file_list %}
-        {{ file_list(files, pid, is_preview=true, record=record) }}
-        """
+    # Publish
+    record = service.publish(system_identity, draft.id)
 
-        rendered = render_template_string(wrapped_content, **context)
-        assert "Download" not in rendered, f"Download button found in rendered content when it shouldn't be: {rendered}"
-        assert not "wrap-long-link" in rendered, f"Download link found in rendered content: {rendered}"
-        assert not "Download all" in rendered, f"Download all link found in rendered content: {rendered}"
+    record_view = client_admin.get("/records/" + record['id']).data
+    print(record_view)
+    # Download all button show not present
+    assert "Download all" not in record_view.decode("utf-8")
+    # Download button for small file should present
+    small_file_download_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/small.pdf?download=1">'.format(record['id'])
+    assert small_file_download_button_html in record_view.decode("utf-8")
+    # Download button for large file should not present
+    large_file_download_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/large.pdf?download=1">'.format(record['id'])
+    assert large_file_download_button_html not in record_view.decode("utf-8")
