@@ -15,7 +15,10 @@ from invenio_access.permissions import system_identity
 
 
 def test_one_small_file(service, minimal_record, client_with_login):
-    """Restricted record fixture."""
+    """
+    This test verifies files page for small file in the application.
+    The Download button, Download all button, and file name download link should present.
+    """
     data = minimal_record.copy()
     data["files"]["enabled"] = True
 
@@ -33,16 +36,23 @@ def test_one_small_file(service, minimal_record, client_with_login):
 
     # Publish
     record = service.publish(system_identity, draft.id)
-
     record_view = client_with_login.get("/records/" + record['id']).data
+    html = record_view.decode("utf-8")
+
     # Download all button should present
-    assert "Download all" in record_view.decode("utf-8")
+    assert "Download all" in html
     # Downlaod button should present
     expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
-    assert expected_button_html in record_view.decode("utf-8")
+    assert expected_button_html in html
+    # File name download link should present
+    expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
+    assert expected_namelink_html in html
 
 def test_one_large_file(service, minimal_record, client_with_login):
-    """Restricted record fixture."""
+    """
+    This test verifies files page for large file in the application.
+    The Download button, Download all button, and file name download link should not present.
+    """
     data = minimal_record.copy()
     data["files"]["enabled"] = True
 
@@ -62,17 +72,25 @@ def test_one_large_file(service, minimal_record, client_with_login):
 
     # Publish
     record = service.publish(system_identity, draft.id)
-
     record_view = client_with_login.get("/records/" + record['id']).data
-
+    html = record_view.decode("utf-8")
+    
     # Download all button should not present
-    assert "Download all" not in record_view.decode("utf-8")
+    assert "Download all" not in html
     # Downlaod button should not present
     expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
-    assert expected_button_html not in record_view.decode("utf-8")
-    
+    assert expected_button_html not in html
+    # File name download link should not present
+    expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
+    assert expected_namelink_html not in html
+
 def test_two_files(service, minimal_record, client_with_login):
-    """Restricted record fixture."""
+    """
+    This test verifies files page for a small file and a large file in the application.
+    The Download all buton should not present.
+    The Download button and file name download link should present for small file.
+    The Download all button, Download button, and file name download link should not present for large file.
+    """
     data = minimal_record.copy()
     data["files"]["enabled"] = True
 
@@ -96,14 +114,22 @@ def test_two_files(service, minimal_record, client_with_login):
 
     # Publish
     record = service.publish(system_identity, draft.id)
-
     record_view = client_with_login.get("/records/" + record['id']).data
+    html = record_view.decode("utf-8")
     
     # Download all button show not present
-    assert "Download all" not in record_view.decode("utf-8")
+    assert "Download all" not in html
+
     # Download button for small file should present
     small_file_download_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/small.pdf?download=1">'.format(record['id'])
-    assert small_file_download_button_html in record_view.decode("utf-8")
+    assert small_file_download_button_html in html
+    # File name download link should present
+    expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/small.pdf?download=1">small.pdf</a>'.format(record['id'])
+    assert expected_namelink_html in html
+
     # Download button for large file should not present
     large_file_download_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/large.pdf?download=1">'.format(record['id'])
-    assert large_file_download_button_html not in record_view.decode("utf-8")
+    assert large_file_download_button_html not in html
+    # File name download link should not present
+    expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/large.pdf?download=1">large.pdf</a>'.format(record['id'])
+    assert expected_namelink_html not in html
