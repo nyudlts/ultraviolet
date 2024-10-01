@@ -13,8 +13,8 @@ flask-pytest = "*"
 
 [packages]
 ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
-ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git", ref="align-v12-update", egg = "ultraviolet_permissions"}
-invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git", ref="feature-update-sync"}
+ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git", ref="align-v12-update"}
+invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git", ref="13.0.6-role-filter"}
 lxml = "==4.9.3"
 xmlsec = "==1.3.13"
 python-dotenv = "*"
