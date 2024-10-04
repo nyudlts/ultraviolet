@@ -15,7 +15,7 @@ flask-pytest = "*"
 ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
 ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git", ref="align-v12-update"}
 invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git", ref="13.0.6-role-filter"}
-sqlalchemy = {version = "*", extras = ["asyncio"]}'
+sqlalchemy = {version = "*", extras = ["asyncio"]}
 lxml = "==4.9.3"
 xmlsec = "==1.3.13"
 python-dotenv = "*"
