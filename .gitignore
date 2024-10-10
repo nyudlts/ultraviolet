@@ -94,3 +94,6 @@ ultraviolet-cli
 fixtures
 tmp
 fixture-map.json
+
+# celery files
+celerybeat-schedule.*
