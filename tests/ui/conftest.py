@@ -16,21 +16,10 @@ from invenio_base.wsgi import wsgi_proxyfix
 from invenio_config import create_config_loader
 import pytest
 import os
+from invenio_app.factory import create_ui
 
 
-@pytest.fixture(scope="module")
-def create_app(ultraviolet_instance_path):
-    """Flask app fixture."""
-    create_ultraviolet_app_ui = factory.create_app_factory(
-        "invenio",
-        config_loader=create_config_loader(config=None, env_prefix="Invenio"),
-        blueprint_entry_points=["invenio_base.blueprints"],
-        extension_entry_points=["invenio_base.apps"],
-        converter_entry_points=["invenio_base.converters"],
-        wsgi_factory=wsgi_proxyfix(),
-        instance_path=ultraviolet_instance_path,
-        static_folder=os.path.join(ultraviolet_instance_path, "static"),
-        root_path=ultraviolet_instance_path,
-        app_class=factory.app_class(),
-    )
-    return create_ultraviolet_app_ui
+@pytest.fixture()
+def service(running_app, search_clear):
+    """RDM Record Service."""
+    return running_app.app.extensions["invenio-rdm-records"].records_service
