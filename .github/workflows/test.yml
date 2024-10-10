@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - rm-e2e
+      - test-refactor
     paths-ignore:
       - "docs/**"
       - "**.md"
