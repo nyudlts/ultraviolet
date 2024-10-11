@@ -8,23 +8,25 @@
 # Note: It is important to keep the commands in this file in sync with your
 # bootstrap script located in ./scripts/bootstrap.
 
-FROM registry.cern.ch/inveniosoftware/almalinux:1
+FROM registry.cern.ch/inveniosoftware/almalinux:latest
 
+RUN dnf install xmlsec1-openssl xmlsec1 libxml2 libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel -y
+COPY site ./site
 COPY Pipfile Pipfile.lock ./
-RUN pipenv install --deploy --system --pre
+RUN pipenv install --deploy --system
 
 COPY ./docker/uwsgi/ ${INVENIO_INSTANCE_PATH}
 COPY ./invenio.cfg ${INVENIO_INSTANCE_PATH}
 COPY ./templates/ ${INVENIO_INSTANCE_PATH}/templates/
 COPY ./app_data/ ${INVENIO_INSTANCE_PATH}/app_data/
 COPY ./translations/ ${INVENIO_INSTANCE_PATH}/translations/
+COPY ./.env ${INVENIO_INSTANCE_PATH}
 COPY ./ .
 
 RUN cp -r ./static/. ${INVENIO_INSTANCE_PATH}/static/ && \
     cp -r ./assets/. ${INVENIO_INSTANCE_PATH}/assets/ && \
     invenio collect --verbose  && \
-    invenio webpack create && \
-    invenio webpack install --unsafe && \
-    invenio webpack build
+    invenio webpack buildall
+
 
 ENTRYPOINT [ "bash", "-c"]

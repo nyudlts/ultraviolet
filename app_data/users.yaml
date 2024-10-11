@@ -1,7 +1,7 @@
 - email: adminUV@test.com
   username: adminUV
   active: True
-  password: changeme 
+  password: adminUV
   roles:
     - admin
   allow:

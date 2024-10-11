@@ -74,7 +74,7 @@ Although postgres is running as container You might  need to install [Postgres](
   ```
 
   The UltraViolet instance should now be available at this URL: <https://127.0.0.1:5000/>  
-  Because of the invalid TLS warning, you will need to use Firefox.
+  Because of self-signed SSL Certificate you will be getting TLS warning
 
   For local instance admin user password in defined in invenio.cfg file. Check RDM_RECORDS_USER_FIXTURE_PASSWORDS variable. By default yuo can login as user `admin@test.com` which you've just created and start uploading data. 
 
@@ -97,10 +97,10 @@ Although postgres is running as container You might  need to install [Postgres](
 
 3. Build docker containers using invenio-cli tool
   ```sh
-  invenio-cli containers start --lock --build --setup
+  invenio-cli containers start --build --setup
   ```
-  The UltraViolet instance should now be running at <https://127.0.0.1:5000/>
-
+  The UltraViolet instance should now be running at <https://127.0.0.1>>
+  For local instance admin user password in defined in invenio.cfg file. Check RDM_RECORDS_USER_FIXTURE_PASSWORDS variable. By default yuo can login as user `admin@test.com` which you've just created and start uploading data. 
 
 
 ## InvenioRDM File Overview
