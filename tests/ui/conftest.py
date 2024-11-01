@@ -14,12 +14,39 @@
 import invenio_app.factory as factory
 from invenio_base.wsgi import wsgi_proxyfix
 from invenio_config import create_config_loader
+from invenio_rdm_records.proxies import current_rdm_records_service
+from invenio_records_resources.proxies import current_service_registry
 import pytest
 import os
-from invenio_app.factory import create_ui
 
+
+@pytest.fixture(scope="module")
+def create_app(ultraviolet_instance_path):
+    """Flask app fixture."""
+    create_ultraviolet_app_ui = factory.create_app_factory(
+        "invenio",
+        config_loader=create_config_loader(config=None, env_prefix="Invenio"),
+        blueprint_entry_points=["invenio_base.blueprints"],
+        extension_entry_points=["invenio_base.apps"],
+        converter_entry_points=["invenio_base.converters"],
+        wsgi_factory=wsgi_proxyfix(),
+        instance_path=ultraviolet_instance_path,
+        static_folder=os.path.join(ultraviolet_instance_path, "static"),
+        root_path=ultraviolet_instance_path,
+        app_class=factory.app_class(),
+    )
+    return create_ultraviolet_app_ui
 
 @pytest.fixture()
-def service(running_app, search_clear):
+def services(running_app, search_clear):
     """RDM Record Service."""
     return running_app.app.extensions["invenio-rdm-records"].records_service
+
+@pytest.fixture(scope="function")
+def register_file_service(app):
+    """Register RDMFileService in the service registry."""
+    # Get the existing draft_files service instance
+    existing_service = current_rdm_records_service.draft_files
+    # Register the existing service instance
+    current_service_registry.register(existing_service, "rdm-files")
+    return existing_service
