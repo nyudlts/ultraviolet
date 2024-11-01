@@ -34,3 +34,8 @@ def create_app(ultraviolet_instance_path):
         app_class=factory.app_class(),
     )
     return create_ultraviolet_app_ui
+
+@pytest.fixture()
+def service(running_app, search_clear):
+    """RDM Record Service."""
+    return running_app.app.extensions["invenio-rdm-records"].records_service
