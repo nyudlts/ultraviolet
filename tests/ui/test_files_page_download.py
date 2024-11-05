@@ -29,7 +29,10 @@ def register_file_service(app):
 
 
 def test_one_small_file(minimal_record, client_with_login, services, app, db, register_file_service):
-    """Test files page for small file in the application."""
+    """
+    Test files page for small file in the application.
+    The Download button, Download all button, and file name download link should present.
+    """
     
     service = current_rdm_records_service
     

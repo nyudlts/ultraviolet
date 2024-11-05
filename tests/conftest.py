@@ -1,10 +1,3 @@
-    # app_config["REST_CSRF_ENABLED"] = False
-    # app_config['SQLALCHEMY_POOL_TIMEOUT'] = None
-    # app_config["VOCABULARIES"] = {
-    #     "subjects": {
-    #         "pid-type": "sub",
-    #     }
-    # }
 # -*- coding: utf-8 -*-
 #
 # -*- coding: utf-8 -*-
@@ -368,10 +361,6 @@ def subjects_service(app,):
     # Create required indexes
     # list(current_search.create(ignore=[400]))
     current_search_client.indices.refresh()
-    
-
-
-
 
     return service
 
