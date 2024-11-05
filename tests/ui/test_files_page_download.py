@@ -11,33 +11,70 @@
 
 
 from io import BytesIO
+from invenio_access.permissions import system_identity
+from invenio_rdm_records.proxies import current_rdm_records_service
+
 import pytest
 from invenio_records_resources.proxies import current_service_registry
 
-from invenio_access.permissions import system_identity
-# from invenio_records_resources.proxies import current_service_registry
-# from invenio_rdm_records.services.files import RDMFileService
-# from invenio_rdm_records.services.config import RDMFileServiceConfig
 
-# instance = <invenio_rdm_records.services.files.service.RDMFileService object at 0x7f2b11a49250>
-from invenio_records_resources.proxies import current_service_registry
-from invenio_rdm_records.services.files.service import RDMFileService
-from invenio_rdm_records.services.config import RDMFileRecordServiceConfig
-from invenio_search import current_search, current_search_client
+@pytest.fixture(scope="function")
+def register_file_service(app):
+    """Register RDMFileService in the service registry."""
+    # Get the existing draft_files service instance
+    existing_service = current_rdm_records_service.draft_files
+    # Register the existing service instance
+    current_service_registry.register(existing_service, "rdm-files")
+    return existing_service
 
-@pytest.fixture(scope="module")
-def file_service(app):
-    """Create properly initialized file service."""
-    service = RDMFileService(config=RDMFileRecordServiceConfig)
-    # Register with correct key
-    current_service_registry.register("rdm-files", service)
-    return service
 
-def test_one_small_file(service, minimal_record, client_with_login, file_service):
+def test_one_small_file(minimal_record, client_with_login, services, app, db, register_file_service):
+    """Test files page for small file in the application."""
+    
+    service = current_rdm_records_service
+    
+    data = minimal_record.copy()
+    data["files"]["enabled"] = True
+
+    # Create draft
+    draft = service.create(system_identity, data)
+    db.session.commit()
+    draft = service.read_draft(system_identity, draft.id)
+    
+    # Add a file
+    service.draft_files.init_files(
+        system_identity, draft.id, data=[{"key": "test.pdf"}]
+    )
+    service.draft_files.set_file_content(
+        system_identity, draft.id, "test.pdf", BytesIO(b"test file")
+    )
+    
+    service.draft_files.commit_file(system_identity, draft.id, "test.pdf")
+
+    record = service.publish(system_identity, draft.id)
+    record_view = client_with_login.get("/records/" + record['id']).data
+    html = record_view.decode("utf-8")
+
+
+    # Download all button should present
+    assert "Download all" in html
+    # Downlaod button should present
+    expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
+    assert expected_button_html in html
+    # File name download link should present
+    expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
+    assert expected_namelink_html in html
+
+
+
+def test_one_large_file(minimal_record, client_with_login, services, app, db):
     """
-    This test verifies files page for small file in the application.
-    The Download button, Download all button, and file name download link should present.
+    This test verifies files page for large file in the application.
+    The Download button, Download all button, and file name download link should not present.
     """
+
+    service = current_rdm_records_service
+
     data = minimal_record.copy()
     data["files"]["enabled"] = True
 
@@ -48,115 +85,77 @@ def test_one_small_file(service, minimal_record, client_with_login, file_service
     service.draft_files.init_files(
         system_identity, draft.id, data=[{"key": "test.pdf"}]
     )
+
+    # larger than config limit
     service.draft_files.set_file_content(
-        system_identity, draft.id, "test.pdf", BytesIO(b"test file")
+        system_identity, draft.id, "test.pdf", BytesIO(b'1' * (10**6))
     )
-    service.draft_files.commit_file(system_identity, draft.id, "test.pdf")  # ->  KeyError: 'Service not found in registry.'
-    # print the instance by :/invenio_records_resources/registry.py get_service_id()
-    # expected isntance: expected instance:  <invenio_rdm_records.services.files.service.RDMFileService object at 0x7fbe93504400>
-    # created from file_service fixture:     <invenio_rdm_records.services.files.service.RDMFileService object at 0x7fbe96ff6790>
+    service.draft_files.commit_file(system_identity, draft.id, "test.pdf")
 
-
-
-
-
-
-    # # Publish
-    # record = service.publish(system_identity, draft.id)
-    # record_view = client_with_login.get("/records/" + record['id']).data
-    # html = record_view.decode("utf-8")
-
-    # # Download all button should present
-    # assert "Download all" in html
-    # # Downlaod button should present
-    # expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
-    # assert expected_button_html in html
-    # # File name download link should present
-    # expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
-    # assert expected_namelink_html in html
-
-# def test_one_large_file(service, minimal_record, client_with_login):
-#     """
-#     This test verifies files page for large file in the application.
-#     The Download button, Download all button, and file name download link should not present.
-#     """
-#     data = minimal_record.copy()
-#     data["files"]["enabled"] = True
-
-#     # Create
-#     draft = service.create(system_identity, data)
-
-#     # Add a file
-#     service.draft_files.init_files(
-#         system_identity, draft.id, data=[{"key": "test.pdf"}]
-#     )
-
-#     # larger than config limit
-#     service.draft_files.set_file_content(
-#         system_identity, draft.id, "test.pdf", BytesIO(b'1' * (10**6))
-#     )
-#     service.draft_files.commit_file(system_identity, draft.id, "test.pdf")
-
-#     # Publish
-#     record = service.publish(system_identity, draft.id)
-#     record_view = client_with_login.get("/records/" + record['id']).data
-#     html = record_view.decode("utf-8")
+    # Publish
+    record = service.publish(system_identity, draft.id)
+    record_view = client_with_login.get("/records/" + record['id']).data
+    html = record_view.decode("utf-8")
     
-#     # Download all button should not present
-#     assert "Download all" not in html
-#     # Downlaod button should not present
-#     expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
-#     assert expected_button_html not in html
-#     # File name download link should not present
-#     expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
-#     assert expected_namelink_html not in html
+    # Download all button should not present
+    assert "Download all" not in html
+    # Downlaod button should not present
+    expected_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/test.pdf?download=1">'.format(record['id'])
+    assert expected_button_html not in html
+    # File name download link should not present
+    expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
+    assert expected_namelink_html not in html
 
-# def test_two_files(service, minimal_record, client_with_login):
-#     """
-#     This test verifies files page for a small file and a large file in the application.
-#     The Download all buton should not present.
-#     The Download button and file name download link should present for small file.
-#     The Download all button, Download button, and file name download link should not present for large file.
-#     """
-#     data = minimal_record.copy()
-#     data["files"]["enabled"] = True
 
-#     # Create
-#     draft = service.create(system_identity, data)
+def test_two_files(minimal_record, client_with_login, services, app, db):
+    """
+    This test verifies files page for a small file and a large file in the application.
+    The Download all buton should not present.
+    The Download button and file name download link should present for small file.
+    The Download all button, Download button, and file name download link should not present for large file.
+    """
 
-#     # Add two files
-#     service.draft_files.init_files(
-#         system_identity, draft.id, data=[{"key": "small.pdf"}, {"key": "large.pdf"}]
-#     )
+    service = current_rdm_records_service
     
-#     service.draft_files.set_file_content(
-#         system_identity, draft.id, "small.pdf", BytesIO(b"test file")
-#     )
-#     service.draft_files.commit_file(system_identity, draft.id, "small.pdf")
-#     # larger than config limit
-#     service.draft_files.set_file_content(
-#         system_identity, draft.id, "large.pdf", BytesIO(b'1' * (10**6))
-#     )
-#     service.draft_files.commit_file(system_identity, draft.id, "large.pdf")
+    data = minimal_record.copy()
+    data["files"]["enabled"] = True
 
-#     # Publish
-#     record = service.publish(system_identity, draft.id)
-#     record_view = client_with_login.get("/records/" + record['id']).data
-#     html = record_view.decode("utf-8")
+    # Create
+    draft = service.create(system_identity, data)
+
+    # Add two files
+    service.draft_files.init_files(
+        system_identity, draft.id, data=[{"key": "small.pdf"}, {"key": "large.pdf"}]
+    )
     
-#     # Download all button show not present
-#     assert "Download all" not in html
+    service.draft_files.set_file_content(
+        system_identity, draft.id, "small.pdf", BytesIO(b"test file")
+    )
+    service.draft_files.commit_file(system_identity, draft.id, "small.pdf")
+    # larger than config limit
+    service.draft_files.set_file_content(
+        system_identity, draft.id, "large.pdf", BytesIO(b'1' * (10**6))
+    )
+    service.draft_files.commit_file(system_identity, draft.id, "large.pdf")
 
-#     # Download button for small file should present
-#     small_file_download_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/small.pdf?download=1">'.format(record['id'])
-#     assert small_file_download_button_html in html
-#     # File name download link should present
-#     expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/small.pdf?download=1">small.pdf</a>'.format(record['id'])
-#     assert expected_namelink_html in html
+    # Publish
+    record = service.publish(system_identity, draft.id)
+    record_view = client_with_login.get("/records/" + record['id']).data
+    html = record_view.decode("utf-8")
+    
+    # Download all button show not present
+    assert "Download all" not in html
 
-#     # Download button for large file should not present
-#     large_file_download_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/large.pdf?download=1">'.format(record['id'])
-#     assert large_file_download_button_html not in html
-#     # File name download link should not present
-#     expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/large.pdf?download=1">large.pdf</a>'.format(record['id'])
-#     assert expected_namelink_html not in html
+    # Download button for small file should present
+    small_file_download_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/small.pdf?download=1">'.format(record['id'])
+    assert small_file_download_button_html in html
+    # File name download link should present
+    expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/small.pdf?download=1">small.pdf</a>'.format(record['id'])
+    assert expected_namelink_html in html
+
+    # Download button for large file should not present
+    large_file_download_button_html = '<a role="button" class="ui compact mini button" href="/records/{}/files/large.pdf?download=1">'.format(record['id'])
+    assert large_file_download_button_html not in html
+    # File name download link should not present
+    expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/large.pdf?download=1">large.pdf</a>'.format(record['id'])
+    assert expected_namelink_html not in html

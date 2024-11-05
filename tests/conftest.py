@@ -501,9 +501,18 @@ def licenses_v(app, licenses):
     return vocab
 
 
+from invenio_vocabularies.contrib.affiliations import AffiliationsService, AffiliationsServiceConfig
+
+
 @pytest.fixture(scope="module")
 def affiliations_v(app):
     """Affiliation vocabulary record."""
+
+    if "affiliations" not in current_service_registry._services:
+        service = AffiliationsService(config=AffiliationsServiceConfig())  # Create an instance
+        current_service_registry.register(service, "affiliations")
+
+
     affiliations_service = current_service_registry.get("affiliations")
     aff = affiliations_service.create(
         system_identity,
@@ -523,7 +532,9 @@ def affiliations_v(app):
             ],
         },
     )
-
+    if not current_search_client.indices.exists(index="affiliations-affiliation-v1.0.0"):
+        current_search_client.indices.create(index="affiliations-affiliation-v1.0.0")
+                
     Affiliation.index.refresh()
 
     return aff
@@ -647,7 +658,7 @@ def running_app(
     resource_type_v,
     subject_v,
     languages_v,
-    # affiliations_v,
+    affiliations_v,
     title_type_v,
     description_type_v,
     date_type_v,
