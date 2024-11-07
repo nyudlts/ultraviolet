@@ -1,0 +1,25 @@
+{% if record.custom_fields["geoserver:wms_url"] and record.custom_fields["geoserver:layer_name"] %}
+    <div id="map"
+         data-base-url="{{ record.custom_fields["geoserver:wms_url"] }}"
+         data-layer-name="{{ record.custom_fields["geoserver:layer_name"] }}"
+         data-bounds="{{ record.custom_fields["geoserver:bounds"] }}"
+    ></div>
+
+    <h2>Attributes</h2>
+    <table class="ui celled table">
+        <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody id="attributes"
+               data-wfs-url="{{ record.custom_fields["geoserver:wfs_url"] }}"
+               data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
+    </table>
+{% endif %}
+
+{% block javascript %}
+    {{ webpack['geoserver_js.js'] }}
+    {{ webpack['geoserver_css.css'] }}
+{% endblock %}
