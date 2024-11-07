@@ -48,9 +48,9 @@ if [ $# -eq 0 ]
 then
     pipenv run pytest -p no:cacheprovider
 else
-    if ! [ -d "$1" ]
+    if ! [ -e "$1" ]
     then
-       echo "Path to test is invalid"
+       echo "Path to test(s) is invalid"
        exit 1
     fi
        pipenv run pytest -p no:cacheprovider "$1"
