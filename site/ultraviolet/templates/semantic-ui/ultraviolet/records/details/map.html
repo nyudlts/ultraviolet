@@ -1,0 +1,12 @@
+{% if record.custom_fields["geoserver:wms_url"] and record.custom_fields["geoserver:layer_name"] %}
+    <div id="map"
+         data-base-url="{{ record.custom_fields["geoserver:wms_url"] }}"
+         data-layer-name="{{ record.custom_fields["geoserver:layer_name"] }}"
+         data-bounds="{{ record.custom_fields["geoserver:bounds"] }}"
+    ></div>
+{% endif %}
+
+{% block javascript %}
+    {{ webpack['geoserver_js.js'] }}
+    {{ webpack['geoserver_css.css'] }}
+{% endblock %}
