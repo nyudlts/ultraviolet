@@ -17,6 +17,14 @@ import os
 from invenio_accounts.proxies import current_datastore
 from invenio_access.proxies import current_access
 
+import pytest
+from invenio_app.factory import create_app as create_ui_api
+
+
+@pytest.fixture(scope="module")
+def create_app():
+    """Create test app."""
+    return create_ui_api
 
 @pytest.fixture(scope="module")
 def app_config(app_config):
@@ -29,7 +37,6 @@ def app_config(app_config):
     app_config["SEARCH_INDEX_PREFIX"] = ""
     app_config["SERVER_NAME"] = "127.0.0.1"
     app_config["MAX_FILE_SIZE"] = 50
-    app_config["REST_CSRF_ENABLED"] = False
     app_config["APP_DEFAULT_SECURE_HEADERS"] = {
         'content_security_policy': {
             'default-src': [
@@ -166,7 +173,7 @@ def minimal_record():
 
 
 @pytest.fixture()
-def client_with_login(client, users):
+def client_with_login(app, client, users):
     """Log in a user to the client."""
     user = users["user1"]
     login_user(user, remember=True)

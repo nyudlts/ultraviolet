@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - rm-references-field
+      - INVENIO-243-update-12-locally
     paths-ignore:
       - "docs/**"
       - "**.md"
