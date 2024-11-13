@@ -15,19 +15,6 @@ from invenio_access.permissions import system_identity
 
 
 
-import pytest
-from invenio_records_resources.proxies import current_service_registry
-
-
-@pytest.fixture(scope="function")
-def register_file_service(app):
-    """Register RDMFileService in the service registry."""
-    # Get the existing draft_files service instance
-    existing_service = current_rdm_records_service.draft_files
-    # Register the existing service instance
-    current_service_registry.register(existing_service, "rdm-files")
-    return existing_service
-
 
 def test_one_small_file(minimal_record, client_with_login, services, app, db, register_file_service):
     """
