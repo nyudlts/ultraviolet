@@ -17,7 +17,7 @@ import os
 from invenio_accounts.proxies import current_datastore
 from invenio_access.proxies import current_access
 
-# modify application configuration
+
 @pytest.fixture(scope="module")
 def app_config(app_config):
     # sqllite refused to create mock db without those parameters and they are missing
@@ -26,10 +26,34 @@ def app_config(app_config):
         "pool_recycle": 3600,
     }
     # need this to make sure separate indexes are created for testing
-    app_config["SEARCH_INDEX_PREFIX"] = "test"
+    app_config["SEARCH_INDEX_PREFIX"] = ""
     app_config["SERVER_NAME"] = "127.0.0.1"
-    app_config['MAX_FILE_SIZE'] = 50
+    app_config["MAX_FILE_SIZE"] = 50
     app_config["REST_CSRF_ENABLED"] = False
+    app_config["APP_DEFAULT_SECURE_HEADERS"] = {
+        'content_security_policy': {
+            'default-src': [
+                "'self'",
+                'data:',  # for fonts
+                "'unsafe-inline'",  # for inline scripts and styles
+                "blob:",  # for pdf preview
+                # Add your own policies here (e.g. analytics)
+            ],
+        },
+        'content_security_policy_report_only': False,
+        'content_security_policy_report_uri': None,
+        'force_file_save': False,
+        'force_https': False,
+        'force_https_permanent': False,
+        'frame_options': 'sameorigin',
+        'frame_options_allow_from': None,
+        'session_cookie_http_only': True,
+        'session_cookie_secure': True,
+        'strict_transport_security': True,
+        'strict_transport_security_include_subdomains': True,
+        'strict_transport_security_max_age': 31556926,  # One year in seconds
+        'strict_transport_security_preload': False,
+    }
     return app_config
 
 
@@ -210,7 +234,17 @@ def resource_type_type(app):
 
 
 @pytest.fixture(scope="module")
-def resource_type_v(app, resource_type_type):
+def init_vocabulary_indexes(app):
+    """Ensure vocabulary indexes are created and refreshed."""
+    # Initialize the vocabulary index
+    try:
+        Vocabulary.index.create()
+        current_search_client.indices.refresh(index=Vocabulary.index._name)
+    except:
+        pass
+
+@pytest.fixture(scope="module")
+def resource_type_v(app, resource_type_type, init_vocabulary_indexes):
     """Resource type vocabulary record."""
     vocabulary_service.create(
         system_identity,
@@ -382,6 +416,7 @@ def subject_v(app, subjects_service):
     Subject.index.refresh()
 
     return vocab
+
 
 
 @pytest.fixture(scope="module")
@@ -604,6 +639,34 @@ def awards_v(app, funders_v):
 
     return award
 
+@pytest.fixture(scope="module")
+def creatorsroles_type(app):
+    """Creators roles vocabulary type."""
+    return vocabulary_service.create_type(system_identity, "creatorsroles", "crt")
+
+@pytest.fixture(scope="module")
+def creatorsroles_v(app, creatorsroles_type):
+    vocabulary_service.create(
+        system_identity,
+        {
+            "id": "author",
+            "title": {"en": "Author"},
+            "type": "creatorsroles",
+        },
+    )
+
+    vocab = vocabulary_service.create(
+        system_identity,
+        {
+            "id": "editor",
+            "title": {"en": "Editor"},
+            "type": "creatorsroles",
+        },
+    )
+
+    Vocabulary.index.refresh()
+
+    return vocab
 
 @pytest.fixture(scope="function")
 def cache():
@@ -634,6 +697,7 @@ RunningApp = namedtuple(
         "licenses_v",
         "funders_v",
         "awards_v",
+        "creatorsroles_v",
     ],
 )
 
@@ -656,6 +720,7 @@ def running_app(
     licenses_v,
     funders_v,
     awards_v,
+    creatorsroles_v,
 ):
     """This fixture provides an app with the typically needed db data loaded.
 
@@ -679,6 +744,7 @@ def running_app(
         licenses_v,
         funders_v,
         awards_v,
+        creatorsroles_v,
     )
 
 
@@ -756,7 +822,7 @@ def users(app, db):
 def admin_user(users, roles, db):
     """Give admin rights to a user."""
     user = users["user1"]
-    current_datastore.add_role_to_user(user,"admin" )
+    current_datastore.add_role_to_user(user,"admin")
     action = current_access.actions["superuser-access"]
     db.session.add(ActionUsers.allow(action, user_id=user.id))
 

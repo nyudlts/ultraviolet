@@ -12,30 +12,12 @@
 
 """Pytest configuration."""
 
-
-import invenio_app.factory as factory
-from invenio_base.wsgi import create_wsgi_factory, wsgi_proxyfix
-from invenio_config import create_config_loader
+from invenio_app.factory import create_app as create_ui_api
 import pytest
-import os
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 
 @pytest.fixture(scope="module")
-def create_app(ultraviolet_instance_path):
-    """Flask app fixture."""
-    create_app_e2e = factory.create_app_factory(
-        "invenio",
-        config_loader=create_config_loader(config=None, env_prefix="Invenio"),
-        blueprint_entry_points=["invenio_base.blueprints"],
-        extension_entry_points=["invenio_base.apps"],
-        converter_entry_points=["invenio_base.converters"],
-        instance_path=ultraviolet_instance_path,
-        static_folder=os.path.join(ultraviolet_instance_path, "static"),
-        root_path=ultraviolet_instance_path,
-        wsgi_factory=wsgi_proxyfix(create_wsgi_factory({"/api": factory.create_api})),
-        static_url_path="/static",
-        app_class=factory.app_class(),
-    )
-    return create_app_e2e
+def create_app(app_config):
+    """Create test app."""
+    return create_ui_api
+
