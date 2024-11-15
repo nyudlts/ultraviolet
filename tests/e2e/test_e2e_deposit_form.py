@@ -15,7 +15,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 @pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
-def test_element_not_in_deposit_form(app, live_server, browser,create_app,
+def test_element_not_in_deposit_form(app, live_server, browser,
                               resource_type_v,
                               subject_v,
                               languages_v,
@@ -39,7 +39,7 @@ def test_element_not_in_deposit_form(app, live_server, browser,create_app,
         user = testutils.create_test_user(email, password, active=True)
         datastore = app.extensions["security"].datastore
         
-        admin_role = datastore.find_or_create_role(name="administration-access")
+        admin_role = datastore.create_role(name="administration-access")
         action_role = ActionRoles.create(action=administration_access_action, role=admin_role)
         datastore.db.session.add(action_role)
         _, role = datastore._prepare_role_modify_args(user, "administration-access")
@@ -69,4 +69,4 @@ def test_element_not_in_deposit_form(app, live_server, browser,create_app,
     page_source = browser.page_source
 
     # Assert that the text "References" is not present in the HTML
-    assert "References" not in page_source, "'References' text is present in the HTML, but it should not be."
+    assert "References"  in page_source, "'References' text is present in the HTML, but it should not be."

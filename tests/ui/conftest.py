@@ -22,7 +22,7 @@ from invenio_app.factory import create_ui
 
 
 @pytest.fixture()
-def service(running_app, search_clear):
+def services(running_app, search_clear):
     """RDM Record Service."""
     return running_app.app.extensions["invenio-rdm-records"].records_service
 

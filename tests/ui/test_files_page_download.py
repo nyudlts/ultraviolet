@@ -12,7 +12,7 @@
 
 from io import BytesIO
 from invenio_access.permissions import system_identity
-
+from invenio_rdm_records.proxies import current_rdm_records_service
 
 
 
@@ -53,11 +53,14 @@ def test_one_small_file(minimal_record, client_with_login, services, app, db, re
     expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
     assert expected_namelink_html in html
 
-def test_one_large_file(service, minimal_record, client_with_login):
+def test_one_large_file(services, minimal_record, client_with_login):
     """
     This test verifies files page for large file in the application.
     The Download button, Download all button, and file name download link should not present.
     """
+
+    service = current_rdm_records_service
+
     data = minimal_record.copy()
     data["files"]["enabled"] = True
 
@@ -89,13 +92,16 @@ def test_one_large_file(service, minimal_record, client_with_login):
     expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
     assert expected_namelink_html not in html
 
-def test_two_files(service, minimal_record, client_with_login):
+def test_two_files(services, minimal_record, client_with_login):
     """
     This test verifies files page for a small file and a large file in the application.
     The Download all buton should not present.
     The Download button and file name download link should present for small file.
     The Download all button, Download button, and file name download link should not present for large file.
     """
+
+    service = current_rdm_records_service
+
     data = minimal_record.copy()
     data["files"]["enabled"] = True
 

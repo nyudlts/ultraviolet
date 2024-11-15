@@ -30,19 +30,18 @@ def create_app():
 
 
 # modify application configuration
-
+@pytest.fixture(scope="module")
 def app_config(app_config):
     # sqllite refused to create mock db without those parameters and they are missing
     app_config["SQLALCHEMY_ENGINE_OPTIONS"] = {
         "pool_pre_ping": False,
         "pool_recycle": 3600,
-        "pool_timeout": None,
     }
     # need this to make sure separate indexes are created for testing
     app_config["SEARCH_INDEX_PREFIX"] = ""
     app_config["SERVER_NAME"] = "127.0.0.1"
     app_config["MAX_FILE_SIZE"] = 50
-
+    app_config["REST_CSRF_ENABLED"] = False
     app_config["APP_DEFAULT_SECURE_HEADERS"] = {
         'content_security_policy': {
             'default-src': [
