@@ -11,11 +11,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 """This is needed so live_server fixture can be used on Mac with python3.8"""
-multiprocessing.set_start_method("fork")
+# multiprocessing.set_start_method("fork")
 
 
 @pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
-def test_element_not_in_deposit_form(app, live_server, browser,
+def test_element_not_in_deposit_form(app, live_server, browser,create_app,
                               resource_type_v,
                               subject_v,
                               languages_v,

@@ -16,6 +16,7 @@ import pytest
 import os
 from invenio_accounts.proxies import current_datastore
 from invenio_access.proxies import current_access
+from invenio_search.proxies import current_search_client
 
 
 import pytest
@@ -35,6 +36,7 @@ def app_config(app_config):
     app_config["SQLALCHEMY_ENGINE_OPTIONS"] = {
         "pool_pre_ping": False,
         "pool_recycle": 3600,
+        "pool_timeout": None,
     }
     # need this to make sure separate indexes are created for testing
     app_config["SEARCH_INDEX_PREFIX"] = ""
