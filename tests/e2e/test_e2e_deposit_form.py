@@ -67,6 +67,6 @@ def test_element_not_in_deposit_form(app, live_server, browser,
     new_upload_button.click()
 
     page_source = browser.page_source
-
+    print(page_source)
     # Assert that the text "References" is not present in the HTML
-    assert "References"  in page_source, "'References' text is present in the HTML, but it should not be."
+    assert "Reference string" not in page_source, "'References' field is present in the HTML, but it should not be."

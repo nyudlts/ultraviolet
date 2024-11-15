@@ -3,11 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-<<<<<<< HEAD
-      - INVENIO-243-update-12-locally
-=======
       - rm-references-field
->>>>>>> 44611af (Add tests for hidden reference field)
     paths-ignore:
       - "docs/**"
       - "**.md"
