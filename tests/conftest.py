@@ -38,7 +38,7 @@ def app_config(app_config):
         "pool_recycle": 3600,
     }
     # need this to make sure separate indexes are created for testing
-    app_config["SEARCH_INDEX_PREFIX"] = ""
+    app_config["SEARCH_INDEX_PREFIX"] = "q"
     app_config["SERVER_NAME"] = "127.0.0.1"
     app_config["MAX_FILE_SIZE"] = 50
     app_config["REST_CSRF_ENABLED"] = False
@@ -392,6 +392,10 @@ def subject_v(app):
         },
     )
 
+    if not current_search_client.indices.exists(index="subjects-subject-v1.0.0"):
+        current_search_client.indices.create(index="subjects-subject-v1.0.0")
+                
+
     Subject.index.refresh()
 
     return vocab
@@ -569,7 +573,8 @@ def funders_v(app):
             "country": "BE",
         },
     )
-
+    if not current_search_client.indices.exists(index="funders-funder-v1.0.0"):
+        current_search_client.indices.create(index="funders-funder-v1.0.0")
     Funder.index.refresh()
 
     return funder
@@ -600,7 +605,8 @@ def awards_v(app, funders_v):
             "acronym": "HIT-CF",
         },
     )
-
+    if not current_search_client.indices.exists(index="awards-award-v1.0.0"):
+        current_search_client.indices.create(index="awards-award-v1.0.0")
     Award.index.refresh()
 
     return award
@@ -784,6 +790,7 @@ def users(app, db):
         "user2": user2,
     }
 
+
 @pytest.fixture()
 def admin_user(users, roles, db):
     """Give admin rights to a user."""
@@ -793,6 +800,7 @@ def admin_user(users, roles, db):
     db.session.add(ActionUsers.allow(action, user_id=user.id))
 
     return user
+
 
 @pytest.fixture()
 def community_type_type(superuser_identity):
