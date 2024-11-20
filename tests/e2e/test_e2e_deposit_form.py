@@ -44,7 +44,7 @@ def chrome_driver():
 """This is needed so live_server fixture can be used on Mac with python3.8"""
 # multiprocessing.set_start_method("fork")
 
-
+# # create user on the fly - can login
 # @pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
 # def test_element_not_in_deposit_form1(app, live_server, chrome_driver,
 #                               resource_type_v,
@@ -102,7 +102,7 @@ def chrome_driver():
 #     assert "Reference string" not in page_source, "'References' field is present in the HTML, but it should not be."
 
 
-
+# Use user fixture - cannot login 
 @pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
 def test_element_not_in_deposit_form2(app, live_server, chrome_driver,
                               resource_type_v,
