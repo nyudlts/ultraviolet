@@ -20,8 +20,3 @@ import pytest
 def create_app(app_config):
     """Create test app."""
     return create_ui_api
-
-@pytest.fixture()
-def services(running_app, search_clear):
-    """RDM Record Service."""
-    return running_app.app.extensions["invenio-rdm-records"].records_service
