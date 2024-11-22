@@ -17,6 +17,6 @@ def test_map_view(app, service, minimal_record, client_with_login):
     html = record_view.decode("utf-8")
 
     assert "Geospatial Data" in html
-    assert "data-base-url=\"https://maps-public.geo.nyu.edu/geoserver/sdr/wms\"" in html
+    assert "data-wms-url=\"https://maps-public.geo.nyu.edu/geoserver/sdr/wms\"" in html
     assert "data-layer-name=\"sdr:nyu_2451_34156\"" in html
     assert "data-bounds=\"ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)\"" in html

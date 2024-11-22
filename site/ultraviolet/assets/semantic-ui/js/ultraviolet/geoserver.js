@@ -16,7 +16,6 @@ const populateAttributeTable = (data) => {
         tr.appendChild(typeTd)
         attributesElement.appendChild(tr)
     })
-
 }
 
 const describeFeatureType = (wfsUrl, layerNames) => {
@@ -31,7 +30,10 @@ const describeFeatureType = (wfsUrl, layerNames) => {
     })
         .then(response => response.json())
         .then(data => {
-            const attributes = data.featureTypes[0].properties
+            const attributes = data.featureTypes[0].properties.sort((a, b) => {
+                return a.name.localeCompare(b.name)
+            })
+
             attributes.forEach(attribute => {
                 const nameTd = document.createElement('td');
                 nameTd.textContent = attribute.name
@@ -83,7 +85,6 @@ const addInspection = (map, url, layerId) => {
                 return;
             }
             const data = response_data.features[0];
-            // if (!data.isHTML) overlayLayer(map, data, layer);
 
             populateAttributeTable(data);
         } catch (error) {
@@ -97,16 +98,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     const wfsUrl = attributesElement.getAttribute("data-wfs-url");
     const layerNames = attributesElement.getAttribute("data-layer-names");
 
-
     const mapElement = document.getElementById("map");
-    const baseUrl = mapElement.getAttribute("data-base-url")
+    const baseUrl = mapElement.getAttribute("data-wms-url")
     const layerName = mapElement.getAttribute("data-layer-name")
     const bounds = mapElement.getAttribute("data-bounds")
 
     const map = L.map('map').setView([0, 0], 13);
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>',
+        maxZoom: 18,
+        worldCopyJump: true,
+        retina: "@2x",
     }).addTo(map);
 
     const wmsLayer = L.tileLayer.wms(baseUrl, {
