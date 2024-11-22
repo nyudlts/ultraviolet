@@ -798,7 +798,7 @@ def admin_user(users, roles, db):
     current_datastore.add_role_to_user(user,"admin")
     action = current_access.actions["superuser-access"]
     db.session.add(ActionUsers.allow(action, user_id=user.id))
-
+    db.session.commit()
     return user
 
 
@@ -853,6 +853,7 @@ def admin(UserFixture, app, db, admin_role_need):
         password="admin",
     )
     u.create(app, db)
+    db.session.commit()
 
     datastore = app.extensions["security"].datastore
     _, role = datastore._prepare_role_modify_args(u.user, "administration-access")
