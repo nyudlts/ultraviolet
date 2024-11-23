@@ -20,5 +20,3 @@ import pytest
 def create_app(app_config):
     """Create test app."""
     return create_ui_api
-
-

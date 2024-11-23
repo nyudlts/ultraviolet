@@ -16,6 +16,8 @@ import pytest
 import os
 from invenio_accounts.proxies import current_datastore
 from invenio_access.proxies import current_access
+from invenio_search.proxies import current_search_client
+
 
 import pytest
 from invenio_app.factory import create_app as create_ui_api
@@ -36,9 +38,10 @@ def app_config(app_config):
         "pool_recycle": 3600,
     }
     # need this to make sure separate indexes are created for testing
-    app_config["SEARCH_INDEX_PREFIX"] = ""
+    app_config["SEARCH_INDEX_PREFIX"] = "q"
     app_config["SERVER_NAME"] = "127.0.0.1"
     app_config["MAX_FILE_SIZE"] = 50
+    app_config["REST_CSRF_ENABLED"] = False
     app_config["APP_DEFAULT_SECURE_HEADERS"] = {
         'content_security_policy': {
             'default-src': [
@@ -235,7 +238,17 @@ def resource_type_type(app):
 
 
 @pytest.fixture(scope="module")
-def resource_type_v(app, resource_type_type):
+def init_vocabulary_indexes(app):
+    """Ensure vocabulary indexes are created and refreshed."""
+    # Initialize the vocabulary index
+    try:
+        Vocabulary.index.create()
+        current_search_client.indices.refresh(index=Vocabulary.index._name)
+    except:
+        pass
+
+@pytest.fixture(scope="module")
+def resource_type_v(app, resource_type_type, init_vocabulary_indexes):
     """Resource type vocabulary record."""
     vocabulary_service.create(
         system_identity,
@@ -379,9 +392,14 @@ def subject_v(app):
         },
     )
 
+    if not current_search_client.indices.exists(index="subjects-subject-v1.0.0"):
+        current_search_client.indices.create(index="subjects-subject-v1.0.0")
+                
+
     Subject.index.refresh()
 
     return vocab
+
 
 
 @pytest.fixture(scope="module")
@@ -490,9 +508,18 @@ def licenses_v(app, licenses):
     return vocab
 
 
+from invenio_vocabularies.contrib.affiliations import AffiliationsService, AffiliationsServiceConfig
+
+
 @pytest.fixture(scope="module")
 def affiliations_v(app):
     """Affiliation vocabulary record."""
+
+    if "affiliations" not in current_service_registry._services:
+        service = AffiliationsService(config=AffiliationsServiceConfig())  # Create an instance
+        current_service_registry.register(service, "affiliations")
+
+
     affiliations_service = current_service_registry.get("affiliations")
     aff = affiliations_service.create(
         system_identity,
@@ -512,7 +539,9 @@ def affiliations_v(app):
             ],
         },
     )
-
+    if not current_search_client.indices.exists(index="affiliations-affiliation-v1.0.0"):
+        current_search_client.indices.create(index="affiliations-affiliation-v1.0.0")
+                
     Affiliation.index.refresh()
 
     return aff
@@ -544,7 +573,8 @@ def funders_v(app):
             "country": "BE",
         },
     )
-
+    if not current_search_client.indices.exists(index="funders-funder-v1.0.0"):
+        current_search_client.indices.create(index="funders-funder-v1.0.0")
     Funder.index.refresh()
 
     return funder
@@ -575,11 +605,40 @@ def awards_v(app, funders_v):
             "acronym": "HIT-CF",
         },
     )
-
+    if not current_search_client.indices.exists(index="awards-award-v1.0.0"):
+        current_search_client.indices.create(index="awards-award-v1.0.0")
     Award.index.refresh()
 
     return award
 
+@pytest.fixture(scope="module")
+def creatorsroles_type(app):
+    """Creators roles vocabulary type."""
+    return vocabulary_service.create_type(system_identity, "creatorsroles", "crt")
+
+@pytest.fixture(scope="module")
+def creatorsroles_v(app, creatorsroles_type):
+    vocabulary_service.create(
+        system_identity,
+        {
+            "id": "author",
+            "title": {"en": "Author"},
+            "type": "creatorsroles",
+        },
+    )
+
+    vocab = vocabulary_service.create(
+        system_identity,
+        {
+            "id": "editor",
+            "title": {"en": "Editor"},
+            "type": "creatorsroles",
+        },
+    )
+
+    Vocabulary.index.refresh()
+
+    return vocab
 
 @pytest.fixture(scope="function")
 def cache():
@@ -610,6 +669,7 @@ RunningApp = namedtuple(
         "licenses_v",
         "funders_v",
         "awards_v",
+        "creatorsroles_v",
     ],
 )
 
@@ -632,6 +692,7 @@ def running_app(
     licenses_v,
     funders_v,
     awards_v,
+    creatorsroles_v,
 ):
     """This fixture provides an app with the typically needed db data loaded.
 
@@ -655,6 +716,7 @@ def running_app(
         licenses_v,
         funders_v,
         awards_v,
+        creatorsroles_v,
     )
 
 
@@ -728,15 +790,17 @@ def users(app, db):
         "user2": user2,
     }
 
+
 @pytest.fixture()
 def admin_user(users, roles, db):
     """Give admin rights to a user."""
     user = users["user1"]
-    current_datastore.add_role_to_user(user,"admin" )
+    current_datastore.add_role_to_user(user,"admin")
     action = current_access.actions["superuser-access"]
     db.session.add(ActionUsers.allow(action, user_id=user.id))
-
+    db.session.commit()
     return user
+
 
 @pytest.fixture()
 def community_type_type(superuser_identity):
@@ -789,6 +853,7 @@ def admin(UserFixture, app, db, admin_role_need):
         password="admin",
     )
     u.create(app, db)
+    db.session.commit()
 
     datastore = app.extensions["security"].datastore
     _, role = datastore._prepare_role_modify_args(u.user, "administration-access")

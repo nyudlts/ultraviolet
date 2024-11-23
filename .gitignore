@@ -43,6 +43,7 @@ nosetests.xml
 coverage.xml
 *,cover
 screenshots/
+.e2e_screenshots/
 
 # Translations
 *.mo
