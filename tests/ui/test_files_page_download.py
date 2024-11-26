@@ -15,7 +15,6 @@ from invenio_access.permissions import system_identity
 from invenio_rdm_records.proxies import current_rdm_records_service
 
 
-
 def test_one_small_file(minimal_record, client_with_login, services, app, db, register_file_service):
     """
     Test files page for small file in the application.

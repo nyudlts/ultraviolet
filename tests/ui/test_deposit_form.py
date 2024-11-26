@@ -1,3 +1,15 @@
+# -*- coding: utf-8 -*-
+#
+# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2019 NYU.
+#
+# ultraviolet is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+"""View tests of the front page."""
+
+
 from flask import url_for
 from flask_security import login_user
 from invenio_accounts.testutils import login_user_via_session
