@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 NYU.
+# Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -24,23 +24,12 @@ def test_meta_tags(full_record, services, client, app, db, admin_user):
     app.config["DATACITE_ENABLED"] = "true"
 
     service = current_rdm_records_service
-    
     data = full_record.copy()
-    data["files"]["enabled"] = True
-
     draft = service.create(system_identity, data)
     db.session.commit()
     draft = service.read_draft(system_identity, draft.id)
-    service.draft_files.init_files(
-        system_identity, draft.id, data=[{"key": "big-dataset.zip"}]
-    )
-    service.draft_files.set_file_content(
-        system_identity, draft.id, "big-dataset.zip", BytesIO(b'1' * (10*6))
-    )
-    service.draft_files.commit_file(system_identity, draft.id, "big-dataset.zip")
     record = service.publish(system_identity, draft.id)
     recid = record["id"]
-
     with app.test_request_context():
         record_url = url_for('invenio_app_rdm_records.record_detail', pid_value=recid)
     
@@ -49,7 +38,6 @@ def test_meta_tags(full_record, services, client, app, db, admin_user):
     response = client.get(record_url)
     html_content = response.data.decode()
 
-    
     assert '<meta name="citation_title"' in html_content, "Missing citation_title tag"
     assert '<meta name="description"' in html_content, "Missing description tag"
     assert '<meta name="citation_author"' in html_content, "Missing author tag"

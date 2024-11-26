@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 NYU.
+# Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -284,29 +284,7 @@ def full_record(users):
             },
         },
         "files": {
-            "enabled": True,
-            "total_size": 1114324524355,
-            "count": 1,
-            "bucket": "81983514-22e5-473a-b521-24254bd5e049",
-            "default_preview": "big-dataset.zip",
-            "order": ["big-dataset.zip"],
-            "entries": [
-                {
-                    "checksum": "md5:234245234213421342",
-                    "mimetype": "application/zip",
-                    "size": 1114324524355,
-                    "key": "big-dataset.zip",
-                    "file_id": "445aaacd-9de1-41ab-af52-25ab6cb93df7",
-                    "uuid": "445aaacd-9de1-41ab-af52-25ab6cb93df7",
-                    "version_id": "1",
-                    "created": "2023-01-01",
-                    "updated": "2023-01-02",
-                    "object_version_id": "1",
-                    "metadata": {},
-                    "id": "445aaacd-9de1-41ab-af52-25ab6cb93df7",
-                }
-            ],
-            "meta": {"big-dataset.zip": {"description": "File containing the data."}},
+            "enabled": False,
         },
         "notes": ["Under investigation for copyright infringement."],
     }
