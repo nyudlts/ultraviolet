@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 NYU.
+# Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -131,6 +131,164 @@ from invenio_vocabularies.contrib.subjects.api import Subject
 from invenio_vocabularies.proxies import current_service as vocabulary_service
 from invenio_vocabularies.records.api import Vocabulary
 from invenio_access.models import ActionUsers
+
+@pytest.fixture(scope="function")
+def full_record(users):
+    """Full record data as dict coming from the external world."""
+    return {
+        "pids": {
+            "doi": {
+                "identifier": "10.1234/inveniordm.1234",
+                "provider": "datacite",
+                "client": "inveniordm",
+            },
+            "oai": {
+                "identifier": "oai:vvv.com:abcde-fghij",
+                "provider": "oai",
+            },
+        },
+        "uuid": "445aaacd-9de1-41ab-af52-25ab6cb93df7",
+        "version_id": "1",
+        "created": "2023-01-01",
+        "updated": "2023-01-02",
+        "metadata": {
+            "resource_type": {"id": "image-photo"},
+            "creators": [
+                {
+                    "person_or_org": {
+                        "name": "Nielsen, Lars Holm",
+                        "type": "personal",
+                        "given_name": "Lars Holm",
+                        "family_name": "Nielsen",
+                        "identifiers": [
+                            {
+                                "scheme": "orcid",
+                                "identifier": "0000-0001-8135-3489",
+                            }
+                        ],
+                    },
+                    "affiliations": [{"id": "cern"}, {"name": "free-text"}],
+                }
+            ],
+            "title": "InvenioRDM",
+            "additional_titles": [
+                {
+                    "title": "a research data management platform",
+                    "type": {"id": "subtitle"},
+                    "lang": {"id": "eng"},
+                }
+            ],
+            "publisher": "InvenioRDM",
+            "publication_date": "2020-09-01",
+            "subjects": [
+                {"id": "http://id.nlm.nih.gov/mesh/A-D000007"},
+                {"subject": "custom"},
+            ],
+            "contributors": [
+                {
+                    "person_or_org": {
+                        "name": "Nielsen, Lars Holm",
+                        "type": "personal",
+                        "given_name": "Lars Holm",
+                        "family_name": "Nielsen",
+                        "identifiers": [
+                            {
+                                "scheme": "orcid",
+                                "identifier": "0000-0001-8135-3489",
+                            }
+                        ],
+                    },
+                    "role": {"id": "other"},
+                    "affiliations": [{"id": "cern"}],
+                }
+            ],
+            "dates": [
+                {
+                    "date": "1939/1945",
+                    "type": {"id": "other"},
+                    "description": "A date",
+                }
+            ],
+            "languages": [{"id": "dan"}, {"id": "eng"}],
+            "identifiers": [{"identifier": "1924MNRAS..84..308E", "scheme": "ads"}],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1234/foo.bar",
+                    "scheme": "doi",
+                    "relation_type": {"id": "iscitedby"},
+                    "resource_type": {"id": "dataset"},
+                }
+            ],
+            "sizes": ["11 pages"],
+            "formats": ["application/pdf"],
+            "version": "v1.0",
+            "rights": [
+                {
+                    "title": {"en": "A custom license"},
+                    "description": {"en": "A description"},
+                    "link": "https://customlicense.org/licenses/by/4.0/",
+                },
+                {"id": "cc-by-4.0"},
+            ],
+            "description": "<h1>A description</h1> <p>with HTML tags</p>",
+            "additional_descriptions": [
+                {
+                    "description": "Bla bla bla",
+                    "type": {"id": "methods"},
+                    "lang": {"id": "eng"},
+                }
+            ],
+            "locations": {
+                "features": [
+                    {
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [-32.94682, -60.63932],
+                        },
+                        "place": "test location place",
+                        "description": "test location description",
+                        "identifiers": [
+                            {"identifier": "12345abcde", "scheme": "wikidata"},
+                            {"identifier": "12345abcde", "scheme": "geonames"},
+                        ],
+                    }
+                ]
+            },
+            "funding": [
+                {
+                    "funder": {
+                        "id": "00k4n6c32",
+                    },
+                    "award": {"id": "00k4n6c32::755021"},
+                }
+            ],
+            "references": [
+                {
+                    "reference": "Nielsen et al,..",
+                    "identifier": "0000 0001 1456 7559",
+                    "scheme": "isni",
+                }
+            ],
+        },
+        "provenance": {
+            "created_by": {"user": users["user1"].id},
+            "on_behalf_of": {"user": users["user2"].id},
+        },
+        "access": {
+            "record": "public",
+            "files": "restricted",
+            "embargo": {
+                "active": True,
+                "until": "2131-01-01",
+                "reason": "Only for medical doctors.",
+            },
+        },
+        "files": {
+            "enabled": False,
+        },
+        "notes": ["Under investigation for copyright infringement."],
+    }
+
 
 @pytest.fixture(scope="function")
 def minimal_record():

@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 NYU.
+# Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -13,7 +13,6 @@
 from io import BytesIO
 from invenio_access.permissions import system_identity
 from invenio_rdm_records.proxies import current_rdm_records_service
-
 
 
 def test_one_small_file(minimal_record, client_with_login, services, app, db, register_file_service):
