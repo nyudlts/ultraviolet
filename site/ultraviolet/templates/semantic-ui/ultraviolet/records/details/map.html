@@ -9,17 +9,19 @@
 
     <h3>Attributes</h3>
 
-    <table class="ui unstackable celled table">
-        <thead>
-        <tr>
-            <th>Attribute</th>
-            <th>Value</th>
-        </tr>
-        </thead>
-        <tbody id="attributes"
-               data-wfs-url="{{ record.custom_fields["geoserver:wfs_url"] }}"
-               data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
-    </table>
+    <div class="attributes">
+        <table class="ui unstackable very compact table striped selectable">
+            <thead>
+            <tr>
+                <th>Attribute</th>
+                <th>Type/Value</th>
+            </tr>
+            </thead>
+            <tbody id="attributes"
+                   data-wfs-url="{{ record.custom_fields["geoserver:wfs_url"] }}"
+                   data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
+        </table>
+    </div>
 {% endif %}
 
 {% block javascript %}
