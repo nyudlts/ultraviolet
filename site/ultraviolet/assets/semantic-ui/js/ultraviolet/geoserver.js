@@ -113,7 +113,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }).addTo(map);
 
     const wmsLayer = L.tileLayer.wms(baseUrl, {
-        layers: layerName, format: 'image/png', transparent: true,
+        layers: layerName,
+        format: 'image/png',
+        transparent: true,
+        opacity: 0.75
     });
 
     wmsLayer.addTo(map);

@@ -7,21 +7,23 @@
          data-bounds="{{ record.custom_fields["geoserver:bounds"] }}"
     ></div>
 
-    <h3>Attributes</h3>
+    {% if record.custom_fields["geoserver:wfs_url"] %}
+        <h3>Attributes</h3>
 
-    <div class="attributes">
-        <table class="ui unstackable very compact table striped selectable">
-            <thead>
-            <tr>
-                <th>Attribute</th>
-                <th>Type/Value</th>
-            </tr>
-            </thead>
-            <tbody id="attributes"
-                   data-wfs-url="{{ record.custom_fields["geoserver:wfs_url"] }}"
-                   data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
-        </table>
-    </div>
+        <div class="attributes">
+            <table class="ui unstackable very compact table striped selectable">
+                <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Type/Value</th>
+                </tr>
+                </thead>
+                <tbody id="attributes"
+                       data-wfs-url="{{ record.custom_fields["geoserver:wfs_url"] }}"
+                       data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endif %}
 
 {% block javascript %}
