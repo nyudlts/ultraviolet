@@ -326,6 +326,18 @@ def minimal_record():
         },
     }
 
+@pytest.fixture()
+def geospatial_record(minimal_record):
+    data = minimal_record.copy()
+    data["metadata"]["title"] = "Geospatial Data"
+    data["custom_fields"] = {
+        "geoserver:has_wms_layer": True,
+        "geoserver:has_wfs_layer": True,
+        "geoserver:layer_name": "sdr:nyu_2451_34156",
+        "geoserver:bounds": "ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)"
+    }
+
+    return data
 
 @pytest.fixture()
 def client_with_login(app, client, users):

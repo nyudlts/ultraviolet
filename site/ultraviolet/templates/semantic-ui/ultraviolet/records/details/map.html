@@ -1,34 +1,36 @@
 {% set geoserver_base_url = config.GEOSERVER_PUBLIC_URL if (record.access.files == 'public') else config.GEOSERVER_RESTRICTED_URL %}
 
-{% if record.custom_fields["geoserver:layer_name"] and record.custom_fields["geoserver:has_wms_layer"] %}
-    <h2>Map</h2>
+{% if record.access.files == 'public' or (current_user and current_user.is_authenticated) %}
+    {% if record.custom_fields["geoserver:layer_name"] and record.custom_fields["geoserver:has_wms_layer"] %}
+        <h2>Map</h2>
 
-    <div id="map"
-         data-wms-url="{{ geoserver_base_url }}/wms"
-         data-layer-name="{{ record.custom_fields["geoserver:layer_name"] }}"
-         data-bounds="{{ record.custom_fields["geoserver:bounds"] }}"
-    ></div>
+        <div id="map"
+             data-wms-url="{{ geoserver_base_url }}/wms"
+             data-layer-name="{{ record.custom_fields["geoserver:layer_name"] }}"
+             data-bounds="{{ record.custom_fields["geoserver:bounds"] }}"
+        ></div>
 
-    {% if record.custom_fields["geoserver:has_wfs_layer"] %}
-        <h3>Attributes</h3>
+        {% if record.custom_fields["geoserver:has_wfs_layer"] %}
+            <h3>Attributes</h3>
 
-        <div class="attributes">
-            <table class="ui unstackable very compact table striped selectable">
-                <thead>
-                <tr>
-                    <th>Attribute</th>
-                    <th>Type/Value</th>
-                </tr>
-                </thead>
-                <tbody id="attributes"
-                       data-wfs-url="{{ geoserver_base_url }}/wfs"
-                       data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
-            </table>
-        </div>
+            <div class="attributes">
+                <table class="ui unstackable very compact table striped selectable">
+                    <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type/Value</th>
+                    </tr>
+                    </thead>
+                    <tbody id="attributes"
+                           data-wfs-url="{{ geoserver_base_url }}/wfs"
+                           data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
+                </table>
+            </div>
+        {% endif %}
     {% endif %}
-{% endif %}
 
-{% block javascript %}
-    {{ webpack['geoserver_js.js'] }}
-    {{ webpack['geoserver_css.css'] }}
-{% endblock %}
+    {% block javascript %}
+        {{ webpack['geoserver_js.js'] }}
+        {{ webpack['geoserver_css.css'] }}
+    {% endblock %}
+{% endif %}
