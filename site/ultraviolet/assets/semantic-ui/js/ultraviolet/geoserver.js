@@ -94,13 +94,8 @@ const addInspection = (map, url, layerId) => {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const attributesElement = document.getElementById("attributes");
-    const wfsUrl = attributesElement.getAttribute("data-wfs-url");
-    const layerNames = attributesElement.getAttribute("data-layer-names");
-
     const mapElement = document.getElementById("map");
-    const baseUrl = mapElement.getAttribute("data-wms-url")
-    const layerName = mapElement.getAttribute("data-layer-name")
+    const preview = mapElement.getAttribute("data-preview");
     const bounds = mapElement.getAttribute("data-bounds")
 
     const map = L.map('map').setView([0, 0], 13);
@@ -112,15 +107,27 @@ document.addEventListener("DOMContentLoaded", async () => {
         retina: "@2x",
     }).addTo(map);
 
-    const wmsLayer = L.tileLayer.wms(baseUrl, {
-        layers: layerName,
-        format: 'image/png',
-        transparent: true,
-        opacity: 0.75
-    });
+    if (preview === "True") {
+        const baseUrl = mapElement.getAttribute("data-wms-url")
+        const layerName = mapElement.getAttribute("data-layer-name")
 
-    wmsLayer.addTo(map);
-    wmsLayer.setOpacity(0.75);
+        const wmsLayer = L.tileLayer.wms(baseUrl, {
+            layers: layerName,
+            format: 'image/png',
+            transparent: true,
+            opacity: 0.75
+        });
+
+        wmsLayer.addTo(map);
+        wmsLayer.setOpacity(0.75);
+
+        const attributesElement = document.getElementById("attributes");
+        const wfsUrl = attributesElement.getAttribute("data-wfs-url");
+        const layerNames = attributesElement.getAttribute("data-layer-names");
+
+        addInspection(map, wfsUrl, layerNames);
+        describeFeatureType(wfsUrl, layerNames, attributesElement);
+    }
 
     const regex = /ENVELOPE\(([-\d.]+), ([-\d.]+), ([-\d.]+), ([-\d.]+)\)/;
     const match = bounds.match(regex);
@@ -134,8 +141,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const bounds = [[minLat, minLon], [maxLat, maxLon]];
 
         map.fitBounds(bounds);
-    }
 
-    addInspection(map, wfsUrl, layerNames);
-    describeFeatureType(wfsUrl, layerNames, attributesElement);
+        if (preview === "False") {
+            map.addLayer(L.rectangle(bounds, {color: "#3388FF", weight: 3}));
+        }
+    }
 });
