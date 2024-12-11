@@ -8,6 +8,8 @@ def test_public_map_view_when_anonymous(app, service, geospatial_record, client)
     html = record_view.decode("utf-8")
 
     assert "Geospatial Data" in html
+    assert "Web Services" in html
+    
     assert "data-preview=\"True\"" in html
     assert "data-wms-url=\"https://maps-public.geo.nyu.edu/geoserver/sdr/wms\"" in html
     assert "data-layer-name=\"sdr:nyu_2451_34156\"" in html
@@ -24,6 +26,8 @@ def test_restricted_map_view_when_logged_in(app, service, geospatial_record, cli
     html = record_view.decode("utf-8")
 
     assert "Geospatial Data" in html
+    assert "Web Services" in html
+
     assert "data-preview=\"True\"" in html
     assert "data-wms-url=\"https://maps-restricted.geo.nyu.edu/geoserver/sdr/wms\"" in html
     assert "data-layer-name=\"sdr:nyu_2451_34156\"" in html
@@ -43,5 +47,6 @@ def test_restricted_map_view_when_anonymous(app, service, geospatial_record, cli
     assert "data-preview=\"False\"" in html
     assert "data-bounds=\"ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)\"" in html
 
+    assert "Web Services" not in html
     assert "data-wms-url=\"https://maps-restricted.geo.nyu.edu/geoserver/sdr/wms\"" not in html
     assert "data-layer-name=\"sdr:nyu_2451_34156\"" not in html

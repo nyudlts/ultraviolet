@@ -1,19 +1,19 @@
-{% set preview = record.access.files == 'public' or (current_user and current_user.is_authenticated) %}
+{% set previewable = record.access.files == 'public' or (current_user and current_user.is_authenticated) %}
 {% set geoserver_base_url = config.GEOSERVER_PUBLIC_URL if (record.access.files == 'public') else config.GEOSERVER_RESTRICTED_URL %}
 
 {% if record.custom_fields["geoserver:layer_name"] and record.custom_fields["geoserver:has_wms_layer"] %}
     <h2>Map</h2>
 
     <div id="map"
-         data-preview="{{ preview }}"
+         data-preview="{{ previewable }}"
          data-bounds="{{ record.custom_fields["geoserver:bounds"] }}"
-            {% if preview %}
+            {% if previewable %}
          data-wms-url="{{ geoserver_base_url }}/wms"
          data-layer-name="{{ record.custom_fields["geoserver:layer_name"] }}"
             {% endif %}
     ></div>
 
-    {% if record.custom_fields["geoserver:has_wfs_layer"] and (record.access.files == 'public' or (current_user and current_user.is_authenticated)) %}
+    {% if record.custom_fields["geoserver:has_wfs_layer"] and (previewable) %}
         <h3>Attributes</h3>
 
         <div class="attributes">
@@ -29,6 +29,23 @@
                        data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
             </table>
         </div>
+    {% endif %}
+
+    {% if previewable %}
+        <h3>Web Services</h3>
+
+        <dl class="details-list">
+            <dt class="ui tiny header">Layer Name</dt>
+            <dd><code>{{ record.custom_fields["geoserver:layer_name"] }}</code></dd>
+            {% if record.custom_fields["geoserver:has_wfs_layer"] %}
+                <dt class="ui tiny header">Web Feature Service (WFS)</dt>
+                <dd><code>{{ geoserver_base_url }}/wfs</code></dd>
+            {% endif %}
+            {% if record.custom_fields["geoserver:has_wms_layer"] %}
+                <dt class="ui tiny header">Web Mapping Service (WMS)</dt>
+                <dd><code>{{ geoserver_base_url }}/wms</code></dd>
+            {% endif %}
+        </dl>
     {% endif %}
 {% endif %}
 
