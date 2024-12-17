@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - add-meta-tags
+      - meta-tag
     paths-ignore:
       - "docs/**"
       - "**.md"
