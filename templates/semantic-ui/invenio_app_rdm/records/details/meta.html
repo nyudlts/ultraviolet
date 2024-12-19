@@ -10,13 +10,22 @@ it under the terms of the MIT License; see LICENSE file for more details.
 
 {%- from "invenio_formatter/macros/meta.html" import meta_twittercard, meta_opengraph, meta_highwire -%}
 
+
 {%- set meta_title = record.metadata.title|striptags -%}
 {%- set meta_description = record.metadata.description|striptags -%}
-{%- set meta_authors = record.metadata.creators|map(attribute='name') -%}
+{%- set meta_authors = record.metadata.creators|map(attribute='person_or_org.name') -%}
+{%- set contributors = record.metadata.contributors| rejectattr('role.id', 'equalto', 'editor') | map(attribute='person_or_org.name') -%}
+
+
 {%- set meta_publisher = record.metadata.publisher %}
 {%- set files = record.files %}
 
+<!-- skip the tag for pdf_url -->
 {{- meta_highwire(meta_title,meta_description,authors=meta_authors,publisher=meta_publisher,publication_date=record.metadata.publication_date|from_isodate,doi=record.pids.get("doi", {}).get("identifier"),keywords=record.metadata.subjects | map(attribute="subject"),url=record.links.self_html) }}
+
+{%- for c in contributors %}
+<meta name="citation_contributor" content="{{c}}" />
+{%- endfor %}
 
 {{- meta_opengraph(meta_title, meta_description, url=record.links.self_html) }}
 {{- meta_twittercard(meta_title, meta_description) }}
