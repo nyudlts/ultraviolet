@@ -18,7 +18,7 @@ const populateAttributeTable = (data) => {
     })
 }
 
-const describeFeatureType = (wfsUrl, layerNames) => {
+const retrieveAttributeTypes = (wfsUrl, layerNames) => {
     const attributesElement = document.getElementById("attributes");
 
     const formData = new FormData();
@@ -51,27 +51,25 @@ const describeFeatureType = (wfsUrl, layerNames) => {
         });
 };
 
-const addInspection = (map, url, layerId) => {
+const addFeatureInspectionHandler = (map, url, layerNames) => {
     map.on("click", async (e) => {
         const attributesElement = document.getElementById("attributes");
         attributesElement.innerHTML = '<tr><td colspan="2">Loading...</td>';
-
-        const wmsoptions = {
-            url: url,
-            layers: layerId,
-            bbox: map.getBounds().toBBoxString(),
-            width: Math.round(document.getElementById("map").clientWidth),
-            height: Math.round(document.getElementById("map").clientHeight),
-            query_layers: layerId,
-            x: Math.round(e.containerPoint.x),
-            y: Math.round(e.containerPoint.y),
-        };
 
         try {
             const response = await fetch("/geoserver/get_feature_info", {
                 method: "POST", headers: {
                     "Content-Type": "application/json",
-                }, body: JSON.stringify(wmsoptions),
+                }, body: JSON.stringify({
+                    url: url,
+                    layers: layerNames,
+                    bbox: map.getBounds().toBBoxString(),
+                    width: Math.round(document.getElementById("map").clientWidth),
+                    height: Math.round(document.getElementById("map").clientHeight),
+                    query_layers: layerNames,
+                    x: Math.round(e.containerPoint.x),
+                    y: Math.round(e.containerPoint.y),
+                }),
             });
 
             if (!response.ok) throw new Error("Network response was not ok.");
@@ -93,10 +91,55 @@ const addInspection = (map, url, layerId) => {
     });
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+const zoomMapToBoundingBox = (map) => {
     const mapElement = document.getElementById("map");
     const preview = mapElement.getAttribute("data-preview");
     const bounds = mapElement.getAttribute("data-bounds")
+
+    const regex = /ENVELOPE\(([-\d.]+), ([-\d.]+), ([-\d.]+), ([-\d.]+)\)/;
+    const match = bounds.match(regex);
+
+    if (match) {
+        let [_, minLon, maxLon, minLat, maxLat] = match;
+
+        const bounds = [[minLat, minLon], [maxLat, maxLon]];
+
+        map.fitBounds(bounds);
+
+        if (preview === "False") {
+            map.addLayer(L.rectangle(bounds, {color: "#3388FF", weight: 3}));
+        }
+    }
+};
+
+const addWmsLayer = (map) => {
+    const mapElement = document.getElementById("map");
+    const baseUrl = mapElement.getAttribute("data-wms-url")
+    const layerName = mapElement.getAttribute("data-layer-name")
+
+    const wmsLayer = L.tileLayer.wms(baseUrl, {
+        layers: layerName,
+        format: 'image/png',
+        transparent: true,
+        opacity: 0.75
+    });
+
+    wmsLayer.addTo(map);
+    wmsLayer.setOpacity(0.75);
+};
+
+const addWfsInspection = map => {
+    const attributesElement = document.getElementById("attributes");
+    const wfsUrl = attributesElement.getAttribute("data-wfs-url");
+    const layerNames = attributesElement.getAttribute("data-layer-names");
+
+    addFeatureInspectionHandler(map, wfsUrl, layerNames);
+    retrieveAttributeTypes(wfsUrl, layerNames);
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const mapElement = document.getElementById("map");
+    const preview = mapElement.getAttribute("data-preview");
 
     const map = L.map('map').setView([0, 0], 13);
 
@@ -108,42 +151,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }).addTo(map);
 
     if (preview === "True") {
-        const baseUrl = mapElement.getAttribute("data-wms-url")
-        const layerName = mapElement.getAttribute("data-layer-name")
-
-        const wmsLayer = L.tileLayer.wms(baseUrl, {
-            layers: layerName,
-            format: 'image/png',
-            transparent: true,
-            opacity: 0.75
-        });
-
-        wmsLayer.addTo(map);
-        wmsLayer.setOpacity(0.75);
-
-        const attributesElement = document.getElementById("attributes");
-        const wfsUrl = attributesElement.getAttribute("data-wfs-url");
-        const layerNames = attributesElement.getAttribute("data-layer-names");
-
-        addInspection(map, wfsUrl, layerNames);
-        describeFeatureType(wfsUrl, layerNames, attributesElement);
+        addWmsLayer(map);
+        addWfsInspection(map);
     }
 
-    const regex = /ENVELOPE\(([-\d.]+), ([-\d.]+), ([-\d.]+), ([-\d.]+)\)/;
-    const match = bounds.match(regex);
-
-    if (match) {
-        const minLon = parseFloat(match[1]);
-        const maxLon = parseFloat(match[2]);
-        const minLat = parseFloat(match[3]);
-        const maxLat = parseFloat(match[4]);
-
-        const bounds = [[minLat, minLon], [maxLat, maxLon]];
-
-        map.fitBounds(bounds);
-
-        if (preview === "False") {
-            map.addLayer(L.rectangle(bounds, {color: "#3388FF", weight: 3}));
-        }
-    }
+    zoomMapToBoundingBox(map);
 });
