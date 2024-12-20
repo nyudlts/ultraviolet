@@ -7,10 +7,10 @@ import requests
 
 
 class GetFeatureInfo(MethodView):
-    """GeoServer view."""
+    """Proxy for GeoServer GetFeatureInfo requests."""
 
     def post(self):
-        """Return JSON"""
+        """Pass GetFeatureInfo requests to GeoServer and hand back results."""
         data = request.get_json()
 
         url = data.get('url', None)

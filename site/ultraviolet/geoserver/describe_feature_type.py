@@ -7,10 +7,10 @@ import requests
 
 
 class DescribeFeatureType(MethodView):
-    """GeoServer view."""
+    """Proxy for GeoServer DescribeFeatureType requests."""
 
     def post(self):
-        """Return JSON"""
+        """Pass DescribeFeatureType requests to GeoServer and hand back results."""
         url = request.form.get('url', default=None)
         layers = request.form.get('layers', default=None)
 
