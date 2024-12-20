@@ -130,11 +130,14 @@ const addWmsLayer = (map) => {
 
 const addWfsInspection = map => {
     const attributesElement = document.getElementById("attributes");
-    const wfsUrl = attributesElement.getAttribute("data-wfs-url");
-    const layerNames = attributesElement.getAttribute("data-layer-names");
 
-    addFeatureInspectionHandler(map, wfsUrl, layerNames);
-    retrieveAttributeTypes(wfsUrl, layerNames);
+    if (attributesElement) {
+        const wfsUrl = attributesElement.getAttribute("data-wfs-url");
+        const layerNames = attributesElement.getAttribute("data-layer-names");
+
+        addFeatureInspectionHandler(map, wfsUrl, layerNames);
+        retrieveAttributeTypes(wfsUrl, layerNames);
+    }
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
