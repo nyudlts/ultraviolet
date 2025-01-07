@@ -10,7 +10,6 @@
 # conftest.py
 """Pytest fixtures for ultraviolet testing"""
 
-
 import sys
 import pytest
 import os
@@ -68,10 +67,12 @@ def app_config(app_config):
     }
     return app_config
 
+
 # overriding instance path allows us to make sure we use ultraviolet templates
 @pytest.fixture(scope="module")
 def instance_path():
     return os.path.join(sys.prefix, "var", "instance")
+
 
 # Copied from https://github.dev/inveniosoftware/invenio-rdm-records/tree/maint-1.3.x/tests/records
 
@@ -131,6 +132,7 @@ from invenio_vocabularies.contrib.subjects.api import Subject
 from invenio_vocabularies.proxies import current_service as vocabulary_service
 from invenio_vocabularies.records.api import Vocabulary
 from invenio_access.models import ActionUsers
+
 
 @pytest.fixture(scope="function")
 def full_record(users):
@@ -325,6 +327,26 @@ def minimal_record():
             "title": "A Romans story",
         },
     }
+
+
+@pytest.fixture()
+def geospatial_record(minimal_record):
+    minimal_record["metadata"]["title"] = "Geospatial Data"
+    minimal_record["custom_fields"] = {
+        "geoserver:has_wms_layer": True,
+        "geoserver:has_wfs_layer": True,
+        "geoserver:layer_name": "sdr:nyu_2451_34156",
+        "geoserver:bounds": "ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)"
+    }
+
+    return minimal_record
+
+
+@pytest.fixture()
+def restricted_geospatial_record(geospatial_record):
+    geospatial_record["access"]["files"] = "restricted"
+
+    return geospatial_record
 
 
 @pytest.fixture()
@@ -654,8 +676,8 @@ def licenses_v(app, licenses):
             "tags": ["recommended", "all"],
             "description": {
                 "en": "The Creative Commons Attribution license allows"
-                " re-distribution and re-use of a licensed work on"
-                " the condition that the creator is appropriately credited."
+                      " re-distribution and re-use of a licensed work on"
+                      " the condition that the creator is appropriately credited."
             },
             "type": "licenses",
         },

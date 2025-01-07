@@ -9,8 +9,13 @@ theme = WebpackThemeBundle(
     themes={
         "semantic-ui": dict(
             entry={
-                # Add your webpack entrypoints
+                "geoserver_js": "./js/ultraviolet/geoserver.js",
+                "geoserver_css": "./css/ultraviolet/geoserver.css",
             },
+            dependencies={
+                "leaflet": "^1.9.4",
+                "ol": "^10.2.1"
+            }
         ),
     },
 )
