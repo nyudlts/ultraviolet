@@ -1,9 +1,11 @@
 import React, {Component} from "react";
 
-import {Input} from "react-invenio-forms";
+import {Input, BooleanCheckbox} from "react-invenio-forms";
 
 const newExperiment = {
   layer: "",
+  has_wms: false,
+  has_wfs: false,
   bounds: "",
 };
 
@@ -12,6 +14,8 @@ export class Experiments extends Component {
     const {
       fieldPath, // injected by the custom field loader via the `field` config property
       layer,
+      has_wms,
+      has_wfs,
       bounds,
     } = this.props;
 
@@ -25,6 +29,16 @@ export class Experiments extends Component {
           placeholder={layer.placeholder}
           description={layer.description}
         ></Input>
+        <BooleanCheckbox
+          fieldPath={`${fieldPathPrefix}.has_wms`}
+          label={has_wms.label}
+          description={has_wms.description}
+        ></BooleanCheckbox>
+        <BooleanCheckbox
+          fieldPath={`${fieldPathPrefix}.has_wfs`}
+          label={has_wfs.label}
+          description={has_wfs.description}
+        ></BooleanCheckbox>
         <Input
           fieldPath={`${fieldPathPrefix}.bounds`}
           label={bounds.label}
