@@ -2,4 +2,3 @@
 - url: /api-documentation
   title: UltraViolet REST API
   description: Documentation for UltraViolet REST API
-  template: my_custom_page.html
