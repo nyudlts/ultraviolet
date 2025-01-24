@@ -14,7 +14,7 @@ theme = WebpackThemeBundle(
             },
             dependencies={
                 "leaflet": "^1.9.4",
-                "ol": "^10.2.1"
+                "ol": "^10.2.1",
             }
         ),
     },

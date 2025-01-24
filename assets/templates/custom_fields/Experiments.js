@@ -1,12 +1,30 @@
-import React, {Component} from "react";
+import React, {Component, useEffect, useRef} from "react";
 
-import {Input, BooleanCheckbox} from "react-invenio-forms";
+import {BooleanCheckbox, Input} from "react-invenio-forms";
+import {Grid, GridColumn} from 'semantic-ui-react'
+import L from 'leaflet';
 
-const newExperiment = {
-  layer: "",
-  has_wms: false,
-  has_wfs: false,
-  bounds: "",
+import 'leaflet/dist/leaflet.css';
+
+const Map = ({center = [0, 0], zoom = 1}) => {
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    const map = L.map(mapRef.current).setView(center, zoom);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png', {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>',
+      maxZoom: 18,
+      worldCopyJump: true,
+      retina: "@2x",
+    }).addTo(map);
+
+    return () => map.remove();
+  }, [center, zoom]);
+
+  return (
+    <div ref={mapRef} id="map" style={{height: '440px', width: '100%'}}/>
+  );
 };
 
 export class Experiments extends Component {
@@ -45,6 +63,11 @@ export class Experiments extends Component {
           placeholder={bounds.placeholder}
           description={bounds.description}
         ></Input>
+        <Grid>
+          <GridColumn>
+            <Map></Map>
+          </GridColumn>
+        </Grid>
       </>
     );
   }

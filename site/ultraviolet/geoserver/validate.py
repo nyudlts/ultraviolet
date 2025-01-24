@@ -28,31 +28,6 @@ class ExperimentsValidator(Validator):
     def __call__(self, value: _T) -> _T:
         current_app.logger.debug(f"Validating {value}")
 
-        raise ValidationError("Single string error message")
-        # raise ValidationError(["Error messages one", "Error messages two"])
-        # raise ValidationError({
-        #     "one": "foo",
-        #     "two": "bar",
-        # })
-
-        # raise ValidationError(
-        #     "there was a problem",
-        #     "custom_fields.experiments.layer"
-        # )
-
-        # raise ValidationError({
-        #     "custom_fields.experiments.layer": "There was a problem with the layer name."
-        # })
-
-        # raise ValidationError(
-        #     "blah blah blah",
-        #     field_name="custom_fields.experiments.layer",
-        # )
-
-        # raise ValidationError({"custom_fields": {"experiments": {"layer": "layer error message"}}})
-        # raise ValidationError({"experiments": {"layer": "layer error message"}})
-        # raise ValidationError({"custom_fields.experiments.layer": "layer error message"})
-
         errors = []
 
         layer = value.get("layer", None)
