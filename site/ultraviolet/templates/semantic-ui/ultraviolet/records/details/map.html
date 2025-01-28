@@ -1,19 +1,19 @@
 {% set previewable = record.access.files == 'public' or (current_user and current_user.is_authenticated) %}
 {% set geoserver_base_url = config.GEOSERVER_PUBLIC_URL if (record.access.files == 'public') else config.GEOSERVER_RESTRICTED_URL %}
 
-{% if record.custom_fields["geoserver:layer_name"] and record.custom_fields["geoserver:has_wms_layer"] %}
+{% if record.custom_fields["experiments"]["layer"] and record.custom_fields["experiments"]["has_wms"] %}
     <h2>Map</h2>
 
     <div id="map"
          data-preview="{{ previewable }}"
-         data-bounds="{{ record.custom_fields["geoserver:bounds"] }}"
+         data-bounds="{{ record.custom_fields["experiments"]["bounds"] }}"
             {% if previewable %}
          data-wms-url="{{ geoserver_base_url }}/wms"
-         data-layer-name="{{ record.custom_fields["geoserver:layer_name"] }}"
+         data-layer-name="{{ record.custom_fields["experiments"]["layer"] }}"
             {% endif %}
     ></div>
 
-    {% if record.custom_fields["geoserver:has_wfs_layer"] and (previewable) %}
+    {% if record.custom_fields["experiments"]["has_wfs"] and (previewable) %}
         <h3>Attributes</h3>
 
         <div class="attributes">
@@ -26,7 +26,7 @@
                 </thead>
                 <tbody id="attributes"
                        data-wfs-url="{{ geoserver_base_url }}/wfs"
-                       data-layer-names="{{ record.custom_fields["geoserver:layer_name"] }}"></tbody>
+                       data-layer-names="{{ record.custom_fields["experiments"]["layer"] }}"></tbody>
             </table>
         </div>
     {% endif %}
@@ -36,12 +36,12 @@
 
         <dl class="details-list">
             <dt class="ui tiny header">Layer Name</dt>
-            <dd><code>{{ record.custom_fields["geoserver:layer_name"] }}</code></dd>
-            {% if record.custom_fields["geoserver:has_wfs_layer"] %}
+            <dd><code>{{ record.custom_fields["experiments"]["layer"] }}</code></dd>
+            {% if record.custom_fields["experiments"]["has_wfs"] %}
                 <dt class="ui tiny header">Web Feature Service (WFS)</dt>
                 <dd><code>{{ geoserver_base_url }}/wfs</code></dd>
             {% endif %}
-            {% if record.custom_fields["geoserver:has_wms_layer"] %}
+            {% if record.custom_fields["experiments"]["has_wms"] %}
                 <dt class="ui tiny header">Web Mapping Service (WMS)</dt>
                 <dd><code>{{ geoserver_base_url }}/wms</code></dd>
             {% endif %}

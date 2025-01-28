@@ -1,53 +1,12 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {BooleanCheckbox, Input} from "react-invenio-forms";
 import {Grid, GridColumn} from 'semantic-ui-react'
 import {useFormikContext} from 'formik';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const Map = ({layerName = "", boundingBox = "", center = [0, 0], zoom = 1}) => {
-  const mapRef = useRef(null);
-
-  useEffect(() => {
-    const map = L.map(mapRef.current).setView(center, zoom);
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png', {
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>',
-      maxZoom: 18,
-      worldCopyJump: true,
-      retina: "@2x",
-    }).addTo(map);
-
-    if (layerName != "") {
-      const wmsLayer = L.tileLayer.wms("https://maps-public.geo.nyu.edu/geoserver/sdr/wms", {
-        layers: layerName,
-        format: 'image/png',
-        transparent: true,
-        opacity: 0.75
-      });
-
-      wmsLayer.addTo(map);
-      wmsLayer.setOpacity(0.75);
-    }
-
-    const match = boundingBox.match(/ENVELOPE\(([-\d.]+), ([-\d.]+), ([-\d.]+), ([-\d.]+)\)/);
-
-    if (match) {
-      let [_, minLon, maxLon, minLat, maxLat] = match;
-
-      const bounds = [[minLat, minLon], [maxLat, maxLon]];
-
-      map.fitBounds(bounds);
-    }
-
-    return () => map.remove();
-  }, [center, zoom, layerName]);
-
-  return (
-    <div ref={mapRef} id="map" style={{height: '440px', width: '100%'}}/>
-  );
-};
+import {Map} from './Map'
+import {LayerAttributes} from "./LayerAttributes";
 
 export const Experiments = props => {
   const {
@@ -68,32 +27,16 @@ export const Experiments = props => {
   const {values} = useFormikContext();
 
   useEffect(() => {
-    console.log("Field value changed:", values);
+    let custom_fields = values.custom_fields;
 
-    if (values.custom_fields && values.custom_fields.experiments) {
-      if (values.custom_fields.experiments.layer) {
-        setLayerName(values.custom_fields.experiments.layer)
-      } else {
-        setLayerName("")
-      }
+    if (custom_fields && custom_fields.experiments) {
+      let experiments = custom_fields.experiments;
 
-      if (values.custom_fields.experiments.has_wms) {
-        setHasWms(true)
-      } else {
-        setHasWms(false)
-      }
+      experiments.layer ? setLayerName(experiments.layer) : setLayerName("")
+      experiments.bounds ? setBoundingBox(experiments.bounds) : setBoundingBox("")
 
-      if (values.custom_fields.experiments.has_wfs) {
-        setHasWfs(true)
-      } else {
-        setHasWfs(false)
-      }
-
-      if (values.custom_fields.experiments.bounds) {
-        setBoundingBox(values.custom_fields.experiments.bounds)
-      } else {
-        setBoundingBox("")
-      }
+      setHasWms(!!experiments.has_wms)
+      setHasWfs(!!experiments.has_wfs)
     }
   }, [values]);
 
@@ -104,6 +47,12 @@ export const Experiments = props => {
         label={layer.label}
         placeholder={layer.placeholder}
         description={layer.description}
+      ></Input>
+      <Input
+        fieldPath={`${fieldPathPrefix}.bounds`}
+        label={bounds.label}
+        placeholder={bounds.placeholder}
+        description={bounds.description}
       ></Input>
       <BooleanCheckbox
         fieldPath={`${fieldPathPrefix}.has_wms`}
@@ -125,16 +74,10 @@ export const Experiments = props => {
       {layerName && hasWfs && (
         <Grid>
           <GridColumn>
-            WFS Table Here (eventually)
+            <LayerAttributes layerName={layerName}/>
           </GridColumn>
         </Grid>
       )}
-      <Input
-        fieldPath={`${fieldPathPrefix}.bounds`}
-        label={bounds.label}
-        placeholder={bounds.placeholder}
-        description={bounds.description}
-      ></Input>
     </>
   );
 };
