@@ -8,31 +8,39 @@ export const LayerAttributes = (
   let [attributes, setAttributes] = useState([]);
 
   useEffect(() => {
-    if (layerName != "") {
-      const formData = new FormData();
-      formData.append("url", "https://maps-public.geo.nyu.edu/geoserver/sdr/wfs");
-      formData.append("layers", layerName);
-
-      fetch("/geoserver/describe_feature_type", {
-        method: "POST", body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          const sortedAttributes = data.featureTypes[0].properties.sort((a, b) => {
-            return a.name.localeCompare(b.name)
-          })
-
-          setAttributes(sortedAttributes)
-
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-
+    if (!layerName) {
+      setAttributes([])
+      return;
     }
+
+    const formData = new FormData();
+    formData.append("url", "https://maps-public.geo.nyu.edu/geoserver/sdr/wfs");
+    formData.append("layers", layerName);
+
+    fetch("/geoserver/describe_feature_type", {
+      method: "POST", body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        const sortedAttributes = data.featureTypes[0].properties.sort((a, b) => {
+          return a.name.localeCompare(b.name)
+        })
+
+        setAttributes(sortedAttributes)
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setAttributes([])
+      });
+
   }, [layerName])
 
-  const attributeRows = attributes.map(attribute => <tr>
+  if (attributes.length == 0) {
+    return <b>No WFS layer named {layerName} found!</b>
+  }
+
+  const attributeRows = attributes.map(attribute => <tr key={attribute.name}>
     <td>{attribute.name}</td>
     <td>{attribute.localType}</td>
   </tr>)
