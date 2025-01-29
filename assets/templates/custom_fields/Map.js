@@ -1,12 +1,12 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-export const Map = (
+const ActualMap = (
   {
     layerName = "",
-    boundingBox = "",
+    boundingBox = ""
   }
 ) => {
   const mapRef = useRef(null);
@@ -33,18 +33,58 @@ export const Map = (
       wmsLayer.setOpacity(0.75);
     }
 
-    const match = boundingBox.match(/ENVELOPE\(([-\d.]+), ([-\d.]+), ([-\d.]+), ([-\d.]+)\)/);
+    if (boundingBox != "") {
+      const match = boundingBox.match(/ENVELOPE\(([-\d.]+), ([-\d.]+), ([-\d.]+), ([-\d.]+)\)/);
 
-    if (match) {
-      let [_, minLon, maxLon, minLat, maxLat] = match;
+      if (match) {
+        let [_, minLon, maxLon, minLat, maxLat] = match;
 
-      map.fitBounds([[minLat, minLon], [maxLat, maxLon]]);
+        map.fitBounds([[minLat, minLon], [maxLat, maxLon]]);
+      }
     }
 
     return () => map.remove();
-  }, [center, zoom, layerName]);
+  }, [layerName])
 
   return (
     <div ref={mapRef} id="map" style={{height: '440px', width: '100%'}}/>
   );
+}
+
+export const Map = (
+  {
+    layerName = "",
+    boundingBox = "",
+  }
+) => {
+  const mapRef = useRef(null);
+  const [layerFound, setLayerFound] = useState(false);
+
+  useEffect(() => {
+    const formData = new FormData();
+    formData.append("url", "https://maps-public.geo.nyu.edu/geoserver/sdr/wfs");
+    formData.append("layers", layerName);
+
+    fetch("/geoserver/describe_layer", {
+      method: "POST", body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data["exceptions"]) {
+          setLayerFound(false)
+        } else {
+          setLayerFound(true)
+        }
+      })
+      .catch(error => {
+        setLayerFound(false)
+        console.error('Error:', error);
+      });
+  }, [layerName]);
+
+  if (layerFound) {
+    return <ActualMap layerName={layerName} boundingBox={boundingBox}/>
+  } else {
+    return <div className="ui red message">Error: No WMS layer named <code>{layerName}</code> found!</div>
+  }
 };
