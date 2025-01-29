@@ -7,14 +7,12 @@ export const Map = (
   {
     layerName = "",
     boundingBox = "",
-    center = [0, 0],
-    zoom = 1
   }
 ) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    const map = L.map(mapRef.current).setView(center, zoom);
+    const map = L.map(mapRef.current).setView([0, 0], 1);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>',

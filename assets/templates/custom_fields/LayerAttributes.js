@@ -37,7 +37,7 @@ export const LayerAttributes = (
   }, [layerName])
 
   if (attributes.length == 0) {
-    return <b>No WFS layer named {layerName} found!</b>
+    return <div className="ui red message">No WFS layer named {layerName} found!</div>
   }
 
   const attributeRows = attributes.map(attribute => <tr key={attribute.name}>
