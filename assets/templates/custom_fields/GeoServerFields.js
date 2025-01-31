@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import {BooleanCheckbox, Input} from "react-invenio-forms";
-import {Grid, GridColumn, GridRow} from 'semantic-ui-react'
+import {Grid, GridColumn, GridRow, Segment} from 'semantic-ui-react'
 import {useFormikContext} from 'formik';
 import 'leaflet/dist/leaflet.css';
 
@@ -62,7 +62,9 @@ export const GeoServerFields = props => {
             description={has_wms.description}
           ></BooleanCheckbox>
           {layerName && hasWms && (
-            <WmsCheck layerName={layerName} boundingBox={boundingBox}></WmsCheck>
+            <Segment basic>
+              <WmsCheck layerName={layerName} boundingBox={boundingBox}></WmsCheck>
+            </Segment>
           )}
           <BooleanCheckbox
             fieldPath={`${fieldPathPrefix}.has_wfs`}
@@ -70,7 +72,9 @@ export const GeoServerFields = props => {
             description={has_wfs.description}
           ></BooleanCheckbox>
           {layerName && hasWfs && (
-            <WfsCheck layerName={layerName}/>
+            <Segment basic>
+              <WfsCheck layerName={layerName}/>
+            </Segment>
           )}
         </GridColumn>
       </GridRow>
