@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 
 import {BooleanCheckbox, Input} from "react-invenio-forms";
-import {Grid, GridColumn} from 'semantic-ui-react'
+import {Grid, GridColumn, GridRow} from 'semantic-ui-react'
 import {useFormikContext} from 'formik';
 import 'leaflet/dist/leaflet.css';
 
-import {Map} from './Map'
-import {LayerAttributes} from "./LayerAttributes";
+import {WmsCheck} from './WmsCheck'
+import {WfsCheck} from "./WfsCheck";
 
 export const Experiments = props => {
   const {
@@ -41,43 +41,39 @@ export const Experiments = props => {
   }, [values]);
 
   return (
-    <>
-      <Input
-        fieldPath={`${fieldPathPrefix}.layer`}
-        label={layer.label}
-        placeholder={layer.placeholder}
-        description={layer.description}
-      ></Input>
-      <Input
-        fieldPath={`${fieldPathPrefix}.bounds`}
-        label={bounds.label}
-        placeholder={bounds.placeholder}
-        description={bounds.description}
-      ></Input>
-      <BooleanCheckbox
-        fieldPath={`${fieldPathPrefix}.has_wms`}
-        label={has_wms.label}
-        description={has_wms.description}
-      ></BooleanCheckbox>
-      {layerName && hasWms && (
-        <Grid>
-          <GridColumn>
-            <Map layerName={layerName} boundingBox={boundingBox}></Map>
-          </GridColumn>
-        </Grid>
-      )}
-      <BooleanCheckbox
-        fieldPath={`${fieldPathPrefix}.has_wfs`}
-        label={has_wfs.label}
-        description={has_wfs.description}
-      ></BooleanCheckbox>
-      {layerName && hasWfs && (
-        <Grid>
-          <GridColumn>
-            <LayerAttributes layerName={layerName}/>
-          </GridColumn>
-        </Grid>
-      )}
-    </>
+    <Grid>
+      <GridRow>
+        <GridColumn>
+          <Input
+            fieldPath={`${fieldPathPrefix}.layer`}
+            label={layer.label}
+            placeholder={layer.placeholder}
+            description={layer.description}
+          ></Input>
+          <Input
+            fieldPath={`${fieldPathPrefix}.bounds`}
+            label={bounds.label}
+            placeholder={bounds.placeholder}
+            description={bounds.description}
+          ></Input>
+          <BooleanCheckbox
+            fieldPath={`${fieldPathPrefix}.has_wms`}
+            label={has_wms.label}
+            description={has_wms.description}
+          ></BooleanCheckbox>
+          {layerName && hasWms && (
+            <WmsCheck layerName={layerName} boundingBox={boundingBox}></WmsCheck>
+          )}
+          <BooleanCheckbox
+            fieldPath={`${fieldPathPrefix}.has_wfs`}
+            label={has_wfs.label}
+            description={has_wfs.description}
+          ></BooleanCheckbox>
+          {layerName && hasWfs && (
+            <WfsCheck layerName={layerName}/>
+          )}
+        </GridColumn>
+      </GridRow>
+    </Grid>
   );
 };

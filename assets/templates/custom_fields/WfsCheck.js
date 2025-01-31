@@ -1,17 +1,19 @@
 import React, {useEffect, useState} from "react";
+import {WfsAttributeTable} from "./WfsAttributeTable";
 
-export const LayerAttributes = (
+export const WfsCheck = (
   {
     layerName = ""
   }
 ) => {
-  let [attributes, setAttributes] = useState([]);
+  const [attributes, setAttributes] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!layerName) {
-      setAttributes([])
-      return;
-    }
+    setLoading(true)
+    setError(null)
+    setAttributes(null)
 
     const formData = new FormData();
     formData.append("url", "https://maps-public.geo.nyu.edu/geoserver/sdr/wfs");
@@ -27,33 +29,23 @@ export const LayerAttributes = (
         })
 
         setAttributes(sortedAttributes)
-
+        setLoading(false)
       })
       .catch(error => {
-        console.error('Error:', error);
-        setAttributes([])
+        setError(error)
+        setLoading(false)
       });
+  }, [layerName]);
 
-  }, [layerName])
+  if (loading) {
+    return <div className="ui active inverted dimmer">
+      <div className="ui text loader">Loading attributes...</div>
+    </div>
+  }
 
-  if (attributes.length == 0) {
+  if (error) {
     return <div className="ui red message">Error: No WFS layer named <code>{layerName}</code> found!</div>
   }
 
-  const attributeRows = attributes.map(attribute => <tr key={attribute.name}>
-    <td>{attribute.name}</td>
-    <td>{attribute.localType}</td>
-  </tr>)
-
-  return <table className="ui unstackable very compact table striped selectable">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-    </tr>
-    </thead>
-    <tbody>
-    {attributeRows}
-    </tbody>
-  </table>
+  return <WfsAttributeTable attributes={attributes}/>
 }

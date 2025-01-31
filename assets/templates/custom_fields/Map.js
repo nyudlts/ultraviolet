@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const ActualMap = (
+export const Map = (
   {
     layerName = "",
     boundingBox = ""
@@ -44,47 +44,9 @@ const ActualMap = (
     }
 
     return () => map.remove();
-  }, [layerName])
+  }, [layerName, boundingBox])
 
   return (
     <div ref={mapRef} id="map" style={{height: '440px', width: '100%'}}/>
   );
 }
-
-export const Map = (
-  {
-    layerName = "",
-    boundingBox = "",
-  }
-) => {
-  const mapRef = useRef(null);
-  const [layerFound, setLayerFound] = useState(false);
-
-  useEffect(() => {
-    const formData = new FormData();
-    formData.append("url", "https://maps-public.geo.nyu.edu/geoserver/sdr/wfs");
-    formData.append("layers", layerName);
-
-    fetch("/geoserver/describe_layer", {
-      method: "POST", body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data["exceptions"]) {
-          setLayerFound(false)
-        } else {
-          setLayerFound(true)
-        }
-      })
-      .catch(error => {
-        setLayerFound(false)
-        console.error('Error:', error);
-      });
-  }, [layerName]);
-
-  if (layerFound) {
-    return <ActualMap layerName={layerName} boundingBox={boundingBox}/>
-  } else {
-    return <div className="ui red message">Error: No WMS layer named <code>{layerName}</code> found!</div>
-  }
-};
