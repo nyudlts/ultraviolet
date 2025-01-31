@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {WfsAttributeTable} from "./WfsAttributeTable";
+import {WfsAttributes} from "./WfsAttributes";
 
 export const WfsCheck = (
   {
@@ -47,5 +47,5 @@ export const WfsCheck = (
     return <div className="ui red message">Error: No WFS layer named <code>{layerName}</code> found!</div>
   }
 
-  return <WfsAttributeTable attributes={attributes}/>
+  return <WfsAttributes attributes={attributes}/>
 }

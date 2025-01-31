@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {Map} from "./Map.js"
+import {WmsMap} from "./WmsMap.js"
 
 export const WmsCheck = (
   {
@@ -51,5 +51,5 @@ export const WmsCheck = (
     return <div className="ui red message">Error: No WMS layer named <code>{layerName}</code> found!</div>
   }
 
-  return <Map layerName={layerName} boundingBox={boundingBox}/>
+  return <WmsMap layerName={layerName} boundingBox={boundingBox}/>
 };

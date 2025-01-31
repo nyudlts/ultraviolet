@@ -3,7 +3,7 @@ import React, {useEffect, useRef} from "react";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-export const Map = (
+export const WmsMap = (
   {
     layerName = "",
     boundingBox = ""

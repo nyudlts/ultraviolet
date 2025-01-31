@@ -8,7 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import {WmsCheck} from './WmsCheck'
 import {WfsCheck} from "./WfsCheck";
 
-export const Experiments = props => {
+export const GeoServerFields = props => {
   const {
     fieldPath, // injected by the custom field loader via the `field` config property
     layer,
@@ -29,14 +29,14 @@ export const Experiments = props => {
   useEffect(() => {
     let custom_fields = values.custom_fields;
 
-    if (custom_fields && custom_fields.experiments) {
-      let experiments = custom_fields.experiments;
+    if (custom_fields && custom_fields.geoserver) {
+      let geoServerFields = custom_fields.geoserver;
 
-      experiments.layer ? setLayerName(experiments.layer) : setLayerName("")
-      experiments.bounds ? setBoundingBox(experiments.bounds) : setBoundingBox("")
+      geoServerFields.layer ? setLayerName(geoServerFields.layer) : setLayerName("")
+      geoServerFields.bounds ? setBoundingBox(geoServerFields.bounds) : setBoundingBox("")
 
-      setHasWms(!!experiments.has_wms)
-      setHasWfs(!!experiments.has_wfs)
+      setHasWms(!!geoServerFields.has_wms)
+      setHasWfs(!!geoServerFields.has_wfs)
     }
   }, [values]);
 

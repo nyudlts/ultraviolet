@@ -1,6 +1,6 @@
 import React from "react";
 
-export const WfsAttributeTable = (
+export const WfsAttributes = (
   {
     attributes = []
   }

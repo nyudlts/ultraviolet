@@ -12,7 +12,7 @@ from marshmallow.validate import Validator
 _T = typing.TypeVar("_T")
 
 
-class ExperimentsValidator(Validator):
+class GeoServerValidator(Validator):
     default_message = "{type} layer {input} not found on {server}."
 
     def __init__(self, *, server: str | None = None, error: str | None = None):
