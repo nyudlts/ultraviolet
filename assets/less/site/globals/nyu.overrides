@@ -75,6 +75,14 @@ body {
       }
     }
   }
+  #record-info {
+    .right span:first-child {
+      padding-right: 1.5em !important;
+    }
+    .ui.label > .icon {
+      margin: 0 0.25rem 0 0 !important;
+   }
+  }
   .ui.search.button {
     background-color: @searchButtonColor  !important;
 
@@ -108,13 +116,17 @@ body {
     &.neutral {
       background-color: transparent !important;
       border: none !important;
-      color: @darkGray !important;;
+      color: @darkGray !important;
       margin-left: 0;
-      padding: 0;
+      padding: 0 !important;
       border: 0;
     }
+  
   }
-
+  // search results items: icons for "downloads" and "views" appearing at bottom right
+  .ui.items  > .item .extra small .ui.label {
+    padding: .5rem 1.5rem 0 !important;
+  }
   .ui.items>.item .extra.labels-actions {
     margin-bottom: 0;
 
@@ -125,7 +137,6 @@ body {
     >[class*="right floated"] {
       margin: 0 0 0 0.5rem;
     }
-
     // Bullet points between metadata labels
     div {
       &::after {
