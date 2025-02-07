@@ -175,6 +175,30 @@ body {
   .ui.text.container {
     font-family: Lato, sans-serif;
   }
+  
+  #banners {
+    .ui.container.page-subheader-outer {
+      background-color: @secondaryColor;
+      color: white;
+      
+    }
+    .ui.container.page-subheader  {
+      padding-left: 0;
+      .page-subheader-element {
+        padding-left: 0;
+        padding-right: 0;
+      } 
+      a, a:link, a:hover {
+        text-decoration: underline;
+        color:white;
+      }
+    }
+    .ui.image.community-header-logo {
+      max-width: 0;
+      display: none;
+    }
+  }
+  
   .wrap-long-link {
     overflow-wrap: break-word;
     word-wrap: break-word;
