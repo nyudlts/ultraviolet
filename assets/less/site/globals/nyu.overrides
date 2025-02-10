@@ -177,9 +177,20 @@ body {
   }
   
   #banners {
+    .ui.container.page-subheader .page-subheader-element {
+      @media all and (max-width: @computerBreakpoint) {
+        display: block;
+      }
+      
+    }
     .ui.container.page-subheader-outer {
       background-color: @secondaryColor;
-      color: white;
+      color: #eaddf9;
+      text-transform: uppercase;
+      text-shadow: 0px 0px 2px black;
+    }
+    .description {
+      color: #c5b8d4;
       
     }
     .ui.container.page-subheader  {
@@ -189,8 +200,13 @@ body {
         padding-right: 0;
       } 
       a, a:link, a:hover {
-        text-decoration: underline;
-        color:white;
+        color:#eaddf9;
+        text-decoration: underline solid #eaddf9;
+        text-underline-offset: 2px;
+      }
+      a:hover {
+        color:#ffffff;
+        text-decoration: underline solid #ffffff;
       }
     }
     .ui.image.community-header-logo {

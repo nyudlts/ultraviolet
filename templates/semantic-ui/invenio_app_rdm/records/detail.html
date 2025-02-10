@@ -69,7 +69,7 @@
               </div>
               <div class="page-subheader-element">
                 <a
-                  href="{{ url_for('invenio_app_rdm_communities.communities_detail', pid_value=community.slug) }}">{{ community.metadata.title }}</a> {% if community.metadata.description %}: {{ community.metadata.description }}{% endif %}
+                  href="{{ url_for('invenio_app_rdm_communities.communities_detail', pid_value=community.slug) }}">{{ community.metadata.title }}</a> {% if community.metadata.description %}<span class="description">: {{ community.metadata.description }}</span>{% endif %}
                 {% if is_community_restricted %}
                   <span
                     class="ui label horizontal small access-status restricted rel-ml-1"
