@@ -25,10 +25,7 @@ class GeoServerCF(BaseListCF):
                     has_wfs=fields.Boolean(),
                 )
             ),
-            **(kwargs.get("field_args", {}))
         )
-
-        kwargs.pop('field_args')
 
         super().__init__(
             name,
