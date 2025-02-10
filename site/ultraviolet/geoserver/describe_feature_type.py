@@ -1,9 +1,8 @@
 import urllib
 
+import requests
 from flask import request, Response
 from flask.views import MethodView
-
-import requests
 
 
 class DescribeFeatureType(MethodView):

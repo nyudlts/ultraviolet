@@ -1,10 +1,8 @@
 from invenio_records_resources.services.custom_fields import BaseListCF
 from marshmallow import fields
 from marshmallow_utils.fields import SanitizedUnicode
-
-from ultraviolet.geoserver.validate import LayerValidator, BoundsValidator
-
 from ultraviolet.geoserver.constants import PUBLIC_URL
+from ultraviolet.geoserver.validate import LayerValidator, BoundsValidator
 
 
 class GeoServerCF(BaseListCF):
