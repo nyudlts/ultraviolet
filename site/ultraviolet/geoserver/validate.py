@@ -12,7 +12,12 @@ from marshmallow.validate import Validator
 _T = typing.TypeVar("_T")
 
 
-class GeoServerValidator(Validator):
+class BoundsValidator(Validator):
+    def __call__(self, value: _T) -> _T:
+        return value
+
+
+class LayerValidator(Validator):
     default_message = "{type} layer {input} not found on {server}."
 
     def __init__(self, *, server: str | None = None, error: str | None = None):
@@ -30,45 +35,39 @@ class GeoServerValidator(Validator):
 
         errors = []
 
-        layer = value.get("layer", None)
-        has_wms = value.get("has_wms", False)
-        has_wfs = value.get("has_wfs", False)
+        url = "{0}/wms".format(self.server)
+        query_string = urllib.parse.urlencode({
+            "service": "WMS",
+            "version": "1.1.1",
+            "request": "DescribeLayer",
+            "layers": value,
+            "outputFormat": "application/json",
+            "exceptions": "application/json",
+        })
 
-        if has_wms:
-            url = "{0}/wms".format(self.server)
-            query_string = urllib.parse.urlencode({
-                "service": "WMS",
-                "version": "1.1.1",
-                "request": "DescribeLayer",
-                "layers": layer,
-                "outputFormat": "application/json",
-                "exceptions": "application/json",
-            })
+        full_url = "{0}?{1}".format(url, query_string)
+        response = requests.get(full_url)
+        data = json.loads(response.text)
 
-            full_url = "{0}?{1}".format(url, query_string)
-            response = requests.get(full_url)
-            data = json.loads(response.text)
+        if data.get("exceptions") is not None:
+            errors.append("Can't find WMS layer named {0}.".format(value))
 
-            if data.get("exceptions") is not None:
-                errors.append("Can't find WMS layer named {0}.".format(layer))
+        url = "{0}/wfs".format(self.server)
+        query_string = urllib.parse.urlencode({
+            "service": "WFS",
+            "version": "2.0.0",
+            "request": "DescribeFeatureType",
+            "typename": value,
+            "outputFormat": "application/json",
+            "exceptions": "application/json",
+        })
 
-        if has_wfs:
-            url = "{0}/wfs".format(self.server)
-            query_string = urllib.parse.urlencode({
-                "service": "WFS",
-                "version": "2.0.0",
-                "request": "DescribeFeatureType",
-                "typename": layer,
-                "outputFormat": "application/json",
-                "exceptions": "application/json",
-            })
+        full_url = "{0}?{1}".format(url, query_string)
+        response = requests.get(full_url)
+        data = json.loads(response.text)
 
-            full_url = "{0}?{1}".format(url, query_string)
-            response = requests.get(full_url)
-            data = json.loads(response.text)
-
-            if data.get("exceptions") is not None:
-                errors.append("Can't find WFS layer named {0}.".format(layer))
+        if data.get("exceptions") is not None:
+            errors.append("Can't find WFS layer named {0}.".format(value))
 
         if len(errors) > 0:
             raise ValidationError(" ".join(errors))
