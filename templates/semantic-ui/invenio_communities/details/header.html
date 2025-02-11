@@ -46,14 +46,6 @@
         <div
           class="community-header flex align-items-center column-mobile align-items-start-mobile">
           <div class="flex align-items-center">
-            <div class="ui rounded image community-image mt-5 rel-mr-2">
-              <img
-                src="{{ community.links.logo | resolve_community_logo(community.id) }}"
-                alt=""
-                class="rel-mb-1"
-              />
-            </div>
-
             <div class="mobile only">
               {{community_title(community)}}
               {% if community.metadata.description %}
