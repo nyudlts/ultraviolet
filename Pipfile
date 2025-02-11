@@ -10,7 +10,6 @@ selenium = "*"
 pytest-invenio = "==2.1.1"
 flask-pytest = "*"
 
-
 [packages]
 ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
 ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git", ref="align-v12-update"}
@@ -22,11 +21,10 @@ python-dotenv = "*"
 invenio-app-rdm = {extras = ["opensearch2"], version = "~=12.0.0"}
 ultraviolet = {editable = true, path="./site"}
 flask_babelex = "*"
-
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
-
+responses = "*"
 
 [requires]
 python_version = "3.9"

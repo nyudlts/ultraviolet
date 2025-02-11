@@ -1,7 +1,7 @@
 {% set previewable = record.access.files == 'public' or (current_user and current_user.is_authenticated) %}
 {% set geoserver_base_url = config.GEOSERVER_PUBLIC_URL if (record.access.files == 'public') else config.GEOSERVER_RESTRICTED_URL %}
 
-{% if record.custom_fields["geoserver"]["layer"] and record.custom_fields["geoserver"]["has_wms"] %}
+{% if record.custom_fields["geoserver"] and record.custom_fields["geoserver"]["layer"] and record.custom_fields["geoserver"]["has_wms"] %}
     <h2>Map</h2>
 
     <div id="map"

@@ -5,7 +5,6 @@ import typing
 import urllib
 
 import requests
-from flask import current_app
 from marshmallow.exceptions import ValidationError
 from marshmallow.validate import Validator
 
@@ -31,7 +30,11 @@ class LayerValidator(Validator):
         return self.error.format(service=service, input=value, server=self.server)
 
     def __call__(self, value: _T) -> _T:
-        current_app.logger.debug(f"Validating {value}")
+        if value is None:
+            return None
+
+        if value is "":
+            return ""
 
         errors = []
 
@@ -70,6 +73,6 @@ class LayerValidator(Validator):
             errors.append("Can't find WFS layer named {0}.".format(value))
 
         if len(errors) > 0:
-            raise ValidationError(" ".join(errors))
+            raise ValidationError("Neither a WMS or WFS layer named {0} exists on {1} ".format(value, self.server))
 
         return value
