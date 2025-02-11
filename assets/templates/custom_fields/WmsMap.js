@@ -6,7 +6,8 @@ import 'leaflet/dist/leaflet.css';
 export const WmsMap = (
   {
     layerName = "",
-    boundingBox = ""
+    boundingBox = "",
+    serverUrl = ""
   }
 ) => {
   const mapRef = useRef(null);
@@ -22,7 +23,7 @@ export const WmsMap = (
     }).addTo(map);
 
     if (layerName != "") {
-      const wmsLayer = L.tileLayer.wms("https://maps-public.geo.nyu.edu/geoserver/sdr/wms", {
+      const wmsLayer = L.tileLayer.wms(`${serverUrl}/wms`, {
         layers: layerName,
         format: 'image/png',
         transparent: true,

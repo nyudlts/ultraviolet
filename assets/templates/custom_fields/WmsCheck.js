@@ -51,5 +51,5 @@ export const WmsCheck = (
     return <div className="ui red message">Error: No WMS layer named <code>{layerName}</code> found!</div>
   }
 
-  return <WmsMap layerName={layerName} boundingBox={boundingBox}/>
+  return <WmsMap layerName={layerName} boundingBox={boundingBox} serverUrl={serverUrl} />
 };
