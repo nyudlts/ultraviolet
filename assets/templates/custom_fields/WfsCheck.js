@@ -3,7 +3,8 @@ import {WfsAttributes} from "./WfsAttributes";
 
 export const WfsCheck = (
   {
-    layerName = ""
+    layerName = "",
+    serverUrl = ""
   }
 ) => {
   const [attributes, setAttributes] = useState(null);
@@ -16,7 +17,7 @@ export const WfsCheck = (
     setAttributes(null)
 
     const formData = new FormData();
-    formData.append("url", "https://maps-public.geo.nyu.edu/geoserver/sdr/wfs");
+    formData.append("url", `${serverUrl}/wfs`);
     formData.append("layers", layerName);
 
     fetch("/geoserver/describe_feature_type", {

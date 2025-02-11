@@ -15,6 +15,7 @@ export const GeoServerFields = props => {
     has_wms,
     has_wfs,
     bounds,
+    serverUrl
   } = props;
 
   const [layerName, setLayerName] = useState("")
@@ -63,7 +64,7 @@ export const GeoServerFields = props => {
           ></BooleanCheckbox>
           {layerName && hasWms && (
             <Segment basic>
-              <WmsCheck layerName={layerName} boundingBox={boundingBox}></WmsCheck>
+              <WmsCheck layerName={layerName} boundingBox={boundingBox} serverUrl={serverUrl}/>
             </Segment>
           )}
           <BooleanCheckbox
@@ -73,7 +74,7 @@ export const GeoServerFields = props => {
           ></BooleanCheckbox>
           {layerName && hasWfs && (
             <Segment basic>
-              <WfsCheck layerName={layerName}/>
+              <WfsCheck layerName={layerName} serverUrl={serverUrl}/>
             </Segment>
           )}
         </GridColumn>

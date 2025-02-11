@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-
 import {WmsMap} from "./WmsMap.js"
 
 export const WmsCheck = (
   {
     layerName = "",
     boundingBox = "",
+    serverUrl = "",
   }
 ) => {
   const [layerFound, setLayerFound] = useState(false);
@@ -18,7 +18,7 @@ export const WmsCheck = (
     setLayerFound(false)
 
     const formData = new FormData();
-    formData.append("url", "https://maps-public.geo.nyu.edu/geoserver/sdr/wfs");
+    formData.append("url", `${serverUrl}/wms`);
     formData.append("layers", layerName);
 
     fetch("/geoserver/describe_layer", {
