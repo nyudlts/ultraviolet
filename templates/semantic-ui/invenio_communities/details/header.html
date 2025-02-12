@@ -41,6 +41,12 @@
   </div>
 {% endmacro %}
 
+{% macro community_description(community) %}
+  {% if community.metadata.description %}
+    <div class="description">{{ community.metadata.description }}</div>
+  {% endif %}  
+{% endmacro %}
+
 <div
   class="ui container fluid page-subheader-outer with-submenu rel-pt-2 ml-0-mobile mr-0-mobile">
   <div class="ui container relaxed grid page-subheader mr-0-mobile ml-0-mobile">
@@ -52,18 +58,14 @@
           <div class="flex align-items-center">
             <div class="mobile only">
               {{community_title(community)}}
-              {% if community.metadata.description %}
-                {{ community.metadata.description }}
-              {% endif %}
+              {{community_description(community)}}
             </div>
           </div>
 
           <div>
             <div class="mb-5 tablet computer only">
               {{community_title(community)}}
-              {% if community.metadata.description %}
-                {{ community.metadata.description }}
-              {% endif %}  
+              {{community_description(community)}}
               {% if community.access.visibility == 'restricted' %}
                 <div class="rel-ml-1">
                   {{ access_status_label() }}
