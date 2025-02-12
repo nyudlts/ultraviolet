@@ -25,6 +25,8 @@ export const GeoServerFields = props => {
 
   const {values} = useFormikContext();
 
+  // Listen to Formik field changes on custom fields
+  // And convert them into local state
   useEffect(() => {
     let customFields = values.custom_fields;
 
