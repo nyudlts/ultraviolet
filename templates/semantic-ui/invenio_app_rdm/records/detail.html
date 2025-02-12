@@ -61,13 +61,6 @@
             class="ui fluid container page-subheader-outer with-submenu compact ml-0-mobile mr-0-mobile">
             <div class="ui container page-subheader">
               <div class="page-subheader-element">
-                <img
-                  class="ui rounded image community-header-logo"
-                  src="{{ community.links.logo | resolve_community_logo(community.id) }}"
-                  alt=""
-                />
-              </div>
-              <div class="page-subheader-element">
                 <a
                   href="{{ url_for('invenio_app_rdm_communities.communities_detail', pid_value=community.slug) }}">{{ community.metadata.title }}</a> {% if community.metadata.description %}<span class="description">: {{ community.metadata.description }}</span>{% endif %}
                 {% if is_community_restricted %}
