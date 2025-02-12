@@ -28,8 +28,8 @@
 {% endmacro %}
 
 {% macro community_title(community) %}
-  <div class="ui small header">
-    <h1><a href="{{ url_for('invenio_app_rdm_communities.communities_detail', pid_value=community.slug) }}" class="ui small header">
+  <div>
+    <h1 class="community-h1"><a href="{{ url_for('invenio_app_rdm_communities.communities_detail', pid_value=community.slug) }}" class="ui header">
       {{ community.metadata.title }}
     </a></h1>
     <!-- Show the icon for subcommunities -->
