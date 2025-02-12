@@ -26,10 +26,10 @@ export const GeoServerFields = props => {
   const {values} = useFormikContext();
 
   useEffect(() => {
-    let custom_fields = values.custom_fields;
+    let customFields = values.custom_fields;
 
-    if (custom_fields && custom_fields.geoserver) {
-      let geoServerFields = custom_fields.geoserver;
+    if (customFields && customFields.geoserver) {
+      let geoServerFields = customFields.geoserver;
 
       geoServerFields.layer ? setLayerName(geoServerFields.layer) : setLayerName("")
       geoServerFields.bounds ? setBoundingBox(geoServerFields.bounds) : setBoundingBox("")
@@ -59,6 +59,8 @@ export const GeoServerFields = props => {
             fieldPath={`${fieldPath}.has_wms`}
             label={has_wms.label}
             description={has_wms.description}
+            trueLabel="Yes"
+            falseLabel="No"
           ></BooleanCheckbox>
           {layerName && hasWms && (
             <Segment basic>
@@ -69,6 +71,8 @@ export const GeoServerFields = props => {
             fieldPath={`${fieldPath}.has_wfs`}
             label={has_wfs.label}
             description={has_wfs.description}
+            trueLabel="Yes"
+            falseLabel="No"
           ></BooleanCheckbox>
           {layerName && hasWfs && (
             <Segment basic>
