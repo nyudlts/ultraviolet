@@ -8,14 +8,12 @@ export const WmsCheck = (
     serverUrl = "",
   }
 ) => {
-  const [layerFound, setLayerFound] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true)
     setError(null)
-    setLayerFound(false)
 
     const formData = new FormData();
     formData.append("url", `${serverUrl}/wms`);
@@ -30,13 +28,11 @@ export const WmsCheck = (
           setError("Layer not found")
           setLoading(false)
         } else {
-          setLayerFound(true)
           setLoading(false)
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        setLayerFound(true)
         setLoading(false)
       });
   }, [layerName]);

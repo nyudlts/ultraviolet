@@ -22,7 +22,7 @@ export const WmsMap = (
       retina: "@2x",
     }).addTo(map);
 
-    if (layerName != "") {
+    if (layerName !== "") {
       const wmsLayer = L.tileLayer.wms(`${serverUrl}/wms`, {
         layers: layerName,
         format: 'image/png',
@@ -34,7 +34,7 @@ export const WmsMap = (
       wmsLayer.setOpacity(0.75);
     }
 
-    if (boundingBox != "") {
+    if (boundingBox !== "") {
       const match = boundingBox.match(/ENVELOPE\(([-\d.]+), ([-\d.]+), ([-\d.]+), ([-\d.]+)\)/);
 
       if (match) {

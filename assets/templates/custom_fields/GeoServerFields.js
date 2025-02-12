@@ -23,8 +23,6 @@ export const GeoServerFields = props => {
   const [hasWfs, setHasWfs] = useState(false)
   const [boundingBox, setBoundingBox] = useState("")
 
-  const fieldPathPrefix = `${fieldPath}`;
-
   const {values} = useFormikContext();
 
   useEffect(() => {
@@ -46,19 +44,19 @@ export const GeoServerFields = props => {
       <GridRow>
         <GridColumn>
           <Input
-            fieldPath={`${fieldPathPrefix}.layer`}
+            fieldPath={`${fieldPath}.layer`}
             label={layer.label}
             placeholder={layer.placeholder}
             description={layer.description}
           ></Input>
           <Input
-            fieldPath={`${fieldPathPrefix}.bounds`}
+            fieldPath={`${fieldPath}.bounds`}
             label={bounds.label}
             placeholder={bounds.placeholder}
             description={bounds.description}
           ></Input>
           <BooleanCheckbox
-            fieldPath={`${fieldPathPrefix}.has_wms`}
+            fieldPath={`${fieldPath}.has_wms`}
             label={has_wms.label}
             description={has_wms.description}
           ></BooleanCheckbox>
@@ -68,7 +66,7 @@ export const GeoServerFields = props => {
             </Segment>
           )}
           <BooleanCheckbox
-            fieldPath={`${fieldPathPrefix}.has_wfs`}
+            fieldPath={`${fieldPath}.has_wfs`}
             label={has_wfs.label}
             description={has_wfs.description}
           ></BooleanCheckbox>
