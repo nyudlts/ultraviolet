@@ -1,7 +1,7 @@
 import pytest
 import responses
 from marshmallow import ValidationError
-
+from ultraviolet.geoserver.validate import BoundsValidator
 from ultraviolet.geoserver.validate import LayerValidator
 
 
@@ -123,6 +123,7 @@ def test_layer_invalid(invalid_wms_response, invalid_wfs_response):
     with pytest.raises(ValidationError):
         validator("sdr:foo_bar")
 
+
 @responses.activate
 def test_layer_half_valid(invalid_wms_response, valid_wfs_response):
     responses.add(
@@ -143,3 +144,24 @@ def test_layer_half_valid(invalid_wms_response, valid_wfs_response):
 
     with pytest.raises(ValidationError):
         validator("sdr:foo_bar")
+
+
+def test_bounds_valid_decimals():
+    validator = BoundsValidator()
+
+    assert validator(
+        "ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)") == "ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)"
+
+
+def test_bounds_valid_integers():
+    validator = BoundsValidator()
+
+    assert validator(
+        "ENVELOPE(-74, -73, 40, 40)") == "ENVELOPE(-74, -73, 40, 40)"
+
+
+def test_bounds_invalid():
+    validator = BoundsValidator()
+
+    with pytest.raises(ValidationError):
+        validator("ENVELOPE(-74.2556640887564 -73.700009054899 40.9157739339836 40.4960925239255)")

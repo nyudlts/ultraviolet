@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import typing
 import urllib
 
@@ -13,7 +14,10 @@ _T = typing.TypeVar("_T")
 
 class BoundsValidator(Validator):
     def __call__(self, value: _T) -> _T:
-        return value
+        if re.match(r"ENVELOPE\((-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)\)", value):
+            return value
+        else:
+            raise ValidationError("Invalid bounds value")
 
 
 class LayerValidator(Validator):
