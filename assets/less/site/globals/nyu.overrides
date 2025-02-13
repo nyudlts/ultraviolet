@@ -201,7 +201,7 @@ body {
       } 
       a, a:link, a:hover {
         color:#eaddf9;
-        text-decoration: underline solid #eaddf9;
+        text-decoration: underline solid #f1e5ffa5;
         text-underline-offset: 2px;
       }
       a:hover {
@@ -214,7 +214,51 @@ body {
       display: none;
     }
   }
-  
+  .community-header {
+    h1.community-h1 {
+      font-size: 1.6rem;
+      margin-bottom:5px;
+      font-weight: lighter;
+      a {
+        font-weight: lighter;
+        padding-bottom: 7px;
+        display: block;
+      }
+    }
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+  }
+  .page-subheader {
+    // Styles for the tabs on the community pages
+    .ui.secondary.pointing.menu {
+      border-bottom: @secondaryPointingBorderWidth solid @secondaryPointingBorderColor;
+      .item {   
+        margin-right: 1em;
+        border-color: transparent;
+        border-bottom-width: 7px;
+        // margin-bottom: 0 overrides a -2px margin that makes the active highlight overlap the divider line
+        margin-bottom: 0;
+        font-weight:normal;
+        padding-bottom: .5em;
+        
+        &:hover {
+          border-color: #7203bb45;
+        }
+        &:active, &:focus {
+          border-color: #7203bb45;
+          outline:none !important;
+        }
+        @media all and (min-width: @tabletBreakpoint) {
+          &:first-of-type {
+            padding-left: 0;
+          }
+        }
+      }
+      .item.active {
+        border-color: @secondaryPointingActiveHoverBorderColor;
+      }
+    }
+  }
   .wrap-long-link {
     overflow-wrap: break-word;
     word-wrap: break-word;
