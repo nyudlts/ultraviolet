@@ -2,7 +2,7 @@
 
 body {
 
-  font-family: GothamLight, Lato, sans-serif;
+  font-family: Lato, sans-serif;
 
   a,
   .ui.breadcrumb & {
@@ -30,7 +30,7 @@ body {
   h3,
   h4,
   h5 {
-    font-family: GothamLight, Lato, sans-serif;
+    font-family: Lato, sans-serif;
   }
 
   // Please document this
@@ -75,6 +75,14 @@ body {
       }
     }
   }
+  #record-info {
+    .right span:first-child {
+      padding-right: 1.5em !important;
+    }
+    .ui.label > .icon {
+      margin: 0 0.25rem 0 0 !important;
+   }
+  }
   .ui.search.button {
     background-color: @searchButtonColor  !important;
 
@@ -108,13 +116,17 @@ body {
     &.neutral {
       background-color: transparent !important;
       border: none !important;
-      color: @darkGray !important;;
+      color: @darkGray !important;
       margin-left: 0;
-      padding: 0;
+      padding: 0 !important;
       border: 0;
     }
+  
   }
-
+  // search results items: icons for "downloads" and "views" appearing at bottom right
+  .ui.items  > .item .extra small .ui.label {
+    padding: .5rem 1.5rem 0 !important;
+  }
   .ui.items>.item .extra.labels-actions {
     margin-bottom: 0;
 
@@ -125,7 +137,6 @@ body {
     >[class*="right floated"] {
       margin: 0 0 0 0.5rem;
     }
-
     // Bullet points between metadata labels
     div {
       &::after {
@@ -162,13 +173,103 @@ body {
   }
 
   .ui.text.container {
-    font-family: GothamLight, Lato, sans-serif;
+    font-family: Lato, sans-serif;
   }
+  
+  #banners {
+    .ui.container.page-subheader .page-subheader-element {
+      @media all and (max-width: @computerBreakpoint) {
+        display: block;
+      }
+      
+    }
+    .ui.container.page-subheader-outer {
+      background-color: @secondaryColor;
+      color: #eaddf9;
+      text-shadow: 0px 0px 2px black;
+      min-height: 3rem;
+    }
+    .description {
+      color: #d6c8e5;
+    }
+    .ui.container.page-subheader  {
+      padding-left: 0;
+      .page-subheader-element {
+        padding-left: 0;
+        padding-right: 0;
+      } 
+      a, a:link, a:hover {
+        text-transform: uppercase;
+        color:#eaddf9;
+        text-decoration: underline solid #f1e5ffa5;
+        text-underline-offset: 2px;
+      }
+      a:hover {
+        color:#ffffff;
+        text-decoration: underline solid #ffffff;
+      }
+    }
+  }
+  .fallback_image, img.fallback_image, .ui.image.community-header-logo, .community-image {
+    max-width: 0;
+    display: none !important;
+    padding: 0;
+  }
+  .community-header {
+    h1 {
+      font-size: 1.6rem;
+      font-weight: lighter;
+    }
+  }
+  .page-subheader {
+    // Styles for the tabs on the community pages
+    .ui.secondary.pointing.menu {
+      border-bottom: @secondaryPointingBorderWidth solid @secondaryPointingBorderColor;
+      .item {   
+        margin-right: 1em;
+        border-color: transparent;
+        border-bottom-width: 7px;
+        // margin-bottom: 0 overrides a -2px margin that makes the active highlight overlap the divider line
+        margin-bottom: 0;
+        font-weight:normal;
+        padding-bottom: .5em;
+        
+        &:hover {
+          border-color: #7203bb45;
+        }
+        &:active, &:focus-visible {
+          border-color: #7203bb45;
+          outline:none ;
+        }
+
+        @media all and (min-width: @tabletBreakpoint) {
+          &:first-of-type {
+            padding-left: 0;
+          }
+        }
+      }
+      .item.active {
+        border-color: @secondaryPointingActiveHoverBorderColor;
+      }
+    }
+  }
+
   .wrap-long-link {
     overflow-wrap: break-word;
     word-wrap: break-word;
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
+ }
+ #deposit-form {
+  .page-subheader-element {
+    // This is the community name at the top of the deposit form. Also the image which is currently hidden
+    font-size: 1.6rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .page-subheader-outer {
+    margin-top: 1em;
+  }
  }
 }
