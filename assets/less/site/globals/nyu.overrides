@@ -186,7 +186,6 @@ body {
     .ui.container.page-subheader-outer {
       background-color: @secondaryColor;
       color: #eaddf9;
-      text-transform: uppercase;
       text-shadow: 0px 0px 2px black;
     }
     .description {
@@ -200,6 +199,7 @@ body {
         padding-right: 0;
       } 
       a, a:link, a:hover {
+        text-transform: uppercase;
         color:#eaddf9;
         text-decoration: underline solid #f1e5ffa5;
         text-underline-offset: 2px;
@@ -244,10 +244,14 @@ body {
         &:hover {
           border-color: #7203bb45;
         }
-        &:active, &:focus {
+        &:active, &:focus-visible {
           border-color: #7203bb45;
           outline:none !important;
         }
+        &:focus {
+          outline: 3px solid @linkColorActive !important;
+        }
+
         @media all and (min-width: @tabletBreakpoint) {
           &:first-of-type {
             padding-left: 0;
@@ -258,6 +262,9 @@ body {
         border-color: @secondaryPointingActiveHoverBorderColor;
       }
     }
+  }
+  .community-image {
+    display: none;
   }
   .wrap-long-link {
     overflow-wrap: break-word;
