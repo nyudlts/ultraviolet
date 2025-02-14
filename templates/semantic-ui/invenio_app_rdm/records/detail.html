@@ -1,9 +1,14 @@
+{# 
+  2025-02-11 NYU (lh435) pulled template from invenio_app_rdm
+  https://github.com/inveniosoftware/invenio-app-rdm/blob/c0f92b91756e54f2709ba64fb8b9a600d434c8e0/invenio_app_rdm/records_ui/templates/semantic-ui/invenio_app_rdm/records/detail.html
+  This is for the header of an item page
+#}
 {#
   Copyright (C) 2020-2024 CERN.
   Copyright (C) 2020-2021 Northwestern University.
   Copyright (C) 2021-2023 TU Wien.
   Copyright (C) 2021 Graz University of Technology.
-  Copyright (C) 2021 New York University.
+  Copyright (C) 2021-2025 New York University.
 
   Invenio RDM Records is free software; you can redistribute it and/or modify
   it under the terms of the MIT License; see LICENSE file for more details.
@@ -23,6 +28,7 @@
 {%- from "invenio_app_rdm/records/macros/files.html" import file_list_box, preview_file_box, media_file_list_box %}
 
 {%- set title = record.metadata.title %}
+{%- set description = record.metadata.description %}
 {%- set metadata = record.metadata %}
 
 {%- set can_manage_record = permissions is defined and (permissions.can_edit or permissions.can_review) %}
@@ -57,18 +63,13 @@
           {% include "invenio_communities/details/header.html" %}
         {% else %}
           <div
-            class="ui fluid container page-subheader-outer with-submenu compact ml-0-mobile mr-0-mobile">
+            class="ui fluid flex align-items-center container page-subheader-outer with-submenu  pt-0 ml-0-mobile mr-0-mobile">
             <div class="ui container page-subheader">
               <div class="page-subheader-element">
-                <img
-                  class="ui rounded image community-header-logo"
-                  src="{{ community.links.logo | resolve_community_logo(community.id) }}"
-                  alt=""
-                />
-              </div>
-              <div class="page-subheader-element">
                 <a
-                  href="{{ url_for('invenio_app_rdm_communities.communities_detail', pid_value=community.slug) }}"> {{ community.metadata.title }}</a>
+                  href="{{ url_for('invenio_app_rdm_communities.communities_detail', pid_value=community.slug) }}">{{ community.metadata.title }}</a>
+                  {% if community.metadata.description %}<span class="description">: 
+                  {{ community.metadata.description }}</span>{% endif %}
                 {% if is_community_restricted %}
                   <span
                     class="ui label horizontal small access-status restricted rel-ml-1"
