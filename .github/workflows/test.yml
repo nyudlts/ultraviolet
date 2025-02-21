@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - tombstone-page
+      - tombstone-page 
     paths-ignore:
       - "docs/**"
       - "**.md"
