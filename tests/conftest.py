@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
@@ -29,7 +26,6 @@ def create_app():
     return create_ui_api
 
 
-# modify application configuration
 @pytest.fixture(scope="module")
 def app_config(app_config):
     # sqllite refused to create mock db without those parameters and they are missing
@@ -67,6 +63,7 @@ def app_config(app_config):
         'strict_transport_security_preload': False,
     }
     return app_config
+
 
 # overriding instance path allows us to make sure we use ultraviolet templates
 @pytest.fixture(scope="module")
@@ -1046,7 +1043,7 @@ def admin(UserFixture, app, db, admin_role_need):
         password="admin",
     )
     u.create(app, db)
-    db.session.commit()
+
 
     datastore = app.extensions["security"].datastore
     _, role = datastore._prepare_role_modify_args(u.user, "administration-access")

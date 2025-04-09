@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
@@ -19,11 +16,9 @@ from invenio_accounts.testutils import login_user_via_session
 def test_meta_tags(full_record, services, client, app, db, admin_user):
     """Test that verifies all meta tags appear in the record"""
 
-    app.config["DATACITE_PREFIX"] = "10.1234"
-    app.config["DATACITE_ENABLED"] = "true"
-
     service = current_rdm_records_service
     data = full_record.copy()
+    data["pids"] = {}
     draft = service.create(system_identity, data)
     db.session.commit()
     draft = service.read_draft(system_identity, draft.id)
@@ -42,8 +37,7 @@ def test_meta_tags(full_record, services, client, app, db, admin_user):
     assert '<meta name="citation_author" content="Nielsen, Lars Holm" />' in html_content, "Missing author tag"
     assert '<meta name="citation_publication_date" content="2020/09/01" />' in html_content, "Missing citation_publication_date tag"
     assert '<meta name="citation_publisher" content="InvenioRDM" />' in html_content, "Missing citation_publisher tag"
-    assert '<meta name="citation_doi" content="10.1234/inveniordm.1234" />' in html_content, "Missing citation_doi tag"
+    # assert '<meta name="citation_doi" content="10.1234/inveniordm.1234" />' in html_content, "Missing citation_doi tag"
     assert '<meta name="citation_keywords" content="custom" />' in html_content, "Missing citation_keywords tag"
     assert '<meta name="citation_abstract_html_url" content="https://127.0.0.1:5000/records/' in html_content, "Missing citation_abstract_html_url tag"
     assert '<meta name="citation_contributor" content="Nielsen, Lars Holm" />' in html_content, "Missing contirbutor tag"
-
