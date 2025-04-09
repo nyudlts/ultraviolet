@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
@@ -11,14 +8,9 @@
 """Pytest configuration."""
 
 
-import invenio_app.factory as factory
-from invenio_base.wsgi import wsgi_proxyfix
-from invenio_config import create_config_loader
 from invenio_rdm_records.proxies import current_rdm_records_service
 from invenio_records_resources.proxies import current_service_registry
 import pytest
-import os
-from invenio_app.factory import create_ui
 
 
 @pytest.fixture()
