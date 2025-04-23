@@ -1,9 +1,6 @@
 removalreasons:
   pid-type: rem
   data-file: vocabularies/removal_reasons.yaml
-resourcetypes:
-  pid-type: rsrct
-  data-file: vocabularies/resource_types_nyu.yaml
 languages:
   pid-type: lng
   data-file: vocabularies/languages.yaml
