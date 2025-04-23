@@ -133,7 +133,10 @@
         </nav>
       {%- endblock navbar %}
     </div>
-
+    {%- block site_banner %}
+      {% from 'invenio_banners/banner.html' import banner %}
+      {{ banner() }}
+    {%- endblock site_banner %}
     {%- block flashmessages %}
       {%- from "invenio_theme/macros/messages.html" import flashed_messages with context -%}
       {{ flashed_messages() }}
