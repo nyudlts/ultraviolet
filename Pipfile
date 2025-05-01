@@ -14,14 +14,17 @@ flask-pytest = "*"
 [packages]
 ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
 ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git", ref="align-v12-update"}
-invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git", ref="13.0.6-role-filter"}
+invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git"}
 sqlalchemy = {version = "*", extras = ["asyncio"], markers = "platform_machine == 'x86_64' or platform_machine == 'arm64'"}
+invenio-db = "==1.2.0"
+#invenio-github = "==1.5.2"
+psycopg2-binary = "==2.9.9"
+invenio-search-ui= "==2.8.9"
 lxml = "==4.9.3"
 xmlsec = "==1.3.13"
 python-dotenv = "*"
-invenio-app-rdm = {extras = ["opensearch2"], version = "~=12.0.0"}
+invenio-app-rdm = {extras = ["opensearch2","postgresql"], version = "~=12.0.0"}
 ultraviolet = {editable = true, path="./site"}
-flask_babelex = "*"
 
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"

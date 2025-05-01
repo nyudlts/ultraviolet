@@ -10,7 +10,7 @@
 
 FROM registry.cern.ch/inveniosoftware/almalinux:latest
 
-RUN dnf install xmlsec1-openssl xmlsec1 libxml2 libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel -y
+RUN dnf --releasever=9 install xmlsec1-openssl xmlsec1 libxml2 libxml2-devel xmlsec1-devel xmlsec1-openssl-devel libtool-ltdl-devel -y
 COPY site ./site
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install --deploy --system
