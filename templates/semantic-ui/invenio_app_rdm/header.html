@@ -8,7 +8,11 @@
     under the terms of the MIT License; see LICENSE file for more details.
 #}
 {%- set role_names = current_user.roles | map(attribute='name') | list %}
-{%- set has_community_roles = get_all_community_roles() | length > 0 %}
+{% set has_community_roles = [] | length > 0 %}
+{% if config.ACCOUNTS and current_user.is_authenticated and (get_all_community_roles is defined) %}
+    {% set has_community_roles = get_all_community_roles() | length > 0 %}
+{% endif %}
+
 <div>
   <header class="theme header">
     <div class="outer-navbar">

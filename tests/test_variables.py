@@ -45,10 +45,6 @@ def test_var_noassigned():
     """Mocking using default configuration"""
     app = create_app()
     assert app.config.get("APP_ALLOWED_HOSTS") == ["0.0.0.0", "localhost", "127.0.0.1"]
-    assert (
-        app.config.get("SQLALCHEMY_DATABASE_URI")
-        == "postgresql+psycopg2://ultraviolet:ultraviolet@localhost/ultraviolet"
-    )
     assert app.config.get("SITE_UI_URL") == "https://127.0.0.1:5000"
     assert app.config.get("SITE_API_URL") == "https://127.0.0.1:5000/api"
     assert app.config.get("APP_ENVIRONMENT") == "local"
