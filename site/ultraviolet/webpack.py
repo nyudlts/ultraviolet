@@ -9,7 +9,7 @@ theme = WebpackThemeBundle(
     themes={
         "semantic-ui": dict(
             entry={
-                # Add your webpack entrypoints
+                "web_archive_css": "./css/ultraviolet/web_archive.css"
             },
         ),
     },
