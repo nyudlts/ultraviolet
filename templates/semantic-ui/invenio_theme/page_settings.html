@@ -1,4 +1,4 @@
-{# -*- coding: utf-8 -*-
+={# -*- coding: utf-8 -*-
 
   This file is part of Invenio.
   Copyright (C) 2015-2024 CERN.
@@ -31,15 +31,13 @@
         {%- for item in current_menu.submenu('settings').children if item.visible %}
           {% set fixed_url = '/administration' if 'admin' in item.url  else item.url %}
           {%- block settings_menu_item scoped %}
-            {%- if "password" not in fixed_url %}
-              <a
-                href="{{ fixed_url  }}"
-                class="brand item {% if item.active %}active{% endif %}"
-                {% if item.active %} aria-current="page" {% endif %}
-              >
-                {{ item.text|safe }}
-              </a>
-            {%- endif %}
+            <a
+              href="{{ fixed_url  }}"
+              class="brand item {% if item.active %}active{% endif %}"
+              {% if item.active %} aria-current="page" {% endif %}
+            >
+              {{ item.text|safe }}
+            </a>
           {%- endblock %}
 
         {%- endfor %}
