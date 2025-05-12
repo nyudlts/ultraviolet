@@ -1,0 +1,910 @@
+============================= test session starts ==============================
+platform linux -- Python 3.9.16, pytest-6.2.5, py-1.11.0, pluggy-0.13.1
+rootdir: /home/zack/05/ultraviolet, configfile: pytest.ini
+plugins: invenio-2.1.1, flask-1.3.0, pydocstyle-2.2.1, isort-4.0.0, cov-5.0.0, Faker-30.1.0, pycodestyle-2.2.1, typeguard-4.3.0
+collected 1 item
+
+tests/ui/test_restricted_file_msg.py F                                   [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_restricted_file_message _________________________
+
+minimal_record = {'access': {'files': 'restricted', 'record': 'public'}, 'files': {'enabled': True}, 'metadata': {'creators': [{'person...], 'publication_date': '2020-06-01', 'publisher': 'Acme Inc', 'resource_type': {'id': 'image-photo'}, ...}, 'pids': {}}
+services = <invenio_rdm_records.services.services.RDMRecordService object at 0x7f9ca3113130>
+app = <Flask 'invenio'>
+db = <SQLAlchemy engine=sqlite:////home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/var/instance/test67xl19za.db>
+register_file_service = <invenio_rdm_records.services.files.service.RDMFileService object at 0x7f9ca31132e0>
+client = <FlaskClient <Flask 'invenio'>>
+
+    def test_restricted_file_message(minimal_record, services, app, db, register_file_service, client):
+        """
+        Test restricted file message on record page.
+        """
+    
+        service = current_rdm_records_service
+    
+        data = minimal_record.copy()
+        data["files"]["enabled"] = True
+    
+        data["access"]["record"] = "public"
+        data["access"]["files"] = "restricted"
+    
+        # Create a record with a restricted file
+        draft = service.create(system_identity, data)
+    
+        # Add a file
+        service.draft_files.init_files(
+            system_identity, draft.id, data=[{"key": "test.pdf"}]
+        )
+        service.draft_files.set_file_content(
+            system_identity, draft.id, "test.pdf", BytesIO(b"test file")
+        )
+        service.draft_files.commit_file(system_identity, draft.id, "test.pdf")
+    
+        # Publish
+        record = service.publish(system_identity, draft.id)
+        record_view = client.get("/records/" + record['id']).data
+        html = record_view.decode("utf-8")
+        print(html)
+    
+        # Download all button should present
+>       assert "Downloasd all" in html
+E       assert 'Downloasd all' in '\n\n\n\n<!DOCTYPE html>\n<html lang="en" dir="ltr">\n  <head>\n  \n    \n    <meta charset="utf-8">\n    <meta http-e...ript>\n  <script src="/static/dist/js/previewer_theme.a4cb12f2f2d734727d26.js"></script>\n        \n  </body>\n</html>'
+
+tests/ui/test_restricted_file_msg.py:50: AssertionError
+------------------------------ Captured log setup ------------------------------
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_utils/types/encrypted/encrypted_type.py:463: DeprecationWarning: The 'EncryptedType' class will change implementation from 'LargeBinary' to 'String' in a future version. Use 'StringEncryptedType' to use the 'String' implementation.
+  warnings.warn(
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_babelex/__init__.py:20: DeprecationWarning: '_request_ctx_stack' is deprecated and will be removed in Flask 2.3.
+  from flask import _request_ctx_stack
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask/scaffold.py:50: DeprecationWarning: 'before_app_first_request' is deprecated and will be removed in Flask 2.3. Use 'record_once' instead to run setup code when registering the blueprint.
+  return f(self, *args, **kwargs)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask/scaffold.py:50: DeprecationWarning: 'before_first_request' is deprecated and will be removed in Flask 2.3. Run setup code while creating the application instead.
+  return f(self, *args, **kwargs)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_admin/contrib/__init__.py:2: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('flask_admin.contrib')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  __import__('pkg_resources').declare_namespace(__name__)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/pkg_resources/__init__.py:2563: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('flask_admin')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/invenio_app_rdm/ext.py:34: DeprecationWarning: COMMUNITIES_GROUPS_ENABLED config variable is deprecated. Please use USERS_RESOURCES_GROUPS_ENABLED instead. For now, COMMUNITIES_GROUPS_ENABLED value will be taken into account and features related to groups will be disabled if this was the intention.
+  warnings.warn(
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/invenio_rest/ext.py:30: FutureWarning: CSRF validation will be enabled by default in the version 1.3.x
+  self.init_app(app)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/model.py:121: SAWarning: This declarative base already contains a class with the same class name and module name as sqlalchemy_continuum.model_builder.RecordMetadataVersion, and will be replaced in the string-lookup table.
+  super(BindMetaMixin, cls).__init__(name, bases, d)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/model.py:121: SAWarning: This declarative base already contains a class with the same class name and module name as sqlalchemy_continuum.model_builder.RDMRecordMetadataVersion, and will be replaced in the string-lookup table.
+  super(BindMetaMixin, cls).__init__(name, bases, d)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/model.py:121: SAWarning: This declarative base already contains a class with the same class name and module name as sqlalchemy_continuum.model_builder.RDMFileRecordMetadataVersion, and will be replaced in the string-lookup table.
+  super(BindMetaMixin, cls).__init__(name, bases, d)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/model.py:121: SAWarning: This declarative base already contains a class with the same class name and module name as sqlalchemy_continuum.model_builder.RDMMediaFileRecordMetadataVersion, and will be replaced in the string-lookup table.
+  super(BindMetaMixin, cls).__init__(name, bases, d)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/model.py:121: SAWarning: This declarative base already contains a class with the same class name and module name as sqlalchemy_continuum.model_builder.PageModelVersion, and will be replaced in the string-lookup table.
+  super(BindMetaMixin, cls).__init__(name, bases, d)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/model.py:121: SAWarning: This declarative base already contains a class with the same class name and module name as sqlalchemy_continuum.model_builder.PageListVersion, and will be replaced in the string-lookup table.
+  super(BindMetaMixin, cls).__init__(name, bases, d)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: On mapper mapped class RecordMetadataVersion->records_metadata_version, primary key column 'records_metadata_version.transaction_id' is being combined with distinct primary key column 'records_metadata_version.transaction_id' in attribute 'transaction_id'. Use explicit properties to give each column its own mapped attribute name.
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: relationship 'RecordMetadataVersion.transaction' will copy column transaction.id to column records_metadata_version.transaction_id, which conflicts with relationship(s): 'RecordMetadataVersion.transaction' (copies transaction.id to records_metadata_version.transaction_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="transaction"' to the 'RecordMetadataVersion.transaction' relationship. (Background on this error at: https://sqlalche.me/e/14/qzyx)
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: On mapper mapped class RDMRecordMetadataVersion->rdm_records_metadata_version, primary key column 'rdm_records_metadata_version.transaction_id' is being combined with distinct primary key column 'rdm_records_metadata_version.transaction_id' in attribute 'transaction_id'. Use explicit properties to give each column its own mapped attribute name.
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: relationship 'RDMRecordMetadataVersion.transaction' will copy column transaction.id to column rdm_records_metadata_version.transaction_id, which conflicts with relationship(s): 'RDMRecordMetadataVersion.transaction' (copies transaction.id to rdm_records_metadata_version.transaction_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="transaction"' to the 'RDMRecordMetadataVersion.transaction' relationship. (Background on this error at: https://sqlalche.me/e/14/qzyx)
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: On mapper mapped class RDMFileRecordMetadataVersion->rdm_records_files_version, primary key column 'rdm_records_files_version.transaction_id' is being combined with distinct primary key column 'rdm_records_files_version.transaction_id' in attribute 'transaction_id'. Use explicit properties to give each column its own mapped attribute name.
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: relationship 'RDMFileRecordMetadataVersion.transaction' will copy column transaction.id to column rdm_records_files_version.transaction_id, which conflicts with relationship(s): 'RDMFileRecordMetadataVersion.transaction' (copies transaction.id to rdm_records_files_version.transaction_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="transaction"' to the 'RDMFileRecordMetadataVersion.transaction' relationship. (Background on this error at: https://sqlalche.me/e/14/qzyx)
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: On mapper mapped class RDMMediaFileRecordMetadataVersion->rdm_records_media_files_version, primary key column 'rdm_records_media_files_version.transaction_id' is being combined with distinct primary key column 'rdm_records_media_files_version.transaction_id' in attribute 'transaction_id'. Use explicit properties to give each column its own mapped attribute name.
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: relationship 'RDMMediaFileRecordMetadataVersion.transaction' will copy column transaction.id to column rdm_records_media_files_version.transaction_id, which conflicts with relationship(s): 'RDMMediaFileRecordMetadataVersion.transaction' (copies transaction.id to rdm_records_media_files_version.transaction_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="transaction"' to the 'RDMMediaFileRecordMetadataVersion.transaction' relationship. (Background on this error at: https://sqlalche.me/e/14/qzyx)
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: On mapper mapped class PageModelVersion->pages_page_version, primary key column 'pages_page_version.transaction_id' is being combined with distinct primary key column 'pages_page_version.transaction_id' in attribute 'transaction_id'. Use explicit properties to give each column its own mapped attribute name.
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: relationship 'PageModelVersion.transaction' will copy column transaction.id to column pages_page_version.transaction_id, which conflicts with relationship(s): 'PageModelVersion.transaction' (copies transaction.id to pages_page_version.transaction_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="transaction"' to the 'PageModelVersion.transaction' relationship. (Background on this error at: https://sqlalche.me/e/14/qzyx)
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: On mapper mapped class PageListVersion->pages_pagelist_version, primary key column 'pages_pagelist_version.transaction_id' is being combined with distinct primary key column 'pages_pagelist_version.transaction_id' in attribute 'transaction_id'. Use explicit properties to give each column its own mapped attribute name.
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/sqlalchemy_continuum/builder.py:123: SAWarning: relationship 'PageListVersion.transaction' will copy column transaction.id to column pages_pagelist_version.transaction_id, which conflicts with relationship(s): 'PageListVersion.transaction' (copies transaction.id to pages_pagelist_version.transaction_id). If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   To silence this warning, add the parameter 'overlaps="transaction"' to the 'PageListVersion.transaction' relationship. (Background on this error at: https://sqlalche.me/e/14/qzyx)
+  for prop in sa.inspect(cls).iterate_properties:
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/__init__.py:302: DeprecationWarning: '_app_ctx_stack' is deprecated and will be removed in Flask 2.3. Use 'g' to store data, or 'app_ctx' to access the current context.
+  queries = _app_ctx_stack.top.sqlalchemy_queries
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/__init__.py:304: DeprecationWarning: '_app_ctx_stack' is deprecated and will be removed in Flask 2.3. Use 'g' to store data, or 'app_ctx' to access the current context.
+  queries = _app_ctx_stack.top.sqlalchemy_queries = []
+
+WARNING  opensearch:base.py:280 PUT http://localhost:9200/vocabularies-vocabulary-v1.0.0 [status:400 request:0.004s]
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/invenio_access/models.py:53: RemovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  return cls(action=action.value, argument=argument, **kwargs)
+
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_security/datastore.py:185: DeprecationWarning: get_user method is deprecated, user get_user_by_email/get_user_by_id
+  warnings.warn(
+----------------------------- Captured stdout call -----------------------------
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    
+    <meta name="generator" content="InvenioRDM 12.0"/>
+
+    
+    
+    
+  
+
+<!-- skip the tag for pdf_url -->
+    <meta name="description" content="" />
+    <meta name="citation_title" content="A Romans story" />
+    <meta name="citation_author" content="Brown, Troy" />
+    <meta name="citation_author" content="Troy Inc." />
+    <meta name="citation_publisher" content="Acme Inc" />
+    <meta name="citation_publication_date" content="2020/06/01" />
+    <meta name="citation_abstract_html_url" content="https://127.0.0.1:5000/records/pqj6e-hk642" />
+    <meta property="og:title" content="A Romans story" />
+    <meta property="og:description" content="" />
+    <meta property="og:url" content="https://127.0.0.1:5000/records/pqj6e-hk642" />
+    <meta property="og:site_name" content="UltraViolet" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="" />
+    <meta name="twitter:title" content="A Romans story" />
+    <meta name="twitter:description" content="" />
+
+<link rel="canonical" href="https://127.0.0.1:5000/records/pqj6e-hk642">
+      <title>A Romans story</title>
+      <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
+          <link rel="apple-touch-icon" sizes="120x120" href="/static/apple-touch-icon-120.png"/>
+          <link rel="apple-touch-icon" sizes="152x152" href="/static/apple-touch-icon-152.png"/>
+          <link rel="apple-touch-icon" sizes="167x167" href="/static/apple-touch-icon-167.png"/>
+          <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon-180.png"/>
+    
+      <link rel="stylesheet" href="/static/dist/css/3526.0dfe956f41db13af3b79.css" />
+      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    
+  </head>
+
+  <body data-invenio-config='{"isMathJaxEnabled": ""}'  itemscope itemtype="http://schema.org/WebPage" data-spy="scroll" data-target=".scrollspy-target">
+      <a id="skip-to-main" class="ui button primary ml-5 mt-5 skip-link" href="#main">Skip to main</a>
+      <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+    
+
+<div>
+  <header class="theme header">
+
+    <div class="outer-navbar">
+      <div class="ui container invenio-header-container">
+        <nav id="invenio-nav" class="ui inverted menu borderless p-0">
+          <div class="item logo p-0">
+                    <a class="logo-link" href="/">
+                      <img class="ui image rdm-logo"
+                            src="/static/images/logo_ultraviolet_1word_white.svg"
+                            alt="UltraViolet home"/>
+                    </a>
+          </div>
+
+          <div id="rdm-burger-toggle">
+            <button
+              id="rdm-burger-menu-icon"
+              class="ui button transparent"
+              aria-label="Menu"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="invenio-menu"
+            >
+              <span class="navicon" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <nav
+            id="invenio-menu"
+            aria-labelledby="rdm-burger-menu-icon"
+            class="ui fluid menu borderless mobile-hidden"
+          >
+            <button
+              id="rdm-close-burger-menu-icon"
+              class="ui button transparent"
+              aria-label="Close menu"
+            >
+              <span class="navicon" aria-hidden="true"></span>
+            </button>
+    
+    
+    
+      <div class="item p-0 search-bar rel-mr-1">
+        <div id="header-search-bar" data-options='[{"key": "records", "text": "All UltraViolet", "value": "/search"}]'>
+          <div class="ui fluid search">
+            <div class="ui icon input">
+              <input autocomplete="off" placeholder="Search records..."
+                     type="text" tabindex="0" class="prompt" value="">
+              <i aria-hidden="true" class="search icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+              
+                <div class="item">
+                  <a href="/me/uploads">My dashboard</a>
+                </div>
+              
+              <div class="right menu item">
+        <form>
+            <a href="/login/?next=%2Frecords%2Fpqj6e-hk642"
+               class="ui button">
+                <i class="sign-in icon"></i>
+                Log in</a>
+            
+        </form>
+              </div>
+          </nav>
+        </nav>
+    </div>
+      
+      
+    
+  </header>
+</div>
+
+  <main id="main">
+    <div class="invenio-page-body">
+  <section id="banners" class="banners" aria-label="Information banner">
+
+    <!-- COMMUNITY HEADER: hide it when displaying the submission request -->
+    
+      
+    
+    <!-- /COMMUNITY HEADER -->
+
+    <!-- PREVIEW HEADER -->
+    
+    <!-- /PREVIEW HEADER -->
+
+    
+  </section>
+
+
+  <div class="ui container">
+    <div class="ui relaxed grid mt-5">
+      <div class="two column row top-padded">
+
+        
+        <article
+          class="sixteen wide tablet eleven wide computer column main-record-content">
+          
+
+              
+
+              
+
+              <section id="record-info"
+                       aria-label="Publication date and version number">
+                <div class="ui grid middle aligned">
+                  <div class="two column row">
+                    <div class="left floated left aligned column">
+                      <span class="ui" title="Publication date">
+                        Published June 1, 2020
+                      </span>
+                      <span
+                        class="label text-muted"> | Version v1</span>
+                    </div>
+                    <div class="right floated right aligned column">
+
+                      
+                        <span role="note"
+                              class="ui label horizontal small neutral mb-5"
+                              aria-label="Resource type"
+                        >
+                          Photo
+                        </span>
+                      
+
+                      <span role="note"
+                            class="ui label horizontal small access-status restricted mb-5"
+                            data-tooltip="The files associated with this metadata record are restricted to members of the NYU community."
+                            data-inverted=""
+                            aria-label="Access status"
+                      >
+                        
+                          <i class="icon ban"
+                             aria-hidden="true"></i>
+                        
+                        <span
+                          aria-label="The files associated with this metadata record are restricted to members of the NYU community.">
+                          Restricted
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <div class="ui divider hidden"></div><section id="record-title-section"
+                       aria-label="Record title and creators">
+                <h1 id="record-title"
+                    class="wrap-overflowing-text">A Romans story</h1>
+
+                
+                  <section id="creatibutors"
+                           aria-label="Creators and contributors">
+
+<div class="ui grid">
+  
+    <div class="row ui accordion affiliations">
+      <div class="sixteen wide mobile twelve wide tablet thirteen wide computer column">
+          <h2 class="sr-only">Creators</h2>
+          <ul class="creatibutors">
+            
+  
+  <li class="creatibutor-wrap separated">
+    <a class="ui creatibutor-link"
+      
+      href="/search?q=metadata.creators.person_or_org.name%3A%22Brown,+Troy%22"
+    >
+
+      <span class="creatibutor-name">Brown, Troy</span></a>
+  
+
+  
+
+  
+</li>
+  
+  <li class="creatibutor-wrap separated">
+    <a class="ui creatibutor-link"
+      
+      href="/search?q=metadata.creators.person_or_org.name%3A%22Troy+Inc.%22"
+    >
+
+      <span class="creatibutor-name">Troy Inc.</span></a>
+  
+
+  
+
+  
+    <i class="group icon"></i>
+</li>
+  
+          </ul>
+      </div>
+
+        
+        
+
+    </div>
+  
+
+  
+</div>
+                  </section>
+                
+              </section>
+
+
+
+
+<section id="record-files" class="rel-mt-2 rel-mb-3"
+                         aria-label="Files">
+                    
+                    <div
+                      class="ui accordion panel mb-10 restricted"
+                      href="#files-preview-accordion-panel">
+                      <h3
+                        class="active title panel-heading restricted m-0">
+                        <div role="button" id="files-preview-accordion-trigger"
+                             tabindex="0" class="trigger"
+                             aria-controls="files-preview-accordion-panel">
+                          Files
+                          <i class="angle right icon" aria-hidden="true"></i>
+                        </div>
+                      </h3>
+                      <div role="region" id="files-preview-accordion-panel"
+                           aria-labelledby="files-preview-accordion-trigger"
+                           class="active content preview-container pt-0">
+                        <div
+                          class="ui negative message file-box-message rel-pl-1 rel-pr-1">
+                          <i class="ui ban icon"
+                             aria-hidden="true"></i>
+                          <h4
+                            class="inline">Restricted</h4>
+                          <p>The files associated with this metadata record are restricted to members of the NYU community.</p>
+
+                          
+
+                          
+                          
+                        </div>
+                      </div>
+                    </div>
+                </section>
+              <section id="additional-details" class="rel-mt-2"
+                       aria-label="Additional record details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </section>
+        </article>
+
+        
+        <aside class="sixteen wide tablet five wide computer column sidebar"
+               aria-label="Record details">
+          
+
+
+
+
+<section id="metrics" aria-label="Metrics" class="ui segment rdm-sidebar sidebar-container">
+
+
+<div class="ui tiny two statistics rel-mt-1">
+  
+  
+
+  <div class="ui statistic">
+    <div class="value">0</div>
+    <div class="label">
+      <i aria-hidden="true" class="eye icon"></i>
+      Views
+    </div>
+  </div>
+
+  <div class="ui statistic">
+    <div class="value">0</div>
+    <div class="label">
+      <i aria-hidden="true" class="download icon"></i>
+      Downloads
+    </div>
+  </div>
+</div>
+
+<div class="ui accordion rel-mt-1 centered">
+  <div class="title">
+    <i class="caret right icon" aria-hidden="true"></i>
+    <span
+      tabindex="0"
+      class="trigger"
+      data-open-text="Show more details"
+      data-close-text="Show less details"
+    >
+      Show more details
+    </span>
+  </div>
+
+  <div class="content">
+    <table id="record-statistics" class="ui definition table fluid">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="right aligned">All versions</th>
+          <th class="right aligned">This version</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Views
+            <i
+              tabindex="0"
+              role="button"
+              style="position:relative"
+              class="popup-trigger question circle small icon"
+              aria-expanded="false"
+              aria-label="More info"
+              data-variation="mini inverted"
+            >
+            </i>
+            <p role="tooltip" class="popup-content ui flowing popup transition hidden">
+              Total views
+            </p>
+          </td>
+          <td data-label="All versions" class="right aligned">
+  
+    0
+  
+</td>
+          <td data-label="This version" class="right aligned">
+  
+    0
+  
+</td>
+        </tr>
+        <tr>
+          <td>
+            Downloads
+            <i
+              tabindex="0"
+              role="button"
+              style="position:relative"
+              class="popup-trigger question circle small icon"
+              aria-expanded="false"
+              aria-label="More info"
+              data-variation="mini inverted"
+            >
+            </i>
+            <p role="tooltip" class="popup-content ui flowing popup transition hidden">
+              Total downloads
+            </p>
+          </td>
+          <td data-label="All versions" class="right aligned">
+  
+    0
+  
+</td>
+          <td data-label="This version" class="right aligned">
+  
+    0
+  
+</td>
+        </tr>
+        <tr>
+          <td>
+            Data volume
+            <i
+              tabindex="0"
+              role="button"
+              style="position:relative"
+              class="popup-trigger question circle small icon"
+              aria-expanded="false"
+              aria-label="More info"
+              data-variation="mini inverted"
+            >
+            </i>
+            <p role="tooltip" class="popup-content ui flowing popup transition hidden">
+              Total data volume
+            </p>
+          </td>
+
+          <td data-label="All versions" class="right aligned">0 Bytes</td>
+          <td data-label="This version" class="right aligned">0 Bytes</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="text-align-center rel-mt-1">
+      <small>
+        <a href="/help/statistics">More info on how stats are collected....</a>
+      </small>
+    </p>
+  </div>
+
+</div>
+
+</section>
+
+<div class="sidebar-container">
+  <h2 class="ui medium top attached header mt-0">Versions</h2>
+  <div id="record-versions" class="ui segment rdm-sidebar bottom attached pl-0 pr-0 pt-0">
+    <div class="versions">
+      <div id="recordVersions" data-record='{"access": {"embargo": {"active": false, "reason": null}, "files": "restricted", "record": "public", "status": "restricted"}, "created": "2025-05-08T23:37:28.036183+00:00", "custom_fields": {}, "deletion_status": {"is_deleted": false, "status": "P"}, "expanded": {}, "files": {"enabled": true}, "id": "pqj6e-hk642", "is_draft": false, "is_published": true, "links": {"access": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access", "access_grants": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/grants", "access_groups": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/groups", "access_links": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/links", "access_request": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/request", "access_users": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/users", "archive": "https://127.0.0.1:5000/api/records/pqj6e-hk642/files-archive", "archive_media": "https://127.0.0.1:5000/api/records/pqj6e-hk642/media-files-archive", "communities": "https://127.0.0.1:5000/api/records/pqj6e-hk642/communities", "communities-suggestions": "https://127.0.0.1:5000/api/records/pqj6e-hk642/communities-suggestions", "draft": "https://127.0.0.1:5000/api/records/pqj6e-hk642/draft", "files": "https://127.0.0.1:5000/api/records/pqj6e-hk642/files", "latest": "https://127.0.0.1:5000/api/records/pqj6e-hk642/versions/latest", "latest_html": "https://127.0.0.1:5000/records/pqj6e-hk642/latest", "media_files": "https://127.0.0.1:5000/api/records/pqj6e-hk642/media-files", "parent": "https://127.0.0.1:5000/api/records/zsscn-h6s92", "parent_html": "https://127.0.0.1:5000/records/zsscn-h6s92", "requests": "https://127.0.0.1:5000/api/records/pqj6e-hk642/requests", "reserve_doi": "https://127.0.0.1:5000/api/records/pqj6e-hk642/draft/pids/doi", "self": "https://127.0.0.1:5000/api/records/pqj6e-hk642", "self_html": "https://127.0.0.1:5000/records/pqj6e-hk642", "self_iiif_manifest": "https://127.0.0.1:5000/api/iiif/record:pqj6e-hk642/manifest", "self_iiif_sequence": "https://127.0.0.1:5000/api/iiif/record:pqj6e-hk642/sequence/default", "versions": "https://127.0.0.1:5000/api/records/pqj6e-hk642/versions"}, "media_files": {"enabled": false}, "metadata": {"creators": [{"person_or_org": {"family_name": "Brown", "given_name": "Troy", "name": "Brown, Troy", "type": "personal"}}, {"person_or_org": {"name": "Troy Inc.", "type": "organizational"}}], "publication_date": "2020-06-01", "publisher": "Acme Inc", "resource_type": {"id": "image-photo", "title": {"en": "Photo"}}, "title": "A Romans story"}, "parent": {"access": {"owned_by": null, "settings": {"accept_conditions_text": null, "allow_guest_requests": false, "allow_user_requests": false, "secret_link_expiration": 0}}, "communities": {}, "id": "zsscn-h6s92", "pids": {}}, "pids": {"oai": {"identifier": "oai:ultraviolet.library.nyu.edu:pqj6e-hk642", "provider": "oai"}}, "revision_id": 4, "stats": {"all_versions": {"data_volume": 0.0, "downloads": 0, "unique_downloads": 0, "unique_views": 0, "views": 0}, "this_version": {"data_volume": 0.0, "downloads": 0, "unique_downloads": 0, "unique_views": 0, "views": 0}}, "status": "published", "ui": {"access_status": {"description_l10n": "The files associated with this metadata record are restricted to members of the NYU community.", "embargo_date_l10n": null, "icon": "ban", "id": "restricted", "message_class": "negative", "title_l10n": "Restricted"}, "created_date_l10n_long": "May 8, 2025", "creators": {"affiliations": [], "creators": [{"person_or_org": {"family_name": "Brown", "given_name": "Troy", "name": "Brown, Troy", "type": "personal"}}, {"person_or_org": {"name": "Troy Inc.", "type": "organizational"}}]}, "custom_fields": {}, "is_draft": false, "publication_date_l10n_long": "June 1, 2020", "publication_date_l10n_medium": "Jun 1, 2020", "resource_type": {"id": "image-photo", "title_l10n": "Photo"}, "updated_date_l10n_long": "May 8, 2025", "version": "v1"}, "updated": "2025-05-08T23:37:28.147591+00:00", "versions": {"index": 1, "is_latest": true}}' data-preview='false'>
+        <div class="rel-p-1"></div>
+        <div class="ui fluid placeholder rel-mr-1 rel-ml-1"></div>
+        <div class="header">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><div
+  id="sidebar-communities-manage"
+  data-user-communities-memberships='{}'
+  data-record-community-endpoint="https://127.0.0.1:5000/api/records/pqj6e-hk642/communities"
+  data-record-community-search-endpoint="https://127.0.0.1:5000/api/records/pqj6e-hk642/communities-suggestions"
+  data-record-user-community-search-endpoint=""
+  data-can-manage-record='false'
+  data-pending-communities-search-config='{"aggs": [{"aggName": "type", "field": "type", "title": "Type"}, {"aggName": "status", "field": "status", "title": "Status"}], "appId": "InvenioAppRdm.RecordRequests", "defaultSortingOnEmptyQueryString": [{"sortBy": "newest"}], "initialQueryState": {"filters": [], "hiddenParams": [["expand", "1"], ["is_open", "true"], ["type", "community-inclusion"], ["type", "community-submission"]], "layout": "list", "page": 1, "size": 10, "sortBy": "bestmatch"}, "layoutOptions": {"gridView": false, "listView": true}, "paginationOptions": {"defaultValue": 10, "maxTotalResults": 10000, "resultsPerPage": [{"text": "10", "value": 10}, {"text": "20", "value": 20}, {"text": "50", "value": 50}]}, "searchApi": {"axios": {"headers": {"Accept": "application/json"}, "url": "https://127.0.0.1:5000/api/records/pqj6e-hk642/requests", "withCredentials": true}, "invenio": {"requestSerializer": "InvenioRecordsResourcesRequestSerializer"}}, "sortOptions": [{"sortBy": "bestmatch", "text": "Best match"}, {"sortBy": "newest", "text": "Newest"}, {"sortBy": "oldest", "text": "Oldest"}], "sortOrderDisabled": true}'
+  data-record-community-search-config='{"aggs": [{"aggName": "visibility", "field": "visibility", "title": "Visibility"}, {"aggName": "type", "field": "type", "title": "Type"}], "appId": "InvenioAppRdm.RecordCommunitiesSuggestions", "defaultSortingOnEmptyQueryString": [{"sortBy": "newest"}], "initialQueryState": {"filters": [], "hiddenParams": null, "layout": "list", "page": 1, "size": 10, "sortBy": "bestmatch"}, "layoutOptions": {"gridView": false, "listView": true}, "paginationOptions": {"defaultValue": 10, "maxTotalResults": 10000, "resultsPerPage": [{"text": "10", "value": 10}, {"text": "20", "value": 20}]}, "searchApi": {"axios": {"headers": {"Accept": "application/vnd.inveniordm.v1+json"}, "url": "https://127.0.0.1:5000/api/records/pqj6e-hk642/communities-suggestions", "withCredentials": true}, "invenio": {"requestSerializer": "InvenioRecordsResourcesRequestSerializer"}}, "sortOptions": [{"sortBy": "bestmatch", "text": "Best match"}, {"sortBy": "newest", "text": "Newest"}, {"sortBy": "oldest", "text": "Oldest"}], "sortOrderDisabled": true}'
+  data-record-user-community-search-config='{"aggs": [{"aggName": "visibility", "field": "visibility", "title": "Visibility"}, {"aggName": "type", "field": "type", "title": "Type"}], "appId": "InvenioAppRdm.RecordUserCommunitiesSuggestions", "defaultSortingOnEmptyQueryString": [{"sortBy": "newest"}], "initialQueryState": {"filters": [], "hiddenParams": [["membership", "true"]], "layout": "list", "page": 1, "size": 10, "sortBy": "bestmatch"}, "layoutOptions": {"gridView": false, "listView": true}, "paginationOptions": {"defaultValue": 10, "maxTotalResults": 10000, "resultsPerPage": [{"text": "10", "value": 10}, {"text": "20", "value": 20}]}, "searchApi": {"axios": {"headers": {"Accept": "application/vnd.inveniordm.v1+json"}, "url": "https://127.0.0.1:5000/api/records/pqj6e-hk642/communities-suggestions", "withCredentials": true}, "invenio": {"requestSerializer": "InvenioRecordsResourcesRequestSerializer"}}, "sortOptions": [{"sortBy": "bestmatch", "text": "Best match"}, {"sortBy": "newest", "text": "Newest"}, {"sortBy": "oldest", "text": "Oldest"}], "sortOrderDisabled": true}'
+  data-permissions='{"can_edit": false, "can_manage": false, "can_media_read_files": true, "can_moderate": false, "can_new_version": false, "can_read_files": false, "can_review": false, "can_update_draft": false, "can_view": false}'
+  class="sidebar-container"
+>
+
+  <h2 class="ui medium top attached header">Communities</h2>
+
+  <div class="ui segment bottom attached rdm-sidebar">
+    <div class="ui fluid placeholder">
+      <div class="image header">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <div class="image header">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <div class="image header">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="sidebar-container">
+  <h2 class="ui medium top attached header mt-0">Details</h2>
+  <div id="record-details" class="ui segment bottom attached rdm-sidebar">
+
+    <dl class="details-list">
+      
+      
+  <dt class="ui tiny header">Resource type</dt>
+  <dd>Photo</dd>
+      
+      
+  <dt class="ui tiny header">Publisher</dt>
+  <dd>Acme Inc</dd>
+      
+      
+      
+      
+      
+      
+      
+    </dl>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="sidebar-container">
+  <h2 class="ui medium top attached header mt-0">Citation</h2>
+  <div id="citation" class="ui segment bottom attached rdm-sidebar">
+
+<div id="recordCitation" data-record='{"access": {"embargo": {"active": false, "reason": null}, "files": "restricted", "record": "public", "status": "restricted"}, "created": "2025-05-08T23:37:28.036183+00:00", "custom_fields": {}, "deletion_status": {"is_deleted": false, "status": "P"}, "expanded": {}, "files": {"enabled": true}, "id": "pqj6e-hk642", "is_draft": false, "is_published": true, "links": {"access": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access", "access_grants": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/grants", "access_groups": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/groups", "access_links": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/links", "access_request": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/request", "access_users": "https://127.0.0.1:5000/api/records/pqj6e-hk642/access/users", "archive": "https://127.0.0.1:5000/api/records/pqj6e-hk642/files-archive", "archive_media": "https://127.0.0.1:5000/api/records/pqj6e-hk642/media-files-archive", "communities": "https://127.0.0.1:5000/api/records/pqj6e-hk642/communities", "communities-suggestions": "https://127.0.0.1:5000/api/records/pqj6e-hk642/communities-suggestions", "draft": "https://127.0.0.1:5000/api/records/pqj6e-hk642/draft", "files": "https://127.0.0.1:5000/api/records/pqj6e-hk642/files", "latest": "https://127.0.0.1:5000/api/records/pqj6e-hk642/versions/latest", "latest_html": "https://127.0.0.1:5000/records/pqj6e-hk642/latest", "media_files": "https://127.0.0.1:5000/api/records/pqj6e-hk642/media-files", "parent": "https://127.0.0.1:5000/api/records/zsscn-h6s92", "parent_html": "https://127.0.0.1:5000/records/zsscn-h6s92", "requests": "https://127.0.0.1:5000/api/records/pqj6e-hk642/requests", "reserve_doi": "https://127.0.0.1:5000/api/records/pqj6e-hk642/draft/pids/doi", "self": "https://127.0.0.1:5000/api/records/pqj6e-hk642", "self_html": "https://127.0.0.1:5000/records/pqj6e-hk642", "self_iiif_manifest": "https://127.0.0.1:5000/api/iiif/record:pqj6e-hk642/manifest", "self_iiif_sequence": "https://127.0.0.1:5000/api/iiif/record:pqj6e-hk642/sequence/default", "versions": "https://127.0.0.1:5000/api/records/pqj6e-hk642/versions"}, "media_files": {"enabled": false}, "metadata": {"creators": [{"person_or_org": {"family_name": "Brown", "given_name": "Troy", "name": "Brown, Troy", "type": "personal"}}, {"person_or_org": {"name": "Troy Inc.", "type": "organizational"}}], "publication_date": "2020-06-01", "publisher": "Acme Inc", "resource_type": {"id": "image-photo", "title": {"en": "Photo"}}, "title": "A Romans story"}, "parent": {"access": {"owned_by": null, "settings": {"accept_conditions_text": null, "allow_guest_requests": false, "allow_user_requests": false, "secret_link_expiration": 0}}, "communities": {}, "id": "zsscn-h6s92", "pids": {}}, "pids": {"oai": {"identifier": "oai:ultraviolet.library.nyu.edu:pqj6e-hk642", "provider": "oai"}}, "revision_id": 4, "stats": {"all_versions": {"data_volume": 0.0, "downloads": 0, "unique_downloads": 0, "unique_views": 0, "views": 0}, "this_version": {"data_volume": 0.0, "downloads": 0, "unique_downloads": 0, "unique_views": 0, "views": 0}}, "status": "published", "ui": {"access_status": {"description_l10n": "The files associated with this metadata record are restricted to members of the NYU community.", "embargo_date_l10n": null, "icon": "ban", "id": "restricted", "message_class": "negative", "title_l10n": "Restricted"}, "created_date_l10n_long": "May 8, 2025", "creators": {"affiliations": [], "creators": [{"person_or_org": {"family_name": "Brown", "given_name": "Troy", "name": "Brown, Troy", "type": "personal"}}, {"person_or_org": {"name": "Troy Inc.", "type": "organizational"}}]}, "custom_fields": {}, "is_draft": false, "publication_date_l10n_long": "June 1, 2020", "publication_date_l10n_medium": "Jun 1, 2020", "resource_type": {"id": "image-photo", "title_l10n": "Photo"}, "updated_date_l10n_long": "May 8, 2025", "version": "v1"}, "updated": "2025-05-08T23:37:28.147591+00:00", "versions": {"index": 1, "is_latest": true}}'
+  data-styles='[["apa", "APA"], ["harvard-cite-them-right", "Harvard"], ["modern-language-association", "MLA"], ["vancouver", "Vancouver"], ["chicago-fullnote-bibliography", "Chicago"], ["ieee", "IEEE"]]'
+  data-defaultstyle='"apa"'
+  data-include-deleted='false'>
+</div>
+  </div>
+</div>
+  <div class="sidebar-container">
+    <h2 class="ui medium top attached header mt-0">Export</h2>
+    <div id="export-record" class="ui segment bottom attached exports rdm-sidebar">
+
+      
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        <div id="recordExportDownload" data-formats='[{"export_url": "/records/pqj6e-hk642/export/json", "name": "JSON"}, {"export_url": "/records/pqj6e-hk642/export/json-ld", "name": "JSON-LD"}, {"export_url": "/records/pqj6e-hk642/export/csl", "name": "CSL"}, {"export_url": "/records/pqj6e-hk642/export/datacite-json", "name": "DataCite JSON"}, {"export_url": "/records/pqj6e-hk642/export/datacite-xml", "name": "DataCite XML"}, {"export_url": "/records/pqj6e-hk642/export/dublincore", "name": "Dublin Core XML"}, {"export_url": "/records/pqj6e-hk642/export/marcxml", "name": "MARCXML"}, {"export_url": "/records/pqj6e-hk642/export/bibtex", "name": "BibTeX"}, {"export_url": "/records/pqj6e-hk642/export/geojson", "name": "GeoJSON"}, {"export_url": "/records/pqj6e-hk642/export/dcat-ap", "name": "DCAT"}, {"export_url": "/records/pqj6e-hk642/export/codemeta", "name": "Codemeta"}, {"export_url": "/records/pqj6e-hk642/export/cff", "name": "Citation File Format"}]'></div>
+    </div>
+  </div>
+<section
+  id="upload-info"
+  role="note"
+  aria-label="Upload information"
+  class="sidebar-container ui segment rdm-sidebar text-muted"
+>
+  <h2 class="ui small header text-muted p-0 mb-5"><small>Technical metadata</small></h2>
+  <dl class="m-0">
+    <dt class="inline"><small>Created</small></dt>
+    <dd class="inline">
+      <small>May 8, 2025</small>
+    </dd>
+    <div>
+      <dt class="rel-mt-1 inline"><small>Modified</small></dt>
+      <dd class="inline">
+        <small>May 8, 2025</small>
+      </dd>
+    </div>
+  </dl>
+</section>
+          
+        </aside>
+      </div>
+    </div>
+
+    <div class="ui container">
+      <div class="ui relaxed grid">
+        <div class="two column row">
+          <div class="sixteen wide tablet eleven wide computer column">
+            <div class="ui grid">
+                <div class="centered row rel-mt-1">
+                  <button id="jump-btn" class="jump-to-top ui button labeled icon"
+                          aria-label="Jump to top of page">
+                    <i class="arrow alternate circle up outline icon"></i>
+                    Jump up
+                  </button>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </main>
+    <footer id="rdm-footer-element">
+        
+
+<footer id="rdm-footer-element">
+    <div class="footer-top">
+      <div class="ui container">
+          <div class="ui grid">
+            <div class="rdm-footer five wide tablet three wide computer column">
+              <h2 class="ui small header">About UltraViolet</h2>
+              <p><a href="https://library.answers.nyu.edu/form?queue_id=6256">Deposit Assistance</a></p>
+              <p><a href="https://guides.nyu.edu/ultraviolet/policies">Service Policies</a></p>
+              <p><a href="https://guides.nyu.edu/ultraviolet/">Project Documentation</a></p>
+            </div>
+            <div class="rdm-footer five wide tablet four wide computer column">
+              <h2 class="ui small header">Partnerships</h2>
+              <p><a href="https://wp.nyu.edu/library-dlts/">NYU Digital Library Technology Services</a></p>
+              <p><a href="https://guides.nyu.edu/dataservices">NYU Data Services</a></p>
+              <p><a href="https://datacurationnetwork.org/">Data Curation Network</a></p>
+              <p><a href="http://inveniordm.docs.cern.ch">InvenioRDM</a></p>
+            </div>
+            <div class="rdm-footer five wide tablet four wide computer column">
+              <h2 class="ui small header">Resources</h2>
+              <p><a href="https://guides.nyu.edu/ultraviolet/deposit">Deposit guide</a></p>
+              <p><a href="https://library.nyu.edu/departments/scholarly-communications-information-policy/">NYU Scholarly Communication and Information Policy</a></p>
+              <p><a href="https://library.nyu.edu">NYU Libraries</a></p>
+            </div>
+          <div class="six wide column right aligned">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom sub-footer">
+      <div class="ui container">
+        <div class="ui grid">
+          <div class="eight wide column left middle aligned">
+            UltraViolet v1.0.0 relies on <a href="https://inveniosoftware.org/products/rdm">InvenioRDM</a>
+          </div>
+          <div class="eight wide column right aligned">
+            <a href="https://www.nyu.edu/footer/accessibility.html">Accessibility</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</footer>
+        <div class="footer-bottom sub-footer">
+  <div class="ui container">
+    <div class="ui grid">
+      <div class="eight wide column left middle aligned">
+          
+            Powered by
+            <a
+              href="http://inveniosoftware.org/products/rdm">InvenioRDM</a>
+      </div>
+      <div class="eight wide column right aligned">
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+  
+  
+    
+
+        
+
+        
+<script src="/static/dist/js/manifest.a66420c04575f660989c.js"></script>
+<script src="/static/dist/js/73.b6b9397a87d45e8c7e79.js"></script>
+<script src="/static/dist/js/3526.afad98ddf15bc49dc4bc.js"></script>
+<script src="/static/dist/js/theme.11978575020ef7cbe61f.js"></script>
+<script src="/static/dist/js/106.865fe6104704235441fa.js"></script>
+<script src="/static/dist/js/7655.9a9e929d3dd74e5f5ded.js"></script>
+<script src="/static/dist/js/6267.31d358b09568b173f047.js"></script>
+<script src="/static/dist/js/5373.70f4c437c58fdd5f7bf2.js"></script>
+<script src="/static/dist/js/9777.c8819a4e6d0274df4536.js"></script>
+<script src="/static/dist/js/621.e56e482b698287576d82.js"></script>
+<script src="/static/dist/js/9827.9c86c3c0fc948216e90a.js"></script>
+<script src="/static/dist/js/742.ce1452b1d8e89dd91f12.js"></script>
+<script src="/static/dist/js/base-theme-rdm.8d03d91dd17f7fbcf5ea.js"></script>
+<script src="/static/dist/js/i18n_app.87c128dd93a480df8ee1.js"></script>
+<script src="/static/dist/js/overridable-registry.174ceb17fac232747c35.js"></script>
+  
+    
+      <script type='application/ld+json'>{"@context": "http://schema.org", "@type": "https://schema.org/Photograph", "author": [{"@type": "Person", "familyName": "Brown", "givenName": "Troy", "name": "Brown, Troy"}, {"@type": "Organization", "name": "Troy Inc."}], "creator": [{"@type": "Person", "familyName": "Brown", "givenName": "Troy", "name": "Brown, Troy"}, {"@type": "Organization", "name": "Troy Inc."}], "dateModified": "2025-05-08T23:37:28.147591+00:00", "datePublished": "2020-06-01", "identifier": "https://127.0.0.1:5000/api/records/pqj6e-hk642", "name": "A Romans story", "publisher": {"@type": "Organization", "name": "Acme Inc"}, "url": "https://127.0.0.1:5000/records/pqj6e-hk642"}</script>
+
+  <script src="/static/dist/js/invenio-app-rdm-landing-page-theme.3b272942835c0a00f70d.js"></script>
+  <script src="/static/dist/js/4709.a4fb50b2476d460040d2.js"></script>
+<script src="/static/dist/js/5941.45000a5fd4c17fad73d2.js"></script>
+<script src="/static/dist/js/2081.7326a93bf5f5f8f6e25e.js"></script>
+<script src="/static/dist/js/3994.d0288b5cc6b19a0ddf11.js"></script>
+<script src="/static/dist/js/8102.44f781a775bded3cfd72.js"></script>
+<script src="/static/dist/js/9945.07d4af9c5491b45258db.js"></script>
+<script src="/static/dist/js/5368.e943da3c21feab0d7a42.js"></script>
+<script src="/static/dist/js/1357.1a47957653d07478211d.js"></script>
+<script src="/static/dist/js/8585.b7329ee0834e777f51ea.js"></script>
+<script src="/static/dist/js/1644.bd1f2f8375b39e38a243.js"></script>
+<script src="/static/dist/js/8962.9d404cdb5d7acb16c7a5.js"></script>
+<script src="/static/dist/js/7207.ab4baadd237761c4c4f9.js"></script>
+<script src="/static/dist/js/9693.3b0f49d7dc7328216448.js"></script>
+<script src="/static/dist/js/invenio-app-rdm-landing-page.c16be7d7ef47e4461fbd.js"></script>
+  <script src="/static/dist/js/previewer_theme.a4cb12f2f2d734727d26.js"></script>
+        
+  </body>
+</html>
+----------------------------- Captured stderr call -----------------------------
+[2025-05-08 19:37:28,174] WARNING in api: NotFoundError(404, 'index_not_found_exception', 'no such index [qstats-record-view]', qstats-record-view, index_or_alias)
+[2025-05-08 19:37:28,178] WARNING in api: NotFoundError(404, 'index_not_found_exception', 'no such index [qstats-file-download]', qstats-file-download, index_or_alias)
+------------------------------ Captured log call -------------------------------
+WARNING  opensearch:base.py:280 POST http://localhost:9200/qstats-record-view/_search [status:404 request:0.003s]
+WARNING  invenio:api.py:38 NotFoundError(404, 'index_not_found_exception', 'no such index [qstats-record-view]', qstats-record-view, index_or_alias)
+WARNING  opensearch:base.py:280 POST http://localhost:9200/qstats-file-download/_search [status:404 request:0.002s]
+WARNING  invenio:api.py:54 NotFoundError(404, 'index_not_found_exception', 'no such index [qstats-file-download]', qstats-file-download, index_or_alias)
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask/sessions.py:226: UserWarning: The session cookie domain is an IP address. This may not work as intended in some browsers. Add an entry to your hosts file, for example "localhost.localdomain", and use that instead.
+  warnings.warn(
+---------------------------- Captured log teardown -----------------------------
+WARNING  py.warnings:warnings.py:109 /home/zack/.local/share/virtualenvs/ultraviolet-clE4KMrt/lib/python3.9/site-packages/flask_sqlalchemy/__init__.py:302: DeprecationWarning: '_app_ctx_stack' is deprecated and will be removed in Flask 2.3. Use 'g' to store data, or 'app_ctx' to access the current context.
+  queries = _app_ctx_stack.top.sqlalchemy_queries
+=========================== short test summary info ============================
+FAILED tests/ui/test_restricted_file_msg.py::test_restricted_file_message - a...
+======================= 1 failed, 29 warnings in 19.73s ========================

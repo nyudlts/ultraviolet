@@ -1,0 +1,2 @@
+msgid "The record is publicly accessible, but files are restricted to users with access."
+msgstr "The files associated with this metadata record are restricted to members of the NYU community."
