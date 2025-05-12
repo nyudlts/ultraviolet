@@ -64,7 +64,7 @@ jobs:
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=yes pipenv run pytest -p no:cacheprovider
+          PYTHONPATH=. E2E=yes pipenv run pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
