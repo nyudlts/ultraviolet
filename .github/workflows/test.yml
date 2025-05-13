@@ -61,12 +61,14 @@ jobs:
       - name: "Check services status"
         run: |
           bash check-services.sh
-      - name: "Run tests"
+      - name: Run tests
         run: |
           pipenv install --dev
-          ls -al
-          echo "PYTHONPATH: $PYTHONPATH"
-          PYTHONPATH=. E2E=yes pipenv run python3 -m pytest -p no:cacheprovider
+          echo "CWD: $(pwd)"
+          echo "Listing current dir:"
+          ls -l
+          echo "PYTHONPATH=.. E2E=yes pipenv run python -m pytest -p no:cacheprovider"
+          PYTHONPATH=.. E2E=yes pipenv run python -m pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
