@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - email-notification 
+      - email-notification
     paths-ignore:
       - "docs/**"
       - "**.md"
@@ -64,7 +64,9 @@ jobs:
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=yes pipenv run python3 -m pytest -p no:cacheprovider
+          ls -al
+          echo "PYTHONPATH: $PYTHONPATH"
+          PYTHONPATH=. E2E=yes pipenv run python3 -m pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
