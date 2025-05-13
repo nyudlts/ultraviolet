@@ -18,6 +18,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: .
     steps:
       - name: "Checkout current state"
         uses: actions/checkout@v3
@@ -64,11 +68,7 @@ jobs:
       - name: Run tests
         run: |
           pipenv install --dev
-          echo "CWD: $(pwd)"
-          echo "Listing current dir:"
-          ls -l
-          echo "PYTHONPATH=.. E2E=yes pipenv run python -m pytest -p no:cacheprovider"
-          PYTHONPATH=.. E2E=yes pipenv run python -m pytest -p no:cacheprovider
+          E2E=yes pipenv run python -m pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
