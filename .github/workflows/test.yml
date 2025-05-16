@@ -3,7 +3,7 @@ name: ci:test
 on:
   push:
     branches:
-      - tombstone-page 
+      - application-page-updates
     paths-ignore:
       - "docs/**"
       - "**.md"
@@ -52,6 +52,9 @@ jobs:
         run: |
           invenio-cli install
           invenio-cli services setup -N
+      - name: "Compile translations for restricted file of a public record"
+        run: |
+          invenio-cli translations compile
       - name: Start services and app
         run: |
           docker -v
