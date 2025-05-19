@@ -1,0 +1,15 @@
+{
+  "name": "Neon Green Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "true"
+    },
+    "ghcr.io/devcontainers/features/python:1": {}
+  },
+  "postCreateCommand": "invenio-cli check-requirements && invenio-cli --version && invenio-cli install"
+}
