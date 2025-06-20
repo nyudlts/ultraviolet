@@ -1,0 +1,75 @@
+{#
+   Copyright (C) 2020 CERN.
+   Copyright (C) 2020 Northwestern University.
+   Copyright (C) 2024 New York University.
+
+   Invenio RDM Records is free software; you can redistribute it and/or modify
+   it under the terms of the MIT License; see LICENSE file for more details.
+ #}
+
+{%- from "invenio_app_rdm/records/macros/detail.html" import show_add_descriptions %}
+
+{% set description = metadata.get('description') %}
+{% if description %}
+    <section id="description" class="rel-mt-2 rich-input-content" aria-label="{{ _('Record description') }}">
+        <h2 id="description-heading" class="sr-only">{{ _('Description') }}</h2>
+        {# description data is being sanitized by marshmallow in the backend #}
+        <div style="word-wrap: break-word;">
+            <p>{{ description | safe }}</p>
+        </div>
+    </section>
+{% endif %}
+
+{{ show_add_descriptions(record.ui.additional_descriptions) if record.ui.additional_descriptions }}
+
+{% if record.metadata.resource_type.id.startswith('image') %}
+<h2>Images</h2>
+
+<div>
+    <div id="mirador2" data-mirador-url="{{ record.links.self_iiif_manifest }}"></div>
+</div>
+
+<script src="https://unpkg.com/mirador@^3/dist/mirador.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const miradorElement = document.getElementById("mirador2");
+    const manifestUrl = miradorElement.getAttribute("data-mirador-url");
+
+    Mirador.viewer({
+      id: "mirador2",
+      theme: {
+        transitions: {},
+      },
+      thumbnailNavigation: {
+        defaultPosition: 'far-right',
+      },
+      window: {
+        defaultView: 'single',
+        hideWindowTitle: true,
+      },
+      windows: [
+        {
+          manifestId: manifestUrl,
+        }
+      ],
+      workspace: {
+        allowNewWindows: false,
+        type: 'not-mosaic-or-elastic',
+      },
+      workspaceControlPanel: {
+        enabled: false,
+      },
+    });
+
+  });
+</script>
+
+<style>
+    #mirador2 {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        overflow: hidden;
+    }
+</style>
+{%  endif %}
