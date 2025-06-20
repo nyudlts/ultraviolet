@@ -1,0 +1,37 @@
+{%- extends config.PREVIEWER_ABSTRACT_TEMPLATE %}
+
+{% block panel %}
+    <div id="mirador" data-mirador-url="{{ file.record.links.self_iiif_manifest }}"></div>
+
+    <script src="https://unpkg.com/mirador@^3/dist/mirador.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const miradorElement = document.getElementById("mirador");
+        const manifestUrl = miradorElement.getAttribute("data-mirador-url");
+
+        Mirador.viewer({
+          id: "mirador",
+          theme: {
+            transitions: {},
+          },
+          window: {
+            allowWindowSideBar: false,
+            sideBarOpen: true,
+            sideBarPanel: '',
+          },
+          windows: [
+            {
+              allowClose: false,
+              manifestId: manifestUrl
+            }
+          ],
+          workspace: {
+            type: 'not-mosaic-or-elastic',
+          },
+          workspaceControlPanel: {
+            enabled: false,
+          },
+        });
+      });
+    </script>
+{% endblock %}
