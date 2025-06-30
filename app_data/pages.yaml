@@ -1,0 +1,5 @@
+# list of pages:
+- url: /documentation-api
+  title: UltraViolet REST API
+  description: Documentation for UltraViolet REST API
+  template: documentation-api.html

@@ -1,0 +1,10 @@
+{%- extends config.PREVIEWER_ABSTRACT_TEMPLATE %}
+
+{% block panel %}
+    <script src="/static/replay/ui.js"></script>
+    <replay-web-page
+            sandbox
+            replayBase="/static/replay/"
+            source="{{ file.uri }}"
+    ></replay-web-page>
+{% endblock %}

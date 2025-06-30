@@ -1,0 +1,27 @@
+- id: deaccession
+  title:
+    en: NYU Libraries no longer subscribes to this resource
+- id: retracted
+  title:
+    en: Study has been retracted/withdrawn
+- id: replaced
+  title:
+    en: Files were replaced with those in another record
+- id: copyright
+  title:
+    en: Copyright infringement
+- id: take-down-request
+  title:
+    en: Take-down request
+- id: disputed-authorship
+  title:
+    en: Disputed authorship
+- id: misconduct
+  title:
+    en: Author(s) misconduct
+- id: fraud
+  title:
+    en: Fraud in the work
+- id: technical
+  title:
+    en: Technical issues with the files

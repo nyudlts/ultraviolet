@@ -116,5 +116,13 @@
 @loginSignupMobileBackgroundHover:#9b00ff;
 
 /***********************************************
+        Community Headers
+***********************************************/
+
+@highlightHeaderColor: white;
+@secondaryPointingBorderColor: #7203bba1;
+@secondaryPointingBorderWidth: 2px;
+@secondaryPointingActiveHoverBorderColor: #7203bb;
+/***********************************************
         NYU custom variables (not found in iRDM, invenio-theme, or SemanticUI)
 ***********************************************/

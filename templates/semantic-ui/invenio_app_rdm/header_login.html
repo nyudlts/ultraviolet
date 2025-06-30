@@ -74,7 +74,8 @@
                  aria-labelledby="user-profile-dropdown-btn"
             >
               {%- for item in current_menu.submenu('settings').children if item.visible %}
-                <a role="menuitem" class="item" href="{{ item.url }}" tabindex="-1">
+                {% set fixed_url = '/administration' if 'admin' in item.url  else item.url %}
+                  <a role="menuitem" class="item" href="{{ fixed_url  }}" tabindex="-1">
                   {{ item.text|safe }}
                 </a>
               {%- endfor %}

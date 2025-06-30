@@ -7,6 +7,11 @@
     Invenio App RDM is free software; you can redistribute it and/or modify it
     under the terms of the MIT License; see LICENSE file for more details.
 #}
+{%- set role_names = current_user.roles | map(attribute='name') | list %}
+{% set has_community_roles = [] | length > 0 %}
+{% if config.ACCOUNTS and current_user.is_authenticated and (get_all_community_roles is defined) %}
+    {% set has_community_roles = get_all_community_roles() | length > 0 %}
+{% endif %}
 
 <div>
   <header class="theme header">
@@ -94,14 +99,15 @@
                 {%- endif %}
               {%- endfor %}
 
-              {% for item in current_menu.submenu('actions').children|sort(attribute='order') if item.visible and config.ADMIN_ROLE in current_user.roles|map(attribute='name') recursive %}
+              {% for item in current_menu.submenu('actions').children|sort(attribute='order')
+                   if item.visible and config.ACCOUNTS and current_user.is_authenticated and (config.ADMIN_ROLE in role_names or has_community_roles) recursive %}
                 <div class="item">
                   <a role="menuitem" href="{{ item.url }}">{{ item.text|safe }}</a>
                 </div>
               {% endfor %}
               <div class="item">
                 <a href="{{ config.UV_DEPOSIT_REQUEST }}">
-                  Deposit 
+                  Deposit
                 </a>
               </div>
               <div class="item">
@@ -113,7 +119,9 @@
 
             {%- block navbar_right %}
               <div class="right menu item">
-                {%- if config.ACCOUNTS and current_user.is_authenticated and config.ADMIN_ROLE in current_user.roles|map(attribute='name') %}
+
+                {%- if config.ACCOUNTS and current_user.is_authenticated and (config.ADMIN_ROLE in role_names or has_community_roles) %}
+
                   {% for item in current_menu.submenu('notifications').children|sort(attribute='order') if item.visible recursive %}
                     <div class="item inbox">
                       <a role="menuitem" href="{{ item.url }}" aria-label="{{ _("Requests") }}">
@@ -130,7 +138,10 @@
         </nav>
       {%- endblock navbar %}
     </div>
-
+    {%- block site_banner %}
+      {% from 'invenio_banners/banner.html' import banner %}
+      {{ banner() }}
+    {%- endblock site_banner %}
     {%- block flashmessages %}
       {%- from "invenio_theme/macros/messages.html" import flashed_messages with context -%}
       {{ flashed_messages() }}

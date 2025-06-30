@@ -11,6 +11,7 @@ theme = WebpackThemeBundle(
             entry={
                 "geoserver_js": "./js/ultraviolet/geoserver.js",
                 "geoserver_css": "./css/ultraviolet/geoserver.css",
+                "web_archive_css": "./css/ultraviolet/web_archive.css"
             },
             dependencies={
                 "leaflet": "^1.9.4",
