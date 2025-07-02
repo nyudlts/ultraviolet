@@ -142,21 +142,23 @@ const addWfsInspection = map => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const mapElement = document.getElementById("map");
-    const preview = mapElement.getAttribute("data-preview");
+    if (mapElement) {
+        const preview = mapElement.getAttribute("data-preview");
 
-    const map = L.map('map').setView([0, 0], 13);
+        const map = L.map('map').setView([0, 0], 13);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>',
-        maxZoom: 18,
-        worldCopyJump: true,
-        retina: "@2x",
-    }).addTo(map);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>',
+            maxZoom: 18,
+            worldCopyJump: true,
+            retina: "@2x",
+        }).addTo(map);
 
-    if (preview === "True") {
-        addWmsLayer(map);
-        addWfsInspection(map);
+        if (preview === "True") {
+            addWmsLayer(map);
+            addWfsInspection(map);
+        }
+
+        zoomMapToBoundingBox(map);
     }
-
-    zoomMapToBoundingBox(map);
 });
