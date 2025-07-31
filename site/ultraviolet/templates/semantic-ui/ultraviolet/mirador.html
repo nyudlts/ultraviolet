@@ -9,7 +9,7 @@
         const miradorElement = document.getElementById("mirador");
         const manifestUrl = miradorElement.getAttribute("data-mirador-url");
 
-        Mirador.viewer({
+        const viewer = Mirador.viewer({
           id: "mirador",
           theme: {
             transitions: {},
@@ -31,6 +31,31 @@
           workspaceControlPanel: {
             enabled: false,
           },
+        });
+
+        const store = viewer.store;
+
+        let previousCanvasId = null;
+
+        store.subscribe(() => {
+          const state = store.getState();
+          const windowIds = Object.keys(state.windows);
+          if (windowIds.length === 0) return;
+
+          const windowId = windowIds[0];
+          const currentCanvasId = state.windows[windowId]?.canvasId;
+
+          if (currentCanvasId && currentCanvasId !== previousCanvasId) {
+            console.log("Canvas selected:", currentCanvasId);
+            previousCanvasId = currentCanvasId;
+
+            const span = window.parent.document.getElementById("preview-file-title");
+            if (span) {
+              span.innerHTML = currentCanvasId.split('/').pop();
+            } else {
+              console.log("HUH?!")
+            }
+          }
         });
       });
     </script>
