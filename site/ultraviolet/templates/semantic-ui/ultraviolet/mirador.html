@@ -6,7 +6,7 @@
          data-canvas-url="{{ file.data.links.iiif_canvas }}"
     ></div>
 
-    <script src="https://unpkg.com/mirador@^3/dist/mirador.min.js"></script>
+    <script src="{{ url_for('static', filename='js/mirador-3.min.js') }}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const miradorElement = document.getElementById("mirador");
