@@ -9,7 +9,9 @@ previewable_extensions = ["wacz", "warc", "har", "cdx", "cdxj"]
 
 def can_preview(file):
     """Check if file can be previewed."""
-    return file.is_local() and file.has_extensions(".wacz", ".warc", ".warc.gz", ".har", ".cdx", ".cdxj")
+    return file.is_local() and file.has_extensions(
+        ".wacz", ".warc", ".warc.gz", ".har", ".cdx", ".cdxj"
+    )
 
 
 def preview(file):
