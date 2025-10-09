@@ -1,15 +1,24 @@
 """Mirador rendering."""
 
-from flask import render_template
+from flask import current_app, render_template
 
 from invenio_previewer.proxies import current_previewer
-
-previewable_extensions = ["tiff", "jpg"]
 
 
 def can_preview(file):
     """Check if file can be previewed."""
-    return file.is_local() and file.has_extensions(".tiff", ".jpg")
+    extensions = map(lambda extension: ".{0}".format(extension), current_app.config.get(
+        "RDM_IIIF_MANIFEST_FORMATS", [
+            "jpg",
+            "jpeg",
+            "jp2",
+            "png",
+            "tif",
+            "tiff",
+        ]
+    ))
+
+    return file.is_local() and file.has_extensions(*extensions)
 
 
 def preview(file):
