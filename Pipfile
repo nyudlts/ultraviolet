@@ -22,6 +22,7 @@ uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
 typing-extensions = "*"
+ultraviolet = {editable=true, path="./site"}
 
 [requires]
 python_version = "3.9"
