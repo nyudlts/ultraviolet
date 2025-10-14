@@ -10,7 +10,7 @@ on:
   pull_request:
     branches:
       - main
-      - INVENIO-243-update-12-locally
+      - v12_update 
     paths-ignore:
       - "docs/**"
       - "**.md"

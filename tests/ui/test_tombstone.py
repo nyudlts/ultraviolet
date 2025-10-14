@@ -1,5 +1,6 @@
 from invenio_rdm_records.proxies import current_rdm_records_service
 from invenio_access.permissions import system_identity
+import time
 
 def test_tombstone_page(full_record, client_with_login, services, app, db):
     """
@@ -21,6 +22,9 @@ def test_tombstone_page(full_record, client_with_login, services, app, db):
         "note": "A given note by staff",
         "removal_reason": {"id": "copyright"}
     }
+
+    time.sleep(5)
+
     service.delete_record(system_identity, record.id, data=tombstone_info)
 
     response = client_with_login.get("/records/" + record['id'])
