@@ -3,14 +3,13 @@ name: ci:test
 on:
   push:
     branches:
-      - application-page-updates
+      - main
     paths-ignore:
       - "docs/**"
       - "**.md"
   pull_request:
     branches:
       - main
-      - v12_update 
     paths-ignore:
       - "docs/**"
       - "**.md"
@@ -48,7 +47,6 @@ jobs:
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
           echo -e FLASK_SECRET_KEY="some random value" >> .env
-          echo -e APP_ENVIRONMENT="global" >>.env
       - name: "Install project dependencies"
         run: |
           invenio-cli install
