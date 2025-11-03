@@ -3,7 +3,8 @@ name: ci:test
 on:
   push:
     branches:
-      - application-page-updates
+      - main
+      - v12_update 
     paths-ignore:
       - "docs/**"
       - "**.md"
