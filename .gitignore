@@ -43,6 +43,7 @@ nosetests.xml
 coverage.xml
 *,cover
 screenshots/
+.e2e_screenshots/
 
 # Translations
 *.mo
@@ -94,3 +95,6 @@ ultraviolet-cli
 fixtures
 tmp
 fixture-map.json
+
+# celery files
+celerybeat-schedule.*

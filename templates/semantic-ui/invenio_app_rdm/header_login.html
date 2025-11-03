@@ -74,9 +74,12 @@
                  aria-labelledby="user-profile-dropdown-btn"
             >
               {%- for item in current_menu.submenu('settings').children if item.visible %}
-                <a role="menuitem" class="item" href="{{ item.url }}" tabindex="-1">
-                  {{ item.text|safe }}
-                </a>
+                {% set fixed_url = '/administration' if 'admin' in item.url  else item.url %}
+                  {%- if "password" not in fixed_url %}
+                    <a role="menuitem" class="item" href="{{ fixed_url  }}" tabindex="-1">
+                      {{ item.text|safe }}
+                    </a>
+                  {%- endif %}
               {%- endfor %}
 
               <div class="divider"></div>
@@ -112,9 +115,11 @@
             <h2 class="ui small header">{{ _("My account") }}</h2>
 
             {%- for item in current_menu.submenu('settings').children if item.visible %}
-              <a role="menuitem" class="item" href="{{ item.url }}">
-                {{ item.text|safe }}
-              </a>
+              {%- if "password" not in item.url %}
+                <a role="menuitem" class="item" href="{{ item.url }}">
+                  {{ item.text|safe }}
+                </a>
+              {%- endif %}
             {%- endfor %}
 
             <div class="ui divider"></div>

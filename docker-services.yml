@@ -5,7 +5,8 @@ services:
       context: ./
       args:
         - ENVIRONMENT=DEV
-    image: nyu-data-repository
+    image: ultraviolet
+    restart: "unless-stopped"
     environment:
       - "INVENIO_ACCOUNTS_SESSION_REDIS_URL=redis://cache:6379/1"
       - "INVENIO_BROKER_URL=amqp://guest:guest@mq:5672/"
@@ -13,20 +14,21 @@ services:
       - "INVENIO_CACHE_TYPE=redis"
       - "INVENIO_CELERY_BROKER_URL=amqp://guest:guest@mq:5672/"
       - "INVENIO_CELERY_RESULT_BACKEND=redis://cache:6379/2"
+      - "INVENIO_COMMUNITIES_IDENTITIES_CACHE_REDIS_URL=redis://cache:6379/4"
       - "INVENIO_SEARCH_HOSTS=['search:9200']"
       - "INVENIO_SECRET_KEY=CHANGE_ME"
-      - "INVENIO_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://nyudatarepository:changeme@db/nyudatarepository"
+      - "INVENIO_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://ultraviolet:ultraviolet@db/ultraviolet"
       - "INVENIO_WSGI_PROXIES=2"
       - "INVENIO_RATELIMIT_STORAGE_URL=redis://cache:6379/3"
   frontend:
     build: ./docker/nginx/
-    image: nyu-data-repository-frontend
+    image: ultraviolet-frontend
     restart: "unless-stopped"
     ports:
       - "80"
       - "443"
   cache:
-    image: redis
+    image: redis:7
     restart: "unless-stopped"
     read_only: true
     ports:
@@ -35,11 +37,21 @@ services:
     image: postgres:12.4
     restart: "unless-stopped"
     environment:
-      - "POSTGRES_USER=nyudatarepository"
-      - "POSTGRES_PASSWORD=changeme"
-      - "POSTGRES_DB=nyudatarepository"
+      - "POSTGRES_USER=ultraviolet"
+      - "POSTGRES_PASSWORD=ultraviolet"
+      - "POSTGRES_DB=ultraviolet"
     ports:
       - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4:6
+    restart: "unless-stopped"
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "uv@nyu.edu"
+      PGADMIN_DEFAULT_PASSWORD: "ultraviolet"
+    volumes:
+      - ./docker/pgadmin/servers.json:/pgadmin4/servers.json
   mq:
     image: rabbitmq:3-management
     restart: "unless-stopped"
@@ -66,7 +78,7 @@ services:
     mem_limit: 2g
     ports:
       - "9200:9200"
-      - "9300:9300"
+      - "9600:9600"
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:2.3.0
     ports:

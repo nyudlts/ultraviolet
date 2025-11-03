@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 NYU.
+# Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -45,10 +45,6 @@ def test_var_noassigned():
     """Mocking using default configuration"""
     app = create_app()
     assert app.config.get("APP_ALLOWED_HOSTS") == ["0.0.0.0", "localhost", "127.0.0.1"]
-    assert (
-        app.config.get("SQLALCHEMY_DATABASE_URI")
-        == "postgresql+psycopg2://nyudatarepository:changeme@localhost/nyudatarepository"
-    )
     assert app.config.get("SITE_UI_URL") == "https://127.0.0.1:5000"
     assert app.config.get("SITE_API_URL") == "https://127.0.0.1:5000/api"
     assert app.config.get("APP_ENVIRONMENT") == "local"

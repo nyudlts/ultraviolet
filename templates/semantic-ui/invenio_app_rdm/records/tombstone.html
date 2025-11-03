@@ -1,5 +1,6 @@
 {#
   Copyright (C) 2021 CERN.
+  Copyright (C) 2023 TU Wien.
 
   Invenio App RDM is free software; you can redistribute it and/or modify it
   under the terms of the MIT License; see LICENSE file for more details.
@@ -7,18 +8,291 @@
 {% extends config.THEME_ERROR_TEMPLATE %}
 
 {%- set title = _("Tombstone") + " | " + config.THEME_SITENAME -%}
+{%- set removal_reason = _("Reason unknown") %}
+{%- if record.ui.tombstone.removal_reason %}
+  {%- set removal_reason = record.ui.tombstone.removal_reason.title_l10n %}
+{%- endif %}
 
-{% block message %}
-  <h1><i class="fa fa-flash"></i> {{_('Gone')}}</h1>
+{%- block message %}
+<div class="container centered rel-pt-2">
+
+   <h2>Files Removed</h2>
+
   <p>
-  {% trans sitename=config.THEME_SITENAME %}
-    The record  you are trying to access was removed from {{sitename}}. The
-    metadata of the record is kept for archival purposes.
-  {% endtrans %}
+    {%- trans sitename=config.THEME_SITENAME %}
+      The record you are trying to access was removed from the UltraViolet Repository.
+    {%- endtrans %}
   </p>
-  {% if record and record.removal_reason %}
-  <p>
-    <strong>{{ _("Reason for removal:") }}</strong> {{record.removal_reason}}
-  </p>
-  {% endif %}
+
+  <div class="ui message compact text-align-left">
+    <div class="content">
+      <p>
+        <strong>{{ _("Reason for removal:") }}</strong> {{ removal_reason }}
+      </p>
+      {%- if record.ui.tombstone.note %}
+      <p>
+        <strong>{{ _("Removal note:") }}</strong> {{ record.ui.tombstone.note }}
+      </p>
+      {%- endif %}
+      <p>
+        <strong>{{ _("Date of removal:") }}</strong> {{ record.ui.tombstone.removal_date_l10n_long }}
+      </p>
+      {%- if record.pids.doi %}
+      <p>
+        <strong>{{ _("Identifier:") }}</strong> {{ record.pids.doi.identifier }}
+      </p>
+      {%- endif %}
+
+      <hr class="ui divider">
+      <h3 class="ui dividing header">{{ _("Record Metadata") }}</h3>
+
+      <!-- Metadata Section -->
+      <div class="ui segment">
+
+        <!-- Title -->
+        {%- if record.metadata.title %}
+        <p><strong>{{ _("Title:") }}</strong> {{ record.metadata.title }}</p>
+        {%- endif %}
+
+        <!-- Additional Titles -->
+        {%- if record.metadata.additional_titles %}
+          {%- for additional in record.metadata.additional_titles %}
+            <p><strong>{{ _("Additional Title:") }}</strong> {{ additional.title }}</p>
+          {%- endfor %}
+        {%- endif %}
+
+        <!-- Description -->
+        {%- if record.metadata.description %}
+        <p><strong>{{ _("Description:") }}</strong> {{ record.metadata.description | safe }}</p>
+        {%- endif %}
+
+        <!-- Additional Descriptions -->
+        {%- if record.metadata.additional_descriptions %}
+          {%- for additional in record.metadata.additional_descriptions %}
+            <p><strong>{{ _("Additional Description:") }}</strong> {{ additional.description | safe }}</p>
+          {%- endfor %}
+        {%- endif %}
+        <!-- Publication Date -->
+        {%- if record.metadata.publication_date %}
+        <p><strong>{{ _("Publication Date:") }}</strong> {{ record.metadata.publication_date }}</p>
+        {%- endif %}
+
+        <!-- Publisher -->
+        {%- if record.metadata.publisher %}
+        <p><strong>{{ _("Publisher:") }}</strong> {{ record.metadata.publisher }}</p>
+        {%- endif %}
+
+        <!-- Version -->
+        {%- if record.metadata.version %}
+        <p><strong>{{ _("Version:") }}</strong> {{ record.metadata.version }}</p>
+        {%- endif %}
+
+        <!-- Resource Type -->
+        {%- if record.metadata.resource_type %}
+        <p><strong>{{ _("Resource Type:") }}</strong> {{ record.metadata.resource_type.title.en }}</p>
+        {%- endif %}
+
+        <!-- Creators -->
+        {%- if record.metadata.creators %}
+        <p><strong>{{ _("Creators:") }}</strong></p>
+        <ul>
+          {% for creator in record.metadata.creators %}
+            <li>
+              {{ creator.person_or_org.name }}
+              {% if creator.affiliations %}
+                ({{ creator.affiliations[0].name }})
+              {% endif %}
+              {% if creator.role %}
+                - {{ creator.role.title.en }}
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- Contributors -->
+        {%- if record.metadata.contributors %}
+        <p><strong>{{ _("Contributors:") }}</strong></p>
+        <ul>
+          {% for contributor in record.metadata.contributors %}
+            <li>
+              {{ contributor.person_or_org.name }}
+              {% if contributor.affiliations %}
+                ({{ contributor.affiliations[0].name }})
+              {% endif %}
+              - {{ contributor.role.title.en }}
+            </li>
+          {% endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- Identifiers -->
+        {%- if record.metadata.identifiers %}
+        <p><strong>{{ _("Identifiers:") }}</strong></p>
+        <ul>
+          {% for identifier in record.metadata.identifiers %}
+            <li>{{ identifier.scheme }}: {{ identifier.identifier }}</li>
+          {% endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- Related Identifiers -->
+        {%- if record.metadata.related_identifiers %}
+        <p><strong>{{ _("Related Identifiers:") }}</strong></p>
+        <ul>
+          {% for related in record.metadata.related_identifiers %}
+            <li>
+              {{ related.scheme }}: {{ related.identifier }} 
+              ({{ related.relation_type.title.en }}, {{ related.resource_type.title.en }})
+            </li>
+          {% endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- Dates -->
+        {%- if record.metadata.dates %}
+        <p><strong>{{ _("Dates:") }}</strong></p>
+        <ul>
+          {% for date in record.metadata.dates %}
+            <li>
+              {{ date.date }} - {{ date.type.title.en }}
+              {% if date.description %}
+                ({{ date.description }})
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- Languages -->
+        {%- if record.metadata.languages %}
+        <p><strong>{{ _("Languages:") }}</strong></p>
+        <ul>
+          {% for language in record.metadata.languages %}
+            <li>{{ language.title.en }}</li>
+          {% endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- Subjects -->
+        {%- if record.metadata.subjects %}
+        <p><strong>{{ _("Subjects:") }}</strong></p>
+        <ul>
+          {% for subject in record.metadata.subjects %}
+            <li>{{ subject.subject }} ({{ subject.scheme }})</li>
+          {% endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- References -->
+        {%- if record.metadata.references %}
+        <p><strong>{{ _("References:") }}</strong></p>
+        <ul>
+          {%- for reference in record.metadata.references %}
+            <li>
+              <strong>{{ reference.reference }}</strong>
+              {%- if reference.identifier or reference.scheme %}
+                ({{ reference.identifier }}{% if reference.identifier and reference.scheme %}, {% endif %}{{ reference.scheme }})
+              {%- endif %}
+            </li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- Funding -->
+        {%- if record.metadata.funding %}
+        <p><strong>{{ _("Funding:") }}</strong></p>
+        <ul>
+          {%- for funding in record.metadata.funding %}
+            <li>
+              {%- if funding.funder and funding.funder.id %}
+                {{ funding.funder.id }}
+              {%- endif %}
+              {%- if funding.award and funding.award.id %}
+                - {{ funding.award.id }}
+              {%- endif %}
+            </li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+
+        <!-- Locations -->
+        {%- if record.metadata.locations and record.metadata.locations.features %}
+          <p><strong>{{ _("Locations:") }}</strong></p>
+          <ul>
+            {%- for location in record.metadata.locations.features %}
+              <li>
+                <p><strong>{{ _("Place:") }}</strong> {{ location.place }}</p>
+                <p><strong>{{ _("Description:") }}</strong> {{ location.description }}</p>
+                {%- if location.geometry %}
+                  <p><strong>{{ _("Geometry:") }}</strong> {{ location.geometry.type }} with coordinates {{ location.geometry.coordinates }}</p>
+                {%- endif %}
+                {%- if location.identifiers %}
+                  <p><strong>{{ _("Identifiers:") }}</strong></p>
+                  <ul>
+                    {%- for ident in location.identifiers %}
+                      <li>{{ ident.scheme }}: {{ ident.identifier }}</li>
+                    {%- endfor %}
+                  </ul>
+                {%- endif %}
+              </li>
+            {%- endfor %}
+          </ul>
+        {%- endif %}
+
+        <!-- Sizes -->
+        {%- if record.metadata.sizes %}
+          <p><strong>{{ _("Sizes:") }}</strong></p>
+          <ul>
+            {%- for size in record.metadata.sizes %}
+              <li>{{ size }}</li>
+            {%- endfor %}
+          </ul>
+        {%- endif %}
+
+        <!-- Formats -->
+        {%- if record.metadata.formats %}
+          <p><strong>{{ _("Formats:") }}</strong></p>
+          <ul>
+            {%- for file_format in record.metadata.formats %}
+              <li>{{ file_format }}</li>
+            {%- endfor %}
+          </ul>
+        {%- endif %}
+
+        <!-- Rights -->
+        {%- if record.metadata.rights %}
+          <p><strong>{{ _("Rights:") }}</strong></p>
+          <ul>
+            {%- for right in record.metadata.rights %}
+              <li>
+                <strong>
+                  {%- if right.title is defined and right.title.en is defined %}
+                    {{ right.title.en }}
+                  {%- elif right.id is defined %}
+                    {{ right.id }}
+                  {%- else %}
+                    {{ _("Unknown Right") }}
+                  {%- endif %}:
+                </strong>
+                {%- if right.description is defined and right.description.en is defined %}
+                  {{ right.description.en }}
+                {%- endif %}
+                <br>
+                {%- if right.props is defined and right.props.url %}
+                  <a href="{{ right.props.url }}" target="_blank">{{ right.props.url }}</a>
+                {%- elif right.link is defined %}
+                  <a href="{{ right.link }}" target="_blank">{{ right.link }}</a>
+                {%- endif %}
+              </li>
+            {%- endfor %}
+          </ul>
+        {%- endif %}
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
 {% endblock message %}

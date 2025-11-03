@@ -15,7 +15,8 @@
 # - Cache: Redis (exposed port: 6379)
 # - DB: (PostgresSQL/MySQL) (exposed port: 5432 or 3306)
 # - Message queue: RabbitMQ (exposed ports: 5672, 15672)
-# - Opensearch (exposed ports: 9200, 9300)
+# - Search platform: (OpenSearch/Elasticsearch) (exposed ports: 9200, 9300)
+# - OpenSearch Dashboard/Kibana (view OS/ES indexes) (exposed ports: 5601)
 #
 version: '2.2'
 services:
@@ -35,6 +36,14 @@ services:
     extends:
       file: docker-services.yml
       service: search
+  opensearch-dashboards:
+    extends:
+      file: docker-services.yml
+      service: opensearch-dashboards
+  pgadmin:
+    extends:
+      file: docker-services.yml
+      service: pgadmin
   # Frontend
   frontend:
     extends:
@@ -54,7 +63,7 @@ services:
       file: docker-services.yml
       service: app
     command: ["uwsgi /opt/invenio/var/instance/uwsgi_ui.ini"]
-    image: nyu-data-repository
+    image: ultraviolet:latest
     ports:
       - "5000"
     volumes:
@@ -68,7 +77,7 @@ services:
       file: docker-services.yml
       service: app
     command: ["uwsgi /opt/invenio/var/instance/uwsgi_rest.ini"]
-    image: nyu-data-repository
+    image: ultraviolet:latest
     ports:
       - "5000"
     volumes:
@@ -80,9 +89,10 @@ services:
     extends:
       file: docker-services.yml
       service: app
-    restart: "always"
     command: ["celery -A invenio_app.celery worker --beat --loglevel=INFO"]
-    image: nyu-data-repository
+    image: ultraviolet:latest
+    volumes:
+      - uploaded_data:/opt/invenio/var/instance/data
     depends_on:
       search:
         condition: service_started

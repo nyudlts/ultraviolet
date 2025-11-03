@@ -1,9 +1,6 @@
-licenses:
-  pid-type: lic
-  data-file: vocabularies/licenses_truncated.csv
-resourcetypes:
-  pid-type: rsrct
-  data-file: vocabularies/resource_types_nyu.yaml
+removalreasons:
+  pid-type: rem
+  data-file: vocabularies/removal_reasons.yaml
 languages:
   pid-type: lng
   data-file: vocabularies/languages.yaml
@@ -12,11 +9,7 @@ creatorsroles:
   data-file: vocabularies/creatorsroles_nyu.yaml
 affiliations:
   pid-type: aff
-  schemes:
-    - id: ROR
-      name: Research Organization Registry
-      uri: "https://ror.org/"
-      data-file: vocabularies/affiliations_ror.yaml
+  data-file: vocabularies/affiliations_ror.yaml
 subjects:
   pid-type: sub
   schemes:

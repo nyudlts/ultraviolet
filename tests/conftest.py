@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 NYU.
+# Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -16,6 +16,18 @@ import pytest
 import os
 from invenio_accounts.proxies import current_datastore
 from invenio_access.proxies import current_access
+from invenio_search.proxies import current_search_client
+
+
+import pytest
+from invenio_app.factory import create_app as create_ui_api
+
+
+@pytest.fixture(scope="module")
+def create_app():
+    """Create test app."""
+    return create_ui_api
+
 
 # modify application configuration
 @pytest.fixture(scope="module")
@@ -26,15 +38,39 @@ def app_config(app_config):
         "pool_recycle": 3600,
     }
     # need this to make sure separate indexes are created for testing
-    app_config["SEARCH_INDEX_PREFIX"] = "test"
+    app_config["SEARCH_INDEX_PREFIX"] = "q"
     app_config["SERVER_NAME"] = "127.0.0.1"
-    app_config['MAX_FILE_SIZE'] = 50
+    app_config["MAX_FILE_SIZE"] = 50
+    app_config["REST_CSRF_ENABLED"] = False
+    app_config["APP_DEFAULT_SECURE_HEADERS"] = {
+        'content_security_policy': {
+            'default-src': [
+                "'self'",
+                'data:',  # for fonts
+                "'unsafe-inline'",  # for inline scripts and styles
+                "blob:",  # for pdf preview
+                # Add your own policies here (e.g. analytics)
+            ],
+        },
+        'content_security_policy_report_only': False,
+        'content_security_policy_report_uri': None,
+        'force_file_save': False,
+        'force_https': False,
+        'force_https_permanent': False,
+        'frame_options': 'sameorigin',
+        'frame_options_allow_from': None,
+        'session_cookie_http_only': True,
+        'session_cookie_secure': True,
+        'strict_transport_security': True,
+        'strict_transport_security_include_subdomains': True,
+        'strict_transport_security_max_age': 31556926,  # One year in seconds
+        'strict_transport_security_preload': False,
+    }
     return app_config
-
 
 # overriding instance path allows us to make sure we use ultraviolet templates
 @pytest.fixture(scope="module")
-def ultraviolet_instance_path():
+def instance_path():
     return os.path.join(sys.prefix, "var", "instance")
 
 # Copied from https://github.dev/inveniosoftware/invenio-rdm-records/tree/maint-1.3.x/tests/records
@@ -74,12 +110,8 @@ except AttributeError:
     security.safe_str_cmp = hmac.compare_digest
 
 from collections import namedtuple
-from copy import deepcopy
-from datetime import datetime
 
 import pytest
-from flask import g
-from flask_principal import Identity, Need, UserNeed
 from flask_security import login_user, logout_user
 from flask_security.utils import hash_password
 from invenio_access.models import ActionRoles
@@ -92,7 +124,6 @@ from invenio_cache import current_cache
 from invenio_communities import current_communities
 from invenio_communities.communities.records.api import Community
 from invenio_records_resources.proxies import current_service_registry
-from invenio_records_resources.services.custom_fields import TextCF
 from invenio_vocabularies.contrib.affiliations.api import Affiliation
 from invenio_vocabularies.contrib.awards.api import Award
 from invenio_vocabularies.contrib.funders.api import Funder
@@ -101,6 +132,162 @@ from invenio_vocabularies.proxies import current_service as vocabulary_service
 from invenio_vocabularies.records.api import Vocabulary
 from invenio_access.models import ActionUsers
 
+@pytest.fixture(scope="function")
+def full_record(users):
+    """Full record data as dict coming from the external world."""
+    return {
+        "pids": {
+            "doi": {
+                "identifier": "10.1234/inveniordm.1234",
+                "provider": "datacite",
+                "client": "inveniordm",
+            },
+            "oai": {
+                "identifier": "oai:vvv.com:abcde-fghij",
+                "provider": "oai",
+            },
+        },
+        "uuid": "445aaacd-9de1-41ab-af52-25ab6cb93df7",
+        "version_id": "1",
+        "created": "2023-01-01",
+        "updated": "2023-01-02",
+        "metadata": {
+            "resource_type": {"id": "image-photo"},
+            "creators": [
+                {
+                    "person_or_org": {
+                        "name": "Nielsen, Lars Holm",
+                        "type": "personal",
+                        "given_name": "Lars Holm",
+                        "family_name": "Nielsen",
+                        "identifiers": [
+                            {
+                                "scheme": "orcid",
+                                "identifier": "0000-0001-8135-3489",
+                            }
+                        ],
+                    },
+                    "affiliations": [{"id": "cern"}, {"name": "free-text"}],
+                }
+            ],
+            "title": "InvenioRDM",
+            "additional_titles": [
+                {
+                    "title": "a research data management platform",
+                    "type": {"id": "subtitle"},
+                    "lang": {"id": "eng"},
+                }
+            ],
+            "publisher": "InvenioRDM",
+            "publication_date": "2020-09-01",
+            "subjects": [
+                {"id": "http://id.nlm.nih.gov/mesh/A-D000007"},
+                {"subject": "custom"},
+            ],
+            "contributors": [
+                {
+                    "person_or_org": {
+                        "name": "Nielsen, Lars Holm",
+                        "type": "personal",
+                        "given_name": "Lars Holm",
+                        "family_name": "Nielsen",
+                        "identifiers": [
+                            {
+                                "scheme": "orcid",
+                                "identifier": "0000-0001-8135-3489",
+                            }
+                        ],
+                    },
+                    "role": {"id": "other"},
+                    "affiliations": [{"id": "cern"}],
+                }
+            ],
+            "dates": [
+                {
+                    "date": "1939/1945",
+                    "type": {"id": "other"},
+                    "description": "A date",
+                }
+            ],
+            "languages": [{"id": "dan"}, {"id": "eng"}],
+            "identifiers": [{"identifier": "1924MNRAS..84..308E", "scheme": "ads"}],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1234/foo.bar",
+                    "scheme": "doi",
+                    "relation_type": {"id": "iscitedby"},
+                    "resource_type": {"id": "dataset"},
+                }
+            ],
+            "sizes": ["11 pages"],
+            "formats": ["application/pdf"],
+            "version": "v1.0",
+            "rights": [
+                {
+                    "title": {"en": "A custom license"},
+                    "description": {"en": "A description"},
+                    "link": "https://customlicense.org/licenses/by/4.0/",
+                },
+                {"id": "cc-by-4.0"},
+            ],
+            "description": "<h1>A description</h1> <p>with HTML tags</p>",
+            "additional_descriptions": [
+                {
+                    "description": "Bla bla bla",
+                    "type": {"id": "methods"},
+                    "lang": {"id": "eng"},
+                }
+            ],
+            "locations": {
+                "features": [
+                    {
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [-32.94682, -60.63932],
+                        },
+                        "place": "test location place",
+                        "description": "test location description",
+                        "identifiers": [
+                            {"identifier": "12345abcde", "scheme": "wikidata"},
+                            {"identifier": "12345abcde", "scheme": "geonames"},
+                        ],
+                    }
+                ]
+            },
+            "funding": [
+                {
+                    "funder": {
+                        "id": "00k4n6c32",
+                    },
+                    "award": {"id": "00k4n6c32::755021"},
+                }
+            ],
+            "references": [
+                {
+                    "reference": "Nielsen et al,..",
+                    "identifier": "0000 0001 1456 7559",
+                    "scheme": "isni",
+                }
+            ],
+        },
+        "provenance": {
+            "created_by": {"user": users["user1"].id},
+            "on_behalf_of": {"user": users["user2"].id},
+        },
+        "access": {
+            "record": "public",
+            "files": "restricted",
+            "embargo": {
+                "active": True,
+                "until": "2131-01-01",
+                "reason": "Only for medical doctors.",
+            },
+        },
+        "files": {
+            "enabled": False,
+        },
+        "notes": ["Under investigation for copyright infringement."],
+    }
 
 
 @pytest.fixture(scope="function")
@@ -141,7 +328,7 @@ def minimal_record():
 
 
 @pytest.fixture()
-def client_with_login(client, users):
+def client_with_login(app, client, users):
     """Log in a user to the client."""
     user = users["user1"]
     login_user(user, remember=True)
@@ -209,7 +396,17 @@ def resource_type_type(app):
 
 
 @pytest.fixture(scope="module")
-def resource_type_v(app, resource_type_type):
+def init_vocabulary_indexes(app):
+    """Ensure vocabulary indexes are created and refreshed."""
+    # Initialize the vocabulary index
+    try:
+        Vocabulary.index.create()
+        current_search_client.indices.refresh(index=Vocabulary.index._name)
+    except:
+        pass
+
+@pytest.fixture(scope="module")
+def resource_type_v(app, resource_type_type, init_vocabulary_indexes):
     """Resource type vocabulary record."""
     vocabulary_service.create(
         system_identity,
@@ -353,9 +550,14 @@ def subject_v(app):
         },
     )
 
+    if not current_search_client.indices.exists(index="subjects-subject-v1.0.0"):
+        current_search_client.indices.create(index="subjects-subject-v1.0.0")
+                
+
     Subject.index.refresh()
 
     return vocab
+
 
 
 @pytest.fixture(scope="module")
@@ -464,9 +666,18 @@ def licenses_v(app, licenses):
     return vocab
 
 
+from invenio_vocabularies.contrib.affiliations import AffiliationsService, AffiliationsServiceConfig
+
+
 @pytest.fixture(scope="module")
 def affiliations_v(app):
     """Affiliation vocabulary record."""
+
+    if "affiliations" not in current_service_registry._services:
+        service = AffiliationsService(config=AffiliationsServiceConfig())  # Create an instance
+        current_service_registry.register(service, "affiliations")
+
+
     affiliations_service = current_service_registry.get("affiliations")
     aff = affiliations_service.create(
         system_identity,
@@ -486,7 +697,9 @@ def affiliations_v(app):
             ],
         },
     )
-
+    if not current_search_client.indices.exists(index="affiliations-affiliation-v1.0.0"):
+        current_search_client.indices.create(index="affiliations-affiliation-v1.0.0")
+                
     Affiliation.index.refresh()
 
     return aff
@@ -518,7 +731,8 @@ def funders_v(app):
             "country": "BE",
         },
     )
-
+    if not current_search_client.indices.exists(index="funders-funder-v1.0.0"):
+        current_search_client.indices.create(index="funders-funder-v1.0.0")
     Funder.index.refresh()
 
     return funder
@@ -549,10 +763,71 @@ def awards_v(app, funders_v):
             "acronym": "HIT-CF",
         },
     )
-
+    if not current_search_client.indices.exists(index="awards-award-v1.0.0"):
+        current_search_client.indices.create(index="awards-award-v1.0.0")
     Award.index.refresh()
 
     return award
+
+@pytest.fixture(scope="module")
+def creatorsroles_type(app):
+    """Creators roles vocabulary type."""
+    return vocabulary_service.create_type(system_identity, "creatorsroles", "crt")
+
+@pytest.fixture(scope="module")
+def creatorsroles_v(app, creatorsroles_type):
+    vocabulary_service.create(
+        system_identity,
+        {
+            "id": "author",
+            "title": {"en": "Author"},
+            "type": "creatorsroles",
+        },
+    )
+
+    vocab = vocabulary_service.create(
+        system_identity,
+        {
+            "id": "editor",
+            "title": {"en": "Editor"},
+            "type": "creatorsroles",
+        },
+    )
+
+    Vocabulary.index.refresh()
+
+    return vocab
+
+@pytest.fixture(scope="module")
+def removal_reasons_type(app):
+    """Removal reasons vocabulary type."""
+    return vocabulary_service.create_type(system_identity, "removalreasons", "rem")
+
+
+@pytest.fixture(scope="module")
+def removal_reasons_v(app, removal_reasons_type):
+    vocabulary_service.create(
+        system_identity,
+        {
+            "id": "copyright",
+            "title": {"en": "of copyright infringement"},
+            "type": "removalreasons",
+        },
+    )
+
+    vocab = vocabulary_service.create(
+        system_identity,
+        {
+            "id": "retracted",
+            "title": {"en": "The study has been retracted/withdrawn."},
+            "type": "removalreasons",
+        },
+    )
+
+    # Refresh the index to make the vocabulary available
+    Vocabulary.index.refresh()
+
+    return vocab
 
 
 @pytest.fixture(scope="function")
@@ -584,6 +859,8 @@ RunningApp = namedtuple(
         "licenses_v",
         "funders_v",
         "awards_v",
+        "creatorsroles_v",
+        "removal_reasons_v",
     ],
 )
 
@@ -606,6 +883,8 @@ def running_app(
     licenses_v,
     funders_v,
     awards_v,
+    creatorsroles_v,
+    removal_reasons_v,
 ):
     """This fixture provides an app with the typically needed db data loaded.
 
@@ -629,6 +908,8 @@ def running_app(
         licenses_v,
         funders_v,
         awards_v,
+        creatorsroles_v,
+        removal_reasons_v,
     )
 
 
@@ -702,15 +983,17 @@ def users(app, db):
         "user2": user2,
     }
 
+
 @pytest.fixture()
 def admin_user(users, roles, db):
     """Give admin rights to a user."""
     user = users["user1"]
-    current_datastore.add_role_to_user(user,"admin" )
+    current_datastore.add_role_to_user(user,"admin")
     action = current_access.actions["superuser-access"]
     db.session.add(ActionUsers.allow(action, user_id=user.id))
-
+    db.session.commit()
     return user
+
 
 @pytest.fixture()
 def community_type_type(superuser_identity):
@@ -763,6 +1046,7 @@ def admin(UserFixture, app, db, admin_role_need):
         password="admin",
     )
     u.create(app, db)
+    db.session.commit()
 
     datastore = app.extensions["security"].datastore
     _, role = datastore._prepare_role_modify_args(u.user, "administration-access")

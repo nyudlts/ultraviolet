@@ -11,19 +11,17 @@ pytest-invenio = "==2.1.1"
 flask-pytest = "*"
 
 [packages]
-invenio-logging = {extras = ["sentry-sdk"], version = "~=1.3.0"}
 ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
-ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git"}
-invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git", ref="4.1.1-role-filter"}
-lxml = "==4.9.3"
-xmlsec = "==1.3.13"
-invenio-assets = "==2.0.0"
-invenio-previewer = "==1.3.10"
+ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git", ref="align-v12-update"}
+invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git", ref="sync_release_13.1.1"}
+sqlalchemy = {version = "*", extras = ["asyncio"], markers = "platform_machine == 'x86_64' or platform_machine == 'arm64'"}
+xmlsec = "==1.3.16"
 python-dotenv = "*"
+invenio-app-rdm = {extras = ["opensearch2"], version = "~=12.0.0"}
 uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
-invenio-app-rdm = {version = "~=11.0.0", extras = ["opensearch2", "postgresql"]}
+typing-extensions = "*"
 
 [requires]
 python_version = "3.9"

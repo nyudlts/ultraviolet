@@ -3,13 +3,14 @@ name: ci:test
 on:
   push:
     branches:
-      - test-refactor
+      - application-page-updates
     paths-ignore:
       - "docs/**"
       - "**.md"
   pull_request:
     branches:
       - main
+      - v12_update 
     paths-ignore:
       - "docs/**"
       - "**.md"
@@ -47,10 +48,14 @@ jobs:
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
           echo -e FLASK_SECRET_KEY="some random value" >> .env
+          echo -e APP_ENVIRONMENT="global" >>.env
       - name: "Install project dependencies"
         run: |
-          invenio-cli install --dev
+          invenio-cli install
           invenio-cli services setup -N
+      - name: "Compile translations for restricted file of a public record"
+        run: |
+          invenio-cli translations compile
       - name: Start services and app
         run: |
           docker -v
@@ -63,7 +68,7 @@ jobs:
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=no pipenv run pytest -p no:cacheprovider
+          E2E=yes pipenv run pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
