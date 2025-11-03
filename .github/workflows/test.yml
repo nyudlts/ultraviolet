@@ -49,7 +49,6 @@ jobs:
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
           echo -e FLASK_SECRET_KEY="some random value" >> .env
-          echo -e APP_ENVIRONMENT="global" >>.env
       - name: "Install project dependencies"
         run: |
           invenio-cli install
