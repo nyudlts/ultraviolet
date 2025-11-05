@@ -9,7 +9,8 @@ theme = WebpackThemeBundle(
     themes={
         "semantic-ui": dict(
             entry={
-                # Add your webpack entrypoints
+                "mirador_js": "./js/ultraviolet/mirador.js",
+                "mirador_css": "./css/ultraviolet/mirador.css"
             },
         ),
     },
