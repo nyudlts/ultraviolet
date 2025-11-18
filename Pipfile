@@ -23,7 +23,7 @@ uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
 typing-extensions = "*"
-invenio-search = ">=3.0.0"
+invenio-search = ">=2.0.0"
 
 [requires]
 python_version = "3.9"
