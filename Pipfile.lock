@@ -3377,6 +3377,10 @@
             "markers": "python_version >= '3.9'",
             "version": "==0.18.0.post1"
         },
+        "ultraviolet": {
+            "editable": true,
+            "path": "./site"
+        },
         "ultraviolet-permissions": {
             "git": "https://github.com/nyudlts/ultraviolet-permissions-module.git",
             "ref": "c09c52c344a0f6915456846201f030084bd8e3da"
