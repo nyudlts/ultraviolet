@@ -84,5 +84,5 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     can_update_files = [Disable()]
 
 
-def ultraviolet_admin_permission_factory(admin_view):
+def ultraviolet_admin_permission_factory(_admin_view):
     return Permission(RoleNeed(current_app.config["ADMIN_ROLE"]))
