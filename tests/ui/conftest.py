@@ -10,21 +10,16 @@
 # conftest.py
 """Pytest configuration."""
 
-
-import invenio_app.factory as factory
-from invenio_base.wsgi import wsgi_proxyfix
-from invenio_config import create_config_loader
+import pytest
 from invenio_rdm_records.proxies import current_rdm_records_service
 from invenio_records_resources.proxies import current_service_registry
-import pytest
-import os
-from invenio_app.factory import create_ui
 
 
 @pytest.fixture()
 def services(running_app, search_clear):
     """RDM Record Service."""
     return running_app.app.extensions["invenio-rdm-records"].records_service
+
 
 @pytest.fixture(scope="function")
 def register_file_service(app):

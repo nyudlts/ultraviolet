@@ -12,7 +12,6 @@
 
 
 import sys
-import pytest
 import os
 from invenio_accounts.proxies import current_datastore
 from invenio_access.proxies import current_access
@@ -331,6 +330,15 @@ def minimal_record():
 def client_with_login(app, client, users):
     """Log in a user to the client."""
     user = users["user1"]
+    login_user(user, remember=True)
+    login_user_via_session(client, email=user.email)
+    return client
+
+
+@pytest.fixture()
+def client_with_nyu_login(app, client, users):
+    """Log in a user to the client."""
+    user = users["user2"]
     login_user(user, remember=True)
     login_user_via_session(client, email=user.email)
     return client
