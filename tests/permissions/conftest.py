@@ -221,10 +221,10 @@ def logout_user(client):
 
 
 
-@pytest.fixture(scope='module')
-def create_proprietary_record(client):
+@pytest.fixture(scope='function')
+def create_proprietary_record(client, propriatery_record):
     """Create draft ready for file attachment and return its id."""
-    response = client.post("/records", json=create_proprietary_record, headers=minimal_headers())
+    response = client.post("/records", json=propriatery_record, headers=minimal_headers())
     assert response.status_code == 201
     return response.json['id']
 
@@ -287,3 +287,8 @@ def create_real_record(create_record, location):
         # db.session.commit()
 
     return _create_real_record
+
+@pytest.fixture()
+def services(running_app, search_clear):
+    """RDM Record Service."""
+    return running_app.app.extensions["invenio-rdm-records"].records_service
