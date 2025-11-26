@@ -37,8 +37,8 @@
 - id: publication-book
   props:
     csl: book
-    datacite_general: Text
-    datacite_type: Book
+    datacite_general: Book 
+    datacite_type: '' 
     openaire_resourceType: '2'
     openaire_type: publication
     schema.org: https://schema.org/Book
@@ -55,8 +55,8 @@
 - id: publication-section
   props:
     csl: chapter
-    datacite_general: Text
-    datacite_type: Book section
+    datacite_general: BookChapter 
+    datacite_type: '' 
     openaire_resourceType: '13'
     openaire_type: publication
     schema.org: https://schema.org/ScholarlyArticle
@@ -66,15 +66,15 @@
     type_icon: file alternate
     type_name: Publication
   title:
-    en: Book section
+    en: Book chapter 
   tags:
     - depositable
     - linkable
 - id: publication-conferencepaper
   props:
     csl: paper-conference
-    datacite_general: Text
-    datacite_type: Conference paper
+    datacite_general: ConferencePaper 
+    datacite_type: '' 
     openaire_resourceType: '4'
     openaire_type: publication
     schema.org: https://schema.org/ScholarlyArticle
@@ -91,9 +91,9 @@
 - id: publication-datamanagementplan
   props:
     csl: report
-    datacite_general: Text
-    datacite_type: Data management plan
-    openaire_resourceType: '9'
+    datacite_general: OutputManagementPlan 
+    datacite_type: '' 
+    openaire_resourceType: '45'
     openaire_type: publication
     schema.org: https://schema.org/CreativeWork
     subtype: publication-datamanagementplan
@@ -109,8 +109,8 @@
 - id: publication-article
   props:
     csl: article-journal
-    datacite_general: Text
-    datacite_type: Journal article
+    datacite_general: JournalArticle
+    datacite_type: '' 
     openaire_resourceType: '1'
     openaire_type: publication
     schema.org: https://schema.org/ScholarlyArticle
@@ -145,8 +145,8 @@
 - id: publication-preprint
   props:
     csl: article
-    datacite_general: Text
-    datacite_type: Preprint
+    datacite_general: Preprint 
+    datacite_type: '' 
     openaire_resourceType: '16'
     openaire_type: publication
     schema.org: https://schema.org/ScholarlyArticle
@@ -217,8 +217,8 @@
 - id: publication-report
   props:
     csl: article
-    datacite_general: Text
-    datacite_type: Report
+    datacite_general: Report 
+    datacite_type: '' 
     openaire_resourceType: '17'
     openaire_type: publication
     schema.org: https://schema.org/ScholarlyArticle
