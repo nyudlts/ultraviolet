@@ -36,8 +36,6 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     #
     # Allow submitting new record
     can_create = can_manage
-    can_read = can_view  # <-- ADD THIS LINE - This is what's checked when accessing published records
-    can_read_files = can_view
 
     #
     # Drafts
