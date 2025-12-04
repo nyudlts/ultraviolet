@@ -105,14 +105,14 @@ def test_anonymous_user_cannot_access_restricted_records(services, app, db, base
 
 
 
-def test_user_with_nyu_role_can_access_restricted_records(services, app, users, roles, client_with_nyu_login):
+def test_user_with_nyu_role_can_access_restricted_records(services, app, client_with_nyu_login):
     service = current_rdm_records_service
 
     data = {
         "pids": {},
         "access": {
             "record": "restricted",
-            "files": "restricted",
+            "files": "restricted"
         },
         "files": {
             "enabled": False,
@@ -147,11 +147,5 @@ def test_user_with_nyu_role_can_access_restricted_records(services, app, users, 
         'content-type': 'application/octet-stream',
         'accept': 'application/json'
     })
-    user = users["user2"]  # Get the same user that was logged in
-
-    #assert False, f"User: {user}, Email: {user.email}, Roles: {user.roles}"
-
-    print(f"Response status: {response.status_code}")
-    print(f"Response data: {response.json if response.status_code != 200 else 'Success'}")
 
     assert 200 == response.status_code
