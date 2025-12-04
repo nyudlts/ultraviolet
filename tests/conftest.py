@@ -338,7 +338,7 @@ def client_with_login(app, client, users):
 @pytest.fixture()
 def client_with_nyu_login(app, client, users,roles):
     """Log in a user to the client."""
-    user = users["user2"]
+    user = users["user3"]
     login_user(user, remember=True)
     login_user_via_session(client, email=user.email)
     return client
@@ -350,10 +350,11 @@ def roles(app, db):
     with db.session.begin_nested():
         datastore = app.extensions["security"].datastore
         role1 = datastore.create_role(name="admin", description="admin role")
-        role2 = datastore.create_role(name="viewer", description="NYU viewer")
+        role2 = datastore.create_role(name="test", description="tests are coming")
+        role3 = datastore.create_role(name="viewer", description="NYU viewer")
 
     db.session.commit()
-    return {"admin": role1, "viewer": role2}
+    return {"admin": role1, "test": role2, "viewer": role3}
 
 
 @pytest.fixture(scope="module")
@@ -983,13 +984,17 @@ def users(app, db,roles):
         user2 = datastore.create_user(
             email="user2@test.com", password=hashed_password, active=True
         )
+        user3 = datastore.create_user(
+            email="user3@test.com", password=hashed_password, active=True
+        )
         # Give role to admin
         db.session.add(ActionUsers(action="admin-access", user=user1))
-        # Assign predefined role to user2
-        datastore.add_role_to_user(user2, roles["viewer"])
+        # Assign predefined role to user3
+        datastore.add_role_to_user(user3, roles["viewer"])
     return {
         "user1": user1,
         "user2": user2,
+        "user3": user3,
     }
 
 
