@@ -1,10 +1,10 @@
 from flask import current_app
 from flask_principal import Permission, RoleNeed
 from invenio_rdm_records.services import RDMRecordPermissionPolicy
-from invenio_rdm_records.services.generators import SecretLinks, RecordCommunitiesAction
+from invenio_rdm_records.services.generators import SecretLinks, RecordCommunitiesAction, RecordOwners, AccessGrant
 from invenio_records_permissions.generators import SystemProcess, AuthenticatedUser, AnyUser, Disable
 
-from .generators import AdminSuperUser, Depositor, Curator, ProprietaryRecordPermissions, PublicViewer
+from .generators import AdminSuperUser, Depositor, Curator, Viewer
 
 
 class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
@@ -23,19 +23,21 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     #
     # High-level permissions (used by low-level)
     #
-    can_manage = [SystemProcess(), AdminSuperUser(), Depositor()]
-    can_curate = can_manage + [SecretLinks("edit"), Curator()]
-    can_preview = can_manage + [SecretLinks("preview"), Curator()]
-    can_view = can_manage + [SecretLinks("view"), ProprietaryRecordPermissions(), RecordCommunitiesAction("view")]
+    can_manage = [ RecordOwners(),Viewer(), SystemProcess(), AccessGrant("manage"), AdminSuperUser(), Depositor(), RecordCommunitiesAction("manage")]
+    can_curate = can_manage + [SecretLinks("edit"), AccessGrant("edit"),Curator(),RecordCommunitiesAction("curate")]
+    can_preview = can_manage + [SecretLinks("preview"), AccessGrant("view"),Curator()]
+    can_view = can_manage + [SecretLinks("view"),AccessGrant("view"), RecordCommunitiesAction("view"), Viewer()]
 
     can_authenticated = [AuthenticatedUser(), SystemProcess()]
-    can_all = [AnyUser(), SystemProcess(), PublicViewer()]
+    can_all = [AnyUser(), SystemProcess()]
 
     #
     #  Records
     #
     # Allow submitting new record
     can_create = can_manage
+    can_read = can_view  # <-- ADD THIS LINE - This is what's checked when accessing published records
+    can_read_files = can_view
 
     #
     # Drafts
