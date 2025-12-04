@@ -351,10 +351,11 @@ def roles(app, db):
         datastore = app.extensions["security"].datastore
         role1 = datastore.create_role(name="admin", description="admin role")
         role2 = datastore.create_role(name="test", description="tests are coming")
-        role3 = datastore.create_role(name="depositor", description="NYU Depositor")
+        role3 = datastore.create_role(name="viewer", description="NYU Viewer")
+        role4 = datastore.create_role(name="depositor", description="NYU Depositor")
 
     db.session.commit()
-    return {"admin": role1, "test": role2, "depositor": role3}
+    return {"admin": role1, "test": role2, "viewer": role3, "depositor": role4}
 
 
 @pytest.fixture(scope="module")
@@ -987,14 +988,20 @@ def users(app, db,roles):
         user3 = datastore.create_user(
             email="user3@test.com", password=hashed_password, active=True
         )
+        user4 = datastore.create_user(
+            email="user4@test.com", password=hashed_password, active=True
+        )
         # Give role to admin
         db.session.add(ActionUsers(action="admin-access", user=user1))
         # Assign predefined role to user3
-        datastore.add_role_to_user(user3, roles["depositor"])
+        datastore.add_role_to_user(user3, roles["viewer"])
+        # Assign predefined role to user4
+        datastore.add_role_to_user(user4, roles["depositor"])
     return {
         "user1": user1,
         "user2": user2,
         "user3": user3,
+        "user4": user4,
     }
 
 

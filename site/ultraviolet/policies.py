@@ -1,7 +1,7 @@
 from flask import current_app
 from flask_principal import Permission, RoleNeed
 from invenio_rdm_records.services import RDMRecordPermissionPolicy
-from invenio_rdm_records.services.generators import SecretLinks, RecordCommunitiesAction, RecordOwners, AccessGrant, IfRestricted
+from invenio_rdm_records.services.generators import SecretLinks, RecordCommunitiesAction, RecordOwners, AccessGrant, IfRestricted, ResourceAccessToken
 from invenio_records_permissions.generators import SystemProcess, AuthenticatedUser, AnyUser, Disable
 
 from .generators import AdminSuperUser, Depositor, Curator, Viewer
@@ -39,6 +39,10 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
      # Allow reading metadata of a record
     can_read = [
         IfRestricted("record", then_=can_view, else_=can_all),
+    ]
+    can_read_files = [
+        IfRestricted("files", then_=can_view, else_=can_all),
+        ResourceAccessToken("read"),
     ]
 
     #
