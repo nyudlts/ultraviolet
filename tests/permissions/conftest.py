@@ -33,8 +33,6 @@ from invenio_records_files.api import Record
 from invenio_records_files.models import RecordsBuckets
 from invenio_records_rest import InvenioRecordsREST
 
-from ultraviolet_permissions.ext import UltravioletPermssions
-
 
 @pytest.fixture(scope='module')
 def celery_config():
@@ -57,11 +55,11 @@ def base_app():
             "SQLALCHEMY_DATABASE_URI", "sqlite:///test.db"
         ),
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        FILES_REST_DEFAULT_STORAGE_CLASS = 'S',
-        FILES_REST_STORAGE_CLASS_LIST = {'A': 'Archive', 'S': 'Standard'},
-        FILES_REST_DEFAULT_QUOTA_SIZE = 112345789,
-        FILES_REST_DEFAULT_MAX_FILE_SIZE = 123465789,
-        FILES_REST_OBJECT_KEY_MAX_LEN = 123456789,
+        FILES_REST_DEFAULT_STORAGE_CLASS='S',
+        FILES_REST_STORAGE_CLASS_LIST={'A': 'Archive', 'S': 'Standard'},
+        FILES_REST_DEFAULT_QUOTA_SIZE=112345789,
+        FILES_REST_DEFAULT_MAX_FILE_SIZE=123465789,
+        FILES_REST_OBJECT_KEY_MAX_LEN=123456789,
         TESTING=True,
     )
     InvenioDB(app_)
@@ -73,7 +71,7 @@ def base_app():
     InvenioRecordsREST(app_)
     InvenioRecordsFiles(app_)
     InvenioPIDStore(app_)
-    UltravioletPermssions(app_)
+    # UltravioletPermssions(app_)
     return app_
 
 
@@ -91,9 +89,11 @@ def app(base_app, request):
     request.addfinalizer(teardown)
     return base_app
 
+
 @pytest.fixture(scope='function')
 def user_role(request):
     return request.param
+
 
 @pytest.fixture(scope='function')
 def user_roles_propriatery_record(user_role):
@@ -180,13 +180,13 @@ def propriatery_record():
         }
     }
 
+
 def minimal_headers():
     """Create headers."""
     return {
-          'content-type': 'application/octet-stream',
-          'accept': 'application/json'
+        'content-type': 'application/octet-stream',
+        'accept': 'application/json'
     }
-
 
 
 @pytest.fixture(scope='module')
@@ -200,12 +200,14 @@ def create_roles(*names):
     db.session.commit()
     return roles
 
+
 @pytest.fixture(scope='module')
 def assign_roles(user, *roles):
     """Assign roles to users."""
     for user, roles in roles.items():
         for role in roles:
             user.provides.add(role)
+
 
 def login_user(client, user):
     """Log user in."""
@@ -218,7 +220,6 @@ def logout_user(client):
     flask_security.logout_user()
     with client.session_transaction() as session:
         session.pop("user_id", None)
-
 
 
 @pytest.fixture(scope='function')
@@ -255,7 +256,7 @@ def create_record():
                 "access_levels": {},
             },
             "files": {
-            "enabled": True,  # Most tests don't care about files
+                "enabled": True,  # Most tests don't care about files
             },
 
         }
@@ -287,6 +288,7 @@ def create_real_record(create_record, location):
         # db.session.commit()
 
     return _create_real_record
+
 
 @pytest.fixture()
 def services(running_app, search_clear):
