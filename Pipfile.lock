@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e40a1da6cdc13d79d9490e028064eced6a2d2b0772c283dfaf850b6b61d437e3"
+            "sha256": "2e64d99561a245fdacbf04d86bffd970a33372f3058e8eeb53f3e7d9411d9173"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -956,7 +956,7 @@
                 "sha256:f28588772bb5fb869a8eb331374ec06f24a83a9c25bfa1f38b6993afe9c1e968",
                 "sha256:f47617f698838ba98f4ff4189aef02e7343952df3a615f847bb575c3feb177a7"
             ],
-            "markers": "python_version >= '3.9'",
+            "markers": "platform_machine == 'x86_64' or platform_machine == 'arm64'",
             "version": "==3.2.4"
         },
         "humanize": {
@@ -1399,11 +1399,11 @@
         },
         "invenio-theme": {
             "hashes": [
-                "sha256:f177db9297c549f119ff329ae2a5152f4a3dfe4279faba92ef60da3b133cc731",
-                "sha256:f513d7aecdb4418e078f6992d9823a92131c97f72d9e91fdeca2683a65cb38a3"
+                "sha256:69ea8a010fe6b0720b9d15f10fbadb17f9c37cc241af76d3a5d2779ac1798091",
+                "sha256:840027c16ddd9b2d3e9d156c38ee0c3b106925f515da172e9940db3de54182bc"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==4.4.3"
+            "version": "==4.5.0"
         },
         "invenio-userprofiles": {
             "hashes": [
@@ -2697,11 +2697,11 @@
         },
         "pywebpack": {
             "hashes": [
-                "sha256:8483b7571a9229a29e7356050ce4d4649d8e4f287fcfd1c68ef49d8af9b09c06",
-                "sha256:b9e51339af7c2d4393b50f388980264fb96f7bd053152b5e46f2dcd9763e86b0"
+                "sha256:dfd175d545063be3e1913865ce327e7d78fa839f0c16ea9f51be997ebcce9b78",
+                "sha256:e25fadc9d8fddaa0c74c2743c4037fc5bff411091e7c671a490894a295f599e9"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2.2.0"
+            "version": "==2.2.1"
         },
         "pyyaml": {
             "hashes": [
@@ -3443,7 +3443,7 @@
                 "sha256:f9480c0740aabd8cb29c329b422fb65358049840b34aba0adf63162371d2a96e",
                 "sha256:ff486e183d151e51b1d694c7aa1695747599bb00b9f5f604092b54b74c64a8e1"
             ],
-            "markers": "python_version >= '3.7'",
+            "markers": "platform_machine == 'x86_64' or platform_machine == 'arm64'",
             "version": "==2.0.44"
         },
         "sqlalchemy-continuum": {
