@@ -11,6 +11,7 @@ pytest-invenio = "==2.1.1"
 flask-pytest = "*"
 
 [packages]
+ultraviolet = {editable = true, path="./site"}
 ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git"}
 ultraviolet-permissions = {git = "https://github.com/nyudlts/ultraviolet-permissions-module.git", ref="align-v12-update"}
 invenio-communities = {git = "https://github.com/nyudlts/ultraviolet-communities.git", ref="sync_release_13.1.1"}
@@ -22,6 +23,7 @@ uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
 typing-extensions = "*"
+invenio-search = ">=2.0.0"
 
 [requires]
 python_version = "3.9"
