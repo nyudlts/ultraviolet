@@ -705,8 +705,8 @@ def affiliations_v(app):
             ],
         },
     )
-    if not current_search_client.indices.exists(index="affiliations-affiliation-v1.0.0"):
-        current_search_client.indices.create(index="affiliations-affiliation-v1.0.0")
+    if not current_search_client.indices.exists(index="affiliations-affiliation-v2.0.0"):
+        current_search_client.indices.create(index="affiliations-affiliation-v2.0.0")
                 
     Affiliation.index.refresh()
 
@@ -739,8 +739,8 @@ def funders_v(app):
             "country": "BE",
         },
     )
-    if not current_search_client.indices.exists(index="funders-funder-v1.0.0"):
-        current_search_client.indices.create(index="funders-funder-v1.0.0")
+    if not current_search_client.indices.exists(index="funders-funder-v2.0.0"):
+        current_search_client.indices.create(index="funders-funder-v2.0.0")
     Funder.index.refresh()
 
     return funder
