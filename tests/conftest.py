@@ -10,16 +10,14 @@
 # conftest.py
 """Pytest fixtures for ultraviolet testing"""
 
-
-import sys
 import os
-from invenio_accounts.proxies import current_datastore
-from invenio_access.proxies import current_access
-from invenio_search.proxies import current_search_client
-
+import sys
 
 import pytest
+from invenio_access.proxies import current_access
+from invenio_accounts.proxies import current_datastore
 from invenio_app.factory import create_app as create_ui_api
+from invenio_search.proxies import current_search_client
 
 
 @pytest.fixture(scope="module")
@@ -67,10 +65,12 @@ def app_config(app_config):
     }
     return app_config
 
+
 # overriding instance path allows us to make sure we use ultraviolet templates
 @pytest.fixture(scope="module")
 def instance_path():
     return os.path.join(sys.prefix, "var", "instance")
+
 
 # Copied from https://github.dev/inveniosoftware/invenio-rdm-records/tree/maint-1.3.x/tests/records
 
@@ -90,28 +90,16 @@ See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
 
-# Monkey patch Werkzeug 2.1
-# Flask-Login uses the safe_str_cmp method which has been removed in Werkzeug
-# 2.1. Flask-Login v0.6.0 (yet to be released at the time of writing) fixes the
-# issue. Once we depend on Flask-Login v0.6.0 as the minimal version in
-# Flask-Security-Invenio/Invenio-Accounts we can remove this patch again.
-try:
-    # Werkzeug <2.1
-    from werkzeug import security
+import hmac
 
-    security.safe_str_cmp
-except AttributeError:
-    # Werkzeug >=2.1
-    import hmac
+from werkzeug import security
 
-    from werkzeug import security
-
-    security.safe_str_cmp = hmac.compare_digest
+security.safe_str_cmp = hmac.compare_digest
 
 from collections import namedtuple
 
 import pytest
-from flask_security import login_user, logout_user
+from flask_security import login_user
 from flask_security.utils import hash_password
 from invenio_access.models import ActionRoles
 from invenio_access.permissions import superuser_access, system_identity
@@ -130,6 +118,7 @@ from invenio_vocabularies.contrib.subjects.api import Subject
 from invenio_vocabularies.proxies import current_service as vocabulary_service
 from invenio_vocabularies.records.api import Vocabulary
 from invenio_access.models import ActionUsers
+
 
 @pytest.fixture(scope="function")
 def full_record(users):
@@ -336,9 +325,18 @@ def client_with_login(app, client, users):
 
 
 @pytest.fixture()
-def client_with_nyu_login(app, client, users,roles):
+def client_with_nyu_login(app, client, users, roles):
     """Log in a user to the client."""
     user = users["user3"]
+    login_user(user, remember=True)
+    login_user_via_session(client, email=user.email)
+    return client
+
+
+@pytest.fixture()
+def client_with_basic_user(app, client, users, roles):
+    """Log in a user to the client."""
+    user = users["user5"]
     login_user(user, remember=True)
     login_user_via_session(client, email=user.email)
     return client
@@ -414,6 +412,7 @@ def init_vocabulary_indexes(app):
         current_search_client.indices.refresh(index=Vocabulary.index._name)
     except:
         pass
+
 
 @pytest.fixture(scope="module")
 def resource_type_v(app, resource_type_type, init_vocabulary_indexes):
@@ -562,12 +561,10 @@ def subject_v(app):
 
     if not current_search_client.indices.exists(index="subjects-subject-v1.0.0"):
         current_search_client.indices.create(index="subjects-subject-v1.0.0")
-                
 
     Subject.index.refresh()
 
     return vocab
-
 
 
 @pytest.fixture(scope="module")
@@ -664,8 +661,8 @@ def licenses_v(app, licenses):
             "tags": ["recommended", "all"],
             "description": {
                 "en": "The Creative Commons Attribution license allows"
-                " re-distribution and re-use of a licensed work on"
-                " the condition that the creator is appropriately credited."
+                      " re-distribution and re-use of a licensed work on"
+                      " the condition that the creator is appropriately credited."
             },
             "type": "licenses",
         },
@@ -687,7 +684,6 @@ def affiliations_v(app):
         service = AffiliationsService(config=AffiliationsServiceConfig())  # Create an instance
         current_service_registry.register(service, "affiliations")
 
-
     affiliations_service = current_service_registry.get("affiliations")
     aff = affiliations_service.create(
         system_identity,
@@ -707,9 +703,9 @@ def affiliations_v(app):
             ],
         },
     )
-    if not current_search_client.indices.exists(index="affiliations-affiliation-v1.0.0"):
-        current_search_client.indices.create(index="affiliations-affiliation-v1.0.0")
-                
+    if not current_search_client.indices.exists(index="affiliations-affiliation-v2.0.0"):
+        current_search_client.indices.create(index="affiliations-affiliation-v2.0.0")
+
     Affiliation.index.refresh()
 
     return aff
@@ -741,8 +737,8 @@ def funders_v(app):
             "country": "BE",
         },
     )
-    if not current_search_client.indices.exists(index="funders-funder-v1.0.0"):
-        current_search_client.indices.create(index="funders-funder-v1.0.0")
+    if not current_search_client.indices.exists(index="funders-funder-v2.0.0"):
+        current_search_client.indices.create(index="funders-funder-v2.0.0")
     Funder.index.refresh()
 
     return funder
@@ -779,10 +775,12 @@ def awards_v(app, funders_v):
 
     return award
 
+
 @pytest.fixture(scope="module")
 def creatorsroles_type(app):
     """Creators roles vocabulary type."""
     return vocabulary_service.create_type(system_identity, "creatorsroles", "crt")
+
 
 @pytest.fixture(scope="module")
 def creatorsroles_v(app, creatorsroles_type):
@@ -807,6 +805,7 @@ def creatorsroles_v(app, creatorsroles_type):
     Vocabulary.index.refresh()
 
     return vocab
+
 
 @pytest.fixture(scope="module")
 def removal_reasons_type(app):
@@ -877,24 +876,24 @@ RunningApp = namedtuple(
 
 @pytest.fixture
 def running_app(
-    app,
-    superuser_identity,
-    location,
-    cache,
-    resource_type_v,
-    subject_v,
-    languages_v,
-    affiliations_v,
-    title_type_v,
-    description_type_v,
-    date_type_v,
-    contributors_role_v,
-    relation_type_v,
-    licenses_v,
-    funders_v,
-    awards_v,
-    creatorsroles_v,
-    removal_reasons_v,
+        app,
+        superuser_identity,
+        location,
+        cache,
+        resource_type_v,
+        subject_v,
+        languages_v,
+        affiliations_v,
+        title_type_v,
+        description_type_v,
+        date_type_v,
+        contributors_role_v,
+        relation_type_v,
+        licenses_v,
+        funders_v,
+        awards_v,
+        creatorsroles_v,
+        removal_reasons_v,
 ):
     """This fixture provides an app with the typically needed db data loaded.
 
@@ -972,7 +971,7 @@ def admin_role_need(db):
 
 
 @pytest.fixture()
-def users(app, db,roles):
+def users(app, db, roles):
     """Create users."""
     password = "123456"
     with db.session.begin_nested():
@@ -991,6 +990,9 @@ def users(app, db,roles):
         user4 = datastore.create_user(
             email="user4@test.com", password=hashed_password, active=True
         )
+        user5 = datastore.create_user(
+            email="user5@test.com", password=hashed_password, active=True
+        )
         # Give role to admin
         db.session.add(ActionUsers(action="admin-access", user=user1))
         # Assign predefined role to user3
@@ -1002,6 +1004,7 @@ def users(app, db,roles):
         "user2": user2,
         "user3": user3,
         "user4": user4,
+        "user5": user5,
     }
 
 
@@ -1009,7 +1012,7 @@ def users(app, db,roles):
 def admin_user(users, roles, db):
     """Give admin rights to a user."""
     user = users["user1"]
-    current_datastore.add_role_to_user(user,"admin")
+    current_datastore.add_role_to_user(user, "admin")
     action = current_access.actions["superuser-access"]
     db.session.add(ActionUsers.allow(action, user_id=user.id))
     db.session.commit()
