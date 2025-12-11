@@ -19,6 +19,7 @@ ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git", ref
 python-dotenv = "*"
 typing-extensions = "*"
 invenio-app-rdm = {extras = ["opensearch2"], version = "~=13.0.0"}
+sqlalchemy = {version = "*", extras = ["asyncio"], markers = "platform_machine == 'x86_64' or platform_machine == 'arm64'"}
 
 [requires]
 python_version = "3.9"
