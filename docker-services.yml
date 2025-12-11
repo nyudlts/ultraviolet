@@ -33,7 +33,7 @@ services:
     ports:
       - "${DOCKER_SERVICES_IP_BIND:-127.0.0.1}:6379:6379"
   db:
-    image: postgres:14.20
+    image: postgres:15.15
     restart: "unless-stopped"
     environment:
       - "POSTGRES_USER=ultraviolet"
