@@ -38,6 +38,10 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y libxml2-dev libxmlsec1-dev
+      - name: Setup firefox
+        uses: browser-actions/setup-firefox@v1
+        with:
+          firefox-version: "84.0"
       - name: "Check Invenio's requirements"
         run: |
           invenio-cli check-requirements
@@ -54,9 +58,6 @@ jobs:
           invenio-cli translations compile
       - name: Start services and app
         run: |
-          docker -v
-          docker compose up -d
-          #invenio-cli services start
           invenio-cli run &
       - name: "Check services status"
         run: |
@@ -64,7 +65,7 @@ jobs:
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=yes SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://ultraviolet:ultraviolet@localhost/ultraviolet pipenv run pytest -p no:cacheprovider
+          E2E=yes E2E_WEBDRIVER_BROWSERS="Firefox" SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://ultraviolet:ultraviolet@localhost/ultraviolet pipenv run pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
