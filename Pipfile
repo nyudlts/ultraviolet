@@ -8,7 +8,7 @@ check-manifest = ">=0.25"
 flask-pytest = "*"
 pytest = ">=6,<9.0.0"
 pytest-invenio = "==3.4.2"
-selenium = "==3.141.0"
+selenium = "*"
 
 [packages]
 ultraviolet = {editable = true, path="./site"}
