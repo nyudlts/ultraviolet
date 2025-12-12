@@ -41,7 +41,7 @@ jobs:
       - name: Setup firefox
         uses: browser-actions/setup-firefox@v1
         with:
-          firefox-version: "84.0"
+          firefox-version: "latest"
       - name: "Check Invenio's requirements"
         run: |
           invenio-cli check-requirements
