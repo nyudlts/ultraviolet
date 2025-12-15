@@ -9,42 +9,37 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 """View tests of the front page."""
 
-
-
 import os
 import time
-import pytest
 
+import pytest
 from flask import url_for
 from invenio_access.models import ActionRoles
-from invenio_accounts import testutils
-from invenio_access.models import ActionUsers
 from invenio_access.permissions import superuser_access
+from invenio_accounts import testutils
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-
 
 # # create user on the fly - can login
-@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
+@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes',
+                    reason="Skipping E2E tests because E2E environment variable is not set")
 def test_element_not_in_deposit_form1(app, live_server,
-                               resource_type_v,
-                               subject_v,
-                               languages_v,
-                               affiliations_v,
-                               title_type_v,
-                               description_type_v,
-                               date_type_v,
-                               contributors_role_v,
-                               relation_type_v,
-                               licenses_v,
-                               funders_v,
-                               awards_v,
-                               creatorsroles_v,
-                               browser):
+                                      resource_type_v,
+                                      subject_v,
+                                      languages_v,
+                                      affiliations_v,
+                                      title_type_v,
+                                      description_type_v,
+                                      date_type_v,
+                                      contributors_role_v,
+                                      relation_type_v,
+                                      licenses_v,
+                                      funders_v,
+                                      awards_v,
+                                      creatorsroles_v,
+                                      browser):
     """Test for hidding References field on deposit form """
     email = "TEST@test.org"
     password = "123456"
@@ -52,7 +47,7 @@ def test_element_not_in_deposit_form1(app, live_server,
     with app.app_context():
         user = testutils.create_test_user(email, password, active=True)
         datastore = app.extensions["security"].datastore
-       
+
         admin_role = datastore.create_role(name="administration-access")
         action_role = ActionRoles.create(action=superuser_access, role=admin_role)
         datastore.db.session.add(action_role)

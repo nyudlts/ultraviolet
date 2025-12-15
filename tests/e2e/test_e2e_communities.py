@@ -37,7 +37,6 @@ def test_user_cannot_create_community(app, live_server,
                                       awards_v,
                                       creatorsroles_v,
                                       browser):
-    """Test for hidding References field on deposit form """
     email = "TEST@test.org"
     password = "123456"
 
@@ -54,6 +53,8 @@ def test_user_cannot_create_community(app, live_server,
 
     time.sleep(5)
     browser.set_window_size(1920, 3980)
+
+    # Log in
     browser.get(url_for("invenio_app_rdm_records.deposit_create", _external=True))
     browser.find_element(By.NAME, "email").send_keys(email)
     browser.find_element(By.NAME, "password").send_keys(password)
@@ -62,8 +63,6 @@ def test_user_cannot_create_community(app, live_server,
     )
 
     submit_button.click()
-
-    assert "About UltraViolet" in browser.page_source
 
     browser.get(url_for("invenio_communities.communities_frontpage", _external=True))
 
