@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7d228d8190181265b40051765322af7128dcf37f102c3c88d0973de6497c0bfd"
+            "sha256": "d1cc97e769da4de4a57bb74e95b2e3002653d210630d6d3fcb79a279e5fc83e4"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -3612,11 +3612,11 @@
         },
         "tzdata": {
             "hashes": [
-                "sha256:1a403fada01ff9221ca8044d701868fa132215d84beb92242d9acd2147f667a8",
-                "sha256:b60a638fcc0daffadf82fe0f57e53d06bdec2f36c4df66280ae79bce6bd6f2b9"
+                "sha256:06a47e5700f3081aab02b2e513160914ff0694bce9947d6b76ebd6bf57cfc5d1",
+                "sha256:de39c2ca5dc7b0344f2eba86f49d614019d29f060fc4ebc8a417896a620b56a7"
             ],
             "markers": "python_version >= '2'",
-            "version": "==2025.2"
+            "version": "==2025.3"
         },
         "tzlocal": {
             "hashes": [
@@ -4474,13 +4474,9 @@
             "version": "==0.3.0"
         },
         "pytest-invenio": {
-            "hashes": [
-                "sha256:8655536540a1585487df319cf3f2491053963f347e8057fb747f1829e980deeb",
-                "sha256:f7be2bca64256e498a71410463f9c0d0da560065590f4eb91745e556bc72a79b"
-            ],
-            "index": "pypi",
+            "git": "https://github.com/spilth/pytest-invenio.git",
             "markers": "python_version >= '3.7'",
-            "version": "==3.4.2"
+            "ref": "0fd3e82f44ed4407c7e6350d7015728cdf67fe90"
         },
         "pytest-isort": {
             "hashes": [
