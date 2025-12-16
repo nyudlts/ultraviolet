@@ -45,6 +45,7 @@ jobs:
         run: |
           echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
           echo -e FLASK_SECRET_KEY="some random value" >> .env
+          echo -e SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://ultraviolet:ultraviolet@localhost/ultraviolet" >>.env
       - name: "Install project dependencies"
         run: |
           invenio-cli install
@@ -61,7 +62,7 @@ jobs:
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=yes SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://ultraviolet:ultraviolet@localhost/ultraviolet pipenv run pytest -p no:cacheprovider
+          E2E=yes pipenv run pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()

@@ -15,12 +15,8 @@ from invenio_accounts.testutils import login_user_via_session
 from invenio_rdm_records.proxies import current_rdm_records_service
 
 
-@pytest.mark.skip(reason="Failing for unknown reasons")
 def test_meta_tags(full_record, services, client, app, db, admin_user):
     """Test that verifies all meta tags appear in the record"""
-
-    app.config["DATACITE_PREFIX"] = "10.1234"
-    app.config["DATACITE_ENABLED"] = "true"
 
     service = current_rdm_records_service
     data = full_record.copy()
