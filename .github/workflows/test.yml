@@ -61,7 +61,7 @@ jobs:
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=yes  SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://ultraviolet:ultraviolet@localhost/ultraviolet pipenv run pytest -p no:cacheprovider
+          E2E=yes  SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://ultraviolet:ultraviolet@localhost/ultraviolet pipenv run pytest -p no:cacheprovider
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
