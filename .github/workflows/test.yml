@@ -48,8 +48,6 @@ jobs:
       - name: "Install project dependencies"
         run: |
           invenio-cli install
-          invenio-cli services setup -N
-          invenio-cli services stop
           invenio-cli translations compile
       - name: "Run tests"
         run: |
