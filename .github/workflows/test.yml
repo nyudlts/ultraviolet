@@ -49,19 +49,12 @@ jobs:
         run: |
           invenio-cli install
           invenio-cli services setup -N
-      - name: "Compile translations for restricted file of a public record"
-        run: |
+          invenio-cli services stop
           invenio-cli translations compile
-      - name: Start services and app
-        run: |
-          invenio-cli run &
-      - name: "Check services status"
-        run: |
-          bash check-services.sh
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=yes SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://ultraviolet:ultraviolet@localhost/ultraviolet pipenv run pytest -p no:cacheprovider
+          pipenv run ./run-tests.sh
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
