@@ -41,6 +41,10 @@ jobs:
       - name: "Check Invenio's requirements"
         run: |
           invenio-cli check-requirements
+      - name: "Setup mandatory files"
+        run: |
+          echo -e "[cli]\nproject_dir = "$PWD"\nservices_setup = False" >> .invenio.private
+          echo -e FLASK_SECRET_KEY="some random value" >> .env
       - name: "Install project dependencies"
         run: |
           invenio-cli install
