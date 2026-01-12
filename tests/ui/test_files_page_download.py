@@ -9,7 +9,6 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 """View tests of the front page."""
 
-
 from io import BytesIO
 from invenio_access.permissions import system_identity
 from invenio_rdm_records.proxies import current_rdm_records_service
@@ -52,11 +51,14 @@ def test_one_small_file(minimal_record, client_with_login, services, app, db, re
     expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
     assert expected_namelink_html in html
 
-def test_one_large_file(services, minimal_record, client_with_login):
+
+def test_one_large_file(services, minimal_record, client_with_login, app):
     """
     This test verifies files page for large file in the application.
     The Download button, Download all button, and file name download link should not present.
     """
+
+    app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = False
 
     service = current_rdm_records_service
 
@@ -91,13 +93,18 @@ def test_one_large_file(services, minimal_record, client_with_login):
     expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/test.pdf?download=1">test.pdf</a>'.format(record['id'])
     assert expected_namelink_html not in html
 
-def test_two_files(services, minimal_record, client_with_login):
+    app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = True
+
+
+def test_two_files(services, minimal_record, client_with_login, app):
     """
     This test verifies files page for a small file and a large file in the application.
     The Download all buton should not present.
     The Download button and file name download link should present for small file.
     The Download all button, Download button, and file name download link should not present for large file.
     """
+
+    app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = False
 
     service = current_rdm_records_service
 
@@ -143,3 +150,5 @@ def test_two_files(services, minimal_record, client_with_login):
     # File name download link should not present
     expected_namelink_html = '<a class="wrap-long-link" href="/records/{}/files/large.pdf?download=1">large.pdf</a>'.format(record['id'])
     assert expected_namelink_html not in html
+
+    app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = True
