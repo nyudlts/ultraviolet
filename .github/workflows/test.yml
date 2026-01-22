@@ -2,8 +2,6 @@ name: ci:test
 
 on:
   push:
-    branches:
-      - main
     paths-ignore:
       - "docs/**"
       - "**.md"
@@ -50,23 +48,11 @@ jobs:
       - name: "Install project dependencies"
         run: |
           invenio-cli install
-          invenio-cli services setup -N
-      - name: "Compile translations for restricted file of a public record"
-        run: |
           invenio-cli translations compile
-      - name: Start services and app
-        run: |
-          docker -v
-          docker compose up -d
-          #invenio-cli services start
-          invenio-cli run &
-      - name: "Check services status"
-        run: |
-          bash check-services.sh
       - name: "Run tests"
         run: |
           pipenv install --dev
-          E2E=yes pipenv run pytest -p no:cacheprovider
+          E2E=yes pipenv run ./run-tests.sh
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()

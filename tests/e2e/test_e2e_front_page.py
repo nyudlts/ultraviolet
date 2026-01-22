@@ -9,18 +9,20 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 """E2E test of the front page."""
 
+import multiprocessing
 import os
 
+import pytest
 from flask import url_for
 from selenium.webdriver.common.by import By
-import multiprocessing
-import pytest
 
 """This is needed so live_server fixture can be used on Mac with python3.8 
     https://github.com/pytest-dev/pytest-flask/issues/104 """
 multiprocessing.set_start_method("fork")
 
-@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes', reason="Skipping E2E tests because E2E environment variable is not set")
+
+@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes',
+                    reason="Skipping E2E tests because E2E environment variable is not set")
 def test_frontpage(live_server, browser):
     """Test retrieval of front page."""
     browser.get(url_for("invenio_app_rdm.index", _external=True))

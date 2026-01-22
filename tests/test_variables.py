@@ -21,7 +21,7 @@ def test_var_assigned(monkeypatch):
     db_connection = "postgresql+psycopg2://test:test@somehost.com/test"
 
     """Mocking setting configuration using environment variables"""
-    monkeypatch.setenv("APP_ALLOWED_HOSTS", app_host)
+    monkeypatch.setenv("TRUSTED_HOSTS", app_host)
     monkeypatch.setenv("SQLALCHEMY_DATABASE_URI", db_connection)
     monkeypatch.setenv("SITE_UI_URL", app_host)
     monkeypatch.setenv("SITE_API_URL", app_host + "/api")
@@ -31,7 +31,7 @@ def test_var_assigned(monkeypatch):
 
     """Create app with configurations passed above"""
     app = create_app()
-    assert app.config.get("APP_ALLOWED_HOSTS") == app_host
+    assert app.config.get("TRUSTED_HOSTS") == app_host
     assert app.config.get("SQLALCHEMY_DATABASE_URI") == db_connection
     assert app.config.get("SITE_UI_URL") == app_host
     assert app.config.get("SITE_API_URL") == app_host + "/api"
@@ -44,7 +44,7 @@ def test_var_assigned(monkeypatch):
 def test_var_noassigned():
     """Mocking using default configuration"""
     app = create_app()
-    assert app.config.get("APP_ALLOWED_HOSTS") == ["0.0.0.0", "localhost", "127.0.0.1"]
+    assert app.config.get("TRUSTED_HOSTS") == ["0.0.0.0", "localhost", "127.0.0.1"]
     assert app.config.get("SITE_UI_URL") == "https://127.0.0.1:5000"
     assert app.config.get("SITE_API_URL") == "https://127.0.0.1:5000/api"
     assert app.config.get("APP_ENVIRONMENT") == "local"
