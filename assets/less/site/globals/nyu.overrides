@@ -175,7 +175,14 @@ body {
   .ui.text.container {
     font-family: Lato, sans-serif;
   }
-  
+
+  .inv-banner {
+    a, a:link, a:hover {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+
   #banners {
     .ui.container.page-subheader .page-subheader-element {
       @media all and (max-width: @computerBreakpoint) {
