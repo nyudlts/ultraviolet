@@ -135,6 +135,19 @@
             {%- endfor %}
 
             <div class="ui divider"></div>
+
+            {% set ns = namespace(admin_menu=False) %}
+            {%- for item in current_menu.submenu('profile-admin').children if item.visible %}
+              {% set ns.admin_menu = True %}
+              <a role="menuitem" class="item" href="{{ item.url }}">
+                {{ item.text|safe }}
+              </a>
+            {%- endfor %}
+
+            {% if ns.admin_menu %}
+              <div class="ui divider"></div>
+            {% endif %}
+              
             {% if 'SSO_SAML_ROLES' in config %}
               {% set ns = namespace(flag=false) %}
               {% for user_role in current_user.roles|map(attribute='name') %}
