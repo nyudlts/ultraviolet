@@ -19,6 +19,7 @@ python-dotenv = "*"
 typing-extensions = "*"
 invenio-app-rdm = {extras = ["opensearch2"], version = "~=13.0.0"}
 sqlalchemy = {version = "*", extras = ["asyncio"], markers = "platform_machine == 'x86_64' or platform_machine == 'arm64'"}
+invenio-rdm-records = "==19.6.3"
 
 [requires]
 python_version = "3.9"
