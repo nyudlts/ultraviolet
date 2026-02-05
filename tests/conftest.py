@@ -238,7 +238,7 @@ def full_record(users):
                         "place": "test location place",
                         "description": "test location description",
                         "identifiers": [
-                            {"identifier": "12345abcde", "scheme": "wikidata"},
+                            {"identifier": "Q1234567890", "scheme": "wikidata"},
                             {"identifier": "12345abcde", "scheme": "geonames"},
                         ],
                     }
