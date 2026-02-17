@@ -1,20 +1,19 @@
 from invenio_records_resources.services.custom_fields import BaseListCF
 from marshmallow import fields
 from marshmallow_utils.fields import SanitizedUnicode
-from ultraviolet.geoserver.constants import PUBLIC_URL
 from ultraviolet.geoserver.validate import LayerValidator, BoundsValidator
 
 
 class GeoServerCF(BaseListCF):
     """GeoServer with layer and bounds."""
 
-    def __init__(self, name, **kwargs):
+    def __init__(self, name, server, **kwargs):
         """Constructor."""
         field_args = dict(
             dict(
                 nested=dict(
                     layer=SanitizedUnicode(
-                        validate=LayerValidator(server=PUBLIC_URL)
+                        validate=LayerValidator(server=server)
                     ),
                     bounds=SanitizedUnicode(
                         validate=BoundsValidator()
