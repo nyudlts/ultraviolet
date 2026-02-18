@@ -1,0 +1,16 @@
+@import "leaflet/dist/leaflet.css";
+@import 'ol/ol.css';
+
+#map {
+    width: 100%;
+    height: 440px;
+    margin-top: 1em;
+    cursor: crosshair !important;
+    border: 1px solid #ced4da;
+    z-index: 99; /* Place map under invenio-menu */
+}
+
+.attributes {
+    max-height: 450px;
+    overflow-y: scroll;
+}

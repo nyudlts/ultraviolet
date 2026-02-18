@@ -1,0 +1,55 @@
+{% set previewable = record.access.files == 'public' or (current_user and current_user.is_authenticated) %}
+{% set geoserver_base_url = config.GEOSERVER_PUBLIC_URL if (record.access.files == 'public') else config.GEOSERVER_RESTRICTED_URL %}
+
+{% if record.custom_fields["geoserver"] and record.custom_fields["geoserver"]["layer"] and record.custom_fields["geoserver"]["has_wms"] %}
+    <h2>Map</h2>
+
+    <div id="map"
+         data-preview="{{ previewable }}"
+         data-bounds="{{ record.custom_fields["geoserver"]["bounds"] }}"
+            {% if previewable %}
+         data-wms-url="{{ geoserver_base_url }}/wms"
+         data-layer-name="{{ record.custom_fields["geoserver"]["layer"] }}"
+            {% endif %}
+    ></div>
+
+    {% if record.custom_fields["geoserver"]["has_wfs"] and (previewable) %}
+        <h3>Attributes</h3>
+
+        <div class="attributes">
+            <table class="ui unstackable very compact table striped selectable">
+                <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Type/Value</th>
+                </tr>
+                </thead>
+                <tbody id="attributes"
+                       data-wfs-url="{{ geoserver_base_url }}/wfs"
+                       data-layer-names="{{ record.custom_fields["geoserver"]["layer"] }}"></tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    {% if previewable %}
+        <h3>Web Services</h3>
+
+        <dl class="details-list">
+            <dt class="ui tiny header">Layer Name</dt>
+            <dd><code>{{ record.custom_fields["geoserver"]["layer"] }}</code></dd>
+            {% if record.custom_fields["geoserver"]["has_wfs"] %}
+                <dt class="ui tiny header">Web Feature Service (WFS)</dt>
+                <dd><code>{{ geoserver_base_url }}/wfs</code></dd>
+            {% endif %}
+            {% if record.custom_fields["geoserver"]["has_wms"] %}
+                <dt class="ui tiny header">Web Mapping Service (WMS)</dt>
+                <dd><code>{{ geoserver_base_url }}/wms</code></dd>
+            {% endif %}
+        </dl>
+    {% endif %}
+{% endif %}
+
+{% block javascript %}
+    {{ webpack['geoserver_js.js'] }}
+    {{ webpack['geoserver_css.css'] }}
+{% endblock %}
