@@ -57,7 +57,8 @@ export const WmsMap = (
     <>
       <div ref={mapRef} id="map" style={{height: '440px', width: '100%'}}/>
       <p>Shift-click &amp; drag to draw a bounding box to zoom to. Scroll wheel can be used for a finer zoom control.</p>
-      <p><input type="text" value={envelope}/></p>
+      <p><input type="text" value={envelope} readOnly/></p>
+      <p>Copy/paste this value into the Layer Bounds field to update it</p>
     </>
   );
 }
