@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -11,9 +11,10 @@ export const WmsMap = (
   }
 ) => {
   const mapRef = useRef(null);
+  const [envelope, setEnvelope] = useState("");
 
   useEffect(() => {
-    const map = L.map(mapRef.current).setView([0, 0], 1);
+    const map = L.map(mapRef.current, {zoomSnap: 0.25}).setView([0, 0], 1);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>',
@@ -44,10 +45,20 @@ export const WmsMap = (
       }
     }
 
+    map.on('moveend', () => {
+      const bounds = map.getBounds();
+      setEnvelope(`ENVELOPE(${bounds.getWest()}, ${bounds.getEast()}, ${bounds.getNorth()}, ${bounds.getSouth()})`);
+    });
+
     return () => map.remove();
   }, [layerName, boundingBox])
 
   return (
-    <div ref={mapRef} id="map" style={{height: '440px', width: '100%'}}/>
+    <>
+      <div ref={mapRef} id="map" style={{height: '440px', width: '100%'}}/>
+      <p>Shift-click &amp; drag to draw a bounding box to zoom to. Scroll wheel can be used for a finer zoom control.</p>
+      <p><input type="text" value={envelope} readOnly/></p>
+      <p>Copy/paste this value into the Layer Bounds field to update it</p>
+    </>
   );
 }
