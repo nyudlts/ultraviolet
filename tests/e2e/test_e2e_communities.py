@@ -51,7 +51,7 @@ def test_user_cannot_create_community(app, live_server,
         datastore.add_role_to_user(user, role)
         datastore.commit()
 
-    time.sleep(5)
+    time.sleep(2)
     browser.set_window_size(1920, 3980)
 
     # Log in
