@@ -14,8 +14,12 @@ theme = WebpackThemeBundle(
             },
             dependencies={
                 "leaflet": "^1.9.4",
-                "ol": "^10.2.1"
-            }
+                "ol": "^10.2.1",
+            },
+            # Hopefully temporary fix to get around issues with Less 4.6
+            devDependencies={
+                "less": "4.5.1"
+            },
         ),
     },
 )
