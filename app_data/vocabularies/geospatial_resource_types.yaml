@@ -1,0 +1,42 @@
+- id: annotations
+  title:
+    en: Annotations
+- id: basemaps
+  title:
+    en: Basemaps
+- id: lidar
+  title:
+    en: LiDAR
+- id: line-data
+  title:
+    en: Line data
+- id: mesh-data
+  title:
+    en: Mesh data
+- id: multi-spectral-data
+  title:
+    en: Multi-spectra data
+- id: oblique-photographs
+  title:
+    en: Oblique photographs
+- id: point-cloud-data
+  title:
+    en: Point cloud data
+- id: point-data
+  title:
+    en: Point data
+- id: polygon-data
+  title:
+    en: Polygon data
+- id: raster-data
+  title:
+    en: Raster data
+- id: satellite-imagery
+  title:
+    en: Satellite imagery
+- id: streetview-photographs
+  title:
+    en: Streetview photographs
+- id: table-data
+  title:
+    en: Table data
