@@ -23,8 +23,6 @@ def test_tombstone_page(full_record, client_with_login, services, app, db):
         "removal_reason": {"id": "copyright"}
     }
 
-    time.sleep(2)
-
     service.delete_record(system_identity, record.id, data=tombstone_info)
 
     response = client_with_login.get("/records/" + record['id'])

@@ -49,7 +49,6 @@ def test_admins_see_administration_item(app, live_server, browser):
         EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
     )
     submit_button.click()
-    time.sleep(2)
     page_source = browser.page_source
 
     assert "Search UltraViolet" in page_source
@@ -75,7 +74,6 @@ def test_regular_users_do_not_see_administration_item(app, live_server, browser)
         EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
     )
     submit_button.click()
-    time.sleep(2)
     page_source = browser.page_source
 
     assert "Search UltraViolet" in page_source
