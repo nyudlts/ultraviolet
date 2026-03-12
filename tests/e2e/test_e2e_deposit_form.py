@@ -55,7 +55,6 @@ def test_element_not_in_deposit_form1(app, live_server,
         datastore.add_role_to_user(user, role)
         datastore.commit()
 
-    time.sleep(2)
     browser.set_window_size(1920, 3980)
     browser.get(url_for("invenio_app_rdm_records.deposit_create", _external=True))
     browser.find_element(By.NAME, "email").send_keys(email)
