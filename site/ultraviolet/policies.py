@@ -1,8 +1,20 @@
 from flask import current_app
 from flask_principal import Permission, RoleNeed
 from invenio_rdm_records.services import RDMRecordPermissionPolicy
-from invenio_rdm_records.services.generators import SecretLinks, RecordCommunitiesAction, RecordOwners, AccessGrant, IfRestricted, ResourceAccessToken
-from invenio_records_permissions.generators import SystemProcess, AuthenticatedUser, AnyUser, Disable
+from invenio_rdm_records.services.generators import (
+    SecretLinks,
+    RecordCommunitiesAction,
+    RecordOwners,
+    AccessGrant,
+    IfRestricted,
+    ResourceAccessToken,
+)
+from invenio_records_permissions.generators import (
+    SystemProcess,
+    AuthenticatedUser,
+    AnyUser,
+    Disable,
+)
 
 from .generators import AdminSuperUser, Depositor, Curator, Viewer
 
@@ -15,18 +27,36 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     """
 
     NEED_LABEL_TO_ACTION = {
-        'bucket-update': 'update_files',
-        'bucket-read': 'read_files',
-        'object-read': 'read_files',
+        "bucket-update": "update_files",
+        "bucket-read": "read_files",
+        "object-read": "read_files",
     }
 
     #
     # High-level permissions (used by low-level)
     #
-    can_manage = [ RecordOwners(),Viewer(), SystemProcess(), AccessGrant("manage"), AdminSuperUser(), Depositor(), RecordCommunitiesAction("manage")]
-    can_curate = can_manage + [SecretLinks("edit"), AccessGrant("edit"),Curator(),RecordCommunitiesAction("curate")]
-    can_preview = can_manage + [SecretLinks("preview"), AccessGrant("view"),Curator()]
-    can_view = can_manage + [SecretLinks("view"),AccessGrant("view"), RecordCommunitiesAction("view"), Viewer()]
+    can_manage = [
+        RecordOwners(),
+        Viewer(),
+        SystemProcess(),
+        AccessGrant("manage"),
+        AdminSuperUser(),
+        Depositor(),
+        RecordCommunitiesAction("manage"),
+    ]
+    can_curate = can_manage + [
+        SecretLinks("edit"),
+        AccessGrant("edit"),
+        Curator(),
+        RecordCommunitiesAction("curate"),
+    ]
+    can_preview = can_manage + [SecretLinks("preview"), AccessGrant("view"), Curator()]
+    can_view = can_manage + [
+        SecretLinks("view"),
+        AccessGrant("view"),
+        RecordCommunitiesAction("view"),
+        Viewer(),
+    ]
 
     can_authenticated = [AuthenticatedUser(), SystemProcess()]
     can_all = [AnyUser(), SystemProcess()]
@@ -36,7 +66,7 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     #
     # Allow submitting new record
     can_create = can_manage
-     # Allow reading metadata of a record
+    # Allow reading metadata of a record
     can_read = [
         IfRestricted("record", then_=can_view, else_=can_all),
     ]

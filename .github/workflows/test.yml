@@ -49,9 +49,10 @@ jobs:
         run: |
           invenio-cli install
           invenio-cli translations compile
-      - name: "Run tests"
+      - name: "Run black & tests"
         run: |
           pipenv install --dev
+          pipenv run black --check .
           E2E=yes pipenv run ./run-tests.sh
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4

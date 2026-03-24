@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
@@ -21,8 +18,10 @@ from selenium.webdriver.common.by import By
 multiprocessing.set_start_method("fork")
 
 
-@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes',
-                    reason="Skipping E2E tests because E2E environment variable is not set")
+@pytest.mark.skipif(
+    os.getenv("E2E", "no") != "yes",
+    reason="Skipping E2E tests because E2E environment variable is not set",
+)
 def test_frontpage(live_server, browser):
     """Test retrieval of front page."""
     browser.get(url_for("invenio_app_rdm.index", _external=True))

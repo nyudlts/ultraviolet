@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 # Tests  to check configuration settings
-import os
 import sys
 
 from invenio_app.factory import create_app
@@ -26,8 +22,8 @@ def test_var_assigned(monkeypatch):
     monkeypatch.setenv("SITE_UI_URL", app_host)
     monkeypatch.setenv("SITE_API_URL", app_host + "/api")
     monkeypatch.setenv("APP_ENVIRONMENT", "global")
-    monkeypatch.setenv("COLLECT_STATIC_ROOT","/opt/static")
-    monkeypatch.setenv("DATACITE_ENABLED","true")
+    monkeypatch.setenv("COLLECT_STATIC_ROOT", "/opt/static")
+    monkeypatch.setenv("DATACITE_ENABLED", "true")
 
     """Create app with configurations passed above"""
     app = create_app()
@@ -49,5 +45,8 @@ def test_var_noassigned():
     assert app.config.get("SITE_API_URL") == "https://127.0.0.1:5000/api"
     assert app.config.get("APP_ENVIRONMENT") == "local"
     assert app.config.get("COLLECT_STATIC_ROOT") == sys.prefix + "/var/instance/static"
-    assert app.config.get("RDM_RECORDS_USER_FIXTURE_PASSWORDS")['adminUV@test.com'] == "adminUV"
+    assert (
+        app.config.get("RDM_RECORDS_USER_FIXTURE_PASSWORDS")["adminUV@test.com"]
+        == "adminUV"
+    )
     assert app.config.get("DATACITE_ENABLED") == False

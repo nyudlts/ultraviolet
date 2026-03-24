@@ -1,0 +1,7 @@
+[tool.black]
+include = '''
+(
+    \.py$
+    | invenio.cfg
+)
+'''

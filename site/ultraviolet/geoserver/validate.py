@@ -14,7 +14,10 @@ _T = typing.TypeVar("_T")
 
 class BoundsValidator(Validator):
     def __call__(self, value: _T) -> _T:
-        if re.match(r"ENVELOPE\((-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)\)", value):
+        if re.match(
+            r"ENVELOPE\((-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)\)",
+            value,
+        ):
             return value
         else:
             raise ValidationError("Invalid bounds value")
@@ -43,14 +46,16 @@ class LayerValidator(Validator):
         errors = []
 
         url = "{0}/wms".format(self.server)
-        query_string = urllib.parse.urlencode({
-            "service": "WMS",
-            "version": "1.1.1",
-            "request": "DescribeLayer",
-            "layers": value,
-            "outputFormat": "application/json",
-            "exceptions": "application/json",
-        })
+        query_string = urllib.parse.urlencode(
+            {
+                "service": "WMS",
+                "version": "1.1.1",
+                "request": "DescribeLayer",
+                "layers": value,
+                "outputFormat": "application/json",
+                "exceptions": "application/json",
+            }
+        )
 
         full_url = "{0}?{1}".format(url, query_string)
         response = requests.get(full_url)
@@ -60,14 +65,16 @@ class LayerValidator(Validator):
             errors.append("Can't find WMS layer named {0}.".format(value))
 
         url = "{0}/wfs".format(self.server)
-        query_string = urllib.parse.urlencode({
-            "service": "WFS",
-            "version": "2.0.0",
-            "request": "DescribeFeatureType",
-            "typename": value,
-            "outputFormat": "application/json",
-            "exceptions": "application/json",
-        })
+        query_string = urllib.parse.urlencode(
+            {
+                "service": "WFS",
+                "version": "2.0.0",
+                "request": "DescribeFeatureType",
+                "typename": value,
+                "outputFormat": "application/json",
+                "exceptions": "application/json",
+            }
+        )
 
         full_url = "{0}?{1}".format(url, query_string)
         response = requests.get(full_url)
@@ -77,6 +84,10 @@ class LayerValidator(Validator):
             errors.append("Can't find WFS layer named {0}.".format(value))
 
         if len(errors) > 0:
-            raise ValidationError("Neither a WMS or WFS layer named {0} exists on {1} ".format(value, self.server))
+            raise ValidationError(
+                "Neither a WMS or WFS layer named {0} exists on {1} ".format(
+                    value, self.server
+                )
+            )
 
         return value
