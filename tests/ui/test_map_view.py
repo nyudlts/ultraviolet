@@ -30,6 +30,8 @@ def test_restricted_map_view_when_logged_in(services, restricted_geospatial_reco
     assert "data-layer-name=\"sdr:nyu_2451_34156\"" in html
     assert "data-bounds=\"ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)\"" in html
 
+    assert "LiDAR" in html
+
     app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = True
 
 

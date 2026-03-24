@@ -321,6 +321,7 @@ def minimal_record():
 def geospatial_record(minimal_record):
     minimal_record["metadata"]["title"] = "Geospatial Data"
     minimal_record["custom_fields"] = {
+        "geospatial:resource_type": {"id": "lidar"},
         "geoserver": {
             "layer": "sdr:nyu_2451_34156",
             "bounds": "ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)",
@@ -381,8 +382,33 @@ def roles(app, db):
 
 
 @pytest.fixture(scope="module")
+def geospatial_resource_type_type(app):
+    """ Geospatial Resource Type type."""
+    return vocabulary_service.create_type(system_identity, "geospatialresourcetypes", "grt")
+
+
+@pytest.fixture(scope="module")
+def geospatial_resource_type_v(app, geospatial_resource_type_type):
+    """ Geospatial Resource Type record."""
+    vocab = vocabulary_service.create(
+        system_identity,
+        {
+            "id": "lidar",
+            "title": {
+                "en": "LiDAR",
+            },
+            "type": "geospatialresourcetypes",
+        }
+    )
+
+    Vocabulary.index.refresh()
+
+    return vocab
+
+
+@pytest.fixture(scope="module")
 def languages_type(app):
-    """Lanuage vocabulary type."""
+    """Language vocabulary type."""
     return vocabulary_service.create_type(system_identity, "languages", "lng")
 
 
@@ -894,6 +920,7 @@ RunningApp = namedtuple(
         "awards_v",
         "creatorsroles_v",
         "removal_reasons_v",
+        "geospatial_resource_type_v",
     ],
 )
 
@@ -918,6 +945,7 @@ def running_app(
         awards_v,
         creatorsroles_v,
         removal_reasons_v,
+        geospatial_resource_type_v,
 ):
     """This fixture provides an app with the typically needed db data loaded.
 
@@ -943,6 +971,7 @@ def running_app(
         awards_v,
         creatorsroles_v,
         removal_reasons_v,
+        geospatial_resource_type_v,
     )
 
 

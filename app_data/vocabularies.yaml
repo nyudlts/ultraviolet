@@ -20,3 +20,6 @@ subjects:
       name: Fields of Science and Technology
       uri: "http://www.oecd.org/science/inno/38235147.pdf"
       data-file: vocabularies/subjects_oecd_fos.yaml
+geospatialresourcetypes:
+  pid-type: grt
+  data-file: vocabularies/geospatial_resource_types.yaml
