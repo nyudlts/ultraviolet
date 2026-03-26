@@ -49,7 +49,7 @@ jobs:
         run: |
           invenio-cli install
           invenio-cli translations compile
-      - name: "Run tests"
+      - name: "Run black & tests"
         run: |
           pipenv install --dev
           E2E=yes pipenv run ./run-tests.sh

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
@@ -22,8 +19,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes',
-                    reason="Skipping E2E tests because E2E environment variable is not set")
+@pytest.mark.skipif(
+    os.getenv("E2E", "no") != "yes",
+    reason="Skipping E2E tests because E2E environment variable is not set",
+)
 def test_admins_see_administration_item(app, live_server, browser):
     """Test for Profile menu Administration entry"""
     email = "foobar@test.org"
@@ -46,7 +45,9 @@ def test_admins_see_administration_item(app, live_server, browser):
     browser.find_element(By.NAME, "email").send_keys(email)
     browser.find_element(By.NAME, "password").send_keys(password)
     submit_button = WebDriverWait(browser, 10).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
+        EC.element_to_be_clickable(
+            (By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button")
+        )
     )
     submit_button.click()
     time.sleep(2)
@@ -56,8 +57,10 @@ def test_admins_see_administration_item(app, live_server, browser):
     assert "Administration" in page_source
 
 
-@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes',
-                    reason="Skipping E2E tests because E2E environment variable is not set")
+@pytest.mark.skipif(
+    os.getenv("E2E", "no") != "yes",
+    reason="Skipping E2E tests because E2E environment variable is not set",
+)
 def test_regular_users_do_not_see_administration_item(app, live_server, browser):
     """Test for Profile menu Administration entry"""
     email = "foobarbaz@test.org"
@@ -72,7 +75,9 @@ def test_regular_users_do_not_see_administration_item(app, live_server, browser)
     browser.find_element(By.NAME, "email").send_keys(email)
     browser.find_element(By.NAME, "password").send_keys(password)
     submit_button = WebDriverWait(browser, 10).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
+        EC.element_to_be_clickable(
+            (By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button")
+        )
     )
     submit_button.click()
     time.sleep(2)

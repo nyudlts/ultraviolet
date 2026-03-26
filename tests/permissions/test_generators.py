@@ -1,5 +1,6 @@
 from flask_principal import RoleNeed
 from invenio_access import superuser_access
+
 from ultraviolet.generators import AdminSuperUser, Depositor, Curator, Viewer
 
 

@@ -7,7 +7,8 @@ verify_ssl = true
 check-manifest = ">=0.25"
 flask-pytest = "*"
 pytest = ">=6,<9.0.0"
-pytest-invenio = {git = "https://github.com/spilth/pytest-invenio.git", ref="selenium-chrome-options"}
+black = "*"
+pytest-invenio = {editable = true, ref = "selenium-chrome-options", git = "https://github.com/nyudlts/pytest-invenio.git"}
 
 [packages]
 ultraviolet = {editable = true, path="./site"}

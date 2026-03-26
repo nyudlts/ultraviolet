@@ -7,7 +7,6 @@
 """E2E test of Communities"""
 
 import os
-import time
 
 import pytest
 from flask import url_for
@@ -20,23 +19,28 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-@pytest.mark.skipif(os.getenv('E2E', 'no') != 'yes',
-                    reason="Skipping E2E tests because E2E environment variable is not set")
-def test_user_cannot_create_community(app, live_server,
-                                      resource_type_v,
-                                      subject_v,
-                                      languages_v,
-                                      affiliations_v,
-                                      title_type_v,
-                                      description_type_v,
-                                      date_type_v,
-                                      contributors_role_v,
-                                      relation_type_v,
-                                      licenses_v,
-                                      funders_v,
-                                      awards_v,
-                                      creatorsroles_v,
-                                      browser):
+@pytest.mark.skipif(
+    os.getenv("E2E", "no") != "yes",
+    reason="Skipping E2E tests because E2E environment variable is not set",
+)
+def test_user_cannot_create_community(
+    app,
+    live_server,
+    resource_type_v,
+    subject_v,
+    languages_v,
+    affiliations_v,
+    title_type_v,
+    description_type_v,
+    date_type_v,
+    contributors_role_v,
+    relation_type_v,
+    licenses_v,
+    funders_v,
+    awards_v,
+    creatorsroles_v,
+    browser,
+):
     email = "TEST@test.org"
     password = "123456"
 
@@ -54,13 +58,14 @@ def test_user_cannot_create_community(app, live_server,
     browser.set_window_size(1920, 3980)
 
     # Log in
-    browser.get(url_for("invenio_app_rdm_records.deposit_create", _external=True))
+    browser.get(url_for("security.login", _external=True))
     browser.find_element(By.NAME, "email").send_keys(email)
     browser.find_element(By.NAME, "password").send_keys(password)
     submit_button = WebDriverWait(browser, 10).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button"))
+        EC.element_to_be_clickable(
+            (By.CSS_SELECTOR, "button.ui.fluid.large.submit.primary.button")
+        )
     )
-
     submit_button.click()
 
     browser.get(url_for("invenio_communities.communities_frontpage", _external=True))

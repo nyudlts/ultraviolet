@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2024 NYU.
 #
 # invenio-nyu is free software; you can redistribute it and/or modify it
@@ -12,8 +9,8 @@
 
 """Pytest configuration."""
 
-from invenio_app.factory import create_app as create_ui_api
 import pytest
+from invenio_app.factory import create_app as create_ui_api
 
 
 @pytest.fixture(scope="module")

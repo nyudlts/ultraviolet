@@ -1,9 +1,9 @@
-from flask_login import current_user
 from flask_principal import RoleNeed
-from invenio_access.permissions import authenticated_user, superuser_access, system_identity
+from invenio_access.permissions import (
+    superuser_access,
+)
 from invenio_records_permissions.generators import Generator
 from invenio_search.engine import dsl
-
 
 
 class AdminSuperUser(Generator):
@@ -20,7 +20,7 @@ class AdminSuperUser(Generator):
     def query_filter(self, identity=None, **kwargs):
         """Filters for current identity as super user."""
         if superuser_access in identity.provides:
-            return dsl.Q('match_all')
+            return dsl.Q("match_all")
         else:
             return []
 

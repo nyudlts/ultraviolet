@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2024 NYU.
 #
 # ultraviolet is free software; you can redistribute it and/or modify it
@@ -39,31 +36,31 @@ def app_config(app_config):
     app_config["SERVER_NAME"] = "127.0.0.1"
     app_config["MAX_FILE_SIZE"] = 50
     app_config["REST_CSRF_ENABLED"] = False
-    app_config['DATACITE_ENABLED'] = True
-    app_config['DATACITE_PREFIX'] = "10.1234"
+    app_config["DATACITE_ENABLED"] = True
+    app_config["DATACITE_PREFIX"] = "10.1234"
     app_config["APP_DEFAULT_SECURE_HEADERS"] = {
-        'content_security_policy': {
-            'default-src': [
+        "content_security_policy": {
+            "default-src": [
                 "'self'",
-                'data:',  # for fonts
+                "data:",  # for fonts
                 "'unsafe-inline'",  # for inline scripts and styles
                 "blob:",  # for pdf preview
                 # Add your own policies here (e.g. analytics)
             ],
         },
-        'content_security_policy_report_only': False,
-        'content_security_policy_report_uri': None,
-        'force_file_save': False,
-        'force_https': False,
-        'force_https_permanent': False,
-        'frame_options': 'sameorigin',
-        'frame_options_allow_from': None,
-        'session_cookie_http_only': True,
-        'session_cookie_secure': True,
-        'strict_transport_security': True,
-        'strict_transport_security_include_subdomains': True,
-        'strict_transport_security_max_age': 31556926,  # One year in seconds
-        'strict_transport_security_preload': False,
+        "content_security_policy_report_only": False,
+        "content_security_policy_report_uri": None,
+        "force_file_save": False,
+        "force_https": False,
+        "force_https_permanent": False,
+        "frame_options": "sameorigin",
+        "frame_options_allow_from": None,
+        "session_cookie_http_only": True,
+        "session_cookie_secure": True,
+        "strict_transport_security": True,
+        "strict_transport_security_include_subdomains": True,
+        "strict_transport_security_max_age": 31556926,  # One year in seconds
+        "strict_transport_security_preload": False,
     }
     return app_config
 
@@ -327,7 +324,7 @@ def geospatial_record(minimal_record):
             "bounds": "ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)",
             "has_wms": True,
             "has_wfs": True,
-        }
+        },
     }
 
     return minimal_record
@@ -383,13 +380,15 @@ def roles(app, db):
 
 @pytest.fixture(scope="module")
 def geospatial_resource_type_type(app):
-    """ Geospatial Resource Type type."""
-    return vocabulary_service.create_type(system_identity, "geospatialresourcetypes", "grt")
+    """Geospatial Resource Type type."""
+    return vocabulary_service.create_type(
+        system_identity, "geospatialresourcetypes", "grt"
+    )
 
 
 @pytest.fixture(scope="module")
 def geospatial_resource_type_v(app, geospatial_resource_type_type):
-    """ Geospatial Resource Type record."""
+    """Geospatial Resource Type record."""
     vocab = vocabulary_service.create(
         system_identity,
         {
@@ -398,7 +397,7 @@ def geospatial_resource_type_v(app, geospatial_resource_type_type):
                 "en": "LiDAR",
             },
             "type": "geospatialresourcetypes",
-        }
+        },
     )
 
     Vocabulary.index.refresh()
@@ -711,8 +710,8 @@ def licenses_v(app, licenses):
             "tags": ["recommended", "all"],
             "description": {
                 "en": "The Creative Commons Attribution license allows"
-                      " re-distribution and re-use of a licensed work on"
-                      " the condition that the creator is appropriately credited."
+                " re-distribution and re-use of a licensed work on"
+                " the condition that the creator is appropriately credited."
             },
             "type": "licenses",
         },
@@ -723,7 +722,10 @@ def licenses_v(app, licenses):
     return vocab
 
 
-from invenio_vocabularies.contrib.affiliations import AffiliationsService, AffiliationsServiceConfig
+from invenio_vocabularies.contrib.affiliations import (
+    AffiliationsService,
+    AffiliationsServiceConfig,
+)
 
 
 @pytest.fixture(scope="module")
@@ -731,7 +733,9 @@ def affiliations_v(app):
     """Affiliation vocabulary record."""
 
     if "affiliations" not in current_service_registry._services:
-        service = AffiliationsService(config=AffiliationsServiceConfig())  # Create an instance
+        service = AffiliationsService(
+            config=AffiliationsServiceConfig()
+        )  # Create an instance
         current_service_registry.register(service, "affiliations")
 
     affiliations_service = current_service_registry.get("affiliations")
@@ -753,7 +757,9 @@ def affiliations_v(app):
             ],
         },
     )
-    if not current_search_client.indices.exists(index="affiliations-affiliation-v2.0.0"):
+    if not current_search_client.indices.exists(
+        index="affiliations-affiliation-v2.0.0"
+    ):
         current_search_client.indices.create(index="affiliations-affiliation-v2.0.0")
 
     Affiliation.index.refresh()
@@ -927,25 +933,25 @@ RunningApp = namedtuple(
 
 @pytest.fixture
 def running_app(
-        app,
-        superuser_identity,
-        location,
-        cache,
-        resource_type_v,
-        subject_v,
-        languages_v,
-        affiliations_v,
-        title_type_v,
-        description_type_v,
-        date_type_v,
-        contributors_role_v,
-        relation_type_v,
-        licenses_v,
-        funders_v,
-        awards_v,
-        creatorsroles_v,
-        removal_reasons_v,
-        geospatial_resource_type_v,
+    app,
+    superuser_identity,
+    location,
+    cache,
+    resource_type_v,
+    subject_v,
+    languages_v,
+    affiliations_v,
+    title_type_v,
+    description_type_v,
+    date_type_v,
+    contributors_role_v,
+    relation_type_v,
+    licenses_v,
+    funders_v,
+    awards_v,
+    creatorsroles_v,
+    removal_reasons_v,
+    geospatial_resource_type_v,
 ):
     """This fixture provides an app with the typically needed db data loaded.
 
