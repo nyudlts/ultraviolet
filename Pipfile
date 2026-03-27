@@ -25,7 +25,7 @@ invenio-rdm-records = "==19.6.3"
 responses = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.12"
 
 [pipenv]
 allow_prereleases = false
