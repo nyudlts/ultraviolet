@@ -36,6 +36,7 @@ jobs:
           version: "0.11.2"
       - name: "Install invenio-cli"
         run: |
+          pip install --no-cache-dir --upgrade pip pipenv
           uv tool install invenio-cli
       - name: "Install XMLSec1 Dependency for Ultraviolet SAML"
         run: |
