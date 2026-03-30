@@ -30,10 +30,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.11.2"
       - name: "Install invenio-cli"
         run: |
-          pip install --no-cache-dir --upgrade pip invenio-cli pipenv
-          pip list
+          uv tool install invenio-cli
       - name: "Install XMLSec1 Dependency for Ultraviolet SAML"
         run: |
           sudo apt-get update -y
@@ -51,8 +54,7 @@ jobs:
           invenio-cli translations compile
       - name: "Run black & tests"
         run: |
-          pipenv install --dev
-          E2E=yes pipenv run ./run-tests.sh
+          E2E=yes uv run ./run-tests.sh
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v4
         if: failure()
