@@ -1,3 +1,44 @@
+[project]
+name = "ultraviolet-rdm"
+version = "1.0.0"
+authors = [
+    { name = "NYU" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "invenio-app-rdm[opensearch2]~=13.0.0",
+    "invenio-rdm-records==19.6.3",
+    "ultraviolet",
+    "uwsgi>=2.0",
+    "uwsgitop>=0.11",
+    "uwsgi-tools>=1.1.1",
+    "ultraviolet-saml",
+    "python-dotenv",
+    "typing-extensions",
+    "sqlalchemy[asyncio] ; platform_machine == 'x86_64' or platform_machine == 'arm64'",
+    "responses",
+]
+
+[dependency-groups]
+dev = [
+    "check-manifest>=0.25",
+    "flask-pytest",
+    "pytest>=8.0.0,<9.0.0",
+    "black",
+    "pytest-invenio",
+]
+
+
+[tool.uv.sources]
+ultraviolet = { workspace = true }
+pytest-invenio = { git = "https://github.com/nyudlts/pytest-invenio.git", rev = "selenium-chrome-options" }
+ultraviolet-saml = { git = "https://github.com/nyudlts/ultraviolet-saml.git", rev = "v13_update" }
+
+[tool.uv.workspace]
+members = [
+    "site",
+]
+
 [tool.black]
 include = '''
 (
