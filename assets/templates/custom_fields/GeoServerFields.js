@@ -32,10 +32,7 @@ export const GeoServerFields = props => {
   // And convert them into local state
   useEffect(() => {
     let customFields = values.custom_fields;
-
-    console.log("VALUES")
-    console.log(values)
-
+    
     if (values.access.record == "public") {
       setServerUrl(publicServerUrl)
     } else {
