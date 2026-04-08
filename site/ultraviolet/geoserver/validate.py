@@ -24,17 +24,19 @@ class BoundsValidator(Validator):
 
 
 class LayerValidator(Validator):
-    default_message = "{type} layer {input} not found on {server}."
+    default_message = "{type} layer {input} not found on {public_server}."
 
-    def __init__(self, *, server: str | None = None, error: str | None = None):
-        self.server = server
+    def __init__(self, *, public_server: str | None = None, error: str | None = None):
+        self.public_server = public_server
         self.error: str = error or self.default_message
 
     def _repr_args(self) -> str:
-        return f"server={self.server!r}"
+        return f"public_server={self.public_server!r}"
 
     def _format_error(self, service: str, value: _T) -> str:
-        return self.error.format(service=service, input=value, server=self.server)
+        return self.error.format(
+            service=service, input=value, public_server=self.public_server
+        )
 
     def __call__(self, value: _T) -> _T:
         if value is None:
@@ -45,7 +47,7 @@ class LayerValidator(Validator):
 
         errors = []
 
-        url = "{0}/wms".format(self.server)
+        url = "{0}/wms".format(self.public_server)
         query_string = urllib.parse.urlencode(
             {
                 "service": "WMS",
@@ -64,7 +66,7 @@ class LayerValidator(Validator):
         if data.get("exceptions") is not None:
             errors.append("Can't find WMS layer named {0}.".format(value))
 
-        url = "{0}/wfs".format(self.server)
+        url = "{0}/wfs".format(self.public_server)
         query_string = urllib.parse.urlencode(
             {
                 "service": "WFS",
@@ -86,7 +88,7 @@ class LayerValidator(Validator):
         if len(errors) > 0:
             raise ValidationError(
                 "Neither a WMS or WFS layer named {0} exists on {1} ".format(
-                    value, self.server
+                    value, self.public_server
                 )
             )
 

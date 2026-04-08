@@ -73,12 +73,12 @@ def invalid_wfs_response():
 
 
 def test_layer_none():
-    validator = LayerValidator(server="https://fake-geoserver.org/geoserver/sdr")
+    validator = LayerValidator(public_server="https://fake-geoserver.org/geoserver/sdr")
     assert validator(None) is None
 
 
 def test_layer_empty():
-    validator = LayerValidator(server="https://fake-geoserver.org/geoserver/sdr")
+    validator = LayerValidator(public_server="https://fake-geoserver.org/geoserver/sdr")
     assert validator("") is ""
 
 
@@ -98,7 +98,7 @@ def test_layer_valid(valid_wms_response, valid_wfs_response):
         status=200,
     )
 
-    validator = LayerValidator(server="https://fake-geoserver.org/geoserver/sdr")
+    validator = LayerValidator(public_server="https://fake-geoserver.org/geoserver/sdr")
     assert validator("sdr:nyu_2451_41645") == "sdr:nyu_2451_41645"
 
 
@@ -118,7 +118,7 @@ def test_layer_invalid(invalid_wms_response, invalid_wfs_response):
         status=400,
     )
 
-    validator = LayerValidator(server="https://fake-geoserver.org/geoserver/sdr")
+    validator = LayerValidator(public_server="https://fake-geoserver.org/geoserver/sdr")
 
     with pytest.raises(ValidationError):
         validator("sdr:foo_bar")
@@ -140,7 +140,7 @@ def test_layer_half_valid(invalid_wms_response, valid_wfs_response):
         status=400,
     )
 
-    validator = LayerValidator(server="https://fake-geoserver.org/geoserver/sdr")
+    validator = LayerValidator(public_server="https://fake-geoserver.org/geoserver/sdr")
 
     with pytest.raises(ValidationError):
         validator("sdr:foo_bar")

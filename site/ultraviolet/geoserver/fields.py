@@ -13,7 +13,9 @@ class GeoServerCF(BaseListCF):
         field_args = dict(
             dict(
                 nested=dict(
-                    layer=SanitizedUnicode(validate=LayerValidator(server=server)),
+                    layer=SanitizedUnicode(
+                        validate=LayerValidator(public_server=server)
+                    ),
                     bounds=SanitizedUnicode(validate=BoundsValidator()),
                     has_wms=fields.Boolean(),
                     has_wfs=fields.Boolean(),
