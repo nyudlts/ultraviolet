@@ -12,6 +12,44 @@ from marshmallow.validate import Validator
 _T = typing.TypeVar("_T")
 
 
+def get_wms(server, value):
+    url = "{0}/wms".format(server)
+    query_string = urllib.parse.urlencode(
+        {
+            "service": "WMS",
+            "version": "1.1.1",
+            "request": "DescribeLayer",
+            "layers": value,
+            "outputFormat": "application/json",
+            "exceptions": "application/json",
+        }
+    )
+
+    full_url = "{0}?{1}".format(url, query_string)
+    response = requests.get(full_url)
+
+    return json.loads(response.text)
+
+
+def get_wfs(server, value):
+    url = "{0}/wfs".format(server)
+    query_string = urllib.parse.urlencode(
+        {
+            "service": "WFS",
+            "version": "2.0.0",
+            "request": "DescribeFeatureType",
+            "typename": value,
+            "outputFormat": "application/json",
+            "exceptions": "application/json",
+        }
+    )
+
+    full_url = "{0}?{1}".format(url, query_string)
+    response = requests.get(full_url)
+
+    return json.loads(response.text)
+
+
 class BoundsValidator(Validator):
     def __call__(self, value: _T) -> _T:
         if re.match(
@@ -56,90 +94,25 @@ class LayerValidator(Validator):
             return ""
 
         public_errors = []
-        restricted_errors = []
 
-        # Public Servers
-        url = "{0}/wms".format(self.public_server)
-        query_string = urllib.parse.urlencode(
-            {
-                "service": "WMS",
-                "version": "1.1.1",
-                "request": "DescribeLayer",
-                "layers": value,
-                "outputFormat": "application/json",
-                "exceptions": "application/json",
-            }
-        )
-
-        full_url = "{0}?{1}".format(url, query_string)
-        response = requests.get(full_url)
-        data = json.loads(response.text)
-
-        if data.get("exceptions") is not None:
+        if get_wms(self.public_server, value).get("exceptions") is not None:
             public_errors.append("Can't find WMS layer named {0}.".format(value))
 
-        url = "{0}/wfs".format(self.public_server)
-        query_string = urllib.parse.urlencode(
-            {
-                "service": "WFS",
-                "version": "2.0.0",
-                "request": "DescribeFeatureType",
-                "typename": value,
-                "outputFormat": "application/json",
-                "exceptions": "application/json",
-            }
-        )
-
-        full_url = "{0}?{1}".format(url, query_string)
-        response = requests.get(full_url)
-        data = json.loads(response.text)
-
-        if data.get("exceptions") is not None:
+        if get_wfs(self.public_server, value).get("exceptions") is not None:
             public_errors.append("Can't find WFS layer named {0}.".format(value))
 
-        # Restricted Servers
-        url = "{0}/wms".format(self.restricted_server)
-        query_string = urllib.parse.urlencode(
-            {
-                "service": "WMS",
-                "version": "1.1.1",
-                "request": "DescribeLayer",
-                "layers": value,
-                "outputFormat": "application/json",
-                "exceptions": "application/json",
-            }
-        )
+        restricted_errors = []
 
-        full_url = "{0}?{1}".format(url, query_string)
-        response = requests.get(full_url)
-        data = json.loads(response.text)
-
-        if data.get("exceptions") is not None:
+        if get_wms(self.restricted_server, value).get("exceptions") is not None:
             restricted_errors.append("Can't find WMS layer named {0}.".format(value))
 
-        url = "{0}/wfs".format(self.restricted_server)
-        query_string = urllib.parse.urlencode(
-            {
-                "service": "WFS",
-                "version": "2.0.0",
-                "request": "DescribeFeatureType",
-                "typename": value,
-                "outputFormat": "application/json",
-                "exceptions": "application/json",
-            }
-        )
-
-        full_url = "{0}?{1}".format(url, query_string)
-        response = requests.get(full_url)
-        data = json.loads(response.text)
-
-        if data.get("exceptions") is not None:
+        if get_wfs(self.restricted_server, value).get("exceptions") is not None:
             restricted_errors.append("Can't find WFS layer named {0}.".format(value))
 
         if len(public_errors) > 0 and len(restricted_errors) > 0:
             raise ValidationError(
-                "Neither a WMS or WFS layer named {0} exists on {1} ".format(
-                    value, self.public_server
+                "Neither a WMS or WFS layer named {0} exists on {1} or {2}.".format(
+                    value, self.public_server, self.restricted_server
                 )
             )
 
