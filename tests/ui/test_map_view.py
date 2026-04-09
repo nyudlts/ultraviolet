@@ -1,7 +1,46 @@
 from invenio_access.permissions import system_identity
 
+import responses
 
-def test_public_map_view_when_anonymous(services, geospatial_record, client):
+
+@responses.activate
+def test_public_map_view_when_anonymous(
+    services,
+    geospatial_record,
+    client,
+    valid_wms_response,
+    valid_wfs_response,
+    invalid_wms_response,
+    invalid_wfs_response,
+):
+    responses.add(
+        method=responses.GET,
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wms",
+        json=valid_wms_response,
+        status=200,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wfs",
+        json=valid_wfs_response,
+        status=200,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wms",
+        json=invalid_wms_response,
+        status=200,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wfs",
+        json=invalid_wfs_response,
+        status=400,
+    )
+
     published_record = publish_draft(geospatial_record, services)
 
     html = client.get("/records/" + published_record["id"]).data.decode("utf-8")
@@ -18,10 +57,46 @@ def test_public_map_view_when_anonymous(services, geospatial_record, client):
     )
 
 
+@responses.activate
 def test_restricted_map_view_when_logged_in(
-    services, restricted_geospatial_record, client_with_login, app
+    services,
+    restricted_geospatial_record,
+    client_with_login,
+    app,
+    valid_wms_response,
+    valid_wfs_response,
+    invalid_wms_response,
+    invalid_wfs_response,
 ):
     app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = False
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wms",
+        json=invalid_wms_response,
+        status=200,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wfs",
+        json=invalid_wfs_response,
+        status=400,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wms",
+        json=valid_wms_response,
+        status=200,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wfs",
+        json=valid_wfs_response,
+        status=200,
+    )
 
     published_record = publish_draft(restricted_geospatial_record, services)
 
@@ -47,9 +122,45 @@ def test_restricted_map_view_when_logged_in(
     app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = True
 
 
+@responses.activate
 def test_restricted_map_view_when_anonymous(
-    services, restricted_geospatial_record, client, app
+    services,
+    restricted_geospatial_record,
+    client,
+    app,
+    invalid_wms_response,
+    invalid_wfs_response,
+    valid_wms_response,
+    valid_wfs_response,
 ):
+    responses.add(
+        method=responses.GET,
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wms",
+        json=invalid_wms_response,
+        status=200,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wfs",
+        json=invalid_wfs_response,
+        status=400,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wms",
+        json=valid_wms_response,
+        status=200,
+    )
+
+    responses.add(
+        method=responses.GET,
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wfs",
+        json=valid_wfs_response,
+        status=200,
+    )
+
     app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = False
 
     published_record = publish_draft(restricted_geospatial_record, services)
