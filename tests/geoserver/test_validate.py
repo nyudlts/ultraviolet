@@ -1,137 +1,59 @@
 import pytest
 import responses
 from marshmallow import ValidationError
+
 from ultraviolet.geoserver.validate import BoundsValidator
 from ultraviolet.geoserver.validate import LayerValidator
 
 
 def test_layer_none():
     validator = LayerValidator(
-        public_server="https://public.geoserver.org/geoserver/sdr",
-        restricted_server="https://restricted.geoserver.org/geoserver/sdr",
+        public_server="https://maps-public.geo.nyu.edu/geoserver/sdr",
+        restricted_server="https://maps-restricted.geo.nyu.edu/geoserver/sdr",
     )
     assert validator(None) is None
 
 
 def test_layer_empty():
     validator = LayerValidator(
-        public_server="https://public.geoserver.org/geoserver/sdr",
-        restricted_server="https://restricted.geoserver.org/geoserver/sdr",
+        public_server="https://maps-public.geo.nyu.edu/geoserver/sdr",
+        restricted_server="https://maps-restricted.geo.nyu.edu/geoserver/sdr",
     )
     assert validator("") is ""
 
 
 @responses.activate
 def test_only_public_layer_exists(
-    valid_wms_response, valid_wfs_response, invalid_wms_response, invalid_wfs_response
+    valid_public_wms, valid_public_wfs, invalid_restricted_wms, invalid_restricted_wfs
 ):
-    responses.add(
-        method=responses.GET,
-        url="https://public.geoserver.org/geoserver/sdr/wms",
-        json=valid_wms_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://public.geoserver.org/geoserver/sdr/wfs",
-        json=valid_wfs_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://restricted.geoserver.org/geoserver/sdr/wms",
-        json=invalid_wms_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://restricted.geoserver.org/geoserver/sdr/wfs",
-        json=invalid_wfs_response,
-        status=400,
-    )
-
     validator = LayerValidator(
-        public_server="https://public.geoserver.org/geoserver/sdr",
-        restricted_server="https://restricted.geoserver.org/geoserver/sdr",
+        public_server="https://maps-public.geo.nyu.edu/geoserver/sdr",
+        restricted_server="https://maps-restricted.geo.nyu.edu/geoserver/sdr",
     )
     assert validator("sdr:nyu_2451_41645") == "sdr:nyu_2451_41645"
 
 
 @responses.activate
 def test_only_restricted_layer_exists(
-    valid_wms_response, valid_wfs_response, invalid_wms_response, invalid_wfs_response
+    invalid_public_wms, invalid_public_wfs, valid_restricted_wms, valid_restricted_wfs
 ):
-    responses.add(
-        method=responses.GET,
-        url="https://public.geoserver.org/geoserver/sdr/wms",
-        json=invalid_wms_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://public.geoserver.org/geoserver/sdr/wfs",
-        json=invalid_wfs_response,
-        status=400,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://restricted.geoserver.org/geoserver/sdr/wms",
-        json=valid_wms_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://restricted.geoserver.org/geoserver/sdr/wfs",
-        json=valid_wfs_response,
-        status=200,
-    )
-
     validator = LayerValidator(
-        public_server="https://public.geoserver.org/geoserver/sdr",
-        restricted_server="https://restricted.geoserver.org/geoserver/sdr",
+        public_server="https://maps-public.geo.nyu.edu/geoserver/sdr",
+        restricted_server="https://maps-restricted.geo.nyu.edu/geoserver/sdr",
     )
     assert validator("sdr:nyu_2451_41645") == "sdr:nyu_2451_41645"
 
 
 @responses.activate
-def test_layer_does_not_exist(invalid_wms_response, invalid_wfs_response):
-    responses.add(
-        method=responses.GET,
-        url="https://public.geoserver.org/geoserver/sdr/wms",
-        json=invalid_wms_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://public.geoserver.org/geoserver/sdr/wfs",
-        json=invalid_wfs_response,
-        status=400,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://restricted.geoserver.org/geoserver/sdr/wms",
-        json=invalid_wms_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://restricted.geoserver.org/geoserver/sdr/wfs",
-        json=invalid_wfs_response,
-        status=400,
-    )
-
+def test_layer_does_not_exist(
+    invalid_public_wms,
+    invalid_public_wfs,
+    invalid_restricted_wms,
+    invalid_restricted_wfs,
+):
     validator = LayerValidator(
-        public_server="https://public.geoserver.org/geoserver/sdr",
-        restricted_server="https://restricted.geoserver.org/geoserver/sdr",
+        public_server="https://maps-public.geo.nyu.edu/geoserver/sdr",
+        restricted_server="https://maps-restricted.geo.nyu.edu/geoserver/sdr",
     )
 
     with pytest.raises(ValidationError):
@@ -140,39 +62,11 @@ def test_layer_does_not_exist(invalid_wms_response, invalid_wfs_response):
 
 @responses.activate
 def test_only_public_wfs_exists(
-    invalid_wms_response, valid_wfs_response, invalid_wfs_response
+    invalid_public_wms, valid_public_wfs, invalid_restricted_wms, invalid_restricted_wfs
 ):
-    responses.add(
-        method=responses.GET,
-        url="https://public.geoserver.org/geoserver/sdr/wms",
-        json=invalid_wms_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://public.geoserver.org/geoserver/sdr/wfs",
-        json=valid_wfs_response,
-        status=400,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://restricted.geoserver.org/geoserver/sdr/wms",
-        json=invalid_wms_response,
-        status=200,
-    )
-
-    responses.add(
-        method=responses.GET,
-        url="https://restricted.geoserver.org/geoserver/sdr/wfs",
-        json=invalid_wfs_response,
-        status=400,
-    )
-
     validator = LayerValidator(
-        public_server="https://public.geoserver.org/geoserver/sdr",
-        restricted_server="https://restricted.geoserver.org/geoserver/sdr",
+        public_server="https://maps-public.geo.nyu.edu/geoserver/sdr",
+        restricted_server="https://maps-restricted.geo.nyu.edu/geoserver/sdr",
     )
 
     with pytest.raises(ValidationError):

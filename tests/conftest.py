@@ -11,6 +11,7 @@ import os
 import sys
 
 import pytest
+import responses
 from invenio_access.proxies import current_access
 from invenio_accounts.proxies import current_datastore
 from invenio_app.factory import create_app as create_ui_api
@@ -1139,14 +1140,14 @@ def admin(UserFixture, app, db, admin_role_need):
     return u
 
 
-@pytest.fixture
+@pytest.fixture()
 def valid_wms_response():
     return {
         "version": "1.1.1",
         "layerDescriptions": [
             {
                 "layerName": "nyu_2451_41645",
-                "owsURL": "https://public.geoserver.org/geoserver/sdr/wfs?",
+                "owsURL": "https://maps-public.geo.nyu.edu/geoserver/sdr/wfs?",
                 "owsType": "WFS",
                 "typeName": "nyu_2451_41645",
             }
@@ -1154,7 +1155,7 @@ def valid_wms_response():
     }
 
 
-@pytest.fixture
+@pytest.fixture()
 def valid_wfs_response():
     return {
         "elementFormDefault": "qualified",
@@ -1178,7 +1179,7 @@ def valid_wfs_response():
     }
 
 
-@pytest.fixture
+@pytest.fixture()
 def invalid_wms_response():
     return {
         "version": "1.1.1",
@@ -1192,7 +1193,7 @@ def invalid_wms_response():
     }
 
 
-@pytest.fixture
+@pytest.fixture()
 def invalid_wfs_response():
     return {
         "version": "2.0.0",
@@ -1204,3 +1205,75 @@ def invalid_wfs_response():
             }
         ],
     }
+
+
+@pytest.fixture()
+def invalid_restricted_wfs(invalid_wfs_response):
+    responses.get(
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wfs",
+        json=invalid_wfs_response,
+        status=400,
+    )
+
+
+@pytest.fixture()
+def invalid_restricted_wms(invalid_wms_response):
+    responses.get(
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wms",
+        json=invalid_wms_response,
+        status=200,
+    )
+
+
+@pytest.fixture()
+def valid_public_wfs(valid_wfs_response):
+    responses.get(
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wfs",
+        json=valid_wfs_response,
+        status=200,
+    )
+
+
+@pytest.fixture()
+def valid_public_wms(valid_wms_response):
+    responses.get(
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wms",
+        json=valid_wms_response,
+        status=200,
+    )
+
+
+@pytest.fixture()
+def valid_restricted_wfs(valid_wfs_response):
+    responses.get(
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wfs",
+        json=valid_wfs_response,
+        status=200,
+    )
+
+
+@pytest.fixture()
+def valid_restricted_wms(valid_wms_response):
+    responses.get(
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wms",
+        json=valid_wms_response,
+        status=200,
+    )
+
+
+@pytest.fixture()
+def invalid_public_wfs(invalid_wfs_response):
+    responses.get(
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wfs",
+        json=invalid_wfs_response,
+        status=400,
+    )
+
+
+@pytest.fixture()
+def invalid_public_wms(invalid_wms_response):
+    responses.get(
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wms",
+        json=invalid_wms_response,
+        status=200,
+    )
