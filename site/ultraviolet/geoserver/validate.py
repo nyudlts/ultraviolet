@@ -25,8 +25,7 @@ def get_wms(server, value):
         }
     )
 
-    full_url = "{0}?{1}".format(url, query_string)
-    response = requests.get(full_url)
+    response = requests.get("{0}?{1}".format(url, query_string))
 
     return json.loads(response.text)
 
@@ -44,8 +43,7 @@ def get_wfs(server, value):
         }
     )
 
-    full_url = "{0}?{1}".format(url, query_string)
-    response = requests.get(full_url)
+    response = requests.get("{0}?{1}".format(url, query_string))
 
     return json.loads(response.text)
 

@@ -15,11 +15,11 @@ class DescribeFeatureType(MethodView):
 
         query_string = urllib.parse.urlencode(
             {
-                "outputFormat": "application/json",
-                "request": "DescribeFeatureType",
                 "service": "WFS",
-                "typeName": layers,
                 "version": "1.1.0",
+                "request": "DescribeFeatureType",
+                "typeName": layers,
+                "outputFormat": "application/json",
             }
         )
 
