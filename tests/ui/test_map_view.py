@@ -1,7 +1,17 @@
+import responses
 from invenio_access.permissions import system_identity
 
 
-def test_public_map_view_when_anonymous(services, geospatial_record, client):
+@responses.activate
+def test_public_map_view_when_anonymous(
+    services,
+    geospatial_record,
+    client,
+    valid_public_wms,
+    valid_public_wfs,
+    invalid_restricted_wms,
+    invalid_restricted_wfs,
+):
     published_record = publish_draft(geospatial_record, services)
 
     html = client.get("/records/" + published_record["id"]).data.decode("utf-8")
@@ -18,8 +28,20 @@ def test_public_map_view_when_anonymous(services, geospatial_record, client):
     )
 
 
+def setup_valid_restricted_wfs_response():
+    pass
+
+
+@responses.activate
 def test_restricted_map_view_when_logged_in(
-    services, restricted_geospatial_record, client_with_login, app
+    services,
+    restricted_geospatial_record,
+    client_with_login,
+    app,
+    invalid_public_wms,
+    invalid_public_wfs,
+    valid_restricted_wms,
+    valid_restricted_wfs,
 ):
     app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = False
 
@@ -47,9 +69,18 @@ def test_restricted_map_view_when_logged_in(
     app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = True
 
 
+@responses.activate
 def test_restricted_map_view_when_anonymous(
-    services, restricted_geospatial_record, client, app
+    services,
+    restricted_geospatial_record,
+    client,
+    app,
+    invalid_public_wms,
+    invalid_public_wfs,
+    valid_restricted_wms,
+    valid_restricted_wfs,
 ):
+
     app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = False
 
     published_record = publish_draft(restricted_geospatial_record, services)

@@ -8,12 +8,19 @@ from ultraviolet.geoserver.validate import LayerValidator, BoundsValidator
 class GeoServerCF(BaseListCF):
     """GeoServer with layer and bounds."""
 
-    def __init__(self, name, server, **kwargs):
+    def __init__(self, name, public_server, restricted_server, **kwargs):
         """Constructor."""
         field_args = dict(
             dict(
                 nested=dict(
-                    layer=SanitizedUnicode(validate=LayerValidator(server=server)),
+                    layer=SanitizedUnicode(
+                        validate=(
+                            LayerValidator(
+                                public_server=public_server,
+                                restricted_server=restricted_server,
+                            )
+                        )
+                    ),
                     bounds=SanitizedUnicode(validate=BoundsValidator()),
                     has_wms=fields.Boolean(),
                     has_wfs=fields.Boolean(),

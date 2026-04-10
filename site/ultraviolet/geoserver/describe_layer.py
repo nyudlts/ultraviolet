@@ -15,12 +15,12 @@ class DescribeLayer(MethodView):
 
         query_string = urllib.parse.urlencode(
             {
+                "service": "WMS",
+                "version": "1.1.1",
+                "request": "DescribeLayer",
+                "layers": layers,
                 "outputFormat": "application/json",
                 "exceptions": "application/json",
-                "request": "DescribeLayer",
-                "service": "WMS",
-                "layers": layers,
-                "version": "1.1.1",
             }
         )
 
