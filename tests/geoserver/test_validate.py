@@ -73,6 +73,37 @@ def test_only_public_wfs_exists(
         validator("sdr:foo_bar")
 
 
+@responses.activate
+def test_layer_connection_error_raises_validation_error():
+    responses.get(
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wms",
+        body=responses.ConnectionError("public server unreachable"),
+    )
+    responses.get(
+        url="https://maps-public.geo.nyu.edu/geoserver/sdr/wfs",
+        body=responses.ConnectionError("public server unreachable"),
+    )
+    responses.get(
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wms",
+        body=responses.ConnectionError("restricted server unreachable"),
+    )
+    responses.get(
+        url="https://maps-restricted.geo.nyu.edu/geoserver/sdr/wfs",
+        body=responses.ConnectionError("restricted server unreachable"),
+    )
+
+    validator = LayerValidator(
+        public_server="https://maps-public.geo.nyu.edu/geoserver/sdr",
+        restricted_server="https://maps-restricted.geo.nyu.edu/geoserver/sdr",
+    )
+
+    with pytest.raises(
+        ValidationError,
+        match="Public server not reachable for validation: https://maps-public.geo.nyu.edu/geoserver/sdr",
+    ):
+        validator("sdr:foo_bar")
+
+
 def test_bounds_valid_decimals():
     validator = BoundsValidator()
 
