@@ -18,6 +18,7 @@ def test_public_map_view_when_anonymous(
 
     assert "Geospatial Data" in html
     assert "Web Services" in html
+    assert "Additional details" in html
 
     assert 'data-preview="True"' in html
     assert 'data-wms-url="https://maps-public.geo.nyu.edu/geoserver/sdr/wms"' in html
@@ -53,6 +54,7 @@ def test_restricted_map_view_when_logged_in(
 
     assert "Geospatial Data" in html
     assert "Web Services" in html
+    assert "Additional details" in html
 
     assert 'data-preview="True"' in html
     assert (
@@ -88,6 +90,7 @@ def test_restricted_map_view_when_anonymous(
     html = client.get("/records/" + published_record["id"]).data.decode("utf-8")
 
     assert "Geospatial Data" in html
+    assert "Additional details" in html
     assert 'data-preview="False"' in html
     assert (
         'data-bounds="ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)"'
