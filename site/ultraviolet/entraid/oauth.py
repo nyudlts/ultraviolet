@@ -1,10 +1,10 @@
-from collections.abc import Mapping
 import re
+from collections.abc import Mapping
 
-from flask import current_app, redirect, request, session
-from flask_login import login_user
 import jwt
 import requests
+from flask import current_app, redirect, request, session
+from flask_login import login_user
 
 
 def _first_present(data, *keys, default=None):
@@ -88,17 +88,6 @@ def entra_authorized_handler(token, remote, response=None):
     """
     Custom authorized handler for Microsoft Entra ID.
     """
-    current_app.logger.info("Entra token type: %s", type(token).__name__)
-    current_app.logger.info("Entra remote type: %s", type(remote).__name__)
-    current_app.logger.info(
-        "Entra response type: %s",
-        type(response).__name__ if response is not None else None,
-    )
-
-    current_app.logger.debug("Entra token repr: %r", token)
-    current_app.logger.debug("Entra remote repr: %r", remote)
-    current_app.logger.debug("Entra response repr: %r", response)
-
     claims = _extract_profile_from_id_token(token)
     if not claims:
         claims = _as_profile_dict(response)
@@ -112,9 +101,6 @@ def entra_authorized_handler(token, remote, response=None):
             current_app.logger.exception("Failed to fetch Entra userinfo")
 
     claims = _as_profile_dict(claims)
-
-    current_app.logger.info("Entra profile keys: %s", sorted(claims.keys()))
-    current_app.logger.debug("Entra profile payload: %s", claims)
 
     entraid = _first_present(claims, "oid", "sub", default=None)
     email = _first_present(
