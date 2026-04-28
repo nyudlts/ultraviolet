@@ -1,26 +1,16 @@
-import re
-
+import jwt
 from flask import current_app, redirect, request, session
 from flask_login import login_user
-import jwt
 
 
-def _sanitize_username(value: str) -> str:
-    value = value.strip().lower()
+def _email_to_username(email: str) -> str:
+    email = email.strip().lower()
 
-    if "@" in value:
-        local_part, domain = value.split("@", 1)
-        domain_label = domain.split(".", 1)[0]
-        value = f"{domain_label}-{local_part}"
+    local_part, domain = email.split("@", 1)
+    domain_label = domain.split(".", 1)[0]
+    email = f"{domain_label}-{local_part}"
 
-    value = re.sub(r"[^a-z0-9_-]", "-", value)
-    value = re.sub(r"^[^a-z]+", "u-", value)
-    value = re.sub(r"-+", "-", value).strip("-")
-
-    if len(value) < 3:
-        value = f"u-{value}".ljust(3, "0")
-
-    return value[:64]
+    return email[:64]
 
 
 def _decode_id_token(token):
@@ -52,7 +42,7 @@ def entra_authorized_handler(token, remote, response=None):
     """Custom authorized handler for Microsoft Entra ID."""
     claims = _decode_id_token(token)
 
-    email = claims.get("email") or claims.get("preferred_username") or claims.get("upn")
+    email = claims.get("email") or claims.get("preferred_username")
     if not email:
         raise ValueError("Microsoft Entra login did not provide an email claim.")
 
@@ -66,8 +56,9 @@ def entra_authorized_handler(token, remote, response=None):
             confirmed_at=None,
         )
 
-        if hasattr(user, "username"):
-            user.username = _sanitize_username(email)
+        user.username = _email_to_username(email)
+        user.first_name = claims.get("givenName", None)
+        user.last_name = claims.get("surname", None)
 
         datastore.db.session.add(user)
         datastore.commit()
