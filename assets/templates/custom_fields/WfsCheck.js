@@ -36,7 +36,7 @@ export const WfsCheck = (
         setError(error)
         setLoading(false)
       });
-  }, [layerName]);
+  }, [layerName, serverUrl]);
 
   if (loading) {
     return <div className="ui active inverted dimmer">
