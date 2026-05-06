@@ -25,6 +25,7 @@ export const GeoServerFields = props => {
   const [boundingBox, setBoundingBox] = useState("")
 
   const [serverUrl, setServerUrl] = useState("")
+  const [fieldHint, setFieldHint] = useState("")
 
   const {values} = useFormikContext();
 
@@ -33,7 +34,7 @@ export const GeoServerFields = props => {
   useEffect(() => {
     let customFields = values.custom_fields;
     
-    if (values.access.record == "public") {
+    if (values.access.files == "public") {
       setServerUrl(publicServerUrl)
     } else {
       setServerUrl(restrictedServerUrl)
@@ -49,6 +50,14 @@ export const GeoServerFields = props => {
       setHasWfs(!!geoServerFields.has_wfs)
     }
   }, [values]);
+
+  useEffect(() => {
+    if (serverUrl == restrictedServerUrl) {
+      setFieldHint(`Restricted files records use ${restrictedServerUrl} as the base URL for WMS and WFS requests.`)
+    } else {
+      setFieldHint(`Public files records use ${publicServerUrl} as the base URL for WMS and WFS requests.`)
+    }
+  }, [serverUrl])
 
   return (
     <Grid>
@@ -69,7 +78,7 @@ export const GeoServerFields = props => {
           <BooleanCheckbox
             fieldPath={`${fieldPath}.has_wms`}
             label={has_wms.label}
-            description={has_wms.description}
+            description={has_wms.description + " " + fieldHint}
             trueLabel="Yes"
             falseLabel="No"
           ></BooleanCheckbox>
@@ -81,7 +90,7 @@ export const GeoServerFields = props => {
           <BooleanCheckbox
             fieldPath={`${fieldPath}.has_wfs`}
             label={has_wfs.label}
-            description={has_wfs.description}
+            description={has_wfs.description + " " + fieldHint}
             trueLabel="Yes"
             falseLabel="No"
           ></BooleanCheckbox>
