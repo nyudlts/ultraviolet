@@ -16,7 +16,6 @@ uwsgi = ">=2.0"
 uwsgitop = ">=0.11"
 uwsgi-tools = ">=1.1.1"
 setuptools = ">=56.0.0,<81.0.0"
-ultraviolet-saml = {git = "https://github.com/nyudlts/ultraviolet-saml.git", ref="v13_update"}
 python-dotenv = "*"
 typing-extensions = "*"
 invenio-app-rdm = {extras = ["opensearch2"], version = "~=13.0.0"}
