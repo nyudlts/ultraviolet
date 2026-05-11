@@ -1,6 +1,9 @@
 import jwt
 from flask import current_app, redirect, request, session
 from flask_login import login_user
+from invenio_accounts.errors import AlreadyLinkedError
+from invenio_accounts.models import UserIdentity
+from invenio_oauthclient import oauth_link_external_id
 
 
 def _email_to_username(email: str) -> str:
@@ -56,12 +59,20 @@ def entra_authorized_handler(token, remote, response=None):
             confirmed_at=None,
         )
 
+        try:
+            UserIdentity.create(user, "entra_id", claims.get("oid"))
+        except AlreadyLinkedError as e:
+            current_app.logger.warning(
+                f"User {user.id} already linked with Entra ID: {e}"
+            )
+
         user.username = _email_to_username(email)
         user.preferences = {
             "visibility": "public",
             "email_visibility": "public",
         }
         user.user_profile = {
+            "full_name": claims.get("name", None),
             "affiliations": "New York University",
         }
 
