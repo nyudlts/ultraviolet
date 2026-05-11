@@ -57,8 +57,13 @@ def entra_authorized_handler(token, remote, response=None):
         )
 
         user.username = _email_to_username(email)
-        user.first_name = claims.get("givenName", None)
-        user.last_name = claims.get("surname", None)
+        user.preferences = {
+            "visibility": "public",
+            "email_visibility": "public",
+        }
+        user.user_profile = {
+            "affiliations": "New York University",
+        }
 
         datastore.db.session.add(user)
 
