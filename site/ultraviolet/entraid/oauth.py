@@ -61,6 +61,15 @@ def entra_authorized_handler(token, remote, response=None):
         user.last_name = claims.get("surname", None)
 
         datastore.db.session.add(user)
+
+        role = datastore.find_role("nyuusers")
+        if role is not None:
+            datastore.add_role_to_user(user, role)
+        else:
+            current_app.logger.warning(
+                'Role "nyuusers" does not exist; user was created without it.'
+            )
+
         datastore.commit()
 
     login_user(user, remember=True)
