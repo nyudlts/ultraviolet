@@ -3,7 +3,6 @@ from flask import current_app, redirect, request, session
 from flask_login import login_user
 from invenio_accounts.errors import AlreadyLinkedError
 from invenio_accounts.models import UserIdentity
-from invenio_oauthclient import oauth_link_external_id
 
 
 def _email_to_username(email: str) -> str:
