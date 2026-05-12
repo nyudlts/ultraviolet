@@ -45,7 +45,7 @@ def entra_authorized_handler(token, remote, response=None):
     """Custom authorized handler for Microsoft Entra ID."""
     claims = _decode_id_token(token)
 
-    email = claims.get("email") or claims.get("preferred_username")
+    email = claims.get("email", None)
     if not email:
         raise ValueError("Microsoft Entra login did not provide an email claim.")
 
@@ -58,13 +58,6 @@ def entra_authorized_handler(token, remote, response=None):
             active=True,
             confirmed_at=None,
         )
-
-        try:
-            UserIdentity.create(user, "entra_id", claims.get("oid"))
-        except AlreadyLinkedError as e:
-            current_app.logger.warning(
-                f"User {user.id} already linked with Entra ID: {e}"
-            )
 
         user.username = _email_to_username(email)
         user.preferences = {
@@ -87,6 +80,11 @@ def entra_authorized_handler(token, remote, response=None):
             )
 
         datastore.commit()
+
+    try:
+        UserIdentity.create(user, "entra_id", claims.get("oid"))
+    except AlreadyLinkedError as e:
+        current_app.logger.warning(f"User {user.id} already linked with Entra ID: {e}")
 
     login_user(user, remember=True)
 
