@@ -10,7 +10,20 @@ Currently, we use Python 3.9 and node 18 for the development version of UltraVio
  
 [pyenv](https://github.com/pyenv/pyenv#installation) is recommended for managing Python versions. 
 
-Although Postgres is running in a container, you might still need to install [Postgres](http://postgresguide.com/setup/install.html) to be able to use the Postgres client within your application.
+Although postgres is running as a container, you might need to install [Postgres](http://postgresguide.com/setup/install.html) to be able to use a Postgres client within your application.
+
+### ImageMagick & IIIF Images
+
+In order for IIIF Canvases to be generated, you must have [ImageMagick](https://imagemagick.org/#gsc.tab=0) installed.
+
+On macOS, you will need a few exports set up for it to run correctly:
+
+```
+export MAGICK_HOME="/opt/homebrew/opt/imagemagick"
+export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib:$DYLD_LIBRARY_PATH"
+export PATH="$MAGICK_HOME/bin:$PATH"
+export PKG_CONFIG_PATH="$MAGICK_HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
+```
 
 ## Setup and Installation for Running Application Locally for Development 
 
