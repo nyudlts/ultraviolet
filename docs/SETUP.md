@@ -145,3 +145,34 @@ Following installation, the project folder will include the following.
 | ``templates`` | Folder for your Jinja templates. |
 | ``.invenio`` | Common file used by Invenio-CLI to be version controlled. |
 | ``.invenio.private`` | Private file used by Invenio-CLI *not* to be version controlled. |
+
+## Development Tasks
+
+### Creating Additional Users
+
+If you ever need to create additional users, open a new terminal window and run the following:
+
+```bash
+$ pipenv shell
+$ invenio users create adent@test.com --password adminUV --active --confirm
+$ invenio access allow administration-access user adent@test.com # if an admin
+```
+
+Note: Email addresses will be forced to lowercase in Invenio RDM, so if you use an email address with mixed case in the `users create` step, then `access allow` will need to use a lowercased version of that email address, otherwise it will not be able to find the account.
+
+### Running the Test Suite
+
+To run the test suite, run the following commands:
+
+```bash
+$ invenio-cli services stop # Because they use the same ports as test services
+$ pipenv run ./run-tests.sh
+```
+
+To run the test suite with end to end tests:
+
+```bash
+$ E2E=yes pipenv run ./run-tests.sh
+```
+
+Note: It’s possible some tests will cause a segmentation fault locally. I haven’t figured out why this happens.
