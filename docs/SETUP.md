@@ -196,3 +196,20 @@ export INVENIO_CELERY_WORKER_POOL="solo"
 ```
 
 This error/fix is [discussed in the Invenio Discord](https://discord.com/channels/692989811736182844/704625518552547329/1420384017814913024)
+
+### E2E Test Segfault
+
+If running `E2E=yes pipenv run ./run-tests.sh` causes a test to fail with:
+
+```text
+tests/e2e/test_e2e_communities.py Fatal Python error: Segmentation fault
+```
+
+This is caused by a macOS bug related to Postgres GSS Encryption.
+
+Add the following to your shell init script:
+
+```bash
+# Segfault fix for macOS Pogtres GSS Encryption issue
+export PGGSSENCMODE=disable
+```
