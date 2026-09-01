@@ -176,3 +176,23 @@ $ E2E=yes pipenv run ./run-tests.sh
 ```
 
 Note: It’s possible some tests will cause a segmentation fault locally. I haven’t figured out why this happens.
+
+## Common Setup Issues
+
+### Celery Worker Segfaults
+
+After running `invenio-cli`, if you see a bunch off error messages similar to:
+
+```text
+billiard.exceptions.WorkerLostError: Worker exited prematurely: signal 11 (SIGSEGV) Job: 8.
+```
+
+Add the following to your shell init script:
+
+```bash
+# Invenio Celery Worker Segfault Fix
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"
+export INVENIO_CELERY_WORKER_POOL="solo"
+```
+
+This error/fix is [discussed in the Invenio Discord](https://discord.com/channels/692989811736182844/704625518552547329/1420384017814913024)
