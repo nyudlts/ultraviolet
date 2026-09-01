@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const map = L.map('map').setView([0, 0], 13);
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png', {
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png?key=cb1_2hc3_1_1a81f66c5d346d83ee13dbbd', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>',
             maxZoom: 18,
             worldCopyJump: true,
