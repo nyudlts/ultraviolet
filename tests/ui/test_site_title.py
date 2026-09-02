@@ -18,4 +18,4 @@ def test_search_page_title(client, app):
     assert response.status_code == 200
 
     html_content = response.data.decode()
-    assert "<title>Search Results | UltraViolet | NYU Libraries</title>" in html_content
+    assert "<title>Search Results | NYU Libraries | UltraViolet</title>" in html_content
