@@ -50,7 +50,7 @@ jobs:
           pipenv install --dev
           E2E=yes pipenv run ./run-tests.sh
       - name: "Upload screenshots"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: screenshots
