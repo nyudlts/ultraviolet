@@ -35,15 +35,21 @@
         <h3>Web Services</h3>
 
         <dl class="details-list">
-            <dt class="ui tiny header">Layer Name</dt>
-            <dd><code>{{ record.custom_fields["geoserver:layer_name"] }}</code></dd>
-            {% if record.custom_fields["geoserver:has_wfs_layer"] %}
-                <dt class="ui tiny header">Web Feature Service (WFS)</dt>
-                <dd><code>{{ geoserver_base_url }}/wfs</code></dd>
+            {% if record.custom_fields["geoserver"]["layer"] %}
+                <dt class="ui tiny header">WMS Layer Name</dt>
+                <dd><code>{{ record.custom_fields["geoserver"]["layer"] }}</code></dd>
             {% endif %}
-            {% if record.custom_fields["geoserver:has_wms_layer"] %}
+            {% if record.custom_fields["geoserver"]["has_wms"] %}
                 <dt class="ui tiny header">Web Mapping Service (WMS)</dt>
                 <dd><code>{{ geoserver_base_url }}/wms</code></dd>
+            {% endif %}
+            {% if record.custom_fields["geoserver"]["wfs_layer"] %}
+                <dt class="ui tiny header">WFS Layer Name</dt>
+                <dd><code>{{ record.custom_fields["geoserver"]["wfs_layer"] }}</code></dd>
+            {% endif %}
+            {% if record.custom_fields["geoserver"]["has_wfs"] %}
+                <dt class="ui tiny header">Web Feature Service (WFS)</dt>
+                <dd><code>{{ geoserver_base_url }}/wfs</code></dd>
             {% endif %}
         </dl>
     {% endif %}

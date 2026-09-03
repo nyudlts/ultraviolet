@@ -12,6 +12,7 @@ export const GeoServerFields = props => {
   const {
     fieldPath, // injected by the custom field loader via the `field` config property
     layer,
+    wfs_layer,
     has_wms,
     has_wfs,
     bounds,
@@ -20,6 +21,7 @@ export const GeoServerFields = props => {
   } = props;
 
   const [layerName, setLayerName] = useState("")
+  const [wfsLayerName, setWfsLayerName] = useState("")
   const [hasWms, setHasWms] = useState(false)
   const [hasWfs, setHasWfs] = useState(false)
   const [boundingBox, setBoundingBox] = useState("")
@@ -33,6 +35,8 @@ export const GeoServerFields = props => {
   // And convert them into local state
   useEffect(() => {
     let customFields = values.custom_fields;
+
+    console.log(customFields);
     
     if (values.access.files == "public") {
       setServerUrl(publicServerUrl)
@@ -44,6 +48,7 @@ export const GeoServerFields = props => {
       let geoServerFields = customFields.geoserver;
 
       geoServerFields.layer ? setLayerName(geoServerFields.layer) : setLayerName("")
+      geoServerFields.wfs_layer ? setWfsLayerName(geoServerFields.wfs_layer) : setWfsLayerName("")
       geoServerFields.bounds ? setBoundingBox(geoServerFields.bounds) : setBoundingBox("")
 
       setHasWms(!!geoServerFields.has_wms)
@@ -87,6 +92,12 @@ export const GeoServerFields = props => {
               <WmsCheck layerName={layerName} boundingBox={boundingBox} serverUrl={serverUrl}/>
             </Segment>
           )}
+          <Input
+            fieldPath={`${fieldPath}.wfs_layer`}
+            label={wfs_layer.label}
+            placeholder={wfs_layer.placeholder}
+            description={wfs_layer.description}
+          ></Input>
           <BooleanCheckbox
             fieldPath={`${fieldPath}.has_wfs`}
             label={has_wfs.label}
@@ -94,9 +105,9 @@ export const GeoServerFields = props => {
             trueLabel="Yes"
             falseLabel="No"
           ></BooleanCheckbox>
-          {layerName && hasWfs && (
+          {wfsLayerName && hasWfs && (
             <Segment basic>
-              <WfsCheck layerName={layerName} serverUrl={serverUrl}/>
+              <WfsCheck layerName={wfsLayerName} serverUrl={serverUrl}/>
             </Segment>
           )}
         </GridColumn>

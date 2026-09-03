@@ -2,7 +2,11 @@ from invenio_records_resources.services.custom_fields import BaseListCF
 from marshmallow import fields
 from marshmallow_utils.fields import SanitizedUnicode
 
-from ultraviolet.geoserver.validate import LayerValidator, BoundsValidator
+from ultraviolet.geoserver.validate import (
+    WmsLayerValidator,
+    BoundsValidator,
+    WfsLayerValidator,
+)
 
 
 class GeoServerCF(BaseListCF):
@@ -15,7 +19,15 @@ class GeoServerCF(BaseListCF):
                 nested=dict(
                     layer=SanitizedUnicode(
                         validate=(
-                            LayerValidator(
+                            WmsLayerValidator(
+                                public_server=public_server,
+                                restricted_server=restricted_server,
+                            )
+                        )
+                    ),
+                    wfs_layer=SanitizedUnicode(
+                        validate=(
+                            WfsLayerValidator(
                                 public_server=public_server,
                                 restricted_server=restricted_server,
                             )
@@ -42,6 +54,7 @@ class GeoServerCF(BaseListCF):
         return {
             "properties": {
                 "layer": {"type": "text"},
+                "wms_layer": {"type": "text"},
                 "has_wms": {"type": "boolean"},
                 "has_wfs": {"type": "boolean"},
                 "bounds": {"type": "text"},
