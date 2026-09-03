@@ -34,8 +34,6 @@ class GeoServerCF(BaseListCF):
                         )
                     ),
                     bounds=SanitizedUnicode(validate=BoundsValidator()),
-                    has_wms=fields.Boolean(),
-                    has_wfs=fields.Boolean(),
                 )
             ),
         )
@@ -55,8 +53,6 @@ class GeoServerCF(BaseListCF):
             "properties": {
                 "layer": {"type": "text"},
                 "wms_layer": {"type": "text"},
-                "has_wms": {"type": "boolean"},
-                "has_wfs": {"type": "boolean"},
                 "bounds": {"type": "text"},
             }
         }

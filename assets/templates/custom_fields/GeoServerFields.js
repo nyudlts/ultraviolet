@@ -13,8 +13,6 @@ export const GeoServerFields = props => {
     fieldPath, // injected by the custom field loader via the `field` config property
     layer,
     wfs_layer,
-    has_wms,
-    has_wfs,
     bounds,
     publicServerUrl,
     restrictedServerUrl
@@ -22,8 +20,6 @@ export const GeoServerFields = props => {
 
   const [layerName, setLayerName] = useState("")
   const [wfsLayerName, setWfsLayerName] = useState("")
-  const [hasWms, setHasWms] = useState(false)
-  const [hasWfs, setHasWfs] = useState(false)
   const [boundingBox, setBoundingBox] = useState("")
 
   const [serverUrl, setServerUrl] = useState("")
@@ -51,8 +47,6 @@ export const GeoServerFields = props => {
       geoServerFields.wfs_layer ? setWfsLayerName(geoServerFields.wfs_layer) : setWfsLayerName("")
       geoServerFields.bounds ? setBoundingBox(geoServerFields.bounds) : setBoundingBox("")
 
-      setHasWms(!!geoServerFields.has_wms)
-      setHasWfs(!!geoServerFields.has_wfs)
     }
   }, [values]);
 
@@ -80,14 +74,7 @@ export const GeoServerFields = props => {
             placeholder={bounds.placeholder}
             description={bounds.description}
           ></Input>
-          <BooleanCheckbox
-            fieldPath={`${fieldPath}.has_wms`}
-            label={has_wms.label}
-            description={has_wms.description + " " + fieldHint}
-            trueLabel="Yes"
-            falseLabel="No"
-          ></BooleanCheckbox>
-          {layerName && hasWms && (
+          {layerName && (
             <Segment basic>
               <WmsCheck layerName={layerName} boundingBox={boundingBox} serverUrl={serverUrl}/>
             </Segment>
@@ -98,14 +85,7 @@ export const GeoServerFields = props => {
             placeholder={wfs_layer.placeholder}
             description={wfs_layer.description}
           ></Input>
-          <BooleanCheckbox
-            fieldPath={`${fieldPath}.has_wfs`}
-            label={has_wfs.label}
-            description={has_wfs.description + " " + fieldHint}
-            trueLabel="Yes"
-            falseLabel="No"
-          ></BooleanCheckbox>
-          {wfsLayerName && hasWfs && (
+          {wfsLayerName && (
             <Segment basic>
               <WfsCheck layerName={wfsLayerName} serverUrl={serverUrl}/>
             </Segment>
