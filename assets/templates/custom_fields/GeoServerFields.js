@@ -32,8 +32,6 @@ export const GeoServerFields = props => {
   useEffect(() => {
     let customFields = values.custom_fields;
 
-    console.log(customFields);
-    
     if (values.access.files == "public") {
       setServerUrl(publicServerUrl)
     } else {
