@@ -1,7 +1,7 @@
 {% set previewable = record.access.files == 'public' or (current_user and current_user.is_authenticated) %}
 {% set geoserver_base_url = config.GEOSERVER_PUBLIC_URL if (record.access.files == 'public') else config.GEOSERVER_RESTRICTED_URL %}
 
-{% if record.custom_fields["geoserver:layer"] %}
+{% if record.custom_fields["geoserver:wms_layer"] %}
     <h2>Map</h2>
 
     <div id="map"
@@ -9,7 +9,7 @@
          data-bounds="{{ record.custom_fields["geoserver:bounds"] }}"
             {% if previewable %}
          data-wms-url="{{ geoserver_base_url }}/wms"
-         data-layer-name="{{ record.custom_fields["geoserver:layer"] }}"
+         data-layer-name="{{ record.custom_fields["geoserver:wms_layer"] }}"
             {% endif %}
     ></div>
 
@@ -26,7 +26,7 @@
                 </thead>
                 <tbody id="attributes"
                        data-wfs-url="{{ geoserver_base_url }}/wfs"
-                       data-layer-names="{{ record.custom_fields["geoserver:layer"] }}"></tbody>
+                       data-layer-names="{{ record.custom_fields["geoserver:wms_layer"] }}"></tbody>
             </table>
         </div>
     {% endif %}
