@@ -11,14 +11,14 @@ import {WfsCheck} from "./WfsCheck";
 export const GeoServerFields = props => {
   const {
     fieldPath, // injected by the custom field loader via the `field` config property
-    layer,
+    wms_layer,
     wfs_layer,
     bounds,
     publicServerUrl,
     restrictedServerUrl
   } = props;
 
-  const [layerName, setLayerName] = useState("")
+  const [wmsLayerName, setWmsLayerName] = useState("")
   const [wfsLayerName, setWfsLayerName] = useState("")
   const [boundingBox, setBoundingBox] = useState("")
 
@@ -43,7 +43,7 @@ export const GeoServerFields = props => {
     if (customFields && customFields.geoserver) {
       let geoServerFields = customFields.geoserver;
 
-      geoServerFields.layer ? setLayerName(geoServerFields.layer) : setLayerName("")
+      geoServerFields.wms_layer ? setWmsLayerName(geoServerFields.wms_layer) : setWmsLayerName("")
       geoServerFields.wfs_layer ? setWfsLayerName(geoServerFields.wfs_layer) : setWfsLayerName("")
       geoServerFields.bounds ? setBoundingBox(geoServerFields.bounds) : setBoundingBox("")
 
@@ -63,22 +63,22 @@ export const GeoServerFields = props => {
       <GridRow>
         <GridColumn>
           <Input
-            fieldPath={`${fieldPath}.layer`}
-            label={layer.label}
-            placeholder={layer.placeholder}
-            description={layer.description}
+            fieldPath={`${fieldPath}.wms_layer`}
+            label={wms_layer.label}
+            placeholder={wms_layer.placeholder}
+            description={wms_layer.description}
           ></Input>
+          {wmsLayerName && (
+            <Segment basic>
+              <WmsCheck layerName={wmsLayerName} boundingBox={boundingBox} serverUrl={serverUrl}/>
+            </Segment>
+          )}
           <Input
             fieldPath={`${fieldPath}.bounds`}
             label={bounds.label}
             placeholder={bounds.placeholder}
             description={bounds.description}
           ></Input>
-          {layerName && (
-            <Segment basic>
-              <WmsCheck layerName={layerName} boundingBox={boundingBox} serverUrl={serverUrl}/>
-            </Segment>
-          )}
           <Input
             fieldPath={`${fieldPath}.wfs_layer`}
             label={wfs_layer.label}

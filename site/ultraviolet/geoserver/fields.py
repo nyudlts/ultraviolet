@@ -17,7 +17,7 @@ class GeoServerCF(BaseListCF):
         field_args = dict(
             dict(
                 nested=dict(
-                    layer=SanitizedUnicode(
+                    wms_layer=SanitizedUnicode(
                         validate=(
                             WmsLayerValidator(
                                 public_server=public_server,
@@ -51,8 +51,8 @@ class GeoServerCF(BaseListCF):
         """Return the mapping."""
         return {
             "properties": {
-                "layer": {"type": "text"},
                 "wms_layer": {"type": "text"},
+                "wfs_layer": {"type": "text"},
                 "bounds": {"type": "text"},
             }
         }

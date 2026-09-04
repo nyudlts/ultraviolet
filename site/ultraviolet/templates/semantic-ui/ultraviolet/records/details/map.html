@@ -35,9 +35,9 @@
         <h3>Web Services</h3>
 
         <dl class="details-list">
-            {% if record.custom_fields["geoserver"]["layer"] %}
+            {% if record.custom_fields["geoserver"]["wms_layer"] %}
                 <dt class="ui tiny header">WMS Layer Name</dt>
-                <dd><code>{{ record.custom_fields["geoserver"]["layer"] }}</code></dd>
+                <dd><code>{{ record.custom_fields["geoserver"]["wms_layer"] }}</code></dd>
             {% endif %}
             {% if record.custom_fields["geoserver"]["wfs_layer"] %}
                 <dt class="ui tiny header">WFS Layer Name</dt>
