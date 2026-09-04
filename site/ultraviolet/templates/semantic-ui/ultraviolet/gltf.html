@@ -1,0 +1,5 @@
+{%- extends config.PREVIEWER_ABSTRACT_TEMPLATE %}
+{% block panel %}
+<model-viewer style="width:95vw;height:95vh;background:#F6F0FC;margin-left:auto;margin-right:auto" src="{{ file.uri }}"
+    alt="{{ file.data.key }}" auto-rotate camera-controls></model-viewer>
+{% endblock %}
