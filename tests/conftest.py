@@ -16,6 +16,9 @@ from invenio_access.proxies import current_access
 from invenio_accounts.proxies import current_datastore
 from invenio_app.factory import create_app as create_ui_api
 from invenio_search.proxies import current_search_client
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+from sqlalchemy.exc import DisconnectionError
 
 
 @pytest.fixture(scope="module")
@@ -70,6 +73,39 @@ def app_config(app_config):
 @pytest.fixture(scope="module")
 def instance_path():
     return os.path.join(sys.prefix, "var", "instance")
+
+
+# WHY: pytest-flask's ``live_server`` fixture runs the app in a
+# ``multiprocessing.Process`` started with ``fork`` on POSIX. That
+# duplicates the parent's already-open SQLAlchemy pooled connections
+# (live TCP sockets to Postgres) into the child. If parent and child
+# both check out and use one of those "shared" connections, their
+# reads/writes interleave on the same socket and Postgres kills it,
+# surfacing randomly as "server closed the connection unexpectedly" in
+# whichever process touches it next. This is SQLAlchemy's documented
+# fix: tag each DBAPI connection with the pid that created it, and
+# invalidate it on checkout if the current pid differs, so a forked
+# process always gets a fresh connection of its own.
+# https://docs.sqlalchemy.org/en/20/core/pooling.html#pooling-multiprocessing
+#
+# Registered on the ``Engine`` class (not a specific engine instance)
+# at import time, so it's in place before any connection -- including
+# ones opened by fixtures that run ahead of the test app, like
+# pytest-invenio's ``database`` fixture -- is ever made.
+@event.listens_for(Engine, "connect")
+def _record_pid(dbapi_connection, connection_record):
+    connection_record.info["pid"] = os.getpid()
+
+
+@event.listens_for(Engine, "checkout")
+def _check_pid(dbapi_connection, connection_record, connection_proxy):
+    pid = os.getpid()
+    if connection_record.info.get("pid") != pid:
+        connection_record.dbapi_connection = connection_proxy.dbapi_connection = None
+        raise DisconnectionError(
+            f"Connection record belongs to pid {connection_record.info.get('pid')}, "
+            f"attempting to check out in pid {pid}"
+        )
 
 
 # Copied from https://github.dev/inveniosoftware/invenio-rdm-records/tree/maint-1.3.x/tests/records
