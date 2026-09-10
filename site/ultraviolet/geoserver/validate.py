@@ -95,7 +95,11 @@ class WfsLayerValidator(Validator):
 
         try:
             if get_wfs(self.public_server, value).get("exceptions") is not None:
-                public_errors.append("Can't find WFS layer named {0}.".format(value))
+                public_errors.append(
+                    "Can't find WFS layer named {0} on {1}.".format(
+                        value, self.public_server
+                    )
+                )
 
         except requests.exceptions.ConnectionError:
             raise ValidationError(
@@ -112,7 +116,9 @@ class WfsLayerValidator(Validator):
         try:
             if get_wfs(self.restricted_server, value).get("exceptions") is not None:
                 restricted_errors.append(
-                    "Can't find WFS layer named {0}.".format(value)
+                    "Can't find WFS layer named {0} on {1}.".format(
+                        value, self.restricted_server
+                    )
                 )
         except requests.exceptions.ConnectionError:
             raise ValidationError(
@@ -167,7 +173,11 @@ class WmsLayerValidator(Validator):
 
         try:
             if get_wms(self.public_server, value).get("exceptions") is not None:
-                public_errors.append("Can't find WMS layer named {0}.".format(value))
+                public_errors.append(
+                    "Can't find WMS layer named {0} on {1}.".format(
+                        value, self.public_server
+                    )
+                )
 
         except requests.exceptions.ConnectionError:
             raise ValidationError(
@@ -184,7 +194,9 @@ class WmsLayerValidator(Validator):
         try:
             if get_wms(self.restricted_server, value).get("exceptions") is not None:
                 restricted_errors.append(
-                    "Can't find WMS layer named {0}.".format(value)
+                    "Can't find WMS layer named {0} on {1}.".format(
+                        value, self.restricted_server
+                    )
                 )
 
         except requests.exceptions.ConnectionError:

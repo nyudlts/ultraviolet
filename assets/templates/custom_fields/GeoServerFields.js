@@ -31,8 +31,8 @@ export const GeoServerFields = props => {
   // And convert them into local state
   useEffect(() => {
     let customFields = values.custom_fields;
-
-    if (values.access.files == "public") {
+    
+    if (values.access.files === "public" && values.access.record === "public") {
       setServerUrl(publicServerUrl)
     } else {
       setServerUrl(restrictedServerUrl)
@@ -49,7 +49,7 @@ export const GeoServerFields = props => {
   }, [values]);
 
   useEffect(() => {
-    if (serverUrl == restrictedServerUrl) {
+    if (serverUrl === restrictedServerUrl) {
       setFieldHint(`Restricted files records use ${restrictedServerUrl} as the base URL for WMS and WFS requests.`)
     } else {
       setFieldHint(`Public files records use ${publicServerUrl} as the base URL for WMS and WFS requests.`)

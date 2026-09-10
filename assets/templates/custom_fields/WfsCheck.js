@@ -40,12 +40,12 @@ export const WfsCheck = (
 
   if (loading) {
     return <div className="ui active inverted dimmer">
-      <div className="ui text loader">Loading attributes...</div>
+      <div className="ui text loader">Searching {serverUrl}...</div>
     </div>
   }
 
   if (error) {
-    return <div className="ui red message">Error: No WFS layer named <code>{layerName}</code> found!</div>
+    return <div className="ui red message">Error: No WFS layer named <code>{layerName}</code> found at {serverUrl}.</div>
   }
 
   return <WfsAttributes attributes={attributes}/>

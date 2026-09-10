@@ -23,6 +23,6 @@ class DescribeFeatureType(MethodView):
             }
         )
 
-        response = requests.get("{0}?{1}".format(url, query_string))
+        response = requests.get("{0}?{1}".format(url, query_string), timeout=8)
 
         return Response(response.text, mimetype="application/json")

@@ -32,19 +32,19 @@ export const WmsCheck = (
         }
       })
       .catch(error => {
-        console.error('Error:', error);
+        setError("Layer not found")
         setLoading(false)
       });
   }, [layerName, serverUrl]);
 
   if (loading) {
     return <div className="ui active inverted dimmer">
-      <div className="ui text loader">Loading map...</div>
+      <div className="ui text loader">Searching {serverUrl}...</div>
     </div>
   }
 
   if (error) {
-    return <div className="ui red message">Error: No WMS layer named <code>{layerName}</code> found!</div>
+    return <div className="ui red message">Error: No WMS layer named <code>{layerName}</code> found at {serverUrl}.</div>
   }
 
   return <WmsMap layerName={layerName} boundingBox={boundingBox} serverUrl={serverUrl} />
