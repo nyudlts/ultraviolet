@@ -1,48 +1,33 @@
 import L from "leaflet"
 import "leaflet/dist/leaflet.css";
 
+const renderPropertyRows = (properties) =>
+    Object.entries(properties)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([key, value]) => `
+            <tr>
+                <td>${key}</td>
+                <td>${value}</td>
+            </tr>
+        `).join('');
+
 const populateAttributeTable = (features) => {
     const featuresElement = document.getElementById("features");
-    featuresElement.innerHTML = '';
-
-    features.forEach(feature => {
-        const featureHeader = document.createElement("h4");
-        featureHeader.textContent = `${feature.id} (${feature.geometry.type})`;
-
-        const table = document.createElement("table");
-        table.className = "ui unstackable very compact table striped selectable";
-
-        const tableHead = document.createElement("thead");
-        table.appendChild(tableHead);
-        const attributeHeader = document.createElement("th");
-        attributeHeader.textContent = "Attribute";
-        const valueHeader = document.createElement("th");
-        valueHeader.textContent = "Value";
-        const headerRow = document.createElement("tr");
-        headerRow.appendChild(attributeHeader);
-        headerRow.appendChild(valueHeader);
-        tableHead.appendChild(headerRow);
-
-        const tableBody = document.createElement("tbody")
-        table.appendChild(tableBody)
-
-        Object.keys(feature.properties).sort().forEach(key => {
-            const nameTd = document.createElement('td');
-            nameTd.textContent = key
-            const typeTd = document.createElement("td")
-            typeTd.textContent = feature.properties[key]
-
-            const tr = document.createElement("tr")
-            tr.appendChild(nameTd)
-            tr.appendChild(typeTd)
-
-            tableBody.appendChild(tr)
-        })
-
-        featuresElement.appendChild(featureHeader)
-        featuresElement.appendChild(table);
-    })
-}
+    featuresElement.innerHTML = features.map(feature => `
+        <h4>${feature.id} (${feature.geometry.type})</h4>
+        <table class="ui unstackable very compact table striped selectable">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${renderPropertyRows(feature.properties)}
+            </tbody>
+        </table>
+    `).join('');
+};
 
 const addFeatureInspectionHandler = (map, url, layerNames) => {
     map.on("click", async (e) => {

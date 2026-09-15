@@ -29,7 +29,7 @@ class GetFeatureInfo(MethodView):
                 "info_format": "application/json",
                 "exceptions": "application/json",
                 "styles": "",
-                "feature_count": "10",
+                "feature_count": "20",
             }
         )
 
