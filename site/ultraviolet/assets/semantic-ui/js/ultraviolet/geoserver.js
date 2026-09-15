@@ -1,60 +1,53 @@
 import L from "leaflet"
 import "leaflet/dist/leaflet.css";
 
-const populateAttributeTable = (data) => {
-    const attributesElement = document.getElementById("attributes");
-    attributesElement.innerHTML = '';
+const populateAttributeTable = (features) => {
+    const featuresElement = document.getElementById("features");
+    featuresElement.innerHTML = '';
 
-    Object.keys(data.properties).sort().forEach(property => {
-        const nameTd = document.createElement('td');
-        nameTd.textContent = property
-        const typeTd = document.createElement("td")
-        typeTd.textContent = data.properties[property]
+    features.forEach(feature => {
+        const featureHeader = document.createElement("h4");
+        featureHeader.textContent = `${feature.id} (${feature.geometry.type})`;
 
-        const tr = document.createElement("tr")
-        tr.appendChild(nameTd)
-        tr.appendChild(typeTd)
-        attributesElement.appendChild(tr)
+        const table = document.createElement("table");
+        table.className = "ui unstackable very compact table striped selectable";
+
+        const tableHead = document.createElement("thead");
+        table.appendChild(tableHead);
+        const attributeHeader = document.createElement("th");
+        attributeHeader.textContent = "Attribute";
+        const valueHeader = document.createElement("th");
+        valueHeader.textContent = "Value";
+        const headerRow = document.createElement("tr");
+        headerRow.appendChild(attributeHeader);
+        headerRow.appendChild(valueHeader);
+        tableHead.appendChild(headerRow);
+
+        const tableBody = document.createElement("tbody")
+        table.appendChild(tableBody)
+
+        Object.keys(feature.properties).sort().forEach(key => {
+            const nameTd = document.createElement('td');
+            nameTd.textContent = key
+            const typeTd = document.createElement("td")
+            typeTd.textContent = feature.properties[key]
+
+            const tr = document.createElement("tr")
+            tr.appendChild(nameTd)
+            tr.appendChild(typeTd)
+
+            tableBody.appendChild(tr)
+        })
+
+        featuresElement.appendChild(featureHeader)
+        featuresElement.appendChild(table);
     })
 }
 
-const retrieveAttributeTypes = (wfsUrl, layerNames) => {
-    const attributesElement = document.getElementById("attributes");
-
-    const formData = new FormData();
-    formData.append("url", wfsUrl);
-    formData.append("layers", layerNames);
-
-    fetch("/geoserver/describe_feature_type", {
-        method: "POST", body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            const attributes = data.featureTypes[0].properties.sort((a, b) => {
-                return a.name.localeCompare(b.name)
-            })
-
-            attributes.forEach(attribute => {
-                const nameTd = document.createElement('td');
-                nameTd.textContent = attribute.name
-                const typeTd = document.createElement("td")
-                typeTd.textContent = attribute.localType
-
-                const tr = document.createElement("tr")
-                tr.appendChild(nameTd)
-                tr.appendChild(typeTd)
-                attributesElement.appendChild(tr)
-            })
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-};
-
 const addFeatureInspectionHandler = (map, url, layerNames) => {
     map.on("click", async (e) => {
-        const attributesElement = document.getElementById("attributes");
-        attributesElement.innerHTML = '<tr><td colspan="2">Loading...</td>';
+        const featuresElement = document.getElementById("features");
+        featuresElement.innerHTML = '<p>Loading...</p>';
 
         try {
             const response = await fetch("/geoserver/get_feature_info", {
@@ -77,14 +70,14 @@ const addFeatureInspectionHandler = (map, url, layerNames) => {
             const response_data = await response.json();
 
             if (response_data.hasOwnProperty("error") || response_data.hasOwnProperty('exceptions') || response_data.features.length === 0) {
-                const attributesElement = document.getElementById("attributes");
-                attributesElement.innerHTML = '<tr><td colspan="2">No feature found</td>';
+                const featuresElement = document.getElementById("features");
+                featuresElement.innerHTML = '<tr><td colspan="2">No feature found</td>';
 
                 return;
             }
-            const data = response_data.features[0];
 
-            populateAttributeTable(data);
+            console.log(response_data);
+            populateAttributeTable(response_data.features);
         } catch (error) {
             console.error("Fetch error: ", error);
         }
@@ -129,14 +122,13 @@ const addWmsLayer = (map) => {
 };
 
 const addWfsInspection = map => {
-    const attributesElement = document.getElementById("attributes");
+    const mapElement = document.getElementById("map");
 
-    if (attributesElement) {
-        const wfsUrl = attributesElement.getAttribute("data-wfs-url");
-        const layerNames = attributesElement.getAttribute("data-layer-names");
+    if (mapElement) {
+        const wmsUrl = mapElement.getAttribute("data-wms-url");
+        const layerNames = mapElement.getAttribute("data-layer-name");
 
-        addFeatureInspectionHandler(map, wfsUrl, layerNames);
-        retrieveAttributeTypes(wfsUrl, layerNames);
+        addFeatureInspectionHandler(map, wmsUrl, layerNames);
     }
 };
 

@@ -27,7 +27,9 @@ class GetFeatureInfo(MethodView):
                 "y": data.get("y", None),
                 "srs": "EPSG:4326",
                 "info_format": "application/json",
+                "exceptions": "application/json",
                 "styles": "",
+                "feature_count": "10",
             }
         )
 

@@ -13,22 +13,10 @@
             {% endif %}
     ></div>
 
-    {% if record.custom_fields["geoserver"]["wfs_layer"] and (previewable) %}
-        <h3>Attributes</h3>
+    {% if (previewable) %}
+        <h3>Features</h3>
 
-        <div class="attributes">
-            <table class="ui unstackable very compact table striped selectable">
-                <thead>
-                <tr>
-                    <th>Attribute</th>
-                    <th>Type/Value</th>
-                </tr>
-                </thead>
-                <tbody id="attributes"
-                       data-wfs-url="{{ geoserver_base_url }}/wfs"
-                       data-layer-names="{{ record.custom_fields["geoserver"]["wms_layer"] }}"></tbody>
-            </table>
-        </div>
+        <div class="attributes" id="features"></div>
     {% endif %}
 
     {% if previewable %}
