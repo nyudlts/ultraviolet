@@ -23,7 +23,7 @@ sqlalchemy = {version = "*", extras = ["asyncio"], markers = "platform_machine =
 responses = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.14"
 
 [pipenv]
 allow_prereleases = false
