@@ -98,3 +98,6 @@ fixture-map.json
 
 # celery files
 celerybeat-schedule.*
+
+# Cairo Dynamic Library for macOS
+libcairo.2.dylib

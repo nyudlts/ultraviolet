@@ -1,29 +1,11 @@
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-
-[dev-packages]
-check-manifest = ">=0.25"
-flask-pytest = "*"
-pytest = ">=6,<9.0.0"
-black = "*"
-pytest-invenio = {editable = true, ref = "selenium-chrome-options", git = "https://github.com/nyudlts/pytest-invenio.git"}
+name = "pypi"
 
 [packages]
-ultraviolet = {editable = true, path="./site"}
-uwsgi = ">=2.0"
-uwsgitop = ">=0.11"
-uwsgi-tools = ">=1.1.1"
-setuptools = ">=56.0.0,<81.0.0"
-python-dotenv = "*"
-typing-extensions = "*"
-invenio-app-rdm = {extras = ["opensearch2"], version = "~=13.1.0"}
-sqlalchemy = {version = "*", extras = ["asyncio"], markers = "platform_machine == 'x86_64' or platform_machine == 'arm64'"}
-responses = "*"
+
+[dev-packages]
 
 [requires]
 python_version = "3.14"
-
-[pipenv]
-allow_prereleases = false
