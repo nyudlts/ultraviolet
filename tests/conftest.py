@@ -357,10 +357,9 @@ def geospatial_record(minimal_record):
     minimal_record["custom_fields"] = {
         "geospatial:resource_type": {"id": "lidar"},
         "geoserver": {
-            "layer": "sdr:nyu_2451_34156",
+            "wms_layer": "sdr:nyu_2451_34156",
+            "wfs_layer": "sdr:nyu_2451_34156",
             "bounds": "ENVELOPE(-74.2556640887564, -73.700009054899, 40.9157739339836, 40.4960925239255)",
-            "has_wms": True,
-            "has_wfs": True,
         },
     }
 

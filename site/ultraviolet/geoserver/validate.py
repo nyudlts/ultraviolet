@@ -59,7 +59,85 @@ class BoundsValidator(Validator):
             raise ValidationError("Invalid bounds value")
 
 
-class LayerValidator(Validator):
+class WfsLayerValidator(Validator):
+    default_message = "{type} layer {input} not found on {public_server}."
+
+    def __init__(
+        self,
+        *,
+        public_server: str | None = None,
+        restricted_server: str | None = None,
+        error: str | None = None,
+    ):
+        self.public_server = public_server
+        self.restricted_server = restricted_server
+        self.error: str = error or self.default_message
+
+    def _repr_args(self) -> str:
+        return f"public_server={self.public_server!r} restricted_server={self.restricted_server!r}"
+
+    def _format_error(self, service: str, value: _T) -> str:
+        return self.error.format(
+            service=service,
+            input=value,
+            public_server=self.public_server,
+            restricted_server=self.restricted_server,
+        )
+
+    def __call__(self, value: _T) -> _T:
+        if value is None:
+            return None
+
+        if value is "":
+            return ""
+
+        public_errors = []
+
+        try:
+            if get_wfs(self.public_server, value).get("exceptions") is not None:
+                public_errors.append(
+                    "Can't find WFS layer named {0} on {1}.".format(
+                        value, self.public_server
+                    )
+                )
+
+        except requests.exceptions.ConnectionError:
+            raise ValidationError(
+                "Public server not reachable for validation: {0}".format(
+                    self.public_server
+                )
+            )
+
+        if len(public_errors) == 0:
+            return value
+
+        restricted_errors = []
+
+        try:
+            if get_wfs(self.restricted_server, value).get("exceptions") is not None:
+                restricted_errors.append(
+                    "Can't find WFS layer named {0} on {1}.".format(
+                        value, self.restricted_server
+                    )
+                )
+        except requests.exceptions.ConnectionError:
+            raise ValidationError(
+                "Restricted server not reachable for validation: {0}".format(
+                    self.public_server
+                )
+            )
+
+        if len(restricted_errors) == 0:
+            return value
+
+        raise ValidationError(
+            "A WFS layer named {0} does not exist on {1} or {2}.".format(
+                value, self.public_server, self.restricted_server
+            )
+        )
+
+
+class WmsLayerValidator(Validator):
     default_message = "{type} layer {input} not found on {public_server}."
 
     def __init__(
@@ -95,10 +173,12 @@ class LayerValidator(Validator):
 
         try:
             if get_wms(self.public_server, value).get("exceptions") is not None:
-                public_errors.append("Can't find WMS layer named {0}.".format(value))
+                public_errors.append(
+                    "Can't find WMS layer named {0} on {1}.".format(
+                        value, self.public_server
+                    )
+                )
 
-            if get_wfs(self.public_server, value).get("exceptions") is not None:
-                public_errors.append("Can't find WFS layer named {0}.".format(value))
         except requests.exceptions.ConnectionError:
             raise ValidationError(
                 "Public server not reachable for validation: {0}".format(
@@ -114,13 +194,11 @@ class LayerValidator(Validator):
         try:
             if get_wms(self.restricted_server, value).get("exceptions") is not None:
                 restricted_errors.append(
-                    "Can't find WMS layer named {0}.".format(value)
+                    "Can't find WMS layer named {0} on {1}.".format(
+                        value, self.restricted_server
+                    )
                 )
 
-            if get_wfs(self.restricted_server, value).get("exceptions") is not None:
-                restricted_errors.append(
-                    "Can't find WFS layer named {0}.".format(value)
-                )
         except requests.exceptions.ConnectionError:
             raise ValidationError(
                 "Restricted server not reachable for validation: {0}".format(
@@ -132,7 +210,7 @@ class LayerValidator(Validator):
             return value
 
         raise ValidationError(
-            "Neither a WMS or WFS layer named {0} exists on {1} or {2}.".format(
+            "A WMS layer named {0} does not exist on {1} or {2}.".format(
                 value, self.public_server, self.restricted_server
             )
         )
