@@ -39,6 +39,7 @@ def app_config(app_config):
     app_config["SEARCH_INDEX_PREFIX"] = "q"
     app_config["SERVER_NAME"] = "127.0.0.1"
     app_config["MAX_FILE_SIZE"] = 50
+    app_config["RECORDS_RESOURCES_ARCHIVE_DOWNLOAD_MAX_SIZE"] = 50
     app_config["REST_CSRF_ENABLED"] = False
     app_config["DATACITE_ENABLED"] = True
     app_config["DATACITE_PREFIX"] = "10.1234"
