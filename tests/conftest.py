@@ -19,6 +19,8 @@ from invenio_search.proxies import current_search_client
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import DisconnectionError
+from idutils import is_doi, normalize_doi
+from invenio_rdm_records.services.pids import providers
 
 
 @pytest.fixture(scope="module")
@@ -67,6 +69,30 @@ def app_config(app_config):
         "strict_transport_security_max_age": 31556926,  # One year in seconds
         "strict_transport_security_preload": False,
     }
+    app_config["RDM_PARENT_PERSISTENT_IDENTIFIERS"] = dict(
+        doi=dict(
+            providers=["datacite"],
+            required=False,
+            label="DOI",
+            validator=is_doi,
+            normalizer=normalize_doi,
+            is_enabled=providers.DataCitePIDProvider.is_enabled,
+            ui=dict(default_selected="no"),
+        ),
+    )
+
+    app_config["RDM_PERSISTENT_IDENTIFIERS"] = dict(
+        doi=dict(
+            providers=["datacite"],
+            required=False,
+            label="DOI",
+            validator=is_doi,
+            normalizer=normalize_doi,
+            is_enabled=providers.DataCitePIDProvider.is_enabled,
+            ui=dict(default_selected="no"),
+        ),
+    )
+
     return app_config
 
 
