@@ -43,7 +43,7 @@ class GeoServerCF(BaseListCF):
             field_cls=fields.Nested,
             field_args=field_args,
             multiple=False,
-            **kwargs
+            **kwargs,
         )
 
     @property

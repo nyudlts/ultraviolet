@@ -1,3 +1,18 @@
+[project]
+name = "ultraviolet"
+description = "ultraviolet customizations for Invenio RDM."
+license = "MIT"
+version = "1.0.0"
+
+[project.entry-points."invenio_base.blueprints"]
+ultraviolet_views = "ultraviolet.views:create_blueprint"
+
+[project.entry-points."invenio_assets.webpack"]
+ultraviolet_theme = "ultraviolet.webpack:theme"
+
+[project.entry-points."invenio_base.finalize_app"]
+ultraviolet_customizations = "ultraviolet.customizations:customize_menus"
+
 [build-system]
-requires = ["setuptools", "wheel", "babel>2.8"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

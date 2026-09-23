@@ -1,3 +1,37 @@
+[project]
+name = "ultraviolet-app"
+version = "1.0.0"
+authors = [{name = "NYU", email = "data-repository-tech@nyu.edu"}]
+license = "MIT"
+requires-python = "~=3.14.0"
+dependencies = [
+    "invenio-app-rdm[opensearch2]~=14.0.0",
+    "ultraviolet",
+    "python-dotenv",
+    "pyuwsgi>=2.0",
+    "responses",
+    "setuptools>=56.0.0,<81.0.0",
+    "sqlalchemy[asyncio]",
+    "typing-extensions",
+    "uwsgi-tools>=1.1.1",
+    "uwsgitop>=0.11",
+]
+
+[dependency-groups]
+dev = [
+    "black",
+    "flask-pytest",
+    "pytest-invenio>=4.0.0,<5.0.0",
+    "pytest-invenio@ git+https://github.com/nyudlts/pytest-invenio.git@selenium-chrome-options",
+    "pytest>=6,<9.0.0",
+]
+
+[tool.uv.sources]
+ultraviolet = {workspace = true}
+
+[tool.uv.workspace]
+members = ["site"]
+
 [tool.black]
 include = '''
 (
