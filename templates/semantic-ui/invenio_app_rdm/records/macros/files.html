@@ -113,6 +113,13 @@
             {% else %}
                 {{ file.key }}
             {% endif %}
+
+            {% if file.size >= config.MAX_FILE_SIZE %}
+            <div class="ui icon inline-block" data-tooltip="{{_('Files over 50 GB cannot be downloaded in the browser. See Access Information note for alternative download options.')}}">
+              <i class="info circle large icon"></i>
+            </div>
+            {% endif %}
+
             <small class="ui text-muted font-tiny">{{ file.checksum }}
             <div class="ui icon inline-block" data-tooltip="{{_('This is the file fingerprint (checksum), which can be used to verify the file integrity.')}}">
               <i class="question circle checksum icon"></i>

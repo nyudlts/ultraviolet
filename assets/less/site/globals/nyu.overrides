@@ -280,3 +280,19 @@ body {
   }
  }
 }
+
+// Fix tooltip clipping within tables and accordions
+.ui.accordion .content.active,
+.ui.table,
+.ui.table td {
+  overflow: visible !important;
+}
+
+[data-tooltip] {
+  position: relative;
+
+  &:before,
+  &:after {
+    z-index: 1000 !important;
+  }
+}
