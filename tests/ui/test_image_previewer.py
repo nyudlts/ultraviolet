@@ -8,11 +8,13 @@
 
 from io import BytesIO
 
+import pytest
 from PIL import Image
 from invenio_access.permissions import system_identity
 from invenio_rdm_records.proxies import current_rdm_records_service
 
 
+@pytest.mark.skip(reason="Simple image previewer replaced by Mirador/IIIF Previewer")
 def test_image_previewer(
     minimal_record, client_with_login, services, app, db, register_file_service
 ):
