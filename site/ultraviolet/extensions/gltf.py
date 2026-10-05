@@ -18,5 +18,6 @@ def preview(file):
     return render_template(
         "ultraviolet/gltf.html",
         file=file,
-        js_bundles=current_previewer.js_bundles + ["google_model_viewer.js"],
+        js_bundles=current_previewer.js_bundles + ["gltf_js.js"],
+        css_bundles=current_previewer.css_bundles + ["gltf_css.css"],
     )

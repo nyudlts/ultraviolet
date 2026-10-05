@@ -2,11 +2,14 @@
 
 {% block panel %}
 <model-viewer
-        style="width:95vw;height:95vh;margin-left:auto;margin-right:auto"
+        id="gltf-viewer"
         src="{{ file.uri }}"
         alt="{{ file.data.key }}"
-        poster="/static/images/loading.gif"
         auto-rotate
         camera-controls
-></model-viewer>
+>
+    <div slot="progress-bar" class="gltf-progress-container">
+        <div id="gltf-progress" class="gltf-progress"></div>
+    </div>
+</model-viewer>
 {% endblock %}
