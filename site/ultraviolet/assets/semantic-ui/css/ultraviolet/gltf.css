@@ -9,7 +9,7 @@ model-viewer {
     position: absolute;
     left: 10%;
     right: 10%;
-    top: 20px;
+    top: 20%;
     height: 12px;
     border-radius: 8px;
     background: #ddd;
@@ -19,6 +19,6 @@ model-viewer {
 .gltf-progress {
     width: 0%;
     height: 100%;
-    background: #4285f4;
+    background: #57068c;
     transition: width linear;
 }
