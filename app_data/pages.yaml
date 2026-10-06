@@ -6,4 +6,4 @@
 - url: /spatial-data-repository
   title: Spatial Data Collections from NYU Libraries
   description: Spatial Data Repository Notification
-  template: spatial-data.html
+  template: spatial-data-repository.html
