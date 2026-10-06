@@ -5,6 +5,7 @@ from flask import Blueprint
 from .geoserver.describe_feature_type import DescribeFeatureType
 from .geoserver.describe_layer import DescribeLayer
 from .geoserver.get_feature_info import GetFeatureInfo
+from .download_busy import DownloadBusy
 
 
 #
@@ -32,5 +33,12 @@ def create_blueprint(app):
         "/geoserver/describe_layer",
         view_func=DescribeLayer.as_view("describe_layer"),
     )
+
+    # nginx sends downloads here when the large-download limit is reached.
+    # With no record ID (nginx couldn't find one in the URL) the page is
+    # shown without record details.
+    download_busy = DownloadBusy.as_view("download_busy")
+    blueprint.add_url_rule("/download-busy/", view_func=download_busy)
+    blueprint.add_url_rule("/download-busy/<recid>", view_func=download_busy)
 
     return blueprint
