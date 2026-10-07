@@ -11,10 +11,13 @@ theme = WebpackThemeBundle(
             entry={
                 "geoserver_js": "./js/ultraviolet/geoserver.js",
                 "geoserver_css": "./css/ultraviolet/geoserver.css",
+                "gltf_js": "./js/ultraviolet/gltf.js",
+                "gltf_css": "./css/ultraviolet/gltf.css",
             },
             dependencies={
                 "leaflet": "^1.9.4",
                 "ol": "^10.2.1",
+                "@google/model-viewer": "^4.0.0",
             },
         ),
     },
