@@ -95,6 +95,18 @@
     {% if include_deleted %}
       {%- set include_deleted_value = 1 -%}
     {% endif %}
+
+    {% if files|selectattr("size", "ge", config.MAX_FILE_SIZE)|list|length > 0 %}
+      <tr>
+        <td colspan="3" class="sticky-file-warning-cell">
+          <div class="ui warning message">
+              Note: Files over 50 GB cannot be downloaded in the browser. See record description above for <a href="#record-title-section">alternative download options</a>.
+          </div>
+        </td>
+      </tr>
+    {% endif %}
+
+
     {% for file in files %}
       {% if not file.access.hidden %}
         {% if is_preview %}
@@ -112,12 +124,6 @@
                 <a class="wrap-long-link" href="{{ file_url_download }}">{{ file.key }}</a>
             {% else %}
                 {{ file.key }}
-            {% endif %}
-
-            {% if file.size >= config.MAX_FILE_SIZE %}
-            <div class="ui icon inline-block" data-tooltip="{{_('Files over 50 GB cannot be downloaded in the browser. See Access Information note for alternative download options.')}}">
-              <i class="info circle large icon"></i>
-            </div>
             {% endif %}
 
             <small class="ui text-muted font-tiny">{{ file.checksum }}
