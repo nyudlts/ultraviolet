@@ -167,4 +167,9 @@ def test_two_files(services, minimal_record, client_with_login, app):
     )
     assert expected_namelink_html not in html
 
+    # Info tooltip about lage files should be present
+    info_tooltip_html = 'Note: Files over 50 GB cannot be downloaded in the browser. See record description above for <a href="#record-title-section">alternative download options</a>.'
+
+    assert info_tooltip_html in html
+
     app.config["APP_RDM_RECORD_LANDING_PAGE_FAIR_SIGNPOSTING_LEVEL_1_ENABLED"] = True
