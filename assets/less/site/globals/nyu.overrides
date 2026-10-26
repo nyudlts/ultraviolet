@@ -286,3 +286,11 @@ body {
   top: 0;
   z-index: 2;
 }
+
+.community-header {
+  .ui.small.header {
+    font-family: Lato, sans-serif;
+    font-size: 1.6rem;
+    font-weight: normal;
+  }
+}
