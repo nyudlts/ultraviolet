@@ -43,6 +43,7 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
         AdminSuperUser(),
         Depositor(),
         RecordCommunitiesAction("manage"),
+        RecordCommunitiesAction("curate"),
     ]
     can_curate = can_manage + [
         SecretLinks("edit"),

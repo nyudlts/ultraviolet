@@ -193,3 +193,51 @@ def test_user_with_community_access_can_see_restricted_records(
     )
 
     assert 200 == response.status_code
+
+
+def test_community_curator_can_deposit_record(
+    services,
+    app,
+    db,
+    users,
+    minimal_record,
+    communities_index,
+):
+    community = current_communities.service.create(
+        identity=system_identity,
+        data={
+            "access": {
+                "visibility": "restricted",
+                "members_visibility": "restricted",
+                "record_submission_policy": "open",
+            },
+            "slug": "community2",
+            "metadata": {
+                "title": "Test Community 2",
+            },
+        },
+    )
+
+    current_communities.service.members.add(
+        system_identity,
+        community.id,
+        {
+            "members": [{"type": "user", "id": str(users["user5"].id)}],
+            "role": "curator",
+        },
+    )
+
+    record_data = minimal_record.copy()
+    record_data["parent"] = {
+        "communities": {
+            "default": community.id,
+        },
+    }
+
+    draft = current_rdm_records_service.create(
+        identity=users["user5"].identity,
+        data=record_data,
+    )
+
+    assert draft["id"]
+    assert draft["parent"]["communities"]["default"] == community.id
