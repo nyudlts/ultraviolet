@@ -14,10 +14,11 @@ from invenio_app.factory import create_app
 # Check that configuration variables read correctly from os
 def test_var_assigned(monkeypatch):
     app_host = "ultraviolet.dlib.nyu.edu"
+    trusted_hosts = ["ultraviolet.dlib.nyu.edu", "localhost"]
     db_connection = "postgresql+psycopg2://test:test@somehost.com/test"
 
     """Mocking setting configuration using environment variables"""
-    monkeypatch.setenv("TRUSTED_HOSTS", app_host)
+    monkeypatch.setenv("TRUSTED_HOSTS", trusted_hosts)
     monkeypatch.setenv("SQLALCHEMY_DATABASE_URI", db_connection)
     monkeypatch.setenv("SITE_UI_URL", app_host)
     monkeypatch.setenv("SITE_API_URL", app_host + "/api")
@@ -27,13 +28,13 @@ def test_var_assigned(monkeypatch):
 
     """Create app with configurations passed above"""
     app = create_app()
-    assert app.config.get("TRUSTED_HOSTS") == app_host
+    assert app.config.get("TRUSTED_HOSTS") == trusted_hosts
     assert app.config.get("SQLALCHEMY_DATABASE_URI") == db_connection
     assert app.config.get("SITE_UI_URL") == app_host
     assert app.config.get("SITE_API_URL") == app_host + "/api"
     assert app.config.get("COLLECT_STATIC_ROOT") == "/opt/static"
     assert app.config.get("COLLECT_STORAGE") == "flask_collect.storage.file"
-    assert app.config.get("DATACITE_ENABLED") == True
+    assert app.config.get("DATACITE_ENABLED") == False
 
 
 # Check that default values are assign to configuration variables when values are not passed through os
