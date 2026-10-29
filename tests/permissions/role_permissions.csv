@@ -1,0 +1,27 @@
+On,What they do,Anonymous visitor,Logged-in user,Record owner,Depositor,Curator,Viewer,Superuser
+In general,Start a new record,No,No,No,Yes,No,Yes,Yes
+In general,Search drafts,No,Yes,Yes,Yes,Yes,Yes,Yes
+A public record,View the record,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+A public record,View and download its files,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+A public record,Edit the record,No,No,Yes,Yes,Yes,Yes,Yes
+A public record,Publish a new version,No,No,Yes,Yes,Yes,Yes,Yes
+A public record,Delete the record,No,No,Yes,Yes,No,Yes,Yes
+A public record,Delete its files,No,No,Yes,Yes,No,Yes,Yes
+A public record,Lift its embargo,No,No,Yes,Yes,No,Yes,Yes
+A restricted record,View the record,No,No,Yes,Yes,No,Yes,Yes
+A restricted record,View and download its files,No,No,Yes,Yes,No,Yes,Yes
+A restricted record,Edit the record,No,No,Yes,Yes,Yes,Yes,Yes
+A restricted record,Publish a new version,No,No,Yes,Yes,Yes,Yes,Yes
+A restricted record,Delete the record,No,No,Yes,Yes,No,Yes,Yes
+A restricted record,Delete its files,No,No,Yes,Yes,No,Yes,Yes
+A restricted record,Lift its embargo,No,No,Yes,Yes,No,Yes,Yes
+A draft,View the draft,No,No,Yes,Yes,Yes,Yes,Yes
+A draft,View the draft's files,No,No,Yes,Yes,Yes,Yes,Yes
+A draft,Edit the draft,No,No,Yes,Yes,Yes,Yes,Yes
+A draft,Add files to the draft,No,No,Yes,Yes,Yes,Yes,Yes
+A draft,Reserve a DOI,No,No,Yes,Yes,Yes,Yes,Yes
+A draft,Publish the draft,No,No,Yes,Yes,Yes,Yes,Yes
+A draft,Discard the draft,No,No,Yes,Yes,Yes,Yes,Yes
+In general,Change a published record directly,No,No,No,No,No,No,No
+In general,Upload files outside a draft,No,No,No,No,No,No,No
+In general,Replace files outside a draft,No,No,No,No,No,No,No
