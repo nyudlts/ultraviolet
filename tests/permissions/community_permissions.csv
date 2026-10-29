@@ -1,0 +1,27 @@
+On,What they do,Community reader,Community curator,Community manager,Community owner,Member of another community
+In general,Start a new record,No,No,No,No,No
+In general,Search drafts,Yes,Yes,Yes,Yes,Yes
+A public record,View the record,Yes,Yes,Yes,Yes,Yes
+A public record,View and download its files,Yes,Yes,Yes,Yes,Yes
+A public record,Edit the record,No,Yes,Yes,Yes,No
+A public record,Publish a new version,No,Yes,Yes,Yes,No
+A public record,Delete the record,No,No,Yes,Yes,No
+A public record,Delete its files,No,No,Yes,Yes,No
+A public record,Lift its embargo,No,No,Yes,Yes,No
+A restricted record,View the record,Yes,Yes,Yes,Yes,No
+A restricted record,View and download its files,Yes,Yes,Yes,Yes,No
+A restricted record,Edit the record,No,Yes,Yes,Yes,No
+A restricted record,Publish a new version,No,Yes,Yes,Yes,No
+A restricted record,Delete the record,No,No,Yes,Yes,No
+A restricted record,Delete its files,No,No,Yes,Yes,No
+A restricted record,Lift its embargo,No,No,Yes,Yes,No
+A draft,View the draft,No,No,Yes,Yes,No
+A draft,View the draft's files,No,No,Yes,Yes,No
+A draft,Edit the draft,No,Yes,Yes,Yes,No
+A draft,Add files to the draft,No,Yes,Yes,Yes,No
+A draft,Reserve a DOI,No,Yes,Yes,Yes,No
+A draft,Publish the draft,No,Yes,Yes,Yes,No
+A draft,Discard the draft,No,Yes,Yes,Yes,No
+In general,Change a published record directly,No,No,No,No,No
+In general,Upload files outside a draft,No,No,No,No,No
+In general,Replace files outside a draft,No,No,No,No,No
