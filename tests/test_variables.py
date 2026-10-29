@@ -34,7 +34,7 @@ def test_var_assigned(monkeypatch):
     assert app.config.get("SITE_API_URL") == app_host + "/api"
     assert app.config.get("COLLECT_STATIC_ROOT") == "/opt/static"
     assert app.config.get("COLLECT_STORAGE") == "flask_collect.storage.file"
-    assert app.config.get("DATACITE_ENABLED") == False
+    assert app.config.get("DATACITE_ENABLED") == True
 
 
 # Check that default values are assign to configuration variables when values are not passed through os
