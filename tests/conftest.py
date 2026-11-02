@@ -10,6 +10,7 @@
 import os
 import sys
 
+import idutils
 import pytest
 import responses
 from invenio_access.proxies import current_access
@@ -19,6 +20,7 @@ from invenio_search.proxies import current_search_client
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import DisconnectionError
+from invenio_rdm_records.services.pids import providers
 
 
 @pytest.fixture(scope="module")
@@ -67,6 +69,32 @@ def app_config(app_config):
         "strict_transport_security_max_age": 31556926,  # One year in seconds
         "strict_transport_security_preload": False,
     }
+
+    app_config["RDM_PERSISTENT_IDENTIFIERS"] = dict(
+        doi=dict(
+            providers=["datacite", "external"],
+            required=False,
+            label="DOI",
+            validator=idutils.is_doi,
+            normalizer=idutils.normalize_doi,
+            is_enabled=providers.DataCitePIDProvider.is_enabled,
+            ui=dict(default_selected="yes"),
+        ),
+    )
+
+    app_config["RDM_PARENT_PERSISTENT_IDENTIFIERS"] = dict(
+        doi=dict(
+            providers=["datacite"],
+            required=False,
+            condition=lambda rec: rec.pids.get("doi", {}).get("provider") == "datacite",
+            label="Concept DOI",
+            validator=idutils.is_doi,
+            normalizer=idutils.normalize_doi,
+            is_enabled=providers.DataCitePIDProvider.is_enabled,
+            ui=dict(default_selected="yes"),
+        ),
+    )
+
     return app_config
 
 

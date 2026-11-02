@@ -38,6 +38,7 @@ def test_element_not_in_deposit_form1(
     funders_v,
     awards_v,
     creatorsroles_v,
+    geospatial_resource_type_v,
     browser,
 ):
     """Test for hidding References field on deposit form"""
@@ -68,7 +69,15 @@ def test_element_not_in_deposit_form1(
     )
     submit_button.click()
 
+    # Confirm the deposit form actually loaded (and we're not silently
+    # looking at an error page, e.g. a 404 from a missing vocabulary).
+    WebDriverWait(browser, 10).until(
+        EC.presence_of_element_located((By.ID, "deposit-form"))
+    )
+
     # Assert that the text "References" is not present in the HTML
     assert (
         "Reference string" not in browser.page_source
     ), "'References' field is present in the HTML, but it should not be."
+
+    assert "No, I don't need one" in browser.page_source

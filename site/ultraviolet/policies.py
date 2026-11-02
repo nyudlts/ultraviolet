@@ -17,6 +17,8 @@ from invenio_records_permissions.generators import (
 )
 
 from .generators import AdminSuperUser, Depositor, Curator, Viewer
+from invenio_records_resources.services.files.generators import IfTransferType
+from invenio_records_resources.services.files.transfer import LOCAL_TRANSFER_TYPE
 
 
 class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
@@ -74,6 +76,11 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
         IfRestricted("files", then_=can_view, else_=can_all),
         ResourceAccessToken("read"),
     ]
+    # Need to repeat here to make sure custom can_read_files will be used for local transfer type
+    can_get_content_files = [
+        IfTransferType(LOCAL_TRANSFER_TYPE, can_read_files),
+        SystemProcess(),
+    ]
 
     #
     # Drafts
@@ -84,6 +91,17 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     can_read_draft = can_preview
     # Allow reading files of a draft
     can_draft_read_files = can_preview
+    # Allow downloading files of a draft (only for local transfer type)
+    # needed to repeat here to make sure custom can_draft_read_files will be used together with
+    # base policy. This is done not to delete existing options. Probably need to fix it later.
+    can_draft_get_content_files = [
+        IfTransferType(
+            LOCAL_TRANSFER_TYPE,
+            can_draft_read_files + RDMRecordPermissionPolicy.can_draft_read_files,
+        ),
+        SystemProcess(),
+    ]
+
     # Allow updating metadata of a draft
     can_update_draft = can_curate
     # Allow uploading, updating and deleting files in drafts

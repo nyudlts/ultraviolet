@@ -1,0 +1,15 @@
+{%- extends config.PREVIEWER_ABSTRACT_TEMPLATE %}
+
+{% block panel %}
+<model-viewer
+        id="gltf-viewer"
+        src="{{ file.uri }}"
+        alt="{{ file.data.key }}"
+        auto-rotate
+        camera-controls
+>
+    <div slot="progress-bar" class="gltf-progress-container">
+        <div id="gltf-progress" class="gltf-progress"></div>
+    </div>
+</model-viewer>
+{% endblock %}
