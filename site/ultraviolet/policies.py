@@ -2,6 +2,7 @@ from flask import current_app
 from flask_principal import Permission, RoleNeed
 from invenio_rdm_records.services import RDMRecordPermissionPolicy
 from invenio_rdm_records.services.generators import (
+    IfAtLeastOneCommunity,
     SecretLinks,
     RecordCommunitiesAction,
     RecordOwners,
@@ -19,6 +20,15 @@ from invenio_records_permissions.generators import (
 from .generators import AdminSuperUser, Depositor, Curator, Viewer
 from invenio_records_resources.services.files.generators import IfTransferType
 from invenio_records_resources.services.files.transfer import LOCAL_TRANSFER_TYPE
+
+
+def has_community_role(identity, role):
+    """Whether the identity holds ``role`` in at least one community."""
+    return any(
+        getattr(need, "method", None) == "community"
+        and getattr(need, "role", None) == role
+        for need in identity.provides
+    )
 
 
 class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
@@ -125,7 +135,15 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     # Allow creating a new version of an existing published record.
     can_new_version = can_curate
     # Allow publishing a new record or changes to an existing record.
-    can_publish = can_curate
+    # Outside of a community, owning the draft is not enough: that would let
+    # community depositors (who can create records without the site-wide
+    # depositor role) publish without going through a community.
+    can_publish = [
+        IfAtLeastOneCommunity(
+            then_=can_curate,
+            else_=[g for g in can_curate if not isinstance(g, RecordOwners)],
+        ),
+    ]
     # Allow lifting a record or draft.
     can_lift_embargo = can_manage
     # Allow deleting of records by admins
@@ -138,6 +156,17 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     can_update = [Disable()]
     can_create_files = [Disable()]
     can_update_files = [Disable()]
+
+    def allows(self, identity):
+        """Also let community depositors create records.
+
+        Creating a record has no community context, so the check cannot be
+        expressed with a generator: a community "depositor" is allowed to
+        create when they hold that role in any community.
+        """
+        if super().allows(identity):
+            return True
+        return self.action == "create" and has_community_role(identity, "depositor")
 
 
 def ultraviolet_admin_permission_factory(_admin_view):
