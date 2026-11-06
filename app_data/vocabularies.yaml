@@ -23,6 +23,3 @@ subjects:
 geospatialresourcetypes:
   pid-type: grt
   data-file: vocabularies/geospatial_resource_types.yaml
-communitytypes:
-  pid-type: comtyp
-  data-file: vocabularies/community_types.yaml
