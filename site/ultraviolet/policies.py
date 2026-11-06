@@ -1,7 +1,11 @@
 from flask import current_app
 from flask_principal import Permission, RoleNeed
+from invenio_access import Permission as InvenioPermission
+from invenio_access.permissions import system_process
+from invenio_communities.permissions import CommunityPermissionPolicy
 from invenio_rdm_records.services import RDMRecordPermissionPolicy
 from invenio_rdm_records.services.generators import (
+    IfAtLeastOneCommunity,
     SecretLinks,
     RecordCommunitiesAction,
     RecordOwners,
@@ -19,6 +23,59 @@ from invenio_records_permissions.generators import (
 from .generators import AdminSuperUser, Depositor, Curator, Viewer
 from invenio_records_resources.services.files.generators import IfTransferType
 from invenio_records_resources.services.files.transfer import LOCAL_TRANSFER_TYPE
+
+
+SITE_DEPOSIT_ROLES = ("depositor", "viewer")
+"""Site-wide roles that can already create records (see ``can_manage``)."""
+
+
+def has_community_role(identity, role, community_id=None):
+    """Whether the identity holds ``role`` in a community.
+
+    Any community when ``community_id`` is not given.
+    """
+    return any(
+        getattr(need, "method", None) == "community"
+        and getattr(need, "role", None) == role
+        and (community_id is None or str(need.value) == str(community_id))
+        for need in identity.provides
+    )
+
+
+def has_site_deposit_access(identity):
+    """Whether the identity can create records regardless of any community.
+
+    ``InvenioPermission`` always includes superusers and expands the needs
+    granted to users and roles in the database.
+    """
+    return InvenioPermission(
+        system_process, *(RoleNeed(role) for role in SITE_DEPOSIT_ROLES)
+    ).allows(identity)
+
+
+def community_depositor_may_create(action, identity):
+    """Whether being a depositor in any community allows ``action``.
+
+    Creating a record has no community context, so the check cannot be
+    expressed with a generator.
+    """
+    return action == "create" and has_community_role(identity, "depositor")
+
+
+def may_submit_record(action, identity, community_id, site_access):
+    """Whether ``action`` is allowed by the rule limiting who submits records.
+
+    Only ``submit_record`` is limited: users who can create records only
+    through the community "depositor" role may submit to the communities they
+    are a depositor of, and no others. ``site_access`` is a callable taking
+    the identity, so that it only runs when the cheap check is not enough.
+    """
+    if action != "submit_record":
+        return True
+    return (
+        community_id is not None
+        and has_community_role(identity, "depositor", community_id)
+    ) or site_access(identity)
 
 
 class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
@@ -125,7 +182,15 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     # Allow creating a new version of an existing published record.
     can_new_version = can_curate
     # Allow publishing a new record or changes to an existing record.
-    can_publish = can_curate
+    # Outside of a community, owning the draft is not enough: that would let
+    # community depositors (who can create records without the site-wide
+    # depositor role) publish without going through a community.
+    can_publish = [
+        IfAtLeastOneCommunity(
+            then_=can_curate,
+            else_=[g for g in can_curate if not isinstance(g, RecordOwners)],
+        ),
+    ]
     # Allow lifting a record or draft.
     can_lift_embargo = can_manage
     # Allow deleting of records by admins
@@ -138,6 +203,25 @@ class UltraVioletPermissionPolicy(RDMRecordPermissionPolicy):
     can_update = [Disable()]
     can_create_files = [Disable()]
     can_update_files = [Disable()]
+
+    def allows(self, identity):
+        """Also let community depositors create records."""
+        return super().allows(identity) or community_depositor_may_create(
+            self.action, identity
+        )
+
+
+class UltraVioletCommunityPermissionPolicy(CommunityPermissionPolicy):
+    """Community permissions, confining community depositors to their community."""
+
+    def allows(self, identity):
+        """Limit who can submit records to a community."""
+        return super().allows(identity) and may_submit_record(
+            self.action,
+            identity,
+            self.over.get("community_id"),
+            has_site_deposit_access,
+        )
 
 
 def ultraviolet_admin_permission_factory(_admin_view):
